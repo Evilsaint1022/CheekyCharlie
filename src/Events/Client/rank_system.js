@@ -38,17 +38,6 @@ module.exports = {
             }
         }
 
-
-        
-        // Change file to store user data in a JSON file named by their username
-        const userLevelFilePath = path.join(levelsDir, `${username}.json`);
-        const mutedFilePath = path.join(mutedDir, 'muted.json');
-        
-        // Create directories if they don't exist
-        if (!fs.existsSync(levelsDir)) fs.mkdirSync(levelsDir, { recursive: true });
-        if (!fs.existsSync(mutedDir)) fs.mkdirSync(mutedDir, { recursive: true });
-        
-
         // Check if user is muted
         let mutedData = {};
         if (fs.existsSync(mutedFilePath)) {
@@ -65,7 +54,6 @@ module.exports = {
             userData = JSON.parse(fs.readFileSync(userLevelFilePath, 'utf8'));
         }
 
-
         // Load level channel ID from level_channel.json if it exists
         let levelChannelId = null;
         if (fs.existsSync(levelChannelFilePath)) {
@@ -74,9 +62,6 @@ module.exports = {
         }
 
         // Generate random XP between 5 and 15 for the user
-
-        // Generate random XP between 5 and 15
-
         const xpGain = Math.floor(Math.random() * 11) + 5;
         userData.xp += xpGain;
 
@@ -87,7 +72,6 @@ module.exports = {
         if (userData.xp >= xpForNextLevel) {
             userData.xp -= xpForNextLevel;
             userData.level += 1;
-
 
             // Determine where to send the level-up message
             let targetChannel = message.channel; // Default to the current channel
@@ -102,9 +86,6 @@ module.exports = {
             // Send the level-up message
             targetChannel.send(
                 `🎉**Congratulations ${message.author.username}!🎉**\n**You've leveled up to level ${userData.level}!**`
-
-            message.channel.send(
-                `🎉**Congratulations ${message.author}!🎉**\n**You've leveled up to level ${userData.level}!**`
             );
         }
 

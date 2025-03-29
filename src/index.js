@@ -59,8 +59,7 @@ client.once("ready", () => {
 // Activities Status ---------------------------------------------------------------------------------------------------------------
 
 // Boolean flag to control AFK status
-let afkStatus = false; // Set to `true` for AFK, `false` for activities
-
+let afkStatus = true; // Set to `true` for AFK, `false` for activities
 
 // Lists of activities
 const activities = [
