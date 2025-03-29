@@ -84,6 +84,18 @@ const commands = [
         name: 'leaderboard',
         description: 'Displays The Leaderboard',
     },
+    {
+        name: 'level', 
+        description: 'Check your current level or another user\'s level.',
+        options: [
+            {
+                name: 'user',
+                description: 'The user to check the level of',
+                type: 6,
+                required: false,
+            },
+        ]
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
     {
@@ -121,6 +133,40 @@ const commands = [
                 required: true,
             },
         ],
+    },
+    {
+        name: 'setlevelchannel',
+        description: 'Set the channel where level-up messages will be sent',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to send level-up messages',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'noxp',
+        description: 'Adds or removes a user from the no XP list.',
+        options: [
+            {
+                name: 'user',
+                description: 'The user to add or remove from the no XP list',
+                type: 6,
+                required: true,
+            },
+            {
+                name: 'action',
+                description: 'Action to perform (add/remove)',
+                type: 3,
+                required: true,
+                choices: [
+                    { name: 'Add', value: 'add' },
+                    { name: 'Remove', value: 'remove' },
+                ],
+            },
+        ]
     },
 ];
 

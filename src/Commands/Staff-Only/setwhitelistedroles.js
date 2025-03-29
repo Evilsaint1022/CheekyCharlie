@@ -14,7 +14,7 @@ module.exports = {
 
     async execute(interaction) {
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: 64 });
         }
 
         const guildName = interaction.guild.name;
@@ -42,7 +42,7 @@ module.exports = {
             fs.writeFileSync(rolesFilePath, JSON.stringify({ roles: WHITELISTED_ROLE_IDS }, null, 4));
         }
         
-        await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, ephemeral: true });
+        await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, flags: 64 });
 
         // Console Logs
         console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the setwhitelistedroles command. Added role <@&${role.id}> to the whitelist.`);

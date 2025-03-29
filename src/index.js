@@ -10,9 +10,12 @@ require('dotenv').config();
 const { loadEvents } = require('../src/Handlers/eventHandler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const { registerCommands } = require('./register-commands');
-const loadservers = require('../src/Functions/loadservers');
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember } = Partials;
+
+// Loading Functions ----------------------------------------------------------------------------------------------------------------
+
+const loadservers = require('../src/Functions/loadservers');
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
 
@@ -53,19 +56,38 @@ client.once("ready", () => {
     loadEvents(client);
     commandHandler(client);
 
-// Set bot activity ----------------------------------------------------------------------------------------------------------------
+// Activities Status ---------------------------------------------------------------------------------------------------------------
 
-    setInterval(() => {
-        const activities = [
-            "Shopping at PaknSave",
-            "✌🏻Nek Minnit",
-            "🤌🏼Awww Gummon",
-            "🗿Built Like a Mitre 10",
-            "Made in New Zealand",
-        ];
-        const activity = activities[Math.floor(Math.random() * activities.length)];
-        client.user.setActivity(activity, { type: ActivityType.Custom });
-    }, 5000); // Update activity every 5 seconds
+// Boolean flag to control AFK status
+let afkStatus = true; // Set to `true` for AFK, `false` for activities
+
+// Lists of activities
+const activities = [
+    "Shopping at PaknSave",
+    "✌🏻Nek Minnit",
+    "🤌🏼Awww Gummon",
+    "🗿Built Like a Mitre 10",
+    "Made in New Zealand",
+];
+
+const afk = [
+    '🔨 - Under Maintenance',
+];
+
+// Set bot activity every 5 seconds based on AFK status
+setInterval(() => {
+    let activityList;
+
+    if (afkStatus) {
+        activityList = afk; // Use AFK list if afkStatus is true
+    } else {
+        activityList = activities; // Use activities list if afkStatus is false
+    }
+
+    const activity = activityList[Math.floor(Math.random() * activityList.length)];
+    client.user.setActivity(activity, { type: ActivityType.Custom });
+}, 5000); // Update every 5 seconds
+
 });
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ module.exports = {
     const { guild, user, channel } = interaction;
     const timestamp = new Date().toLocaleTimeString();
     const guildIconUrl = guild.iconURL() || '';
-    const messageContent = 'Check out the GitHub repository:\nhttps://github.com/Evilsaint1022/Evilsaint1022-DISCORD-BOT';
+    const messageContent = 'Check out the GitHub repository:\nhttps://github.com/Evilsaint1022/CheekyCharlie';
 
     await interaction.reply({ content: messageContent });
 
