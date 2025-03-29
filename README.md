@@ -29,7 +29,7 @@ The purpose of making this discord bot open source is to show that there is no m
 - `/echo`
 - `/setwhitelistrole`
 - `/removewhitelistrole`
-- - `/setlevelchannel`
+- `/setlevelchannel`
 - `/noxp`
 
 if you need any help at all regarding the discord bot code please dm me on discord.   
