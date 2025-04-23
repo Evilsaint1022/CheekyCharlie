@@ -34,7 +34,7 @@ The purpose of making this discord bot open source is to show that there is no m
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-#  **__ 🐞Bugs__**
+#  __ ** 🐞Bugs** __
 
 - No Currnet Bugs At The Moment.
 
