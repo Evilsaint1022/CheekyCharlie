@@ -43,7 +43,7 @@ The purpose of making this discord bot open source is to show that there is no m
 if you need any help at all regarding the discord bot code please dm me on discord.   
 `@evilsaint1022`
 
-# _ 4️⃣  CheekyCharlie Support Server_   
+# 4️⃣ _CheekyCharlie Support Server_   
 https://discord.com/invite/cVMh7SrvvF                             
 ‎
 
