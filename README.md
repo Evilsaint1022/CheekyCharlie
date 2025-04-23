@@ -46,8 +46,10 @@ if you need any help at all regarding the discord bot code please dm me on disco
 # _CheekyCharlie Support Server_   
 https://discord.com/invite/cVMh7SrvvF                             
 ‎
+
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 ‎ 
+
 - **This code is free to use.**
 
 **Made by Evilsaint1022**
