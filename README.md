@@ -54,4 +54,4 @@ https://discord.com/invite/cVMh7SrvvF
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# "Hosted by Bisechosting.com"
+# "Hosted by https://www.bisechosting.com/"
