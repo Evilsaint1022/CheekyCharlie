@@ -98,6 +98,7 @@ const commands = [
     },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
+
     {
         name: 'echo',
         description: 'Replies with the message you provide',
@@ -150,28 +151,6 @@ const commands = [
         name: 'removelevelchannel',
         description: 'Remove the channel where level-up messages are sent',
     },
-    {
-        name: 'noxp',
-        description: 'Adds or removes a user from the no XP list.',
-        options: [
-            {
-                name: 'user',
-                description: 'The user to add or remove from the no XP list',
-                type: 6,
-                required: true,
-            },
-            {
-                name: 'action',
-                description: 'Action to perform (add/remove)',
-                type: 3,
-                required: true,
-                choices: [
-                    { name: 'Add', value: 'add' },
-                    { name: 'Remove', value: 'remove' },
-                ],
-            },
-        ]
-    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -221,4 +200,5 @@ const registerCommands = async (client) => {
 };
 
 // Exporting Register Commands --------------------------------------------------------------------------------------------------------------------------------
+
 module.exports = { registerCommands };

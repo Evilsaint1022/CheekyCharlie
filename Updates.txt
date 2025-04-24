@@ -2,12 +2,6 @@ Cheeky Charlie (24/4/25)
 
 Updates:
 
-- Added a Staff-Only /removelevelchannel application command that removes the levelnotification channel id.
-- Redirected the LevelChannelId to a Settings Folder that has a channelsettings.json file with the "LevelChannelId"
-- Changed all directories for the Rank_system.json and /setlevelchannel.js
-- Created a Whitelistedroles.json File in the Settings Folder
-- Redirected the WhitelistedRolesPathDirectory to the Settings Folder for all staff application commands
-- Removed the Delete File if empty code from the removewhitelistedroles application command.
-- Updateed the Readme Console_terminal.png image
-
-[ Deleted Old Json Files ]
+- Removed the NoXp.json and NoXp Folder
+- Removed the noxp.js Application Command
+- Unregistered the noxp Application Command
