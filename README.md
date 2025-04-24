@@ -35,6 +35,7 @@ The purpose of making this discord bot open source is to show that there is no m
 - `/setwhitelistrole`
 - `/removewhitelistrole`
 - `/setlevelchannel`
+- `/removelevelchannel`
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
