@@ -85,7 +85,7 @@ function isAdmin(interaction) {
 
 // Function to check if the user has a whitelisted role
 function isWhitelisted(guild, user) {
-  const whitelistedRolesFilePath = path.resolve(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Whitelisted_Roles/whitelisted_roles.json`);
+  const whitelistedRolesFilePath = path.resolve(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Whitelistedroles/whitelistedroles.json`);
 
   // Check if the file exists
   if (!fs.existsSync(whitelistedRolesFilePath)) {

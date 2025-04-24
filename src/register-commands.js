@@ -147,6 +147,10 @@ const commands = [
         ],
     },
     {
+        name: 'removelevelchannel',
+        description: 'Remove the channel where level-up messages are sent',
+    },
+    {
         name: 'noxp',
         description: 'Adds or removes a user from the no XP list.',
         options: [

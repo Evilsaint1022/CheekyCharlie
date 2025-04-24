@@ -27,8 +27,8 @@
   "author": "Evilsaint1022",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^9.25.0",
-    "nodemon": "^3.1.9"
+    "eslint": "^9.25.1",
+    "nodemon": "^3.1.10"
   },
   "description": ""
 }

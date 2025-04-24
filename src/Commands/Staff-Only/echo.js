@@ -17,8 +17,8 @@ module.exports = {
         const guildName = interaction.guild.name;
         
         // Define the directory path based on Server Name and Guild ID
-        const dirPath = path.join(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Whitelisted_Roles/`);
-        const rolesFilePath = path.join(dirPath, 'whitelisted_roles.json');
+        const dirPath = path.join(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/`);
+        const rolesFilePath = path.join(dirPath, 'whitelistedroles.json');
         
         // Ensure the directory exists
         if (!fs.existsSync(dirPath)) {
