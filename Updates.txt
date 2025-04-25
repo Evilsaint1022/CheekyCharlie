@@ -1,7 +1,7 @@
-Cheeky Charlie (24/4/25)
+Cheeky Charlie (25/4/25)
 
 Updates:
 
-- Removed the NoXp.json and NoXp Folder
-- Removed the noxp.js Application Command
-- Unregistered the noxp Application Command
+- Updated the Autokick.js to make it load the Verified roles from the rolesettings.json file.
+- Updated the /pick Application Command to make it create the directories for the Bank and Balance txt files.
+- Updated the drop_party.js to fix reading and writing the the drop_party_cooldown.json file.

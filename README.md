@@ -27,11 +27,11 @@ The purpose of making this discord bot open source is to show that there is no m
 - `/deposit`
 - `/daily`
 - `/level`
+- `/pick`
 
 *Staff-Only:* ( `Requires Administrator Permissions` )
 
 - `/echo`
-- `/noxp`
 - `/setwhitelistrole`
 - `/removewhitelistrole`
 - `/setlevelchannel`
