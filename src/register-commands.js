@@ -171,6 +171,22 @@ const commands = [
         name: 'remove-party-drop-channel',
         description: 'Remove the configured party drops channel',
     },
+    {
+        name: 'set-join-to-create-vc',
+        description: 'Set the Voice channel for the join to create feature',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for the join to create feature',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-join-to-create-vc',
+        description: 'Remove the configured join to create channel',
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
