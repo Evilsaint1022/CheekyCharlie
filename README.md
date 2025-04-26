@@ -2,60 +2,68 @@
 
 # 4️⃣ CheekyCharlie Discord Bot
 
-This is a discord bot that I've been working on in my free time as just a little hobby thing that I've been working on. This bot is a modular discord bot.
-The purpose of making this discord bot open source is to show that there is no malicious code but also hope to inspire people to make there own discord bots.
+[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Hosted By](https://img.shields.io/badge/Hosted%20By-Bisecthosting.com-blue)](https://bisecthosting.com)
 
-![alt text](./src/Utilities/README.md/Console_Terminal.png)
+Welcome to **CheekyCharlie** — a modular Discord bot built as a fun hobby project!  
+This bot is completely open-source to promote transparency and inspire others to create their own bots.
 
-**Made by Evilsaint1022**
-
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-# _Application Commands_
-
-*Everyone:*
-
-- `/avatar`
-- `/balance`
-- `/cat`
-- `/dog`
-- `/github`
-- `/invite`
-- `/leaderboard`
-- `/ping`
-- `/wihdraw`
-- `/deposit`
-- `/daily`
-- `/level`
-
-*Staff-Only:* ( `Requires Administrator Permissions` )
-
-- `/echo`
-- `/setwhitelistrole`
-- `/removewhitelistrole`
-- `/setlevelchannel`
-- `/removelevelchannel`
-- `/set-drop-party-channel`
-- `/remove-drop-party-channel`
+**Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Developer)**
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-#  _🐞Bugs_
+# 🎮 Application Commands
 
-- No Currnet Bugs At The Moment.
+**Available for Everyone:**
 
-if you need any help at all regarding the discord bot code please dm me on discord.   
-`@evilsaint1022`
+- `/avatar` — View your's or someone elses avatar
+- `/ping` — Check Bots Latency
+- `/cat` — Generates a random picture of a cat
+- `/dog` — Generates a random picture of a dog
+- 
+- `/github` — Github link to CheeckyCharlies Repo
+- `/invite` — Generates a random invite link
+- 
+- `/level` — Check Current Level
+- 
+- `/deposit` — Deposit Currency into your Bank
+- `/withdraw` — Withdraw Currency from your Bank
+- `/balance` — Check your balance
+- `/leaderboard` — Balance Leaderboard
+- `/daily` — Daily Currency Collect
 
-# 4️⃣ _CheekyCharlie Support Server_   
-https://discord.com/invite/cVMh7SrvvF                             
-‎
+**Staff-Only Commands:** (`Administrator permissions required`)
+
+- `/echo` — Echo Messages
+- 
+- `/setwhitelistrole` — Set whitelisted Roles.
+- `/removewhitelistrole` — Remove whitelisted Roles.
+- 
+- `/setlevelchannel` — Set Level Notification Channel
+- `/removelevelchannel` — Remove Level Notifcation Channel
+- 
+- `/set-drop-party-channel` — Set Drop Party Channel
+- `/remove-drop-party-channel` — Remove Drop Party Channel
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-‎ 
 
-- **This code is free to use.**
+# 🐞 Bugs
+
+Currently, there are **no known issues**.  
+
+If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
+`@evilsaint1022` `@linix_red`
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-`Hosted by Bisechosting.com`
+# 🌐 CheekyCharlie Support Server
+
+[Join our Support Server](https://discord.gg/W3ZRZukZmS)
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+- **This code is free to use.**  
+- **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
