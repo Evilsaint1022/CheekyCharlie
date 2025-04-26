@@ -18,10 +18,10 @@ module.exports = {
         `**Hope you enjoy your stay in the server! ❤️**\n`
       )
       .setImage("https://cdn.discordapp.com/attachments/1346998014115578010/1365543472076947456/Untitled371_20250319131308.png?ex=680db0f6&is=680c5f76&hm=56ba655e67bb5c9268f6fa68a177a9890567779bf53dc830be78039888c7aadc&width=450&height=89")
-      .setThumbnail(member.client.user.displayAvatarURL()) // Bot icon as thumbnail
+      .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setFooter({ text: `Four-Square`, iconURL: guild.iconURL() })
       .setTimestamp()
-      .setColor(0xFF0000); // Optional: set a color for the embed
+      .setColor(0x207e37); // Optional: set a color for the embed
 
     // Send the role mention and embed message to the specified channel by ID
     const welcomeChannel = guild.channels.cache.get('1346955022461829162');

@@ -27,7 +27,6 @@ The purpose of making this discord bot open source is to show that there is no m
 - `/deposit`
 - `/daily`
 - `/level`
-- `/pick`
 
 *Staff-Only:* ( `Requires Administrator Permissions` )
 
@@ -36,6 +35,8 @@ The purpose of making this discord bot open source is to show that there is no m
 - `/removewhitelistrole`
 - `/setlevelchannel`
 - `/removelevelchannel`
+- `/set-drop-party-channel`
+- `/remove-drop-party-channel`
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 

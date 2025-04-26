@@ -155,6 +155,22 @@ const commands = [
         name: 'removelevelchannel',
         description: 'Remove the channel where level-up messages are sent',
     },
+    {
+        name: 'set-party-drop-channel',
+        description: 'Set the channel where the party drops will go',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for party drops',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-party-drop-channel',
+        description: 'Remove the configured party drops channel',
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
