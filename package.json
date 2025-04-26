@@ -17,7 +17,7 @@
     "register-commands": "^1.0.0",
     "table": "^6.9.0"
   },
-  "name": "evilsaint1022",
+  "name": "four-square",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
