@@ -53,6 +53,20 @@ module.exports = {
         const cooldownFilePath = path.join(basePath, 'Settings/Cooldowns/drop_party_cooldown.json');
         const settingsFilePath = path.join(basePath, 'Settings/channelsettings.json');
 
+        // ✅ Ensure cooldown file and directory exist
+        try {
+            const cooldownDir = path.dirname(cooldownFilePath);
+            if (!fs.existsSync(cooldownDir)) {
+                fs.mkdirSync(cooldownDir, { recursive: true });
+            }
+            if (!fs.existsSync(cooldownFilePath)) {
+                fs.writeFileSync(cooldownFilePath, JSON.stringify({ lastMessageDropTime: 0 }, null, 4));
+            }
+        } catch (err) {
+            console.error('[DROP PARTY] Error creating cooldown file or directory:', err);
+            return;
+        }
+
         // Load the DropPartyChannelId from settings
         let DropPartyChannelId;
         try {
