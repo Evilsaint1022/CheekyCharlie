@@ -70,8 +70,7 @@ module.exports = {
             const vcSettingsData = await fs.readFileSync(guildConfigPath + VCSettingsPath);
             vcSettings = JSON.parse(vcSettingsData);
         } catch ( err ) {
-            console.error("[TEMP VC / JOIN TO CREATE] Error reading VC settings file.");
-            console.log(err);
+            vcSettings = JSON.parse("{ activeIds: [] }")
             return;
         }
 
