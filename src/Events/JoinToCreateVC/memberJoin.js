@@ -32,8 +32,6 @@ module.exports = {
             const channelSettingsData = await fs.readFileSync(guildConfigPath + channelSettingsPath);
             channelSettings = JSON.parse(channelSettingsData);
         } catch ( err ) {
-            console.error("[TEMP VC / JOIN TO CREATE] Error reading channel settings file.");
-            console.log(err);
             return;
         }
 
@@ -70,7 +68,7 @@ module.exports = {
             const vcSettingsData = await fs.readFileSync(guildConfigPath + VCSettingsPath);
             vcSettings = JSON.parse(vcSettingsData);
         } catch ( err ) {
-            vcSettings = JSON.parse("{ activeIds: [] }")
+            vcSettings = JSON.parse('{ "activeIds": [] }')
             return;
         }
 
