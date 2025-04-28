@@ -46,7 +46,7 @@ This bot is completely open-source to promote transparency and inspire others to
 - 
 - `/set-drop-party-channel` — Set Drop Party Channel
 - `/remove-drop-party-channel` — Remove Drop Party Channel
-
+- 
 - `/starboard-set-channel` - Sets Starboard Channel
 - `/starboard-set-count` - Sets Amount of emojis needed for Starboard
 - `/starboard-set-emoji` - Sets sets Starboard Emoji
