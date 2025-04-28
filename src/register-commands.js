@@ -187,6 +187,42 @@ const commands = [
         name: 'remove-join-to-create-vc',
         description: 'Remove the configured join to create channel',
     },
+    {
+        name: "starboard-set-channel",
+        description: "Set the channel where starboard messages will be sent",
+        options: [
+            {
+                name: "channel",
+                description: "The channel to set for starboard messages",
+                type: 7,
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "starboard-set-count",
+        description: "Set how many reactions are needed to send a message to the starboard",
+        options: [
+            {
+                name: "count",
+                description: "The number of reactions needed to send a message to the starboard",
+                type: 4,
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "starboard-set-emoji",
+        description: "Set the emoji used for starboard reactions",
+        options: [
+            {
+                name: "emoji",
+                description: "The emoji to use for starboard reactions",
+                type: 3,
+                required: true,
+            }
+        ]
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------

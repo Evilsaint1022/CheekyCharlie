@@ -11,7 +11,7 @@ const { loadEvents } = require('../src/Handlers/eventHandler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const { registerCommands } = require('./register-commands');
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
-const { user, Message, GuildMember, ThreadMember } = Partials;
+const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User } = Partials;
 
 // Loading Functions ----------------------------------------------------------------------------------------------------------------
 
@@ -31,9 +31,11 @@ const client = new Client({
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.DirectMessageReactions,
     ],
-    partials: [user, Message, GuildMember, ThreadMember]
+    partials: [user, Message, GuildMember, ThreadMember, Channel, Reaction, User]
 });
 
 // Collections for commands and events ---------------------------------------------------------------------------------------------
