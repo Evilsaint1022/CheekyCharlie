@@ -116,7 +116,7 @@ const commands = [
         ],
     },
     {
-        name: 'setwhitelistedroles',
+        name: 'set-whitelisted-roles',
         description: 'Sets the whitelisted roles for the echo command',
         options: [
             {
@@ -128,7 +128,7 @@ const commands = [
         ],
     },
     {
-        name: 'removewhitelistedroles',
+        name: 'remove-whitelisted-roles',
         description: 'Removes a role from the whitelisted roles for the echo command',
         options: [
             {
@@ -140,7 +140,7 @@ const commands = [
         ],
     },
     {
-        name: 'setlevelchannel',
+        name: 'set-level-channel',
         description: 'Set the channel where level-up messages will be sent',
         options: [
             {
@@ -152,11 +152,11 @@ const commands = [
         ],
     },
     {
-        name: 'removelevelchannel',
+        name: 'remove-level-channel',
         description: 'Remove the channel where level-up messages are sent',
     },
     {
-        name: 'set-party-drop-channel',
+        name: 'set-partydrop-channel',
         description: 'Set the channel where the party drops will go',
         options: [
             {
@@ -168,7 +168,7 @@ const commands = [
         ],
     },
     {
-        name: 'remove-party-drop-channel',
+        name: 'remove-partydrop-channel',
         description: 'Remove the configured party drops channel',
     },
     {

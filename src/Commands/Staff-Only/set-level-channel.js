@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('setlevelchannel')
+        .setName('set-level-channel')
         .setDescription('Set the channel where level-up messages will be sent')
         .addChannelOption(option =>
             option.setName('channel')

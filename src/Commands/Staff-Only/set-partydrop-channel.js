@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('set-party-drop-channel')
+        .setName('set-partydrop-channel')
         .setDescription('Set the channel where the party drops will go')
         .addChannelOption(option =>
             option.setName('channel')

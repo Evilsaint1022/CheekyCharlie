@@ -5,11 +5,10 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('remove-party-drop-channel')
-        .setDescription('Remove the configured party drops channel'),
+        .setName('remove-level-channel')
+        .setDescription('Remove the configured level-up channel'),
 
     async execute(interaction) {
-        
         const guildName = interaction.guild.name;
         const guildId = interaction.guild.id;
         const userId = interaction.user.id;
@@ -26,23 +25,22 @@ module.exports = {
 
         // Check for permission
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) && !member.roles.cache.some(role => whitelistedRoles.includes(role.id))) {
-            return interaction.reply({ content: 'You do not have permission to remove the party drops channel!', flags: 64 });
+            return interaction.reply({ content: 'You do not have permission to remove the level-up channel!', flags: 64 });
         }
 
+        // Check if the file exists
+        if (!fs.existsSync(settingsFilePath)) {
+            return interaction.reply({ content: 'No level-up channel is currently set.', flags: 64 });
+        }
+
+        // Load, remove the LevelChannelId, and save
         let settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
-
-        if ( !("DropPartyChannelId" in settingsData) ) {
-            return interaction.reply({ content: 'No party drop channel was set.', flags: 64 });
-        }
-
-        // Load, remove the DropPartyChannelId, and save
-        if ( 'DropPartyChannelId' in settingsData ) {
-            delete settingsData.DropPartyChannelId;
+        if ('LevelChannelId' in settingsData) {
+            delete settingsData.LevelChannelId;
             fs.writeFileSync(settingsFilePath, JSON.stringify(settingsData, null, 2));
-            return interaction.reply({ content: 'The party drops channel has been removed.', flags: 64 });
+            return interaction.reply({ content: 'The level-up channel has been removed.', flags: 64 });
         } else {
-            return interaction.reply({ content: 'No party drop channel was set.', flags: 64 });
+            return interaction.reply({ content: 'No level-up channel was set.', flags: 64 });
         }
-
     }
 };
