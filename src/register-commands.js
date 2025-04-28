@@ -197,38 +197,16 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 // This function will register the commands either globally or for a specific guild based on the environment.
 const registerCommands = async (client) => {
     try {
-        // Fetch existing commands from Discord API to prevent duplicates
-        let existingCommands = [];
         if (process.env.GUILD_ID) {
-            console.log(`Checking existing commands for the guild with ID: ${process.env.GUILD_ID}`);
-            existingCommands = await rest.get(
-                Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID)
+            await rest.put(
+                Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+                { body: commands }
             );
         } else {
-            existingCommands = await rest.get(
-                Routes.applicationCommands(process.env.CLIENT_ID)
+            await rest.put(
+                Routes.applicationCommands(process.env.CLIENT_ID),
+                { body: commands }
             );
-        }
-
-        // Filter out the commands that are already registered
-        const newCommands = commands.filter(command => {
-            return !existingCommands.some(existingCommand => existingCommand.name === command.name);
-        });
-
-        if (newCommands.length > 0) {
-            // Register only the new commands
-            if (process.env.GUILD_ID) {
-                await rest.put(
-                    Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-                    { body: [...existingCommands, ...newCommands] }
-                );
-            } else {
-                await rest.put(
-                    Routes.applicationCommands(process.env.CLIENT_ID),
-                    { body: [...existingCommands, ...newCommands] }
-                );
-            }
-        } else {
         }
     } catch (err) {
         console.error('Error registering commands:', err);
