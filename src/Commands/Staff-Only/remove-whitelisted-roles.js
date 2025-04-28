@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('removewhitelistedroles')
+        .setName('remove-whitelisted-roles')
         .setDescription('Removes a role from the whitelisted roles from using certain commands')
         .addRoleOption(option =>
             option.setName('role')

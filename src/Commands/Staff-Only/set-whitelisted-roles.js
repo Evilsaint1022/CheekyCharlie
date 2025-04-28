@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('setwhitelistedroles')
+        .setName('set-whitelisted-roles')
         .setDescription('Sets the whitelisted roles for the echo command')
         .addRoleOption(option =>
             option.setName('role')
