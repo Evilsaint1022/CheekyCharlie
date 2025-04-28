@@ -32,19 +32,24 @@ This bot is completely open-source to promote transparency and inspire others to
 - `/balance` — Check your balance
 - `/leaderboard` — Balance Leaderboard
 - `/daily` — Daily Currency Collect
+- `/pick` - Picks coins when the DropParty drops`
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
 - `/echo` — Echo Messages
 - 
-- `/setwhitelistrole` — Set whitelisted Roles.
-- `/removewhitelistrole` — Remove whitelisted Roles.
+- `/set-whitelisted-roles` — Set whitelisted Roles.
+- `/remove-whitelisted-roles` — Remove whitelisted Roles.
 - 
-- `/setlevelchannel` — Set Level Notification Channel
-- `/removelevelchannel` — Remove Level Notifcation Channel
+- `/set-level-channel` — Set Level Notification Channel
+- `/remove-level-channel` — Remove Level Notifcation Channel
 - 
 - `/set-drop-party-channel` — Set Drop Party Channel
 - `/remove-drop-party-channel` — Remove Drop Party Channel
+
+- `/starboard-set-channel` - Sets Starboard Channel
+- `/starboard-set-count` - Sets Amount of emojis needed for Starboard
+- `/starboard-set-emoji` - Sets sets Starboard Emoji
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
