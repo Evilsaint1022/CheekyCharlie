@@ -9,7 +9,7 @@
     "child_process": "^1.0.2",
     "colors": "^1.4.0",
     "discord.js": "^14.19.2",
-    "dotdatabase": "^1.0.2",
+    "dotdatabase": "^1.0.4",
     "dotenv": "^16.5.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.0",
