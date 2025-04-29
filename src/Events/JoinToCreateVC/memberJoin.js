@@ -1,5 +1,5 @@
-const { Events, Message, VoiceState } = require("discord.js");
-const fs = require("fs");
+const { Events, VoiceState } = require("discord.js");
+const db = require("../../Handlers/database");
 
 module.exports = {
     name: Events.VoiceStateUpdate,
@@ -8,7 +8,6 @@ module.exports = {
      * @param {VoiceState} newState
      */
     async execute(oldState, newState) {
-
         let event = "";
 
         if (oldState.channel == null && newState.channel != null) {
@@ -19,28 +18,19 @@ module.exports = {
             event = "leave";
         }
 
-        if (event == "leave") return;
+        if (event === "leave") return;
 
         const guild = newState.guild;
+        const guildId = guild.id;
 
-        const guildConfigPath     = "./src/Utilities/Servers/" + guild.name + "_" + guild.id + "/";
-        const channelSettingsPath = "Settings/channelsettings.json";
+        // Fetch the Join To Create VC ID from the database
+        const joinToCreateVC = await db.config.get(`${guildId}_joinToCreateVC`);
 
-        let channelSettings;
+        if (!joinToCreateVC || joinToCreateVC !== newState.channel.id) {return;}
 
-        try {
-            const channelSettingsData = await fs.readFileSync(guildConfigPath + channelSettingsPath);
-            channelSettings = JSON.parse(channelSettingsData);
-        } catch ( err ) {
-            return;
-        }
-
-        if ( !("joinToCreateVC" in channelSettings) ) return;
-
-        if ( channelSettings.joinToCreateVC != newState.channel.id ) return;
-
+        // Create a new voice channel for the user
         const newChannel = await guild.channels.create({
-            name: newState.member.user.username +"'s Voice",
+            name: `${newState.member.user.username}'s Voice`,
             type: 2,
             parent: newState.channel.parent,
             permissionOverwrites: newState.channel.permissionOverwrites.cache.map(overwrite => ({
@@ -50,40 +40,19 @@ module.exports = {
             }))
         });
 
+        // Move the user to the new channel
         await newState.member.voice.setChannel(newChannel).catch(err => {
             console.error("[TEMP VC / JOIN TO CREATE] Error moving member to new channel.");
             console.log(err);
         });
 
-        const VCSettingsPath = "Settings/vcsettings.json";
-
-        if ( !fs.existsSync(guildConfigPath + VCSettingsPath) ) {
-            fs.writeFileSync(guildConfigPath + VCSettingsPath, JSON.stringify({ activeIds: [newChannel.id] }, null, 2));
-            return;
-        }
-
-        let vcSettings;
-
-        try {
-            const vcSettingsData = await fs.readFileSync(guildConfigPath + VCSettingsPath);
-            vcSettings = JSON.parse(vcSettingsData);
-        } catch ( err ) {
-            vcSettings = JSON.parse('{ "activeIds": [] }')
-            return;
-        }
-
-        const activeIds = vcSettings.activeIds;
-
-        if ( !activeIds || activeIds.length == 0 ) {
-            vcSettings.activeIds = [newChannel.id];
-            await fs.writeFileSync(guildConfigPath + VCSettingsPath, JSON.stringify(vcSettings, null, 2));
-            return;
-        }
+        // Update the active voice channels in the database
+        const activeIdsKey = `${guildId}_activeVCs`;
+        const activeIds = await db.config.get(activeIdsKey) || [];
 
         activeIds.push(newChannel.id);
+        db.config.set(activeIdsKey, activeIds);
 
-        await fs.writeFileSync(guildConfigPath + VCSettingsPath, JSON.stringify(vcSettings, null, 2));
         return;
-
     }
-}
+};

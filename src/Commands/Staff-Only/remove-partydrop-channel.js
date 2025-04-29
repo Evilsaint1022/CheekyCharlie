@@ -1,7 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { PermissionsBitField } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,40 +7,43 @@ module.exports = {
         .setDescription('Remove the configured party drops channel'),
 
     async execute(interaction) {
-        
-        const guildName = interaction.guild.name;
         const guildId = interaction.guild.id;
         const userId = interaction.user.id;
 
-        const settingsFilePath = path.resolve(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/channelsettings.json`);
+        // Check if the user has Administrator permissions or a whitelisted role
         const member = interaction.guild.members.cache.get(userId);
+        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
 
-        // Load roles that are allowed to run this command
-        let whitelistedRoles = [];
-        if (fs.existsSync(settingsFilePath)) {
-            const settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
-            whitelistedRoles = settingsData.roles || [];
+        if (
+            !interaction.member.permissions.has(PermissionFlagsBits.Administrator) &&
+            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
+        ) {
+            return interaction.reply({
+                content: 'You do not have permission to remove the party drops channel!',
+                flags: MessageFlags.Ephemeral,
+            });
         }
 
-        // Check for permission
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) && !member.roles.cache.some(role => whitelistedRoles.includes(role.id))) {
-            return interaction.reply({ content: 'You do not have permission to remove the party drops channel!', flags: 64 });
+        // Check if a party drop channel is set
+        const channelSettings = await db.config.get(`${guildId}_channelSettings`) || {};
+        if (!channelSettings.DropPartyChannelId) {
+            return interaction.reply({
+                content: 'No party drop channel was set.',
+                flags: MessageFlags.Ephemeral,
+            });
         }
 
-        let settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
+        // Remove the DropPartyChannelId from the database
+        delete channelSettings.DropPartyChannelId;
+        db.config.set(`${guildId}_channelSettings`, channelSettings);
 
-        if ( !("DropPartyChannelId" in settingsData) ) {
-            return interaction.reply({ content: 'No party drop channel was set.', flags: 64 });
-        }
+        // Logging the action
+        const timestamp = new Date().toISOString();
+        console.log(`[${timestamp}] ${interaction.guild.name} ${guildId} ${interaction.user.tag} removed the drop party channel.`);
 
-        // Load, remove the DropPartyChannelId, and save
-        if ( 'DropPartyChannelId' in settingsData ) {
-            delete settingsData.DropPartyChannelId;
-            fs.writeFileSync(settingsFilePath, JSON.stringify(settingsData, null, 2));
-            return interaction.reply({ content: 'The party drops channel has been removed.', flags: 64 });
-        } else {
-            return interaction.reply({ content: 'No party drop channel was set.', flags: 64 });
-        }
-
-    }
+        return interaction.reply({
+            content: 'The party drops channel has been removed.',
+            flags: MessageFlags.Ephemeral,
+        });
+    },
 };

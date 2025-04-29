@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const path = require('path');
-const fs = require('fs');
 const { dropPartyEvent } = require('../../Events/Client/drop_party.js');
+const db = require('../../Handlers/database');
 
 // Track users who have picked the coin for the current drop
 const pickedUsers = new Set();
@@ -13,15 +12,8 @@ module.exports = {
 
     async execute(interaction) {
         try {
-            const guild = interaction.guild;
-
-            // Define balance and bank folder paths
-            const balanceFolder = path.resolve(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Economy/Balance`);
-            const bankFolder = path.resolve(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Economy/Bank`);
-
-            // Make sure the folders exist
-            fs.mkdirSync(balanceFolder, { recursive: true });
-            fs.mkdirSync(bankFolder, { recursive: true });
+            const guildId = interaction.guild.id;
+            const userId = interaction.user.id;
 
             // Access the current drop data
             const dropPartyData = dropPartyEvent.dropPartyData;
@@ -31,36 +23,40 @@ module.exports = {
             if (!dropMessage || dropMessage.channel.id !== interaction.channel.id) {
                 return interaction.reply({
                     content: '**🪙 No coins to pick up right now!**',
-                    flags: 64,
+                    flags: MessageFlags.Ephemeral,
                 });
             }
 
-            const member = interaction.member;
-
             // Check if the user has already picked
-            if (pickedUsers.has(member.id)) {
+            if (pickedUsers.has(userId)) {
                 return interaction.reply({
                     content: '**🪙 You have already picked these coins!**',
-                    flags: 64,
+                    flags: MessageFlags.Ephemeral,
                 });
             }
 
             // Add the user to the picked set
-            pickedUsers.add(member.id);
+            pickedUsers.add(userId);
 
-            // Handle balance file
-            const balanceFilePath = path.join(balanceFolder, `${member.user.username}.txt`);
+            // Fetch the user's current balance from the database
             let balance = 0;
-
-            if (fs.existsSync(balanceFilePath)) {
-                const balanceData = fs.readFileSync(balanceFilePath, 'utf-8');
-                balance = parseInt(balanceData, 10) || 0;
+            try {
+                const userData = await db.economy.get(`${guildId}_${userId}`);
+                balance = userData?.balance || 0;
+            } catch (error) {
+                console.error('Error fetching user balance from database:', error);
             }
 
+            // Calculate coins earned and update the balance
             const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 coins
             balance += coinsEarned;
 
-            fs.writeFileSync(balanceFilePath, balance.toString(), 'utf-8');
+            // Save the updated balance to the database
+            try {
+                await db.economy.set(`${guildId}_${userId}`, { balance });
+            } catch (error) {
+                console.error('Error saving user balance to database:', error);
+            }
 
             // Send response embed
             await interaction.reply({
@@ -73,6 +69,7 @@ module.exports = {
                 ],
             });
 
+            // Delete the reply after 20 seconds
             setTimeout(async () => {
                 try {
                     const message = await interaction.fetchReply();
@@ -86,7 +83,7 @@ module.exports = {
             if (!interaction.replied) {
                 await interaction.reply({
                     content: '**🪙 Something went wrong while picking up the coins.**',
-                    flags: 64,
+                    flags: MessageFlags.Ephemeral,
                 });
             }
         }
