@@ -9,7 +9,10 @@
 Welcome to **CheekyCharlie** — a modular Discord bot built as a fun hobby project!  
 This bot is completely open-source to promote transparency and inspire others to create their own bots.
 
-**Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Developer)**
+**Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Developer)**  
+  
+(This project uses dotdatabase made by NZ-Linix)  
+https://github.com/NZ-Linix/dotdatabase
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
