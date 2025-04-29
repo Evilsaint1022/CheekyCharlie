@@ -1,7 +1,6 @@
 const { Events } = require('discord.js');
 const { EventEmitter } = require('events');
-const fs = require('fs');
-const path = require('path');
+const db = require('../../Handlers/database'); // Import the database module
 
 // EventEmitter instance to manage drop party events
 const dropPartyEvent = new EventEmitter();
@@ -20,23 +19,21 @@ dropPartyEvent.clearDrop = function () {
 const cooldownDuration = 10 * 60 * 1000; // 10 minutes
 let isProcessing = false; // Lock to prevent concurrent execution
 
-function getLastDropTime(cooldownFilePath) {
+async function getLastDropTime(guildId) {
     try {
-        if (!fs.existsSync(cooldownFilePath)) return 0;
-        const data = JSON.parse(fs.readFileSync(cooldownFilePath, 'utf-8'));
-        return data.lastMessageDropTime || 0;
+        const cooldownData = await db.config.get(`${guildId}_dropPartyCooldown`);
+        return cooldownData?.lastMessageDropTime || 0;
     } catch (error) {
-        console.error('[DROP PARTY] Error reading cooldown file:', error);
+        console.error('[DROP PARTY] Error reading cooldown from database:', error);
         return 0;
     }
 }
 
-function saveLastDropTime(cooldownFilePath, timestamp) {
+async function saveLastDropTime(guildId, timestamp) {
     try {
-        const data = { lastMessageDropTime: timestamp };
-        fs.writeFileSync(cooldownFilePath, JSON.stringify(data, null, 4));
+        await db.config.set(`${guildId}_dropPartyCooldown`, { lastMessageDropTime: timestamp });
     } catch (error) {
-        console.error('[DROP PARTY] Error writing to cooldown file:', error);
+        console.error('[DROP PARTY] Error saving cooldown to database:', error);
     }
 }
 
@@ -44,46 +41,23 @@ module.exports = {
     name: Events.MessageCreate,
 
     async execute(message) {
+
         if (message.author.bot) return;
 
-        const guildName = message.guild.name;
         const guildId = message.guild.id;
 
-        const basePath = path.resolve(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/`);
-        const cooldownFilePath = path.join(basePath, 'Settings/Cooldowns/drop_party_cooldown.json');
-        const settingsFilePath = path.join(basePath, 'Settings/channelsettings.json');
-
-        // ✅ Ensure cooldown file and directory exist
-        try {
-            const cooldownDir = path.dirname(cooldownFilePath);
-            if (!fs.existsSync(cooldownDir)) {
-                fs.mkdirSync(cooldownDir, { recursive: true });
-            }
-            if (!fs.existsSync(cooldownFilePath)) {
-                fs.writeFileSync(cooldownFilePath, JSON.stringify({ lastMessageDropTime: 0 }, null, 4));
-            }
-        } catch (err) {
-            console.error('[DROP PARTY] Error creating cooldown file or directory:', err);
-            return;
-        }
-
-        // Load the DropPartyChannelId from settings
+        // Load the DropPartyChannelId from the database
         let DropPartyChannelId;
         try {
-            if (!fs.existsSync(settingsFilePath)) {
-                console.log(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Settings file does not exist: ${settingsFilePath}`);
+            const settingsData = await db.config.get(`${guildId}_channelSettings`);
+            DropPartyChannelId = settingsData?.DropPartyChannelId;
+
+            if (!DropPartyChannelId) {
+                console.log(`[🎉DROP PARTY🎉] ${guildId} No DropPartyChannelId found in database.`);
                 return;
             }
-
-            const settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf-8'));
-            DropPartyChannelId = settingsData.DropPartyChannelId;
-
         } catch (err) {
-            console.error(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Error loading channel settings:`, err);
-            return;
-        }
-
-        if (!DropPartyChannelId) {
+            console.error(`[🎉DROP PARTY🎉] ${guildId} Error loading channel settings from database:`, err);
             return;
         }
 
@@ -92,7 +66,7 @@ module.exports = {
         }
 
         const currentTime = Date.now();
-        const lastMessageDropTime = getLastDropTime(cooldownFilePath);
+        const lastMessageDropTime = await getLastDropTime(guildId);
 
         if (currentTime - lastMessageDropTime < cooldownDuration || isProcessing) {
             return;
@@ -103,29 +77,29 @@ module.exports = {
         try {
             const channel = await message.client.channels.fetch(DropPartyChannelId);
             if (channel) {
-                console.log(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Sending drop party message...`);
+                console.log(`[🎉DROP PARTY🎉] ${guildId} Sending drop party message...`);
 
                 const dropMessage = await channel.send(
                     '**🎉 A Drop Party Has Started!🎉**\n*Use the **/pick** command to grab your rewards!*'
                 );
 
-                console.log(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Drop party message sent.`);
+                console.log(`[🎉DROP PARTY🎉] ${guildId} Drop party message sent.`);
                 dropPartyEvent.triggerNewDrop(dropMessage);
 
                 setTimeout(() => {
                     if (dropMessage.deletable) {
                         dropMessage.delete().catch(console.error);
                         dropPartyEvent.clearDrop();
-                        console.log(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Drop party message deleted.`);
+                        console.log(`[🎉DROP PARTY🎉] ${guildId} Drop party message deleted.`);
                     }
                 }, 40000);
             } else {
-                console.log(`🎉[DROP PARTY🎉] ${guildName} ${guildId} Channel not found or could not be fetched.`);
+                console.log(`🎉[DROP PARTY🎉] ${guildId} Channel not found or could not be fetched.`);
             }
 
-            saveLastDropTime(cooldownFilePath, currentTime);
+            await saveLastDropTime(guildId, currentTime);
         } catch (error) {
-            console.error(`[🎉DROP PARTY🎉] ${guildName} ${guildId} Error sending drop party message:`, error);
+            console.error(`[🎉DROP PARTY🎉] ${guildId} Error sending drop party message:`, error);
         } finally {
             isProcessing = false;
         }

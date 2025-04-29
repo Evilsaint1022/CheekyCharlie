@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,34 +16,22 @@ module.exports = {
             return interaction.reply({ content: 'You do not have permission to use this command.', flags: 64 });
         }
 
-        const guildName = interaction.guild.name;
         const guildId = interaction.guild.id;
-        const dirPath = path.join(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/`);
-        const rolesFilePath = path.join(dirPath, 'whitelistedroles.json');
-        
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-
-        let WHITELISTED_ROLE_IDS = [];
-        if (fs.existsSync(rolesFilePath)) {
-            try {
-                const data = fs.readFileSync(rolesFilePath, 'utf8');
-                WHITELISTED_ROLE_IDS = JSON.parse(data).roles || [];
-            } catch (error) {
-                console.error('Error reading whitelisted roles file:', error);
-            }
-        }
-        
         const role = interaction.options.getRole('role');
+
+        // Fetch existing whitelisted roles from the database
+        let WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             WHITELISTED_ROLE_IDS.push(role.id);
-            fs.writeFileSync(rolesFilePath, JSON.stringify({ roles: WHITELISTED_ROLE_IDS }, null, 4));
+
+            // Update the database with the new list of whitelisted roles
+            db.config.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
         }
-        
+
         await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, flags: 64 });
 
         // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the setwhitelistedroles command. Added role <@&${role.id}> to the whitelist.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${guildId} ${interaction.user.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
     }
 };

@@ -4,6 +4,8 @@ const { readFile, writeFile } = require('fs/promises');
 const { join } = require('path');
 const fs = require('fs');
 
+const db = require("../../Handlers/database");
+
 module.exports = {
     // Command registration data
     data: new SlashCommandBuilder()
@@ -17,37 +19,14 @@ module.exports = {
 
     // Command execution
     async execute(interaction) {
+
         // Get the target user (either the command executor or a mentioned user)
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
 
-        // Generate dynamic folder paths using guild name and ID
-        const balanceFolder = join(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Economy/Balance`);
-        const bankFolder = join(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Economy/Bank`);
-
-        // Ensure folders exist
-        await Promise.all([
-            fs.promises.mkdir(balanceFolder, { recursive: true }),
-            fs.promises.mkdir(bankFolder, { recursive: true }),
-        ]);
-
-        // Read balance file
-        const balancePath = join(balanceFolder, `${targetUser.username}.txt`);
-        let balance = 0;
-        try {
-            balance = parseInt(await readFile(balancePath, 'utf8'), 10);
-        } catch {
-            await writeFile(balancePath, balance.toString());
-        }
-
-        // Read bank file
-        const bankPath = join(bankFolder, `${targetUser.username}.txt`);
-        let bank = 0;
-        try {
-            bank = parseInt(await readFile(bankPath, 'utf8'), 10);
-        } catch {
-            await writeFile(bankPath, bank.toString());
-        }
+        // Get values from database
+        const balance = await db.economy.get(guild.id + "." + targetUser.id + ".balance") || 0;
+        const bank    = await db.economy.get(guild.id + "." + targetUser.id + ".bank") || 0;
 
         // Create an embed message
         const embed = new EmbedBuilder()

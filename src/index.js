@@ -13,10 +13,6 @@ const { registerCommands } = require('./register-commands');
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User } = Partials;
 
-// Loading Functions ----------------------------------------------------------------------------------------------------------------
-
-const loadservers = require('../src/Functions/loadservers');
-
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
 
 const colors = require('colors'); // For console colors
@@ -47,9 +43,6 @@ client.commands = new Map();
 
 client.once("ready", () => {
     console.log(`[🌿│${client.user.tag} Is Online!]`.bold.green);
-
-    // Loading Servers
-    loadservers(client);
 
     // Registers Application Commands
     registerCommands(client);

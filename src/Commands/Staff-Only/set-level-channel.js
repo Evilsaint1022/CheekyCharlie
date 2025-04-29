@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,49 +18,34 @@ module.exports = {
         const guildId = interaction.guild.id;
         const userId = interaction.user.id;
 
-        const settingsDir = path.resolve(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings`);
-        const settingsFilePath = path.join(settingsDir, 'channelsettings.json');
-
-        fs.mkdirSync(settingsDir, { recursive: true });
-
         const member = interaction.guild.members.cache.get(userId);
 
-        let whitelistedRoles = [];
-        if (fs.existsSync(settingsFilePath)) {
-            const settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
-            whitelistedRoles = settingsData.roles || [];
-        }
+        // Fetch whitelisted roles from the database
+        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
 
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) && !member.roles.cache.some(role => whitelistedRoles.includes(role.id))) {
-            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: 64 });
+        // Check if the user has permission
+        if (
+            !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
+            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
+        ) {
+            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: MessageFlags.Ephemeral, });
         }
 
         const channel = interaction.options.getChannel('channel');
 
-        let settingsData = {};
-        if (fs.existsSync(settingsFilePath)) {
-            settingsData = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
-        }
-
-        settingsData.LevelChannelId = channel.id;
-
-        fs.writeFileSync(settingsFilePath, JSON.stringify(settingsData, null, 2));
+        // Save the level-up channel ID to the database
+        db.config.set(`${guildId}_levelChannelId`, channel.id);
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the setlevelchannel to set the channel id "${channel.id}"`);
+        console.log(`[${timestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
 
-        return interaction.reply({ content: `Level-up messages will now be sent in <#${channel.id}>.`, flags: 64 });
+        return interaction.reply({ content: `Level-up messages will now be sent in <#${channel.id}>.`, flags: MessageFlags.Ephemeral, });
     },
 
     sendLevelUpMessage: async function (client, guildId, levelUpMessage, fallbackChannel) {
-        const levelSettingsFilePath = path.resolve(__dirname, `../../Utilities/Servers/${guildId}/Level_Settings/Level_Settings.json`);
-
-        let channelId = null;
-        if (fs.existsSync(levelSettingsFilePath)) {
-            const levelSettingsData = JSON.parse(fs.readFileSync(levelSettingsFilePath, 'utf8'));
-            channelId = levelSettingsData.channelId;
-        }
+        // Fetch the level-up channel ID from the database
+        const channelId = await db.config.get(`${guildId}.levelChannelId`);
 
         console.log(`Loaded channelId: ${channelId}`);
 

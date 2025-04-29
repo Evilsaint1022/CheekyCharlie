@@ -1,11 +1,10 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('remove-whitelisted-roles')
-        .setDescription('Removes a role from the whitelisted roles from using certain commands')
+        .setDescription('Removes a role from the whitelisted roles for using certain commands')
         .addRoleOption(option =>
             option.setName('role')
                 .setDescription('Role to remove from whitelist')
@@ -18,24 +17,11 @@ module.exports = {
         }
 
         const guildId = interaction.guild.id;
-        const guildName = interaction.guild.name;
-        const dirPath = path.join(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/`);
-        const rolesFilePath = path.join(dirPath, 'whitelistedroles.json');
-
-        if (!fs.existsSync(rolesFilePath)) {
-            return interaction.reply({ content: 'No whitelisted roles have been set.', flags: 64 });
-        }
-
-        let WHITELISTED_ROLE_IDS = [];
-        try {
-            const data = fs.readFileSync(rolesFilePath, 'utf8');
-            WHITELISTED_ROLE_IDS = JSON.parse(data).roles || [];
-        } catch (error) {
-            console.error('Error reading whitelisted roles file:', error);
-            return interaction.reply({ content: 'An error occurred while reading the whitelist file.', flags: 64 });
-        }
-
         const role = interaction.options.getRole('role');
+
+        // Fetch existing whitelisted roles from the database
+        let WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             return interaction.reply({ content: `The role <@&${role.id}> is not in the whitelist.`, flags: 64 });
         }
@@ -43,12 +29,12 @@ module.exports = {
         // Remove the role from the array
         WHITELISTED_ROLE_IDS = WHITELISTED_ROLE_IDS.filter(id => id !== role.id);
 
-        // Otherwise, update the file
-        fs.writeFileSync(rolesFilePath, JSON.stringify({ roles: WHITELISTED_ROLE_IDS }, null, 4));
+        // Update the database with the new list of whitelisted roles
+        db.config.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
 
         await interaction.reply({ content: `The role <@&${role.id}> has been removed from the whitelist.`, flags: 64 });
 
         // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the removewhitelistedroles command. Removed role <@&${role.id}> from the whitelist.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${guildId} ${interaction.user.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
     }
 };

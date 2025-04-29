@@ -206,7 +206,7 @@ const commands = [
             {
                 name: "count",
                 description: "The number of reactions needed to send a message to the starboard",
-                type: 4,
+                type: 10,
                 required: true,
             }
         ]

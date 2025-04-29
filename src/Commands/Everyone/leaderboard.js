@@ -1,6 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const db = require("../../Handlers/database");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,42 +8,37 @@ module.exports = {
 
     async execute(interaction) {
         const { guild } = interaction;
-        const bankFolder = path.resolve(__dirname, `../../Utilities/Servers/${guild.name}_${guild.id}/Economy/Balance`);
 
-        if (!fs.existsSync(bankFolder)) {
-            return await interaction.reply("The Bank folder does not exist. Please set up the economy system first.");
-        }
-
-        const balances = fs.readdirSync(bankFolder)
-            .filter(file => file.endsWith('.txt'))
-            .map(file => {
-                const username = path.basename(file, '.txt');
-                const balance = parseInt(fs.readFileSync(path.join(bankFolder, file), 'utf8'), 10) || 0;
-                return { username, balance };
-            })
+        // Fetch all users' balances from the database
+        const economyData = await db.economy.get(guild.id) || {};
+        const balances = Object.entries(economyData)
+            .map(([userId, data]) => ({
+                userId,
+                balance: data.balance || 0
+            }))
             .sort((a, b) => b.balance - a.balance);
 
-        const username = interaction.user.username;
-        const userBalanceEntry = balances.find(entry => entry.username === username);
+        const userId = interaction.user.id;
+        const userBalanceEntry = balances.find(entry => entry.userId === userId);
         const userRank = userBalanceEntry ? balances.indexOf(userBalanceEntry) + 1 : 'Unranked';
 
         const itemsPerPage = 10;
         const totalPages = Math.ceil(balances.length / itemsPerPage);
         let currentPage = 0;
 
-        const generateLeaderboardEmbed = (page) => {
+        const generateLeaderboardEmbed = async (page) => {
             const start = page * itemsPerPage;
-            const leaderboard = balances.slice(start, start + itemsPerPage)
-                .map((entry, index) => {
-
-                    // Fetch member by username, without including IDs
-                    return `**    \n__${start + index + 1}.__  ${entry.username} \n♢  🪙${entry.balance}**`;
+            const leaderboard = await Promise.all(
+                balances.slice(start, start + itemsPerPage).map(async (entry, index) => {
+                    const member = await guild.members.fetch(entry.userId).catch(() => null);
+                    const username = member ? member.user.username : "Unknown User";
+                    return `**    \n__${start + index + 1}.__  ${username} \n♢  🪙${entry.balance}**`;
                 })
-                .join('\n');
+            );
 
             return new EmbedBuilder()
                 .setTitle("**╭─── The Leaderboard ───╮**")
-                .setDescription((leaderboard || "No users found.") + `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`)
+                .setDescription((leaderboard.join('\n') || "No users found.") + `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`)
                 .setColor(0xFFFFFF)
                 .setThumbnail(interaction.guild.iconURL())
                 .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
@@ -58,13 +52,13 @@ module.exports = {
                 new ButtonBuilder().setCustomId('next').setLabel('Next').setStyle(ButtonStyle.Primary).setDisabled(currentPage === totalPages - 1)
             );
 
-        const message = await interaction.reply({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
+        const message = await interaction.reply({ embeds: [await generateLeaderboardEmbed(currentPage)], components: [row()] });
 
         const collector = message.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 
         collector.on('collect', async (buttonInteraction) => {
             if (buttonInteraction.user.id !== interaction.user.id) {
-                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", ephemeral: true });
+                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", flags: MessageFlags.Ephemeral, });
             }
 
             if (buttonInteraction.customId === 'previous' && currentPage > 0) {
@@ -77,7 +71,7 @@ module.exports = {
                 return;
             }
 
-            await buttonInteraction.update({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
+            await buttonInteraction.update({ embeds: [await generateLeaderboardEmbed(currentPage)], components: [row()] });
         });
 
         collector.on('end', () => {

@@ -1,6 +1,8 @@
-const { Events, MessageReaction, User, Client, EmbedBuilder } = require('discord.js');
+const { Events, MessageReaction, User, Client, EmbedBuilder, Embed } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+
+const db = require('../../Handlers/database');
 
 module.exports = {
 
@@ -23,94 +25,39 @@ module.exports = {
             }
         }
 
-        try {
-            const dirPath = path.join(__dirname, `../../Utilities/Servers/${reaction.message.guild.name}_${reaction.message.guild.id}/Settings/`);
-            const starboardSettingsPath = path.join(dirPath, 'starboardSettings.json');
+        const guildId = reaction.message.guild.id;
 
-            console.log(`Checking starboard settings at path: ${starboardSettingsPath}`);
+        const channelId = await db.config.get(`${guildId}_starboardChannel`)
+        const emojiData = await db.config.get(`${guildId}_starboardEmoji`)
+        const count = await db.config.get(`${guildId}_starboardCount`)
 
-            if (fs.existsSync(starboardSettingsPath)) {
-                console.log('Starboard settings file found.');
+        // if ( !channelId || !emoji || !count ) {console.log("Starboard not configured"); return;};
 
-                const data = fs.readFileSync(starboardSettingsPath, 'utf8');
-                const settings = JSON.parse(data);
+        let customEmoji = "<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">";
 
-                console.log('Starboard settings loaded:', settings);
+        if ( reaction.count !== count ) { return; }
 
-                if (!settings.channelId || !settings.count || !settings.emoji) {
-                    console.log('Starboard settings are not properly configured.');
-                    return;
-                }
+        if ( reaction.message.channel.id == channelId ) { return; }
 
-                let customEmoji;
+        const channel = reaction.message.guild.channels.cache.get(channelId);
 
-                if (settings.emoji.length > 1) {
-                    customEmoji = true;
-                } else {
-                    customEmoji = false;
-                }
+        const message = reaction.message;
 
-                console.log(`Using custom emoji: ${customEmoji}`);
+        const starEmbed = new EmbedBuilder()
+        .setColor("Blurple")
+        .setDescription(message.content + "\n\n" + message.url)
+        .setFooter({ text: `Message reached **${reaction.count}** reactions!` })
+        .setAuthor({ name: message.author.displayName, iconURL: message.author.displayAvatarURL() })
+        
+        if ( reaction.emoji.name == emojiData ) {
 
-                if (!customEmoji) {
+            await channel.send({ embeds: [starEmbed] });
 
-                    if (reaction.count == settings.count && reaction.emoji.name == settings.emoji) {
-                        console.log('Matching standard emoji and reaction count reached.');
+        } else if ( customEmoji == emojiData ) {
 
-                        const starBoardChannel = reaction.message.guild.channels.cache.get(settings.channelId);
+            await channel.send({ embeds: [starEmbed] });
 
-                        if (!starBoardChannel) {
-                            console.log('Starboard channel not found.');
-                            return;
-                        }
-
-                        const starboardEmbed = new EmbedBuilder()
-                            .setColor("Blurple")
-                            .setAuthor({ name: reaction.message.author.username, iconURL: reaction.message.author.displayAvatarURL() })
-                            .setDescription(reaction.message.content + "\n\n" + reaction.message.url + "");
-
-                        if (reaction.message.attachments.size > 0) {
-                            starboardEmbed.setImage(reaction.message.attachments.first().url);
-                        }
-
-                        await starBoardChannel.send({ embeds: [starboardEmbed] });
-                        console.log('Starboard message sent.');
-
-                    }
-
-                } else {
-
-                    if (reaction.count == settings.count && "<:" + reaction.emoji.identifier + ">" == settings.emoji) {
-                        console.log('Matching custom emoji and reaction count reached.');
-
-                        const starBoardChannel = reaction.message.guild.channels.cache.get(settings.channelId);
-
-                        if (!starBoardChannel) {
-                            console.log('Starboard channel not found.');
-                            return;
-                        }
-
-                        const starboardEmbed = new EmbedBuilder()
-                            .setColor("Blurple")
-                            .setAuthor({ name: reaction.message.author.username, iconURL: reaction.message.author.displayAvatarURL() })
-                            .setDescription(reaction.message.content + "\n\n" + reaction.message.url + "");
-
-                        if (reaction.message.attachments.size > 0) {
-                            starboardEmbed.setImage(reaction.message.attachments.first().url);
-                        }
-
-                        await starBoardChannel.send({ embeds: [starboardEmbed] });
-                        console.log('Starboard message sent.');
-                    }
-
-                }
-
-            } else {
-                console.log('Starboard settings file does not exist.');
-            }
-        } catch (err) {
-            console.error('An error occurred in the MessageReactionAdd event:', err);
-        }
+        } else { return; }
 
     },
 

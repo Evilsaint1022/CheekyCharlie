@@ -1,7 +1,6 @@
-// guildMemberAdd.js
+// auto_kick.js
 const { Events } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
     name: Events.GuildMemberAdd,
@@ -11,20 +10,17 @@ module.exports = {
         // Ignore bots
         if (member.user.bot) return;
 
-        const guild = member.guild;
-        const guildName = guild.name
-        const guildId = guild.id;
+        const guildId = member.guild.id;
 
-        const settingsPath = path.resolve(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/rolesettings.json`);
+        // Retrieve the VerifiedRoleId from the database
         let verifiedRoleId;
-
         try {
-            if (fs.existsSync(settingsPath)) {
-                const roleSettings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-                verifiedRoleId = roleSettings.VerifiedRoleId;
+            const guildConfig = await db.config.get(`${guildId}_verifiedRoleId`);
+            if (guildConfig && guildConfig.VerifiedRoleId) {
+                verifiedRoleId = guildConfig.VerifiedRoleId;
             }
         } catch (err) {
-            console.error(`Failed to read role settings for ${guild.name}:`, err);
+            console.error(`Failed to retrieve role settings for guild ${guildId}:`, err);
             return;
         }
 
