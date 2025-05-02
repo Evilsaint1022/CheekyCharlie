@@ -31,31 +31,40 @@ module.exports = {
         const emojiData = await db.config.get(`${guildId}_starboardEmoji`)
         const count = await db.config.get(`${guildId}_starboardCount`)
 
-        // if ( !channelId || !emoji || !count ) {console.log("Starboard not configured"); return;};
-
         let customEmoji = "<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">";
 
-        if ( reaction.count !== count ) { return; }
+        if (reaction.count !== count) { return; }
 
-        if ( reaction.message.channel.id == channelId ) { return; }
+        if (reaction.message.channel.id == channelId) { return; }
 
         const channel = reaction.message.guild.channels.cache.get(channelId);
 
         const message = reaction.message;
 
+        const authorName = reaction.message.author.bot 
+            ? `${reaction.message.author.username} [🤖]` 
+            : reaction.message.author.username;
+
         const starEmbed = new EmbedBuilder()
-        .setColor("Blurple")
-        .setDescription(message.content + "\n\n" + message.url)
-        .setFooter({ text: `Message reached **${reaction.count}** reactions!` })
-        .setAuthor({ name: message.author.displayName, iconURL: message.author.displayAvatarURL() })
-        
-        if ( reaction.emoji.name == emojiData ) {
+            .setAuthor({
+                name: authorName,
+                iconURL: reaction.message.author.displayAvatarURL(),
+            })
+            .setDescription(reaction.message.content || "No content")
+            .setImage(reaction.message.attachments.first() ? reaction.message.attachments.first().url : null)
+            .setColor("Blurple");
 
-            await channel.send({ embeds: [starEmbed] });
+        reaction.message.attachments.forEach((attachment) => {
+            starEmbed.addFields({ name: "Attachment", value: attachment.url });
+        });
 
-        } else if ( customEmoji == emojiData ) {
+        if (reaction.emoji.name == emojiData) {
 
-            await channel.send({ embeds: [starEmbed] });
+            await channel.send({ content: "**" + reaction.count + "** | " + reaction.message.url, embeds: [starEmbed] });
+
+        } else if (customEmoji == emojiData) {
+
+            await channel.send({ content: "**" + reaction.count + "** | " + reaction.message.url, embeds: [starEmbed] });
 
         } else { return; }
 
