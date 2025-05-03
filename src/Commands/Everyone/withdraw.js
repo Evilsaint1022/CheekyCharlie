@@ -38,7 +38,7 @@ module.exports = {
         const updatedWalletBalance = walletBalance + withdrawAmount;
 
         await db.bank.set(`${user.username}_${user.id}.bank`, updatedBankBalance);
-        await db.balance.set(`${user.username}.${user.id}.balance`, updatedWalletBalance);
+        await db.balance.set(`${user.username}_${user.id}.balance`, updatedWalletBalance);
 
         // Create an embed message
         const embed = new EmbedBuilder()

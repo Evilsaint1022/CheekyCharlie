@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
-const db = require("../../Handlers/database");
+import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
+import db from "../../Handlers/database";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,16 +7,19 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
-        const { guild, user } = interaction;
+        const { guild } = interaction;
 
         // Fetch all users' balances from the database
-        const economyData = await db.balance.get(user.username + "_" + user.id + ".balance") || {};
-        const balances = Object.entries(economyData)
-            .map(([userId, data]) => ({
-                userId,
-                balance: data.balance || 0
-            }))
-            .sort((a, b) => b.balance - a.balance);
+        const allKeys = await db.balance.keys();
+        const balances = (await Promise.all(
+            allKeys
+                .filter(key => key.endsWith('.balance')) // Filter keys that end with '.balance'
+                .map(async key => {
+                    const [username, userId] = key.split('_');
+                    const balance = await db.balance.get(key) || 0;
+                    return { userId, username, balance };
+                })
+        )).sort((a, b) => b.balance - a.balance);
 
         const userId = interaction.user.id;
         const userBalanceEntry = balances.find(entry => entry.userId === userId);
@@ -31,7 +34,7 @@ module.exports = {
             const leaderboard = await Promise.all(
                 balances.slice(start, start + itemsPerPage).map(async (entry, index) => {
                     const member = await guild.members.fetch(entry.userId).catch(() => null);
-                    const username = member ? member.user.username : "Unknown User";
+                    const username = member ? member.user.username : entry.username || "Unknown User";
                     return `**    \n__${start + index + 1}.__  ${username} \n♢  🪙${entry.balance}**`;
                 })
             );
@@ -58,7 +61,7 @@ module.exports = {
 
         collector.on('collect', async (buttonInteraction) => {
             if (buttonInteraction.user.id !== interaction.user.id) {
-                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", flags: MessageFlags.Ephemeral, });
+                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", ephemeral: true });
             }
 
             if (buttonInteraction.customId === 'previous' && currentPage > 0) {
