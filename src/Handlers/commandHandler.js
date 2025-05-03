@@ -4,7 +4,6 @@ const { Collection } = require('discord.js');
 const Table = require('ascii-table');
 
 module.exports = async (client) => {
-    client.commands = new Collection(); // Using Collection from Discord.js
 
     const commandFolders = ["Everyone","Staff-Only"]; // Folders to load commands from
     const table = new Table();

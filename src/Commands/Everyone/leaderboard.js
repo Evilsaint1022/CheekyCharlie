@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
-import db from "../../Handlers/database";
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js")
+const db = require("../../Handlers/database");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,6 +7,9 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
+
+        console.log("[Leaderboard] Command executed.");
+
         const { guild } = interaction;
 
         // Fetch all users' balances from the database
