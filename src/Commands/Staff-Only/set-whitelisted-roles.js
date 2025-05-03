@@ -17,21 +17,22 @@ module.exports = {
         }
 
         const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
         const role = interaction.options.getRole('role');
 
         // Fetch existing whitelisted roles from the database
-        let WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             WHITELISTED_ROLE_IDS.push(role.id);
 
             // Update the database with the new list of whitelisted roles
-            db.config.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
+            db.whitelisted.set(`${guildName}_${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
         }
 
         await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, flags: 64 });
 
         // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${guildId} ${interaction.user.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
     }
 };

@@ -21,31 +21,32 @@ module.exports = {
         const member = interaction.guild.members.cache.get(userId);
 
         // Fetch whitelisted roles from the database
-        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         // Check if the user has permission
         if (
             !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
             !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
         ) {
-            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: MessageFlags.Ephemeral, });
+            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: 64, });
         }
 
         const channel = interaction.options.getChannel('channel');
 
         // Save the level-up channel ID to the database
-        db.config.set(`${guildId}_levelChannelId`, channel.id);
+        db.settings.set(`${guildName}_${guildId}_levelChannelId`, channel.id);
 
         // Logging the action
-        const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
+        const timestamp = new Date().toLocaleTimeString();
+        const datestamp = new Date().toLocaleDateString();
+        console.log(`[${timestamp}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
 
-        return interaction.reply({ content: `Level-up messages will now be sent in <#${channel.id}>.`, flags: MessageFlags.Ephemeral, });
+        return interaction.reply({ content: `Level-up messages will now be sent in <#${channel.id}>.`, flags: 64, });
     },
 
     sendLevelUpMessage: async function (client, guildId, levelUpMessage, fallbackChannel) {
         // Fetch the level-up channel ID from the database
-        const channelId = await db.config.get(`${guildId}.levelChannelId`);
+        const channelId = await db.settings.get(`${guildName}_${guildId}.levelChannelId`);
 
         console.log(`Loaded channelId: ${channelId}`);
 

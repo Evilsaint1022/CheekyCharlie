@@ -11,16 +11,17 @@ module.exports = {
         if (member.user.bot) return;
 
         const guildId = member.guild.id;
+        const guildName = member.guild.name;
 
         // Retrieve the VerifiedRoleId from the database
         let verifiedRoleId;
         try {
-            const guildConfig = await db.config.get(`${guildId}_verifiedRoleId`);
+            const guildConfig = await db.settings.get(`${guildName}_${guildId}_verifiedRoleId`);
             if (guildConfig && guildConfig.VerifiedRoleId) {
                 verifiedRoleId = guildConfig.VerifiedRoleId;
             }
         } catch (err) {
-            console.error(`Failed to retrieve role settings for guild ${guildId}:`, err);
+            console.error(`Failed to retrieve role settings for guild ${guildName}_${guildId}:`, err);
             return;
         }
 

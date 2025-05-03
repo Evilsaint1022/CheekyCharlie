@@ -8,11 +8,12 @@ module.exports = {
 
     async execute(interaction) {
         const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
         const userId = interaction.user.id;
 
         // Check if the user has Administrator permissions or a whitelisted role
         const member = interaction.guild.members.cache.get(userId);
-        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         if (
             !interaction.member.permissions.has(PermissionFlagsBits.Administrator) &&
@@ -25,7 +26,7 @@ module.exports = {
         }
 
         // Check if a party drop channel is set
-        const channelSettings = await db.config.get(`${guildId}_channelSettings`) || {};
+        const channelSettings = await db.settings.get(`${guildName}_${guildId}_channelSettings`) || {};
         if (!channelSettings.DropPartyChannelId) {
             return interaction.reply({
                 content: 'No party drop channel was set.',
@@ -35,11 +36,11 @@ module.exports = {
 
         // Remove the DropPartyChannelId from the database
         delete channelSettings.DropPartyChannelId;
-        db.config.set(`${guildId}_channelSettings`, channelSettings);
+        db.settings.set(`${guildName}_${guildId}_channelSettings`, channelSettings);
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${interaction.guild.name} ${guildId} ${interaction.user.tag} removed the drop party channel.`);
+        console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} removed the drop party channel.`);
 
         return interaction.reply({
             content: 'The party drops channel has been removed.',

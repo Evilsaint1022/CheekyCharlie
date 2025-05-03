@@ -22,10 +22,11 @@ module.exports = {
 
         const guild = oldState.guild;
         const guildId = guild.id;
+        const guildName = guild.name;
 
         // Fetch the active voice channels from the database
-        const activeIdsKey = `${guildId}_activeVCs`;
-        const activeIds = await db.config.get(activeIdsKey) || [];
+        const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
+        const activeIds = await db.settings.get(activeIdsKey) || [];
 
         if (!activeIds.includes(oldState.channel.id)) return;
 
@@ -45,7 +46,7 @@ module.exports = {
             }
 
             // Update the active voice channels in the database
-            db.config.set(activeIdsKey, activeIds);
+            db.settings.set(activeIdsKey, activeIds);
         }
 
         return;

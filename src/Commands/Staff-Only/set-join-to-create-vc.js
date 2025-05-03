@@ -13,10 +13,11 @@ module.exports = {
         ),
     async execute(interaction) {
         const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
         const userId = interaction.user.id;
 
         // Fetch whitelisted roles from the database
-        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const whitelistedRoles = await db.settings.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         // Check if the user has the required permissions or a whitelisted role
         const member = interaction.guild.members.cache.get(userId);
@@ -30,11 +31,11 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
 
         // Update the database with the new Join To Create channel
-        db.config.set(`${guildId}_joinToCreateVC`, channel.id);
+        db.settings.set(`${guildName}_${guildId}_joinToCreateVC`, channel.id);
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${interaction.guild.name} ${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
+        console.log(`[${timestamp}] ${interaction.guild.name} ${guildName}_${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
 
         return interaction.reply({ content: `This channel is now set to Join To Create: <#${channel.id}>.`, flags: 64 });
     },

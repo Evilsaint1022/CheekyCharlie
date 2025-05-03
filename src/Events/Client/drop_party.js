@@ -21,7 +21,7 @@ let isProcessing = false; // Lock to prevent concurrent execution
 
 async function getLastDropTime(guildId) {
     try {
-        const cooldownData = await db.config.get(`${guildId}_dropPartyCooldown`);
+        const cooldownData = await db.settings.get(`${guildId}_dropPartyCooldown`);
         return cooldownData?.lastMessageDropTime || 0;
     } catch (error) {
         console.error('[DROP PARTY] Error reading cooldown from database:', error);
@@ -31,7 +31,7 @@ async function getLastDropTime(guildId) {
 
 async function saveLastDropTime(guildId, timestamp) {
     try {
-        await db.config.set(`${guildId}_dropPartyCooldown`, { lastMessageDropTime: timestamp });
+        await db.settings.set(`${guildId}_dropPartyCooldown`, { lastMessageDropTime: timestamp });
     } catch (error) {
         console.error('[DROP PARTY] Error saving cooldown to database:', error);
     }
@@ -45,19 +45,20 @@ module.exports = {
         if (message.author.bot) return;
 
         const guildId = message.guild.id;
+        const guildName = message.guild.name;
 
         // Load the DropPartyChannelId from the database
         let DropPartyChannelId;
         try {
-            const settingsData = await db.config.get(`${guildId}_channelSettings`);
+            const settingsData = await db.settings.get(`${guildName}_${guildId}_channelSettings`);
             DropPartyChannelId = settingsData?.DropPartyChannelId;
 
             if (!DropPartyChannelId) {
-                console.log(`[🎉DROP PARTY🎉] ${guildId} No DropPartyChannelId found in database.`);
+                console.log(`[🎉DROP PARTY🎉] ${guildName} - No DropPartyChannelId found in database.`);
                 return;
             }
         } catch (err) {
-            console.error(`[🎉DROP PARTY🎉] ${guildId} Error loading channel settings from database:`, err);
+            console.error(`[🎉DROP PARTY🎉] ${guildName} - Error loading channel settings from database:`, err);
             return;
         }
 
@@ -77,29 +78,28 @@ module.exports = {
         try {
             const channel = await message.client.channels.fetch(DropPartyChannelId);
             if (channel) {
-                console.log(`[🎉DROP PARTY🎉] ${guildId} Sending drop party message...`);
 
                 const dropMessage = await channel.send(
                     '**🎉 A Drop Party Has Started!🎉**\n*Use the **/pick** command to grab your rewards!*'
                 );
 
-                console.log(`[🎉DROP PARTY🎉] ${guildId} Drop party message sent.`);
+                console.log(`[🎉DROP PARTY🎉] ${guildName} - Drop party message sent.`);
                 dropPartyEvent.triggerNewDrop(dropMessage);
 
                 setTimeout(() => {
                     if (dropMessage.deletable) {
                         dropMessage.delete().catch(console.error);
                         dropPartyEvent.clearDrop();
-                        console.log(`[🎉DROP PARTY🎉] ${guildId} Drop party message deleted.`);
+                        console.log(`[🎉DROP PARTY🎉] ${guildName} - Drop party message deleted.`);
                     }
                 }, 40000);
             } else {
-                console.log(`🎉[DROP PARTY🎉] ${guildId} Channel not found or could not be fetched.`);
+                console.log(`🎉[DROP PARTY🎉] ${guildName} - Channel not found or could not be fetched.`);
             }
 
             await saveLastDropTime(guildId, currentTime);
         } catch (error) {
-            console.error(`[🎉DROP PARTY🎉] ${guildId} Error sending drop party message:`, error);
+            console.error(`[🎉DROP PARTY🎉] ${guildName} - Error sending drop party message:`, error);
         } finally {
             isProcessing = false;
         }
