@@ -90,12 +90,8 @@ setInterval(() => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
-    console.log(interaction.commandName)
-
     const command = client.commands.get(interaction.commandName);
     if (!command) return
-
-    console.log(interaction.commandName)
 
     try {
         await command.execute(interaction);

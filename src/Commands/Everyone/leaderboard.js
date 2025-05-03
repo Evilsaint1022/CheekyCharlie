@@ -7,9 +7,6 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
-
-        console.log("[Leaderboard] Command executed.");
-
         const { guild } = interaction;
 
         // Fetch all users' balances from the database
