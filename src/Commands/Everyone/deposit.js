@@ -24,8 +24,8 @@ module.exports = {
         let depositAmount = interaction.options.getInteger('amount');
 
         // Get values from database
-        let balance = await db.balance.get(user.username+ "." + user.id + ".balance") || 0;
-        let bank    = await db.bank.get(user.username + "." + user.id + ".bank") || 0;
+        let balance = await db.balance.get(user.username + "_" + user.id + ".balance") || 0;
+        let bank    = await db.bank.get(user.username + "_" + user.id + ".bank") || 0;
 
         // If depositAmount is 0, deposit all wallet points
         if (depositAmount === 0) {
@@ -41,8 +41,8 @@ module.exports = {
         balance -= depositAmount;
         bank += depositAmount;
 
-        await db.balance.set(guild.id + "." + user.id + ".balance", balance);
-        await db.bank.set(guild.id + "." + user.id + ".bank", bank);
+        await db.balance.set(user.username + "_" + user.id + ".balance", balance);
+        await db.bank.set(user.username + "_" + user.id + ".bank", bank);
 
         // Create an embed message
         const embed = new EmbedBuilder()
