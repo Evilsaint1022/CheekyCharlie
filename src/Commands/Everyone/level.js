@@ -25,7 +25,7 @@ module.exports = {
         try {
             // Fetch user level data from the economy database
             const userKey = `${guildId}_${targetUser.id}_level`;
-            const userData = await db.economy.get(userKey);
+            const userData = await db.level.get(userKey);
 
             if (!userData) {
                 return interaction.reply(`${targetUser.username} hasn't gained any XP yet. They need to participate to earn XP!`);

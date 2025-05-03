@@ -25,8 +25,8 @@ module.exports = {
         const { guild } = interaction;
 
         // Get values from database
-        const balance = await db.economy.get(guild.id + "." + targetUser.id + ".balance") || 0;
-        const bank    = await db.economy.get(guild.id + "." + targetUser.id + ".bank") || 0;
+        const balance = await db.balance.get(targetUser.username + "_" + targetUser.id + ".balance") || 0;
+        const bank    = await db.bank.get(targetUser.username + "_" + targetUser.id + ".bank") || 0;
 
         // Create an embed message
         const embed = new EmbedBuilder()

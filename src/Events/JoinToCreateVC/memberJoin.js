@@ -49,10 +49,10 @@ module.exports = {
 
         // Update the active voice channels in the database
         const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
-        const activeIds = await db.settings.get(activeIdsKey) || [];
+        const activeIds = await db.vc.get(activeIdsKey) || [];
 
         activeIds.push(newChannel.id);
-        db.settings.set(activeIdsKey, activeIds);
+        db.vc.set(activeIdsKey, activeIds);
 
         return;
     }

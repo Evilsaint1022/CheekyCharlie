@@ -7,10 +7,10 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
-        const { guild } = interaction;
+        const { guild, user } = interaction;
 
         // Fetch all users' balances from the database
-        const economyData = await db.economy.get(guild.id) || {};
+        const economyData = await db.balance.get(user.username + "_" + user.id + ".balance") || {};
         const balances = Object.entries(economyData)
             .map(([userId, data]) => ({
                 userId,

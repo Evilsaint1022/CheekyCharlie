@@ -20,8 +20,8 @@ module.exports = {
         let withdrawAmount = interaction.options.getInteger('amount');
 
         // Get values from database
-        const bankBalance = await db.economy.get(`${guild.id}.${user.id}.bank`) || 0;
-        const walletBalance = await db.economy.get(`${guild.id}.${user.id}.balance`) || 0;
+        const bankBalance = await db.bank.get(`${user.username}_${user.id}.bank`) || 0;
+        const walletBalance = await db.balance.get(`${user.username}_${user.id}.balance`) || 0;
 
         // If withdrawAmount is 0, withdraw all bank points
         if (withdrawAmount === 0) {
@@ -37,8 +37,8 @@ module.exports = {
         const updatedBankBalance = bankBalance - withdrawAmount;
         const updatedWalletBalance = walletBalance + withdrawAmount;
 
-        await db.economy.set(`${guild.id}.${user.id}.bank`, updatedBankBalance);
-        await db.economy.set(`${guild.id}.${user.id}.balance`, updatedWalletBalance);
+        await db.bank.set(`${user.username}_${user.id}.bank`, updatedBankBalance);
+        await db.balance.set(`${user.username}.${user.id}.balance`, updatedWalletBalance);
 
         // Create an embed message
         const embed = new EmbedBuilder()
