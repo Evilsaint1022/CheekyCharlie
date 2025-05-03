@@ -35,7 +35,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/balance` — Check your balance
 - `/leaderboard` — Balance Leaderboard
 - `/daily` — Daily Currency Collect
-- `/pick` - Picks coins when the DropParty drops`
+- `/pick` - Picks coins when the dropparty's drops
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
