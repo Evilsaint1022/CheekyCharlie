@@ -17,7 +17,7 @@ module.exports = {
         const userId = interaction.user.id;
 
         // Fetch whitelisted roles from the database
-        const whitelistedRoles = await db.settings.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         // Check if the user has the required permissions or a whitelisted role
         const member = interaction.guild.members.cache.get(userId);

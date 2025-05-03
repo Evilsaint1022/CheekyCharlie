@@ -14,6 +14,7 @@ module.exports = {
         try {
             const guildId = interaction.guild.id;
             const userId = interaction.user.id;
+            const username = interaction.user.username;
 
             // Access the current drop data
             const dropPartyData = dropPartyEvent.dropPartyData;
@@ -23,7 +24,7 @@ module.exports = {
             if (!dropMessage || dropMessage.channel.id !== interaction.channel.id) {
                 return interaction.reply({
                     content: '**🪙 No coins to pick up right now!**',
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
 
@@ -31,7 +32,7 @@ module.exports = {
             if (pickedUsers.has(userId)) {
                 return interaction.reply({
                     content: '**🪙 You have already picked these coins!**',
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
 
@@ -41,7 +42,7 @@ module.exports = {
             // Fetch the user's current balance from the database
             let balance = 0;
             try {
-                const userData = await db.economy.get(`${guildId}_${userId}`);
+                const userData = await db.balance.get(`${username}_${userId}`);
                 balance = userData?.balance || 0;
             } catch (error) {
                 console.error('Error fetching user balance from database:', error);
@@ -53,7 +54,7 @@ module.exports = {
 
             // Save the updated balance to the database
             try {
-                await db.economy.set(`${guildId}_${userId}`, { balance });
+                await db.balance.set(`${username}_${userId}`, { balance });
             } catch (error) {
                 console.error('Error saving user balance to database:', error);
             }
@@ -83,7 +84,7 @@ module.exports = {
             if (!interaction.replied) {
                 await interaction.reply({
                     content: '**🪙 Something went wrong while picking up the coins.**',
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
         }

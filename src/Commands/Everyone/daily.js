@@ -18,7 +18,7 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
         const guildIconUrl = guild.iconURL({ dynamic: true, format: 'png' }) || '';
 
-        const lastClaim = await db.economy.get(guild.id + "." + user.id + ".lastClaim") || 0;
+        const lastClaim = await db.lastclaim.get(user.username + "_" + user.id + ".lastClaim") || 0;
 
         const currentTime = Date.now();
 
@@ -30,17 +30,17 @@ module.exports = {
 
             return interaction.reply({
                 content: `You have already claimed your daily reward! Please wait **${hours}h ${minutes}m ${seconds}s** before claiming again.`,
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
 
-        let balance = await db.economy.get(guild.id + "." + user.id + ".balance") || 0;
+        let balance = await db.balance.get(user.username + "_" + user.id + ".balance") || 0;
 
         balance += rewardAmount;
 
-        await db.economy.set(guild.id + "." + user.id + ".balance", balance);
+        await db.balance.set(user.username + "_" + user.id + ".balance", balance);
 
-        await db.economy.set(guild.id + "." + user.id + ".lastClaim", currentTime);
+        await db.lastclaim.set(user.username + "_" + user.id + ".lastClaim", currentTime);
 
         // Create an embed message
         const embed = new EmbedBuilder()
