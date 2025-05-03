@@ -22,8 +22,8 @@ module.exports = {
         )).sort((a, b) => b.balance - a.balance);
 
         const userId = interaction.user.id;
-        const userBalanceEntry = balances.find(entry => entry.userId === userId);
-        const userRank = userBalanceEntry ? balances.indexOf(userBalanceEntry) + 1 : 'Unranked';
+        const userBalanceEntry = balances.find(entry => entry.userId === userId) + ".balance";
+        const userRank = userBalanceEntry ? balances.findIndex(entry => entry.user === userBalanceEntry.user) + 1: 'Unranked';
 
         const itemsPerPage = 10;
         const totalPages = Math.ceil(balances.length / itemsPerPage);
