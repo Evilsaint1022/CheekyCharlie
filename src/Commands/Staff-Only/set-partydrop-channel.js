@@ -12,11 +12,12 @@ module.exports = {
         ),
     async execute(interaction) {
         const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
         const userId = interaction.user.id;
 
         // Check if the user has Administrator permissions or a whitelisted role
         const member = interaction.guild.members.cache.get(userId);
-        const whitelistedRoles = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         if (
             !interaction.member.permissions.has(PermissionFlagsBits.Administrator) &&
@@ -24,7 +25,7 @@ module.exports = {
         ) {
             return interaction.reply({
                 content: 'You do not have permission to set the party drops channel!',
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
 
@@ -32,15 +33,15 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
 
         // Save the channel ID to the database
-        db.config.set(`${guildId}_channelSettings`, { DropPartyChannelId: channel.id });
+       db.settings.set(`${guildName}_${guildId}_channelSettings`, { DropPartyChannelId: channel.id });
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${interaction.guild.name} ${guildId} ${interaction.user.tag} set the drop party channel to "${channel.id}"`);
+        console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} set the drop party channel to "${channel.id}"`);
 
         return interaction.reply({
             content: `Drops will now appear in <#${channel.id}>.`,
-            flags: MessageFlags.Ephemeral,
+            flags: 64,
         });
     },
 };

@@ -21,7 +21,8 @@ module.exports = {
         }
 
         const guildId = interaction.guild.id;
-        const WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -32,7 +33,7 @@ module.exports = {
 
         const emojiInput = interaction.options.getString('emoji');
 
-        await db.config.set(`${guildId}_starboardEmoji`, emojiInput);
+        await db.starboard.set(`${guildName}_${guildId}_starboardEmoji`, emojiInput);
         return interaction.reply({ content: `Starboard emoji has been set to ${emojiInput}`, flags: MessageFlags.Ephemeral });
 
     },

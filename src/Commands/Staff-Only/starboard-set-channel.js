@@ -20,7 +20,8 @@ module.exports = {
         }
 
         const guildId = interaction.guild.id;
-        const WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -35,7 +36,7 @@ module.exports = {
             return interaction.reply({ content: 'Please select a valid text channel.', flags: MessageFlags.Ephemeral });
         }
 
-        await db .config.set(`${guildId}_starboardChannel`, channel.id);
+        await db.starboard.set(`${guildName}_${guildId}_starboardChannel`, channel.id);
 
         await interaction.reply({ content: `Starboard channel set to ${channel.url}.`, flags: MessageFlags.Ephemeral });
 

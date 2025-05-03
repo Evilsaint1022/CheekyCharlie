@@ -21,7 +21,8 @@ module.exports = {
         }
 
         const guildId = interaction.guild.id;
-        const WHITELISTED_ROLE_IDS = await db.config.get(`${guildId}.whitelistedRoles`) || [];
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -36,7 +37,7 @@ module.exports = {
             return interaction.reply({ content: 'The count must be at least 1.', flags: MessageFlags.Ephemeral });
         }
 
-        await db.config.set(`${guildId}_starboardCount`, count);
+        await db.starboard.set(`${guildName}_${guildId}_starboardCount`, count);
 
         await interaction.reply({ content: `Starboard count set to ${count}.`, flags: MessageFlags.Ephemeral });
 

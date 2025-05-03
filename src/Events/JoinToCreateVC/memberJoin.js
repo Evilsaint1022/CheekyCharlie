@@ -22,9 +22,10 @@ module.exports = {
 
         const guild = newState.guild;
         const guildId = guild.id;
+        const guildName = guild.name;
 
         // Fetch the Join To Create VC ID from the database
-        const joinToCreateVC = await db.config.get(`${guildId}_joinToCreateVC`);
+        const joinToCreateVC = await db.settings.get(`${guildName}_${guildId}_joinToCreateVC`);
 
         if (!joinToCreateVC || joinToCreateVC !== newState.channel.id) {return;}
 
@@ -47,11 +48,11 @@ module.exports = {
         });
 
         // Update the active voice channels in the database
-        const activeIdsKey = `${guildId}_activeVCs`;
-        const activeIds = await db.config.get(activeIdsKey) || [];
+        const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
+        const activeIds = await db.settings.get(activeIdsKey) || [];
 
         activeIds.push(newChannel.id);
-        db.config.set(activeIdsKey, activeIds);
+        db.settings.set(activeIdsKey, activeIds);
 
         return;
     }
