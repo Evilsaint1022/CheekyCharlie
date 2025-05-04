@@ -28,9 +28,9 @@ module.exports = {
         const guildId = reaction.message.guild.id;
         const guildName = reaction.message.guild.name;
 
-        const channelId = await db.starboard.get(`${guildId}_${guildName}_starboardChannel`)
-        const emojiData = await db.starboard.get(`${guildId}_${guildName}_starboardEmoji`)
-        const count = await db.starboard.get(`${guildId}_${guildName}_starboardCount`)
+        const channelId = await db.starboard.get(`${guildName}_${guildId}_starboardChannel`)
+        const emojiData = await db.starboard.get(`${guildName}_${guildId}_starboardEmoji`)
+        const count = await db.starboard.get(`${guildName}_${guildId}_starboardCount`)
 
         let customEmoji = "<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">";
 
