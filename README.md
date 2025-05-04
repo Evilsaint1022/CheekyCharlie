@@ -58,7 +58,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 # 🐞 Bugs
 
-- UserRanks are displaying correctly inside the /leaderboards application command. 
+- UserRanks are not displaying correctly inside the /leaderboards application command. 
 - Starboard isnt functioning correctly at the moment.
 
 `We apologize for the inconvenience. ❤️`
