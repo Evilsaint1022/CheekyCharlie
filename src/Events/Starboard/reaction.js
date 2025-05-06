@@ -1,4 +1,4 @@
-const { Events, MessageReaction, User, Client, EmbedBuilder, Embed } = require('discord.js');
+const { Events, MessageReaction, User, Client } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -11,7 +11,7 @@ module.exports = {
 
     /**
      * @param {MessageReaction} reaction
-     * @param {User}
+     * @param {User} user
      * @param {Client} client
      */
     async execute(reaction, user, client) {
@@ -39,36 +39,27 @@ module.exports = {
         if (reaction.message.channel.id == channelId) { return; }
 
         const channel = reaction.message.guild.channels.cache.get(channelId);
-
         const message = reaction.message;
 
-        const authorName = reaction.message.author.bot 
-            ? `${reaction.message.author.username} [🤖]` 
-            : reaction.message.author.username;
+        const authorName = message.author.bot
+            ? `${message.author.username} [🤖]`
+            : message.author.username;
 
-        const starEmbed = new EmbedBuilder()
-            .setAuthor({
-                name: authorName,
-                iconURL: reaction.message.author.displayAvatarURL(),
-            })
-            .setDescription(reaction.message.content || "No content")
-            .setImage(reaction.message.attachments.first() ? reaction.message.attachments.first().url : null)
-            .setColor("Blurple");
+        let content = `${customEmoji} | **${reaction.count}** | ${message.url}\n`;
+        content += `**Author:** ${authorName}\n`;
+        content += `**Content:** ${message.content || "_No Message Content_"}\n`;
 
-        reaction.message.attachments.forEach((attachment) => {
-            starEmbed.addFields({ name: "Attachment", value: attachment.url });
-        });
+        if (message.attachments.size > 0) {
+            content += `**Attachments:**\n`;
+            message.attachments.forEach((attachment) => {
+                content += `${attachment.url}\n`;
+            });
+        }
 
-        if (reaction.emoji.name == emojiData) {
-
-            await channel.send({ content: "**" + reaction.count + "** | " + reaction.message.url, embeds: [starEmbed] });
-
-        } else if (customEmoji == emojiData) {
-
-            await channel.send({ content: "**" + reaction.count + "** | " + reaction.message.url, embeds: [starEmbed] });
-
-        } else { return; }
-
+        if (reaction.emoji.name == emojiData || customEmoji == emojiData) {
+            await channel.send({ content });
+        } else {
+            return;
+        }
     },
-
 };
