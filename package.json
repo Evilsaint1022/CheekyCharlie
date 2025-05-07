@@ -13,7 +13,7 @@
     "dotenv": "^16.5.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.0",
-    "node": "^23.11.0",
+    "node": "^24.0.0",
     "npm": "^11.3.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",

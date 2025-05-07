@@ -57,7 +57,16 @@ module.exports = {
         }
 
         if (reaction.emoji.name == emojiData || customEmoji == emojiData) {
-            await channel.send({ content });
+            const sentMessage = await channel.send({ content });
+            try {
+                // Add the custom emoji reaction to the sent message
+                const emojiIdMatch = emojiData.match(/<a?:\w+:(\d+)>/);
+                if (emojiIdMatch) {
+                    await sentMessage.react(emojiIdMatch[1]);
+                }
+            } catch (err) {
+                console.error('Failed to react with custom emoji:', err);
+            }
         } else {
             return;
         }

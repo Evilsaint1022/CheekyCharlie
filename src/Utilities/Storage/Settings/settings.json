@@ -1,16 +1,20 @@
 {
-    "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_joinToCreateVC": "1347010006054342738",
     "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_channelSettings": {
         "DropPartyChannelId": "1346955022461829162"
     },
-    "1346955021614317619_dropPartyCooldown": {
-        "lastMessageDropTime": 1746503766534
-    },
+    "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_joinToCreateVC": "1347010006054342738",
     "The Cool Kids_1297062144080089088_channelSettings": {
         "DropPartyChannelId": "1297062144759828525"
     },
-    "1297062144080089088_dropPartyCooldown": {
-        "lastMessageDropTime": 1746483947768
+    "The Cool Kids_1297062144080089088_levelChannelId": "1347401540054417408",
+    "Nabfalized™ Discord_1130986094758993960_channelSettings": {
+        "DropPartyChannelId": "1130986095392346114"
     },
-    "The Cool Kids_1297062144080089088_levelChannelId": "1347401540054417408"
+    "Nabfalized™ Discord_1130986094758993960_levelChannelId": "1131007407032643725",
+    "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_dropPartyCooldown": {
+        "lastMessageDropTime": 1746594129712
+    },
+    "The Cool Kids_1297062144080089088_dropPartyCooldown": {
+        "lastMessageDropTime": 1746594757173
+    }
 }
