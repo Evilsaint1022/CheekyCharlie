@@ -1,11 +1,7 @@
 const { Events, MessageReaction, User, Client } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
-
 const db = require('../../Handlers/database');
 
 module.exports = {
-
     name: Events.MessageReactionAdd,
     once: false,
 
@@ -28,9 +24,9 @@ module.exports = {
         const guildId = reaction.message.guild.id;
         const guildName = reaction.message.guild.name;
 
-        const channelId = await db.starboard.get(`${guildName}_${guildId}_starboardChannel`)
-        const emojiData = await db.starboard.get(`${guildName}_${guildId}_starboardEmoji`)
-        const count = await db.starboard.get(`${guildName}_${guildId}_starboardCount`)
+        const channelId = await db.starboard.get(`${guildName}_${guildId}_starboardChannel`);
+        const emojiData = await db.starboard.get(`${guildName}_${guildId}_starboardEmoji`);
+        const count = await db.starboard.get(`${guildName}_${guildId}_starboardCount`);
 
         let customEmoji = "<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">";
 
@@ -58,6 +54,12 @@ module.exports = {
 
         if (reaction.emoji.name == emojiData || customEmoji == emojiData) {
             const sentMessage = await channel.send({ content });
+
+            // Save the starboard tracking URL in the db
+            const trackingIdKey = `${guildName}_${message.author.username}`;
+            const trackingIdValue = `${message.url}`;
+            await db.starboardids.set(trackingIdKey, trackingIdValue);
+
             try {
                 // Add the custom emoji reaction to the sent message
                 const emojiIdMatch = emojiData.match(/<a?:\w+:(\d+)>/);
