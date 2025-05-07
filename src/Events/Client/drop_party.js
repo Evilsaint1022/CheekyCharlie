@@ -67,7 +67,7 @@ module.exports = {
         }
 
         const currentTime = Date.now();
-        const lastMessageDropTime = await getLastDropTime(guildId);
+        const lastMessageDropTime = await getLastDropTime(guildName + '_' + guildId);
 
         if (currentTime - lastMessageDropTime < cooldownDuration || isProcessing) {
             return;
@@ -97,7 +97,7 @@ module.exports = {
                 console.log(`🎉[DROP PARTY🎉] ${guildName} - Channel not found or could not be fetched.`);
             }
 
-            await saveLastDropTime(guildId, currentTime);
+            await saveLastDropTime(guildName + '_' + guildId, currentTime);
         } catch (error) {
             console.error(`[🎉DROP PARTY🎉] ${guildName} - Error sending drop party message:`, error);
         } finally {

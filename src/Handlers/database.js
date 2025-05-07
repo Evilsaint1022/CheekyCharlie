@@ -8,6 +8,7 @@ const db = {
     levels: new DotDB("./src/Utilities/Storage/Levels/levels.json"),
     settings: new DotDB(`./src/Utilities/Storage/Settings/settings.json`),
     starboard: new DotDB("./src/Utilities/Storage/Settings/Starboard/starboardsettings.json"),
+    starboardids: new DotDB("./src/Utilities/Storage/Settings/Starboard/Starboard_Ids.json"),
     lastclaim: new DotDB("./src/Utilities/Storage/Settings/LastClaim/lastclaim.json"),
 }   
 
