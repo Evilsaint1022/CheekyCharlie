@@ -223,6 +223,22 @@ const commands = [
             }
         ]
     },
+    {
+        name: "set-verified-role",
+        description: "Set the role to assign to verified members.",
+        options: [
+            {
+                name: "role",
+                description: "The role to assign to verified members.",
+                type: 8,
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "remove-verified-role",
+        description: "Remove the currently set verified role.",
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------

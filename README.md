@@ -20,22 +20,22 @@ https://github.com/NZ-Linix/dotdatabase
 
 **Available for Everyone:**
 
-- `/avatar` — View your's or someone elses avatar
-- `/ping` — Check Bots Latency
-- `/cat` — Generates a random picture of a cat
-- `/dog` — Generates a random picture of a dog
+- `/avatar` — View your's or someone elses avatar.
+- `/ping` — Check Bots Latency.
+- `/cat` — Generates a random picture of a cat.
+- `/dog` — Generates a random picture of a dog.
 - 
-- `/github` — Github link to CheeckyCharlies Repo
-- `/invite` — Generates a random invite link
+- `/github` — Github link to CheeckyCharlies Repo.
+- `/invite` — Generates a random invite link.
 - 
-- `/level` — Check Current Level
+- `/level` — Check Current Level.
 - 
-- `/deposit` — Deposit Currency into your Bank
-- `/withdraw` — Withdraw Currency from your Bank
-- `/balance` — Check your balance
-- `/leaderboard` — Balance Leaderboard
-- `/daily` — Daily Currency Collect
-- `/pick` - Picks coins when the dropparty's drops
+- `/deposit` — Deposit Currency into your Bank.
+- `/withdraw` — Withdraw Currency from your Bank.
+- `/balance` — Check your balance.
+- `/leaderboard` — Balance Leaderboard.
+- `/daily` — Daily Currency Collect.
+- `/pick` - Picks coins when the dropparty's drops.
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
@@ -44,15 +44,18 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 - 
-- `/set-level-channel` — Set Level Notification Channel
-- `/remove-level-channel` — Remove Level Notifcation Channel
+- `/set-level-channel` — Set Level Notification Channel.
+- `/remove-level-channel` — Remove Level Notifcation Channel.
 - 
-- `/set-drop-party-channel` — Set Drop Party Channel
-- `/remove-drop-party-channel` — Remove Drop Party Channel
+- `/set-drop-party-channel` — Set Drop Party Channel.
+- `/remove-drop-party-channel` — Remove Drop Party Channel.
 - 
-- `/starboard-set-channel` - Sets Starboard Channel
-- `/starboard-set-count` - Sets Amount of emojis needed for Starboard
-- `/starboard-set-emoji` - Sets sets Starboard Emoji
+- `/starboard-set-channel` - Sets Starboard Channel.
+- `/starboard-set-count` - Sets Amount of emojis needed for Starboard.
+- `/starboard-set-emoji` - Sets sets Starboard Emoji.
+- 
+- `set-verified-role` - Sets a verified role for the auto_kick event.
+- `remove-verified-role` - Removes the verified role that has been set.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
