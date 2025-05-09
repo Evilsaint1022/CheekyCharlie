@@ -100,6 +100,18 @@ const commands = [
         name: 'pick',
         description: 'Pick up the dropped ferns for points!',
     },
+    {  
+        name: 'blackjack',
+        description: 'Play a game of Blackjack!',
+        options: [
+            {
+                name: 'bet',
+                description: 'The amount of points to bet.',
+                type: 4,
+                required: true,
+            },
+        ]
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 

@@ -52,6 +52,9 @@ module.exports = {
             const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 coins
             balance += coinsEarned;
 
+            // Console Logs
+            console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} picked ${coinsEarned} Coins. 🪙`);
+
             // Save the updated balance to the database
             try {
                 await db.balance.set(`${username}_${userId}`, { balance });

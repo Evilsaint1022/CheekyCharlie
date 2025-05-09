@@ -36,6 +36,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/leaderboard` — Balance Leaderboard.
 - `/daily` — Daily Currency Collect.
 - `/pick` - Picks coins when the dropparty's drops.
+- `/blackjack` - Starts a game of blackjack.
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
@@ -62,6 +63,7 @@ https://github.com/NZ-Linix/dotdatabase
 # 🐞 Bugs
 
 - UserRanks are not displaying correctly inside the /leaderboards application command.
+- Starboard isnt editing the previously sent message to update the reaction count.
 
 `We apologize for the inconvenience. ❤️`
 
