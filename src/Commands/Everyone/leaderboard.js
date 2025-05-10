@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js")
-const db = require("../../Handlers/database");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,9 +7,7 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
-        const { guild } = interaction;
-
-        // Fetch all users' balances from the database
+         // Fetch all users' balances from the database
         const allKeys = await db.balance.keys();
         const balances = (await Promise.all(
             allKeys
@@ -21,27 +19,25 @@ module.exports = {
                 })
         )).sort((a, b) => b.balance - a.balance);
 
-        const userId = interaction.user.id;
-        const userBalanceEntry = balances.find(entry => entry.userId === userId) + ".balance";
-        const userRank = userBalanceEntry ? balances.findIndex(entry => entry.user === userBalanceEntry.user) + 1: 'Unranked';
+        const username = interaction.user.username;
+        const userBalanceEntry = balances.find(entry => entry.username === username);
+        const userRank = userBalanceEntry ? balances.indexOf(userBalanceEntry) + 1 : 'Unranked';
 
         const itemsPerPage = 10;
         const totalPages = Math.ceil(balances.length / itemsPerPage);
         let currentPage = 0;
 
-        const generateLeaderboardEmbed = async (page) => {
+        const generateLeaderboardEmbed = (page) => {
             const start = page * itemsPerPage;
-            const leaderboard = await Promise.all(
-                balances.slice(start, start + itemsPerPage).map(async (entry, index) => {
-                    const member = await guild.members.fetch(entry.userId).catch(() => null);
-                    const username = member ? member.user.username : entry.username || "Unknown User";
-                    return `**    \n__${start + index + 1}.__  ${username} \n♢  🪙${entry.balance}**`;
+            const leaderboard = balances.slice(start, start + itemsPerPage)
+                .map((entry, index) => {
+                    return `**    \n__${start + index + 1}.__  ${entry.username} \n♢  🪙${entry.balance}**`;
                 })
-            );
+                .join('\n');
 
             return new EmbedBuilder()
                 .setTitle("**╭─── The Leaderboard ───╮**")
-                .setDescription((leaderboard.join('\n') || "No users found.") + `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`)
+                .setDescription((leaderboard || "No users found.") + `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`)
                 .setColor(0xFFFFFF)
                 .setThumbnail(interaction.guild.iconURL())
                 .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
@@ -55,13 +51,14 @@ module.exports = {
                 new ButtonBuilder().setCustomId('next').setLabel('Next').setStyle(ButtonStyle.Primary).setDisabled(currentPage === totalPages - 1)
             );
 
-        const message = await interaction.reply({ embeds: [await generateLeaderboardEmbed(currentPage)], components: [row()] });
+        await interaction.reply({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
+        const message = await interaction.fetchReply();
 
         const collector = message.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 
         collector.on('collect', async (buttonInteraction) => {
             if (buttonInteraction.user.id !== interaction.user.id) {
-                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", ephemeral: true });
+                return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", flags: 64 });
             }
 
             if (buttonInteraction.customId === 'previous' && currentPage > 0) {
@@ -74,7 +71,7 @@ module.exports = {
                 return;
             }
 
-            await buttonInteraction.update({ embeds: [await generateLeaderboardEmbed(currentPage)], components: [row()] });
+            await buttonInteraction.update({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
         });
 
         collector.on('end', () => {
@@ -82,8 +79,5 @@ module.exports = {
                 message.edit({ components: [] });
             }
         });
-
-        // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the leaderboard command.`);
     }
 };
