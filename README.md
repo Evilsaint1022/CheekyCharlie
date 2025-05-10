@@ -61,8 +61,6 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
-
-- UserRanks are not displaying correctly inside the /leaderboards application command.
 - Starboard isnt editing the previously sent message to update the reaction count.
 
 `We apologize for the inconvenience. ❤️`
