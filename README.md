@@ -37,7 +37,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/daily` — Daily Currency Collect.
 - `/pick` - Picks coins when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
-- `pay` - Pay Members Coins 🪙
+- `/pay` - Pay Members Coins.
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
