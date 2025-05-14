@@ -1,6 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,33 +16,23 @@ module.exports = {
     async execute(interaction) {
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
+        const userId = interaction.user.id;
         
-        // Define the directory path based on Server Name and Guild ID
-        const dirPath = path.join(__dirname, `../../Utilities/Servers/${guildName}_${guildId}/Settings/`);
-        const rolesFilePath = path.join(dirPath, 'whitelistedroles.json');
-        
-        // Ensure the directory exists
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-        
-        // Load or create the whitelisted roles file
-        let WHITELISTED_ROLE_IDS = [];
-        if (fs.existsSync(rolesFilePath)) {
-            try {
-                const data = fs.readFileSync(rolesFilePath, 'utf8');
-                WHITELISTED_ROLE_IDS = JSON.parse(data).roles || [];
-            } catch (error) {
-                console.error('Error reading whitelisted roles file:', error);
-            }
-        } else {
-            // Create a default file with an empty roles list
-            fs.writeFileSync(rolesFilePath, JSON.stringify({ roles: [] }, null, 4));
+        // Fetch whitelisted roles from the database
+        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+
+        // Check if the user has the required permissions or a whitelisted role
+        const member = interaction.guild.members.cache.get(userId);
+        if (
+            !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
+            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
+        ) {
+            return interaction.reply({ content: 'You do not have permission to remove the Join To Create channel!', flags: 64 });
         }
         
         // Check if the user has a whitelisted role
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
-        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+        const hasPermission = whitelistedRoles.some(roleId => memberRoles.includes(roleId));
         
         if (!hasPermission) {
             return interaction.reply({ content: 'You do not have permission to use this command.', flags: 64 });
