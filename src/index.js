@@ -10,6 +10,7 @@ require('dotenv').config();
 const { loadEvents } = require('../src/Handlers/eventHandler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const { registerCommands } = require('./register-commands');
+const registerAIHandler = require('./Handlers/AI-Handler'); // Adjust path if needed
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User } = Partials;
 
@@ -50,6 +51,9 @@ client.once("ready", () => {
     // Loading the Handlers
     loadEvents(client);
     commandHandler(client);
+
+    // loading the AI handler
+    registerAIHandler(client);
 
 // Activities Status ---------------------------------------------------------------------------------------------------------------
 
