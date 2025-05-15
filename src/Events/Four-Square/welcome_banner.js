@@ -8,7 +8,6 @@ module.exports = {
     // Channel ID where the welcome message will be sent
     const channelId = '1346995573596622928';
     const channel = member.guild.channels.cache.get(channelId);
-    if (!channel) return console.error(`Channel with ID ${channelId} not found.`);
 
     try {
       // Load the welcome template and member avatar

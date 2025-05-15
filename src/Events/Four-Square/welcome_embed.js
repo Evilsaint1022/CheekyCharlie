@@ -28,7 +28,6 @@ module.exports = {
     if (welcomeChannel) {
       await welcomeChannel.send({ content: `<@&1356828430464974941>`, embeds: [welcomeEmbed] });
     } else {
-      console.error("Welcome channel not found. Please check the channel ID.");
     }
   },
 };
