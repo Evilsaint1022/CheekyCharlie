@@ -24,7 +24,6 @@ module.exports = {
         const guildId = guild.id;
         const guildName = guild.name;
 
-        // Fetch the active voice channels from the database
         const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
         const activeIds = await db.vc.get(activeIdsKey) || [];
 
@@ -32,20 +31,37 @@ module.exports = {
 
         const oldChannel = oldState.channel;
 
-        // Check if the channel is empty
-        if (oldChannel.members.size === 0) {
-            await oldChannel.delete().catch(err => {
-                console.error("[TEMP VC / JOIN TO CREATE] Error deleting channel.");
-                console.log(err);
-            });
+        // Disconnect bots
+        for (const [_, member] of oldChannel.members) {
+            if (member.user && member.user.bot) {
+                try {
+                    await member.voice.disconnect();
+                } catch (err) {
+                    console.error(`[TEMP VC / JOIN TO CREATE] Failed to disconnect bot ${member.user?.tag ?? member.id}:`, err);
+                }
+            }
+        }
 
-            // Remove the channel ID from the active voice channels list
-            const index = activeIds.indexOf(oldChannel.id);
-            if (index > -1) {
-                activeIds.splice(index, 1);
+        // Small delay for disconnections to process
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Check if the channel still exists
+        const refreshedChannel = guild.channels.cache.get(oldChannel.id);
+
+        if (refreshedChannel && refreshedChannel.members.size === 0) {
+            try {
+                await refreshedChannel.delete();
+            } catch (err) {
+                if (err.code === 10003) {
+                } else {
+                    console.error("[TEMP VC / JOIN TO CREATE] Error deleting channel.");
+                    console.error(err);
+                }
             }
 
-            // Update the active voice channels in the database
+            // Update database
+            const index = activeIds.indexOf(oldChannel.id);
+            if (index > -1) activeIds.splice(index, 1);
             db.vc.set(activeIdsKey, activeIds);
         }
 
