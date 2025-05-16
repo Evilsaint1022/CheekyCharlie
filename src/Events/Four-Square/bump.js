@@ -12,7 +12,7 @@ module.exports = {
 
     try {
       // Send an instant response
-      await message.channel.send(`There is a /bump command coming soon for ${message.author.username}!\nThank you for Bumping ❤️`);
+      await message.channel.send(`There is a bump reminder coming soon for ${message.author.username}!\nThank you for Bumping ❤️`);
     } catch (error) {
       console.error('Failed to send instant response:', error);
     }
