@@ -10,6 +10,8 @@ const db = {
     starboard: new DotDB("./src/Utilities/Storage/Settings/Starboard/starboardsettings.json"),
     starboardids: new DotDB("./src/Utilities/Storage/Settings/Starboard/Starboard_Ids.json"),
     lastclaim: new DotDB("./src/Utilities/Storage/Settings/LastClaim/lastclaim.json"),
+    bump: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpsettings.json"),
+    bumpcooldown: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcooldown.json")
 }   
 
 module.exports = db;

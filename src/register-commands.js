@@ -269,6 +269,30 @@ const commands = [
         name: "remove-verified-role",
         description: "Remove the currently set verified role.",
     },
+    {
+        name: "set-bump-channel",
+        description: "Set the channel where bump messages will be sent.",
+        options: [
+            {
+                name: "channel",
+                description: "The channel to set for bump messages.",
+                type: 7,
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "set-bump-role",
+        description: "Set the role to assign or mention during bumps.",
+        options: [
+            {
+                name: "role",
+                description: "The role to assign or mention during bumps.",
+                type: 8,
+                required: true,
+            }
+        ]
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
