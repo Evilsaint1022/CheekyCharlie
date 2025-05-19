@@ -60,7 +60,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/remove-verified-role` - Removes the verified role that has been set.
 -
 - `/set-bump-channel` - Sets a channel for the bump reminder.
-- `/set-bump-role` - Sets a bump role for the nump reminder.
+- `/set-bump-role` - Sets a bump role for the bump reminder.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
