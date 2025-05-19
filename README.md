@@ -56,8 +56,11 @@ https://github.com/NZ-Linix/dotdatabase
 - `/starboard-set-count` - Sets Amount of emojis needed for Starboard.
 - `/starboard-set-emoji` - Sets sets Starboard Emoji.
 - 
-- `set-verified-role` - Sets a verified role for the auto_kick event.
-- `remove-verified-role` - Removes the verified role that has been set.
+- `/set-verified-role` - Sets a verified role for the auto_kick event.
+- `/remove-verified-role` - Removes the verified role that has been set.
+-
+- `/set-bump-channel` - Sets a channel for the bump reminder.
+- `/set-bump-role` - Sets a bump role for the nump reminder.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
