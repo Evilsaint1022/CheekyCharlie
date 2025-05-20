@@ -6,32 +6,42 @@ module.exports = {
   async execute(message) {
     const targetBotId = '302050872383242240'; // Disboard bot ID
 
-    // Load bump channel ID and role ID from DB
-    const bumpChannelId = await db.bump.get('channelid');
-    const bumpRoleId = await db.bump.get('role.id');
-
-    // Exit if not from Disboard bot or not in the bump channel
-    if (message.author.id !== targetBotId) return;
-    if (message.channel.id !== bumpChannelId) return;
+    const guildKey = `${message.guild.name}_${message.guild.id}`;
 
     try {
+      const bumpData = await db.bump.get(guildKey);
+
+      if (!bumpData || !bumpData.channelId || !bumpData.roleId) {
+        return;
+      }
+
+      const bumpChannelId = bumpData.channelId;
+      const bumpRoleId = bumpData.roleId;
+
+      // Exit if not from Disboard bot or not in the bump channel
+      if (message.author.id !== targetBotId) {
+        return;
+      }
+      if (message.channel.id !== bumpChannelId) {
+        return;
+      }
+
       // Send thank you message
       await message.channel.send(`You bumped the Server!\nThank you for Bumping ❤️`);
 
       const now = Date.now();
       const reminderDelay = 2 * 60 * 60 * 1000; // 2 hours
 
-      // Save cooldown using key: guildName_guildId
       const cooldownKey = `${message.guild.name}_${message.guild.id}`;
-      await db.bumpcooldown.save(cooldownKey, now);
+      await db.bumpcooldown.set(cooldownKey, now);
 
       // Schedule reminder
       setTimeout(async () => {
         try {
           const lastBump = await db.bumpcooldown.get(cooldownKey);
+          const timePassed = Date.now() - lastBump;
 
-          // Make sure 2 hours have passed before sending
-          if (Date.now() - lastBump >= reminderDelay) {
+          if (timePassed >= reminderDelay) {
             const bumpChannel = await message.client.channels.fetch(bumpChannelId);
             if (bumpChannel) {
               await bumpChannel.send(`<@&${bumpRoleId}> It's time to bump the server again! ❤️`);
