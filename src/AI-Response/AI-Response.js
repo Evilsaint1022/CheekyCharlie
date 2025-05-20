@@ -1,12 +1,13 @@
 // handlers/AI/AI-Response.js
 const fs = require('fs');
 const crypto = require('crypto');
-const OpenAI = require('openai');
+const Groq = require("groq-sdk");
+const db = require('../Handlers/database');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
-const IV = Buffer.alloc(16, 0); // Static IV (for better security, use random per user/session in future)
+const IV = Buffer.alloc(16, 0);
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 function encrypt(text) {
   const cipher = crypto.createCipheriv('aes-256-cbc', ENCRYPTION_KEY, IV);
@@ -27,39 +28,38 @@ async function handleAIMessage(client, message) {
   try {
     await message.channel.sendTyping();
 
-    // Load chat memory (last 5 exchanges)
     let memory = [];
-    if (fs.existsSync('chatlog.txt')) {
-      const logs = fs.readFileSync('chatlog.txt', 'utf-8')
-        .split('\n\n')
-        .slice(-5); // last 5 exchanges
+    const chatlog = await db.ai_history.get(encryptedUsername + ".history");
 
-      logs.forEach(log => {
-        const parts = log.split('\n');
-        if (parts.length === 2) {
-          const userLine = parts[0].replace('[Default]: ', '');
-          const aiLine = parts[1].replace('AI: ', '');
-          memory.push({ role: 'user', content: userLine });
-          memory.push({ role: 'assistant', content: aiLine });
-        }
-      });
+    if (chatlog && Array.isArray(chatlog)) {
+      if (chatlog.length > 10) {
+      chatlog.shift();
+      }
+      memory = chatlog;
     }
 
     memory.push({ role: 'user', content: userContent });
 
+    const systemPrompt = await fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
+
     console.log('🧠 Sending message to OpenAI...');
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: memory,
+    const response = await groq.chat.completions.create({
+
+      messages: [
+        ...memory,
+        { role: 'system', content: systemPrompt },
+      ],
+      model: "meta-llama/llama-4-scout-17b-16e-instruct"
+
     });
 
     const reply = response.choices[0].message.content;
     console.log(`🤖 OpenAI Reply: ${reply}`);
     message.reply(reply);
 
-    // ✅ Encrypted logging
-    fs.appendFileSync('chatlog.txt', `[${encryptedUsername}]: ${userContent}\nAI: ${reply}\n\n`);
-    console.log('📁 Chat logged to chatlog.txt');
+    memory.push({ role: 'assistant', content: reply });
+    await db.ai_history.set(encryptedUsername + ".history", memory);
+    console.log('📁 Chat logged!');
   } catch (err) {
     console.error('❌ Error talking to OpenAI:', err);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
