@@ -7,21 +7,28 @@ module.exports = async function updateStarboard(reaction) {
 
   const guildId = guild.id;
   const guildName = guild.name;
+  const userId = message.author.id;
+  const username = message.author.username;
 
   try {
-    const [starboardChannelId, configuredEmoji] = await Promise.all([
+    const [
+      starboardChannelId,
+      configuredEmoji,
+      starboardCount
+    ] = await Promise.all([
       db.starboard.get(`${guildName}_${guildId}_starboardChannel`),
       db.starboard.get(`${guildName}_${guildId}_starboardEmoji`),
+      db.starboard.get(`${guildName}_${guildId}_starboardCount`),
     ]);
 
-    if (!starboardChannelId || !configuredEmoji) return;
+    if (!starboardChannelId || !configuredEmoji || !starboardCount) return;
 
     const starboardChannel = guild.channels.cache.get(starboardChannelId);
     if (!starboardChannel || message.channel.id === starboardChannelId) return;
 
-    // Get emoji name/id
     let emojiName = configuredEmoji;
     let emojiForReaction = configuredEmoji;
+
     if (configuredEmoji.includes(':')) {
       const emojiId = configuredEmoji.split(':')[2]?.slice(0, -1);
       const emoji = guild.emojis.cache.get(emojiId);
@@ -32,8 +39,7 @@ module.exports = async function updateStarboard(reaction) {
 
     const emojiInCache = guild.emojis.cache.find(e => e.name === emojiName);
     const matchedEmoji =
-      reaction.emoji.name === emojiName ||
-      reaction.emoji.id === emojiInCache?.id;
+      reaction.emoji.name === emojiName || reaction.emoji.id === emojiInCache?.id;
 
     if (!matchedEmoji) return;
 
@@ -42,28 +48,21 @@ module.exports = async function updateStarboard(reaction) {
     );
     const currentCount = currentReaction?.count || 0;
 
-    const trackingIdKey = `𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_${message.author.username}`;
+    // Use message ID as unique identifier
+    const trackingIdKey = `${guildName}_${message.author.username}_${message.id}`;
     const storedUrl = await db.starboardids.get(trackingIdKey);
 
-    // Remove if reaction count dropped to 0
-    if (currentCount === 0 && storedUrl) {
-      const oldId = storedUrl.split('/').pop();
-      try {
-        const oldMsg = await starboardChannel.messages.fetch(oldId);
-        if (oldMsg) await oldMsg.delete();
-      } catch (_) {}
-      await db.starboardids.delete(trackingIdKey);
+    // If count is below threshold and message exists, delete it
+    if (currentCount < parseInt(starboardCount)) {
+      if (storedUrl) {
+        const oldId = storedUrl.split('/').pop();
+        try {
+          const oldMsg = await starboardChannel.messages.fetch(oldId);
+          if (oldMsg) await oldMsg.delete();
+        } catch (_) {}
+        await db.starboardids.delete(trackingIdKey);
+      }
       return;
-    }
-
-    // Otherwise, delete previous and repost with updated count
-    if (storedUrl) {
-      const oldId = storedUrl.split('/').pop();
-      try {
-        const oldMsg = await starboardChannel.messages.fetch(oldId);
-        if (oldMsg) await oldMsg.delete();
-      } catch (_) {}
-      await db.starboardids.delete(trackingIdKey);
     }
 
     const authorName = message.author.bot
@@ -83,6 +82,21 @@ module.exports = async function updateStarboard(reaction) {
       }
     }
 
+    // Edit existing starboard post if it exists
+    if (storedUrl) {
+      const oldId = storedUrl.split('/').pop();
+      try {
+        const oldMsg = await starboardChannel.messages.fetch(oldId);
+        if (oldMsg) {
+          await oldMsg.edit({ content: lines.join('\n') });
+          return;
+        }
+      } catch (_) {
+        // Message no longer exists
+      }
+    }
+
+    // Create a new starboard message
     const newMsg = await starboardChannel.send({ content: lines.join('\n') });
     await newMsg.react(emojiForReaction);
 
