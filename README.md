@@ -65,7 +65,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
-- Starboard isnt editing the previously sent message to update the reaction count.
+No Bugs Currently...
 
 `We apologize for the inconvenience. ❤️`
 
