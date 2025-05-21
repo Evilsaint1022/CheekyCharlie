@@ -31,9 +31,12 @@ async function handleAIMessage(client, message) {
     let memory = [];
     const chatlog = await db.ai_history.get(encryptedUsername + ".history");
 
+    console.log(chatlog);
+
     if (chatlog && Array.isArray(chatlog)) {
-      if (chatlog.length > 10) {
-      chatlog.shift();
+      if (chatlog.length > 22) {
+        chatlog.shift();
+        chatlog.shift();
       }
       memory = chatlog;
     }
