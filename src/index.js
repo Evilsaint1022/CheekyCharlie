@@ -67,6 +67,7 @@ const activities = [
     "Awww Gummon",
     "🗿Built Like a Mitre 10",
     "Made in New Zealand",
+    "@Ping me for help",
 ];
 
 const afk = [

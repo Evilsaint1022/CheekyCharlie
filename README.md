@@ -65,7 +65,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
-No Bugs Currently...
+- The Bump Reminder Event is not sending a reminder consistantly
 
 `We apologize for the inconvenience. ❤️`
 
