@@ -19,12 +19,8 @@ module.exports = {
       const bumpRoleId = bumpData.roleId;
 
       // Exit if not from Disboard bot or not in the bump channel
-      if (message.author.id !== targetBotId) {
-        return;
-      }
-      if (message.channel.id !== bumpChannelId) {
-        return;
-      }
+      if (message.author.id !== targetBotId) return;
+      if (message.channel.id !== bumpChannelId) return;
 
       // Send thank you message
       await message.channel.send(`You bumped the Server!\nThank you for Bumping ❤️`);
@@ -34,6 +30,7 @@ module.exports = {
 
       const cooldownKey = `${message.guild.name}_${message.guild.id}`;
       await db.bumpcooldown.set(cooldownKey, now);
+      await db.lastbump.set(cooldownKey, now); // ✅ Store bump time in lastbump.json
 
       // Schedule reminder
       setTimeout(async () => {
@@ -44,7 +41,7 @@ module.exports = {
           if (timePassed >= reminderDelay) {
             const bumpChannel = await message.client.channels.fetch(bumpChannelId);
             if (bumpChannel) {
-              await bumpChannel.send(`<@&${bumpRoleId}> It's time to bump the server again! ❤️`);
+              await bumpChannel.send(`<@&${bumpRoleId}>\n**It's time to bump the server again! ❤️**`);
             }
           }
         } catch (reminderError) {

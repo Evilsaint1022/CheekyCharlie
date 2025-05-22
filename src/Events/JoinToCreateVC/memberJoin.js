@@ -8,6 +8,9 @@ module.exports = {
      * @param {VoiceState} newState
      */
     async execute(oldState, newState) {
+        // Ignore if the channel didn't actually change
+        if (oldState.channelId === newState.channelId) return;
+
         let event = "";
 
         if (oldState.channel == null && newState.channel != null) {
@@ -24,12 +27,10 @@ module.exports = {
         const guildId = guild.id;
         const guildName = guild.name;
 
-        // Fetch the Join To Create VC ID from the database
         const joinToCreateVC = await db.settings.get(`${guildName}_${guildId}_joinToCreateVC`);
 
-        if (!joinToCreateVC || joinToCreateVC !== newState.channel.id) {return;}
+        if (!joinToCreateVC || joinToCreateVC !== newState.channel.id) return;
 
-        // Create a new voice channel for the user
         const newChannel = await guild.channels.create({
             name: `${newState.member.user.username}'s Voice`,
             type: 2,
@@ -41,13 +42,11 @@ module.exports = {
             }))
         });
 
-        // Move the user to the new channel
         await newState.member.voice.setChannel(newChannel).catch(err => {
             console.error("[TEMP VC / JOIN TO CREATE] Error moving member to new channel.");
             console.log(err);
         });
 
-        // Update the active voice channels in the database
         const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
         const activeIds = await db.vc.get(activeIdsKey) || [];
 

@@ -8,6 +8,9 @@ module.exports = {
      * @param {VoiceState} newState
      */
     async execute(oldState, newState) {
+        // Ignore if the channel didn't actually change
+        if (oldState.channelId === newState.channelId) return;
+
         let event = "";
 
         if (oldState.channel == null && newState.channel != null) {
@@ -31,7 +34,6 @@ module.exports = {
 
         const oldChannel = oldState.channel;
 
-        // Disconnect bots
         for (const [_, member] of oldChannel.members) {
             if (member.user && member.user.bot) {
                 try {
@@ -42,24 +44,20 @@ module.exports = {
             }
         }
 
-        // Small delay for disconnections to process
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        // Check if the channel still exists
         const refreshedChannel = guild.channels.cache.get(oldChannel.id);
 
         if (refreshedChannel && refreshedChannel.members.size === 0) {
             try {
                 await refreshedChannel.delete();
             } catch (err) {
-                if (err.code === 10003) {
-                } else {
+                if (err.code !== 10003) {
                     console.error("[TEMP VC / JOIN TO CREATE] Error deleting channel.");
                     console.error(err);
                 }
             }
 
-            // Update database
             const index = activeIds.indexOf(oldChannel.id);
             if (index > -1) activeIds.splice(index, 1);
             db.vc.set(activeIdsKey, activeIds);
