@@ -5,6 +5,7 @@ module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
         if (message.author.bot) return;
+        if (message.channel.isDMBased()) return;
 
         const timestamp = new Date().toLocaleTimeString();
         const guildId = message.guild.id;
