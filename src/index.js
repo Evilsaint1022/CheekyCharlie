@@ -106,6 +106,12 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+// Bank interest system -------------------------------------------------------------------------------------------------------------
+
+const { startInterest } = require('./bank-interest');
+console.log("Starting bank interest system...".bold.green);
+startInterest();
+
 // Client Login ---------------------------------------------------------------------------------------------------------------------
 
 client.login(process.env.TOKEN);
