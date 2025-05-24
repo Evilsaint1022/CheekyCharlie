@@ -12,7 +12,7 @@ const commandHandler = require('../src/Handlers/commandHandler');
 const { registerCommands } = require('./register-commands');
 const registerAIHandler = require('./Handlers/AI-Handler'); // Adjust path if needed
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
-const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User } = Partials;
+const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
 
@@ -23,16 +23,9 @@ const colors = require('colors'); // For console colors
 // ----------------------------------------------------------------------------------------------------------------------------------
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.DirectMessageReactions,
-    ],
-    partials: [user, Message, GuildMember, ThreadMember, Channel, Reaction, User]
+    intents: 53608447, // All intents
+    partials: [user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound],
+    // All partials
 });
 
 // Collections for commands and events ---------------------------------------------------------------------------------------------

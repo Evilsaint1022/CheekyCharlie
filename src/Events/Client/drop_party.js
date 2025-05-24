@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, Message } = require('discord.js');
 const { EventEmitter } = require('events');
 const db = require('../../Handlers/database'); // Import the database module
 
@@ -40,9 +40,13 @@ async function saveLastDropTime(guildId, timestamp) {
 module.exports = {
     name: Events.MessageCreate,
 
+    /**
+     * @param {Message} message
+    */
     async execute(message) {
 
         if (message.author.bot) return;
+        if (message.channel.isDMBased()) { return; }
 
         const guildId = message.guild.id;
         const guildName = message.guild.name;

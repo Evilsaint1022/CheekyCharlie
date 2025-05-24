@@ -293,6 +293,18 @@ const commands = [
             }
         ]
     },
+    {
+        name: "set-modmail-channel",
+        description: "Set the channel where the modmail will be sent.",
+        options: [
+            {
+                name: "channel",
+                description: "The channel to set for modmail messages.",
+                type: 7,
+                required: true,
+            }
+        ]
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
