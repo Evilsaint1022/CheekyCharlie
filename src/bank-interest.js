@@ -31,7 +31,7 @@ function calcutelatePercent(amount, percent) {
 
 function startInterest() {
 
-    cron.schedule('9 8 * * *', runDailyBankInterest, {
+    cron.schedule(time, runDailyBankInterest, {
         scheduled: true,
         timezone: 'UTC'
     });
