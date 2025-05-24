@@ -31,6 +31,8 @@ function calcutelatePercent(amount, percent) {
 
 function startInterest() {
 
+    console.log("Started daily bank interest calculation.");
+
     cron.schedule(time, runDailyBankInterest, {
         scheduled: true,
         timezone: 'UTC'
