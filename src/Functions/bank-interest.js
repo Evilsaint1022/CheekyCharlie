@@ -1,10 +1,9 @@
 
 const cron = require('node-cron');
-const db = require("./Handlers/database");
-
+const db = require("../Handlers/database");
 const time = "0 0 * * *"; // Daily at midnight UTC
 async function runDailyBankInterest() {
-
+console.log("[💰] [Bank Interest] Starting Bank Interest...");
     const bankEntries = await db.bank.all();
     for (const [key, entry] of Object.entries(bankEntries)) {
         if (entry.bank <= 0) {
@@ -28,7 +27,7 @@ function calcutelatePercent(amount, percent) {
     return (percent / 100) * amount;
 }
 
-function startInterest() {
+function StartInterest() {
 
     cron.schedule(time, runDailyBankInterest, {
         scheduled: true,
@@ -37,4 +36,4 @@ function startInterest() {
 
 }
 
-module.exports = { startInterest };
+module.exports = { StartInterest };
