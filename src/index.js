@@ -14,6 +14,13 @@ const registerAIHandler = require('./Handlers/AI-Handler'); // Adjust path if ne
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
+// Loading Punycode ------------------------------------------------------------------------------------------------------------
+
+// 🔴 Deprication Error
+const punycode = require('punycode/'); // ✅ Uses userland alternative
+
+// @Linix_red can you try have a look at fixing this please <3.
+
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
 
 const colors = require('colors'); // For console colors
@@ -102,7 +109,6 @@ client.on('interactionCreate', async interaction => {
 // Bank interest system -------------------------------------------------------------------------------------------------------------
 
 const { startInterest } = require('./bank-interest');
-console.log("Starting bank interest system...".bold.green);
 startInterest();
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------

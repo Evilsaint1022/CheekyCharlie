@@ -1,14 +1,13 @@
 const { Events } = require('discord.js');
 const db = require("../../Handlers/database");
 
+// Reminder delay
 const reminderDelay = 2 * 60 * 60 * 1000;
 
 module.exports = {
   name: Events.ClientReady,
   once: true,
   async execute(client) {
-    console.log(`[READY] ${client.user.tag} is online — syncing bump reminders...`);
-
     try {
       const allConfigs = await db.bump.all(); // Returns [{ key, value }]
       for (const { key, value } of allConfigs) {
@@ -26,10 +25,10 @@ module.exports = {
             const channel = await client.channels.fetch(channelId);
             if (channel) {
               await channel.send(`<@&${roleId}>\n**It's time to bump the server again! ❤️**`);
-              console.log(`[BUMP] Startup reminder sent in ${channelId}`);
+              console.log(`[⬆️] [BUMP] Startup reminder sent in ${channel.guild.name}`);
             }
           } catch (err) {
-            console.error(`[BUMP] Failed to send startup reminder:`, err);
+            console.error(`[⬆️] [BUMP] Failed to send startup reminder:`, err);
           }
         };
 
@@ -40,7 +39,7 @@ module.exports = {
         }
       }
     } catch (err) {
-      console.error(`[BUMP] Error during startup bump sync:`, err);
+      console.error(`[⬆️] [BUMP] Error during startup bump sync:`, err);
     }
   },
 };

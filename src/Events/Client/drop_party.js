@@ -24,7 +24,7 @@ async function getLastDropTime(guildId) {
         const cooldownData = await db.settings.get(`${guildId}_dropPartyCooldown`);
         return cooldownData?.lastMessageDropTime || 0;
     } catch (error) {
-        console.error('[DROP PARTY] Error reading cooldown from database:', error);
+        console.error('[🎉] [DROP PARTY] Error reading cooldown from database:', error);
         return 0;
     }
 }
@@ -33,7 +33,7 @@ async function saveLastDropTime(guildId, timestamp) {
     try {
         await db.settings.set(`${guildId}_dropPartyCooldown`, { lastMessageDropTime: timestamp });
     } catch (error) {
-        console.error('[DROP PARTY] Error saving cooldown to database:', error);
+        console.error('[🎉] [DROP PARTY] Error saving cooldown to database:', error);
     }
 }
 
@@ -58,11 +58,11 @@ module.exports = {
             DropPartyChannelId = settingsData?.DropPartyChannelId;
 
             if (!DropPartyChannelId) {
-                console.log(`[🎉DROP PARTY🎉] ${guildName} - No DropPartyChannelId found in database.`);
+                console.log(`[🎉] [DROP PARTY] ${guildName} - No DropPartyChannelId found in database.`);
                 return;
             }
         } catch (err) {
-            console.error(`[🎉DROP PARTY🎉] ${guildName} - Error loading channel settings from database:`, err);
+            console.error(`[🎉] [DROP PARTY] ${guildName} - Error loading channel settings from database:`, err);
             return;
         }
 
@@ -87,23 +87,23 @@ module.exports = {
                     '**🎉 A Drop Party Has Started!🎉**\n*Use the **/pick** command to grab your rewards!*'
                 );
 
-                console.log(`[🎉DROP PARTY🎉] ${guildName} - Drop party message sent.`);
+                console.log(`[🎉] [DROP PARTY] ${guildName} - Drop party message sent.`);
                 dropPartyEvent.triggerNewDrop(dropMessage);
 
                 setTimeout(() => {
                     if (dropMessage.deletable) {
                         dropMessage.delete().catch(console.error);
                         dropPartyEvent.clearDrop();
-                        console.log(`[🎉DROP PARTY🎉] ${guildName} - Drop party message deleted.`);
+                        console.log(`[🎉] [DROP PARTY] ${guildName} - Drop party message deleted.`);
                     }
                 }, 40000);
             } else {
-                console.log(`🎉[DROP PARTY🎉] ${guildName} - Channel not found or could not be fetched.`);
+                console.log(`[🎉] [DROP PARTY] ${guildName} - Channel not found or could not be fetched.`);
             }
 
             await saveLastDropTime(guildName + '_' + guildId, currentTime);
         } catch (error) {
-            console.error(`[🎉DROP PARTY🎉] ${guildName} - Error sending drop party message:`, error);
+            console.error(`[🎉] [DROP PARTY] ${guildName} - Error sending drop party message:`, error);
         } finally {
             isProcessing = false;
         }

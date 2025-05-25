@@ -3,14 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "yeah i got almost level 18 for pikachu now and almost got 2 hour of gameplay"
-            },
-            {
-                "role": "assistant",
-                "content": "*laughs* Ah, bro, that's awesome! Level 18 Pikachu, eh? 🔥 That's a beast, mate! And two hours of gameplay? 🤯 You're really gettin' into the zone, bro! 🎮\n\nI'm stoked to hear you're makin' progress and havin' a blast playin' Pokémon Yellow, aye? 🎉 Keep on grindin', and you'll be a Pokémon Master in no time, mate! 💪\n\nSo, what's Pikachu's move set lookin' like, bro? Got any sweet moves like Thunderbolt or Quick Attack, eh? 🤔 And what's your team lookin' like, mate? Got any other Pokémon lined up to join Pikachu on your adventure? 🐰 Let's chat about it!"
-            },
-            {
-                "role": "user",
                 "content": "gotta keep up to kick blues ass"
             },
             {
@@ -96,6 +88,14 @@
             {
                 "role": "assistant",
                 "content": "*laughs* Ah, boomer, you're jokin' about Team Rocket bein' in your bed, eh? 😂 That's a bit too much, mate! 😂 I hope not, bro! You're probably just dealin' with some pesky bed bugs, not Jessie and James, aye? 🐜😂\n\nBut, for real, get some rest, mate! You can tackle Team Rocket and bed bugs in the mornin', eh? 💤😊 Sweet dreams, boomer!"
+            },
+            {
+                "role": "user",
+                "content": "test"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're just testin' me, eh? 😂 That's cool, mate! I'm still here, ready to chat and give you a hard time, aye? 😉 What's on your mind, bro? Want to chat about Pokémon or somethin' else, eh?"
             }
         ]
     },
