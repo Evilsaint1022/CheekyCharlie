@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { PermissionsBitField } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
 const db = require('../../Handlers/database');
 
 module.exports = {
@@ -18,36 +16,31 @@ module.exports = {
         const guildId = interaction.guild.id;
         const userId = interaction.user.id;
 
-        const member = interaction.guild.members.cache.get(userId);
+        const key = "CheekyCharlie_Owners";
+        const Owners = await db.owners.get(key) || [];
 
-        // Fetch whitelisted roles from the database
-        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        // Check if the user is an owner
+        if (!Owners.includes(userId)) {
+        return interaction.reply({ 
+            content: 'You do not have permission to set the modmail channel!', flags: 64
+        });
+    }
 
-        // Check if the user has permission
-        if (
-            !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
-            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
-        ) {
-            return interaction.reply({ content: 'You do not have permission to set the modmail channel!', flags: 64, });
-        }
 
         const channel = interaction.options.getChannel('channel');
 
-        if ( guildId == "1365657523088134234" || guildId == "1346955021614317619" ) {
-
-            // Save the level-up channel ID to the database
+        if (guildId === "1365657523088134234" || guildId === "1346955021614317619") {
+            // Save the modmail channel ID to the database
             db.settings.set(`modmailChannelId`, channel.id);
 
             // Logging the action
             const timestamp = new Date().toLocaleTimeString();
-            const datestamp = new Date().toLocaleDateString();
-            console.log(`[${timestamp}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-modmail-channel command to set the channel ID "${channel.id}"`);
+            console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} used the set-modmail-channel command to set the channel ID "${channel.id}"`);
 
-            return interaction.reply({ content: `Modmail will now be sent in <#${channel.id}>.`, flags: 64, });
-            
+            return interaction.reply({ content: `Modmail will now be sent in <#${channel.id}>.`, flags: 64 });
         }
 
-        await interaction.reply({ content: "Sorry, your server doesnt support this feature yet." })
+        await interaction.reply({ content: "Sorry, your server doesn't support this feature yet." });
         return;
     },
 };
