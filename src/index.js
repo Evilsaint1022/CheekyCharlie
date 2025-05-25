@@ -43,7 +43,7 @@ client.commands = new Collection();
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 
 client.once("ready", () => {
-    console.log(`[🌿│${client.user.tag} Is Online!]`.bold.green);
+    console.log(`🌿・${client.user.tag} Is Online!`.bold.green);
 
     // Registers Application Commands
     registerCommands(client);
@@ -54,6 +54,16 @@ client.once("ready", () => {
 
     // loading the AI handler
     registerAIHandler(client);
+
+// Functions Imports ---------------------------------------------------------------------------------------------------------------
+
+// StartupBumpReminder
+const { runStartupBumpReminder } = require("./Functions/StartupBumpReminder");
+runStartupBumpReminder(client);
+
+// Bank interest system -------------------------------------------------------------------------------------------------------------
+const { StartInterest } = require('./Functions/bank-interest');
+StartInterest();
 
 // Activities Status ---------------------------------------------------------------------------------------------------------------
 
@@ -106,11 +116,6 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 });
-
-// Bank interest system -------------------------------------------------------------------------------------------------------------
-
-const { startInterest } = require('./bank-interest');
-startInterest();
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
 

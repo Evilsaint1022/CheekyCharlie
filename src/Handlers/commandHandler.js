@@ -50,5 +50,5 @@ module.exports = async (client) => {
 
     // Print the table of commands and a success message
     console.log(table.toString());
-    console.log("(✅│Successfully Loaded Commands)".bold.white);
+    console.log("(✅・Successfully loaded commands)".bold.white);
 };
