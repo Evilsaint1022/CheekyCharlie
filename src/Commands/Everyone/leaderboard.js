@@ -31,7 +31,8 @@ module.exports = {
             const start = page * itemsPerPage;
             const leaderboard = balances.slice(start, start + itemsPerPage)
                 .map((entry, index) => {
-                    return `**    \n__${start + index + 1}.__  ${entry.username} \n♢  🪙${entry.balance}**`;
+                    const cleanUsername = entry.username.replace(/^[-_()]+/, '');
+                    return `**    \n__${start + index + 1}.__  ${cleanUsername} \n♢  🪙${entry.balance}**`;
                 })
                 .join('\n');
 
