@@ -65,7 +65,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
-- No Bugs Currently...
+- 🔴 punycode Deprication Error... (Uknown Fix)
 
 `We apologize for the inconvenience. ❤️`
 
