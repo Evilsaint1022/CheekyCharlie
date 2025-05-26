@@ -43,7 +43,7 @@ async function handleAIMessage(client, message) {
 
     memory.push({ role: 'user', content: userContent });
 
-    const systemPrompt = await fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
+    const systemPrompt = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
 
     console.log('🧠 Sending message to OpenAI...');
     const response = await groq.chat.completions.create({

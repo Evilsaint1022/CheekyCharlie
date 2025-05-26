@@ -27,14 +27,14 @@ module.exports = {
       await db.bumpcooldown.set(cooldownKey, now);
       await db.lastbump.set(cooldownKey, now);
 
-      scheduleReminder(message.client, channelId, roleId, cooldownKey);
+      scheduleReminder(message.client, channelId, roleId, cooldownKey, guildKey);
     } catch (err) {
       console.error(`[⬆️] [BUMP] Error handling bump message:`, err);
     }
   },
 };
 
-async function scheduleReminder(client, channelId, roleId, cooldownKey) {
+async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey) {
   const lastBump = await db.bumpcooldown.get(cooldownKey);
   if (!lastBump) return;
 
