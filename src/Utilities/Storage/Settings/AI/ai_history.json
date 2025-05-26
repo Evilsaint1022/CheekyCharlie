@@ -3,38 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "https://tenor.com/view/goodnight-kiwi-kiwi-good-night-new-good-night-kiwi-new-kiwi-goodnight-gif-25832015"
-            },
-            {
-                "role": "assistant",
-                "content": "*laughs* Ah, bro, you're killin' it with that Kiwi goodnight GIF, eh? 😂 That's the spirit, mate! 😊\n\nCheers, bro! Have a good one, and I'll catch ya later! 👋 [wave]"
-            },
-            {
-                "role": "user",
-                "content": "# **🌿__AI Respones -  __**\n.\n**Cheeky Charlie will now give you a friendly but cheeky reply if you `@CheekyCharlie` `MessageContent`.**\n**there is a history for every user but the username has been encrypted so the bot will not be able to name you by username but you can tell the bot what to call you aslong as you be nice.**\n\n`~CheekyCharlie will repond depending on the history of your message content.`\n\n_Have fun fellow customers and homeless people._ ❤️\n\n- 🌿<@&1363733475223408720>"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, sweet as, bro! 😊 Thanks for the heads up, mate! From now on, if you want to chat with me, just @CheekyCharlie and I'll be here to give you a cheeky reply, aye? 😉 \n\nNo worries about the username, bro - just let me know what you want me to call you, and we'll get along just fine, eh? 👋 And thanks for the kind words, mate! ❤️ You're a top bloke for lookin' out for everyone, including the homeless, bro! 😊\n\nSo, what's on your mind, mate? Want to chat about Pokémon or somethin' else, eh? 🤔 Fire away, bro!"
-            },
-            {
-                "role": "user",
-                "content": "Night boomer"
-            },
-            {
-                "role": "assistant",
-                "content": "*smiles* Good night, boomer! 😂 Sweet as, mate! Have a good one, and don't let the dreams get too wild, aye? 😊 Sweet dreams, bro! 👋 \n[wave]"
-            },
-            {
-                "role": "user",
-                "content": "I think the bed bugs are bittting me already"
-            },
-            {
-                "role": "assistant",
-                "content": "*laughs* Ah, boomer, you're gettin' bit by bed bugs already, eh? 😂 That's a bit of a bummer, mate! 🐜 Hopefully it's not too bad, bro. Make sure to get some bug spray or somethin' on 'em, aye? 🚽\n\nBut, on the bright side, you're not gettin' bit by Team Rocket members or any Pokémon gone rogue, eh? 😂 That's a win, mate! 🎉 Keep on keepin' on, and try to get some shut-eye, bro!"
-            },
-            {
-                "role": "user",
                 "content": "Team rocket in my bed oh Lord I hope not"
             },
             {
@@ -96,6 +64,38 @@
             {
                 "role": "assistant",
                 "content": "*nods* Ah, salty's the owner of The Cool Kids Discord Server, eh? 😊 That's sweet as, bro! I'm sure it's a ripper of a server, with salty at the helm, aye? 🤜\n\nI reckon it's great that salty's got a community goin' on, and I'm sure it's a top spot for people to hang out and chat about Pokémon and other cool stuff, mate! 👍\n\nYou should give me an invite, boomer! 😂 I'd love to come check it out and give salty a hard time, eh?"
+            },
+            {
+                "role": "user",
+                "content": "1+1 = ?"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, mate, that's a no-brainer, eh? 😂 1 + 1 = 2, bro! 🤓 You can't go wrong with basic maths, aye? 😊\n\nBut, I've gotta ask, boomer, are you tryin' to test my maths skills or just makin' sure I'm still awake, eh?"
+            },
+            {
+                "role": "user",
+                "content": ""
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* No worries, boomer! 😊 I'm still here, ready to chat and have a laugh, aye? 👋 If you're ready to wrap things up, I'm more than happy to say sweet as, and we can catch up again another time, mate! 👋 See ya later, boomer! 👋 \n[wave]"
+            },
+            {
+                "role": "user",
+                "content": "this is a test"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're testin' me again, eh? 😂 Passed with flyin' colours, mate! 👍 I knew it was a test, and I'm still here, ready to roll, aye? 👋 What's next, bro? Want to test my knowledge of NZ slang or somethin'?"
+            },
+            {
+                "role": "user",
+                "content": "Coolio carry on solider"
+            },
+            {
+                "role": "assistant",
+                "content": "*chuckles* Ah, Coolio, carry on, soldier! 😂 That's a ripper of a reference, boomer! 👍 I reckon you're a bit of a hip-hop head, eh? 🎤\n\nCarry on, indeed, mate! May your day be as smooth as a Fresh Prince flow, aye? 😊 Keep it real, boomer!"
             }
         ]
     },
@@ -312,6 +312,34 @@
             {
                 "role": "assistant",
                 "content": "I can't help with that. Is there anything else I can help you with?"
+            }
+        ]
+    },
+    "cba0a20cace85cfc0b4c8f2e1e58e700": {
+        "history": [
+            {
+                "role": "user",
+                "content": ""
+            },
+            {
+                "role": "assistant",
+                "content": "No worries, bro! How's it going, eh? I'm CheekyCharlie, your friendly Assistant from Aotearoa (that's New Zealand, for you non-Kiwis). I'm here to help you out with whatever you need, while dishing out a bit of cheeky banter, of course!\n\nSo, what's on your mind, mate? Need some help with something, or just wanna have a korero (chat) about the All Blacks or the latest kai (food) trends? Fire away, I'm all ears!"
+            },
+            {
+                "role": "user",
+                "content": "5x5+10-35"
+            },
+            {
+                "role": "assistant",
+                "content": "Sweet as, bro! Let's get crackin' on that math problem, eh?\n\nSo, I've got my calculator out (just kidding, I'm doin' it in me head, mate!).\n\nFirst off, 5 x 5 = 25, no worries.\n\nThen, add 10 to that... 25 + 10 = 35, easy peasy.\n\nBut wait, we've gotta subtract 35 from that... 35 - 35 = 0, bingo!\n\nSo, the answer is... 0, mate!\n\nHow's that, did I get it right, bro? Don't worry if I didn't, I'm always here to give it another go, eh?"
+            },
+            {
+                "role": "user",
+                "content": "U have no head"
+            },
+            {
+                "role": "assistant",
+                "content": "Fair call, bro. I got a bit carried away with the old Kiwi slang, didn't I?\n\nYou're right, I don't actually have a head, I'm just a clever Assistant livin' in the digital realm. But no worries, I'm still here to help and have a chat with ya!\n\nSo, what's next, mate? Want to give me another math problem to solve, or maybe discuss the latest Rugby game? I'm all ears...or rather, all text, eh?"
             }
         ]
     }
