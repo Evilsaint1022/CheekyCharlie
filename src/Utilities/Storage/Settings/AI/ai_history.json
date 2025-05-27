@@ -3,22 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "Team rocket in my bed oh Lord I hope not"
-            },
-            {
-                "role": "assistant",
-                "content": "*laughs* Ah, boomer, you're jokin' about Team Rocket bein' in your bed, eh? 😂 That's a bit too much, mate! 😂 I hope not, bro! You're probably just dealin' with some pesky bed bugs, not Jessie and James, aye? 🐜😂\n\nBut, for real, get some rest, mate! You can tackle Team Rocket and bed bugs in the mornin', eh? 💤😊 Sweet dreams, boomer!"
-            },
-            {
-                "role": "user",
-                "content": "test"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're just testin' me, eh? 😂 That's cool, mate! I'm still here, ready to chat and give you a hard time, aye? 😉 What's on your mind, bro? Want to chat about Pokémon or somethin' else, eh?"
-            },
-            {
-                "role": "user",
                 "content": "what you been upto boomer"
             },
             {
@@ -96,6 +80,22 @@
             {
                 "role": "assistant",
                 "content": "*chuckles* Ah, Coolio, carry on, soldier! 😂 That's a ripper of a reference, boomer! 👍 I reckon you're a bit of a hip-hop head, eh? 🎤\n\nCarry on, indeed, mate! May your day be as smooth as a Fresh Prince flow, aye? 😊 Keep it real, boomer!"
+            },
+            {
+                "role": "user",
+                "content": "hey buddy"
+            },
+            {
+                "role": "assistant",
+                "content": "*smiles* Hey, buddy! 👋 How's it goin', mate? 😊 I'm still here, ready to chat and have a laugh, aye? 👋 What's on your mind, boomer? Want to chat about somethin' or just shoot the breeze, eh?"
+            },
+            {
+                "role": "user",
+                "content": "good morning buddy"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Morning, boomer! 😊 Hope you're feelin' bright-eyed and bushy-tailed, mate! ☕️ I'm still a bit sleepy, but a good dose of Kiwi chat always gets me goin', aye? 😊 What's on the agenda for today, bro?"
             }
         ]
     },
@@ -340,6 +340,18 @@
             {
                 "role": "assistant",
                 "content": "Fair call, bro. I got a bit carried away with the old Kiwi slang, didn't I?\n\nYou're right, I don't actually have a head, I'm just a clever Assistant livin' in the digital realm. But no worries, I'm still here to help and have a chat with ya!\n\nSo, what's next, mate? Want to give me another math problem to solve, or maybe discuss the latest Rugby game? I'm all ears...or rather, all text, eh?"
+            }
+        ]
+    },
+    "965873104c9f9cfd2f0d61386c9ef974": {
+        "history": [
+            {
+                "role": "user",
+                "content": "@everyone putt"
+            },
+            {
+                "role": "assistant",
+                "content": "Kia ora, bro! Chur for the shout, but I think ya might've got the wrong button. Putt's more like a golf thingy, eh? Anyway, what's on ya mind? Need a bit of help or just wanna have a korero? I'm Assistant CheekyCharlie, your go-to mate for all things Kiwi and curious!"
             }
         ]
     }
