@@ -1,4 +1,23 @@
 {
+  "name": "four-square",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "description": "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Evilsaint1022",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evilsaint1022/CheekyCharlie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Evilsaint1022/CheekyCharlie/issues"
+  },
+  "homepage": "https://github.com/Evilsaint1022/CheekyCharlie#readme",
   "dependencies": {
     "@discordjs/builders": "^1.11.2",
     "@discordjs/rest": "^2.5.0",
@@ -13,39 +32,30 @@
     "dotenv": "^16.5.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.0",
-    "groq-sdk": "^0.22.0",
+    "groq-sdk": "^0.23.0",
     "node": "^22.16.0",
-    "node-cron": "^4.0.7",
+    "node-cron": "^4.1.0",
     "node-fetch": "^3.3.2",
     "npm": "^11.4.1",
-    "openai": "^4.103.0",
+    "openai": "^5.0.1",
     "path": "^0.12.7",
     "punycode": "^2.3.1",
     "register-commands": "^1.0.0",
-    "table": "^6.9.0",
-    "whatwg-url": "^14.2.0"
+    "table": "^6.9.0"
   },
-  "name": "four-square",
-  "version": "1.0.0",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Evilsaint1022",
-  "license": "ISC",
   "devDependencies": {
-    "eslint": "^9.27.0",
+    "eslint": "^9.28.0",
     "nodemon": "^3.1.10"
   },
-  "description": "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Evilsaint1022/CheekyCharlie.git"
+  "overrides": {
+  "eslint": {
+    "@eslint/eslintrc": {
+      "ajv": "^8.12.0",
+      "uri-js": "^4.4.1"
+    }
   },
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Evilsaint1022/CheekyCharlie/issues"
-  },
-  "homepage": "https://github.com/Evilsaint1022/CheekyCharlie#readme"
+  "ajv": "^8.12.0",
+  "uri-js": "^4.4.1",
+  "punycode": "^2.3.1"
+}
 }

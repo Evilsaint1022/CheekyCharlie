@@ -4,8 +4,8 @@ const db = {
 
     // Owners ID's DataBase -------------------------------------------------------------------------
     owners: new DotDB("./src/Utilities/Owners/owners.json"),
+    
     // -----------------------------------------------------------------------------------------
-
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
     balance: new DotDB("./src/Utilities/Storage/Global/Economy/Balance/balance.json"),
