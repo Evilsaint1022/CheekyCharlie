@@ -2,6 +2,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const Groq = require("groq-sdk");
+const punycode = require('punycode/');
 const db = require('../Handlers/database');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();

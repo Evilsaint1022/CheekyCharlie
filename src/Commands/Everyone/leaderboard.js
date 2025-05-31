@@ -7,6 +7,9 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
+        // Log command usage
+        console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the leaderboard command.`);
+
          // Fetch all users' balances from the database
         const allKeys = await db.balance.keys();
         const balances = (await Promise.all(
