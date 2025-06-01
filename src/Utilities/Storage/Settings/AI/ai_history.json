@@ -3,22 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "Coolio carry on solider"
-            },
-            {
-                "role": "assistant",
-                "content": "*chuckles* Ah, Coolio, carry on, soldier! 😂 That's a ripper of a reference, boomer! 👍 I reckon you're a bit of a hip-hop head, eh? 🎤\n\nCarry on, indeed, mate! May your day be as smooth as a Fresh Prince flow, aye? 😊 Keep it real, boomer!"
-            },
-            {
-                "role": "user",
-                "content": "hey buddy"
-            },
-            {
-                "role": "assistant",
-                "content": "*smiles* Hey, buddy! 👋 How's it goin', mate? 😊 I'm still here, ready to chat and have a laugh, aye? 👋 What's on your mind, boomer? Want to chat about somethin' or just shoot the breeze, eh?"
-            },
-            {
-                "role": "user",
                 "content": "good morning buddy"
             },
             {
@@ -96,6 +80,22 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, yeah, I'm still goin' strong, boomer! 😊 I'm a bit like a flat white coffee on a cold winter's morning - I'm always ready to perk you up and get the chat goin', aye? ☕️\n\nI'm here to help, mate. Got a question or just wanna make some chat? I'm all ears, boomer! 👂 What's on your mind, eh?"
+            },
+            {
+                "role": "user",
+                "content": "im just working on this cheeky bugga"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, fair play, boomer! 😂 Sounds like you're on a mission to catch that cheeky bugger, eh? 🐜💪\n\nI'm rootin' for ya, mate! 👍 If you need any advice or just wanna bounce some ideas off me, I'm here to help, aye? 🤔 What's the plan to catch that bugger, eh?"
+            },
+            {
+                "role": "user",
+                "content": "your the boomer mate"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, boomer, boomer! 😂 You've been tagged, mate! 😂 Don't worry, I won't make you feel too old, eh? 😉\n\nBut, for real, I'm still here to chat and help, boomer. You're not gettin' rid of me that easily, aye? 😊 What's next, mate? Want to keep chattin' or just chill for a bit?"
             }
         ]
     },
