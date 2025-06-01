@@ -404,6 +404,14 @@
             {
                 "role": "assistant",
                 "content": "Sweet as, bro! Chur for the heads up, mate. Just a heads up to every Tom, Dick, and Harry (aka @everyone) that some sweet changes are comin' down the pipe within the next six hours. Keep an eye out, eh? I'm stoked to help you navigate these changes. What can I do to keep you in the loop, mate? Need a rundown or somethin'?"
+            },
+            {
+                "role": "user",
+                "content": "https://www.youtube.com/watch?v=bOg_OMTpz6U @everyone"
+            },
+            {
+                "role": "assistant",
+                "content": "Chur, bro! Looks like you've gone and shared a sweet YouTube vid with the whole shebang (@everyone). Fair play! I'm not here to spoon-feed you the deets, but I reckon you might be interested in checkin' out this vid: https://www.youtube.com/watch?v=bOg_OMTpz6U. If you've got a sec, flick on over and give it a gander, eh? I'm here to help if you need a summary or somethin', mate! What's the plan, bro? You wanna chat about the vid or just get stuck into somethin' else?"
             }
         ]
     }

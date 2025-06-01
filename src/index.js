@@ -35,64 +35,52 @@ client.commands = new Collection();
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 
-client.once("ready", () => {
+client.once("ready", async () => {
     console.log(`🌿・${client.user.tag} Is Online!`.bold.green);
 
     // Registers Application Commands
     registerCommands(client);
 
-    // Loading the Handlers
-    loadEvents(client);
-    commandHandler(client);
+    // Wait for events and commands to fully load
+    await loadEvents(client);
+    await commandHandler(client);
+    await registerAIHandler(client); // In case it's async
 
-    // loading the AI handler
-    registerAIHandler(client);
+    // Run startup bump reminder
+    const { runStartupBumpReminder } = require("./Functions/StartupBumpReminder");
+    runStartupBumpReminder(client);
 
-// Functions Imports ---------------------------------------------------------------------------------------------------------------
+    // Bank interest system
+    const { StartInterest } = require('./Functions/bank-interest');
+    StartInterest();
 
-// StartupBumpReminder
-const { runStartupBumpReminder } = require("./Functions/StartupBumpReminder");
-runStartupBumpReminder(client);
+    // Bot activity logic
+    let afkStatus = true;
 
-// Bank interest system -------------------------------------------------------------------------------------------------------------
-const { StartInterest } = require('./Functions/bank-interest');
-StartInterest();
+    //Activity list
+    const activities = [
+        "Shopping at PaknSave",
+        "✌🏻Nek Minnit",
+        "Awww Gummon",
+        "🗿Built Like a Mitre 10",
+        "Made in New Zealand",
+        "@ping me for help",
+        "Dm if you have any issues."
+    ];
 
-// Activities Status ---------------------------------------------------------------------------------------------------------------
+    //Afk Activity list
+    const afk = ['🔨 - Under Maintenance'];
 
-// Boolean flag to control AFK status
-let afkStatus = true; // Set to `true` for AFK, `false` for activities
+    setInterval(() => {
+        const list = afkStatus ? afk : activities;
+        const activity = list[Math.floor(Math.random() * list.length)];
+        client.user.setActivity(activity, { type: ActivityType.Custom });
+    }, 5000);
 
-// Lists of activities
-const activities = [
-    "Shopping at PaknSave",
-    "✌🏻Nek Minnit",
-    "Awww Gummon",
-    "🗿Built Like a Mitre 10",
-    "Made in New Zealand",
-    "@ping me for help",
-    "Dm if you have any issues."
-];
-
-const afk = [
-    '🔨 - Under Maintenance',
-];
-
-// Set bot activity every 5 seconds based on AFK status
-setInterval(() => {
-    let activityList;
-
-    if (afkStatus) {
-        activityList = afk; // Use AFK list if afkStatus is true
-    } else {
-        activityList = activities; // Use activities list if afkStatus is false
-    }
-
-    const activity = activityList[Math.floor(Math.random() * activityList.length)];
-    client.user.setActivity(activity, { type: ActivityType.Custom });
-}, 5000); // Update every 5 seconds
-
+    // ✅ Final startup log, after all handlers & functions are done
+    console.log(`successfully finished startup`.bold.green);
 });
+
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------
 
@@ -111,5 +99,4 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
-
 client.login(process.env.TOKEN);
