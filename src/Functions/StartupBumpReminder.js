@@ -1,8 +1,8 @@
 const db = require("../Handlers/database");
 
-async function runStartupBumpReminder(client) {
+module.exports = async (client) => {
   try {
-    const allConfigs = Object.entries(await db.bump.all()); // Fix here
+    const allConfigs = Object.entries(await db.bump.all());
 
     for (const [key, value] of allConfigs) {
       const { channelId, roleId } = value;
@@ -37,16 +37,13 @@ async function runStartupBumpReminder(client) {
 
       const MAX_TIMEOUT = 2_147_483_647;
 
-    if (timeLeft <= 0) {
-    await runReminder();
-    } else {
-    setTimeout(runReminder, Math.min(timeLeft, MAX_TIMEOUT));
-    }
-
+      if (timeLeft <= 0) {
+        await runReminder();
+      } else {
+        setTimeout(runReminder, Math.min(timeLeft, MAX_TIMEOUT));
+      }
     }
   } catch (err) {
     console.error(`[⬆️] [BUMP] Error during startup bump sync:`, err);
   }
-}
-
-module.exports = { runStartupBumpReminder };
+};

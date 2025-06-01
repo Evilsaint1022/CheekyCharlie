@@ -8,16 +8,16 @@
 
 require('dotenv').config();
 const { loadEvents } = require('../src/Handlers/eventHandler');
-const commandHandler = require('../src/Handlers/commandHandler');
 const { registerCommands } = require('./register-commands');
-const registerAIHandler = require('./Handlers/AI-Handler'); // Adjust path if needed
+const registerAIHandler = require('./Handlers/AI-Handler');
+const commandHandler = require('../src/Handlers/commandHandler');
+const loadFunctions  = require('./Handlers/functionHandler');
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
 
 const colors = require('colors'); // For console colors
-
 // loads colors globally for console use.
 
 // ----------------------------------------------------------------------------------------------------------------------------------
@@ -41,18 +41,11 @@ client.once("ready", async () => {
     // Registers Application Commands
     registerCommands(client);
 
-    // Wait for events and commands to fully load
+    // Wait Imports to fully load
+    await loadFunctions(client);
     await loadEvents(client);
     await commandHandler(client);
-    await registerAIHandler(client); // In case it's async
-
-    // Run startup bump reminder
-    const { runStartupBumpReminder } = require("./Functions/StartupBumpReminder");
-    runStartupBumpReminder(client);
-
-    // Bank interest system
-    const { StartInterest } = require('./Functions/bank-interest');
-    StartInterest();
+    await registerAIHandler(client);
 
     // Bot activity logic
     let afkStatus = true;
@@ -77,7 +70,7 @@ client.once("ready", async () => {
         client.user.setActivity(activity, { type: ActivityType.Custom });
     }, 5000);
 
-    // ✅ Final startup log, after all handlers & functions are done
+    // Bisechosting Finished Startup
     console.log(`successfully finished startup`.bold.green);
 });
 
