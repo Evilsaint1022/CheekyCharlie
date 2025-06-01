@@ -58,7 +58,6 @@ module.exports = {
             DropPartyChannelId = settingsData?.DropPartyChannelId;
 
             if (!DropPartyChannelId) {
-                console.log(`[🎉] [DROP PARTY] ${guildName} - No DropPartyChannelId found in database.`);
                 return;
             }
         } catch (err) {
