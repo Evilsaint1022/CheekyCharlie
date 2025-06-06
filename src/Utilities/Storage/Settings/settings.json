@@ -7,18 +7,11 @@
         "DropPartyChannelId": "1297062144759828525"
     },
     "The Cool Kids_1297062144080089088_levelChannelId": "1347401540054417408",
-    "𝐊𝟐Chat 18+ |SFW - Social - Community - Chill - Active - Anime - Chat - Gaming - VC|_1130986094758993960_channelSettings": {
-        "DropPartyChannelId": "1130986095392346114"
-    },
-    "𝐊𝟐Chat 18+ |SFW - Social - Community - Chill - Active - Anime - Chat - Gaming - VC|_1130986094758993960_levelChannelId": "1131007407032643725",
     "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_dropPartyCooldown": {
-        "lastMessageDropTime": 1749181283361
+        "lastMessageDropTime": 1749207536492
     },
     "The Cool Kids_1297062144080089088_dropPartyCooldown": {
-        "lastMessageDropTime": 1749192811226
-    },
-    "𝐊𝟐Chat 18+ |SFW - Social - Community - Chill - Active - Anime - Chat - Gaming - VC|_1130986094758993960_dropPartyCooldown": {
-        "lastMessageDropTime": 1749191026592
+        "lastMessageDropTime": 1749199676390
     },
     "𝐅𝐨𝐮𝐫-𝐒𝐪𝐮𝐚𝐫𝐞_1346955021614317619_verifiedRoleId": "1351798627328069742",
     "OᴄᴇᴀɴɪᴄBʀᴏs | 18+_1367474417784979507_channelSettings": {
@@ -29,6 +22,13 @@
     "OᴄᴇᴀɴɪᴄBʀᴏs | 18+_1367474417784979507_dropPartyCooldown": {
         "lastMessageDropTime": 1749166613076
     },
-    "𝐊𝟐Chat 18+ |SFW - Social - Community - Chill - Active - Anime - Chat - Gaming - VC|_1130986094758993960_joinToCreateVC": "1145881917036695612",
-    "modmailChannelId": "1376046599322603570"
+    "modmailChannelId": "1376046599322603570",
+    "𝐊𝟐Chat 18+ [SFW]_1130986094758993960_channelSettings": {
+        "DropPartyChannelId": "1130986095392346114"
+    },
+    "𝐊𝟐Chat 18+ [SFW]_1130986094758993960_levelChannelId": "1131007407032643725",
+    "𝐊𝟐Chat 18+ [SFW]_1130986094758993960_dropPartyCooldown": {
+        "lastMessageDropTime": 1749207110888
+    },
+    "𝐊𝟐Chat 18+ [SFW]_1130986094758993960_joinToCreateVC": "1145881917036695612"
 }
