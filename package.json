@@ -26,6 +26,7 @@
     "ascii-table": "^0.0.9",
     "axios": "^1.9.0",
     "child_process": "^1.0.2",
+    "cli-table3": "^0.6.5",
     "colors": "^1.4.0",
     "discord.js": "^14.19.3",
     "dotdatabase": "^1.0.4",
@@ -48,14 +49,14 @@
     "nodemon": "^3.1.10"
   },
   "overrides": {
-  "eslint": {
-    "@eslint/eslintrc": {
-      "ajv": "^8.12.0",
-      "uri-js": "^4.4.1"
-    }
-  },
-  "ajv": "^8.12.0",
-  "uri-js": "^4.4.1",
-  "punycode": "^2.3.1"
-}
+    "eslint": {
+      "@eslint/eslintrc": {
+        "ajv": "^8.12.0",
+        "uri-js": "^4.4.1"
+      }
+    },
+    "ajv": "^8.12.0",
+    "uri-js": "^4.4.1",
+    "punycode": "^2.3.1"
+  }
 }

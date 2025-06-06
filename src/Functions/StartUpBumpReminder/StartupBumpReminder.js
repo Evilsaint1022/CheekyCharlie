@@ -1,4 +1,4 @@
-const db = require("../Handlers/database");
+const db = require("./../../Handlers/database");
 
 module.exports = async (client) => {
   try {
@@ -18,7 +18,7 @@ module.exports = async (client) => {
       if (!lastBump) continue;
 
       const bumpCooldown = await db.bumpcooldown.get(cooldownKey);
-      const reminderDelay = bumpCooldown ?? 2 * 60 * 60 * 1000; // 2 hours
+      const reminderDelay = bumpCooldown ?? 2 * 60 * 60 * 1000; // default 2 hours
 
       const timePassed = Date.now() - lastBump;
       const timeLeft = reminderDelay - timePassed;
@@ -26,20 +26,21 @@ module.exports = async (client) => {
       const runReminder = async () => {
         try {
           const channel = await client.channels.fetch(channelId);
-          if (channel) {
-            await channel.send(`<@&${roleId}>\n**It's time to bump the server again! ❤️**`);
-            console.log(`[⬆️] [BUMP] Startup reminder sent in ${channel.guild.name}`);
-          }
+          if (!channel) return;
+          await channel.send(`<@&${roleId}>\n**It's time to bump the server again! ❤️**`);
+          console.log(`[⬆️] [BUMP] Startup reminder sent in ${guild.name}`);
         } catch (err) {
-          console.error(`[⬆️] [BUMP] Failed to send startup reminder:`, err);
+          console.error(`[⬆️] [BUMP] Failed to send startup reminder in ${guild.name}:`, err);
         }
       };
 
-      const MAX_TIMEOUT = 2_147_483_647;
+      const MAX_TIMEOUT = 2_147_483_647; // max safe setTimeout
 
       if (timeLeft <= 0) {
+        // Time to send reminder immediately
         await runReminder();
       } else {
+        // Schedule reminder respecting max timeout
         setTimeout(runReminder, Math.min(timeLeft, MAX_TIMEOUT));
       }
     }
