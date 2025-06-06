@@ -9,9 +9,13 @@
 require('dotenv').config();
 const { loadEvents } = require('../src/Handlers/eventHandler');
 const { registerCommands } = require('./register-commands');
+const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
-const loadFunctions  = require('./Handlers/functionHandler');
+
+// Show Guilds ----------------------------------------------------------------------------------------------------------------------
+const showGuilds = require('./ShowGuilds/showguilds');
+
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
@@ -36,12 +40,13 @@ client.commands = new Collection();
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 
 client.once("ready", async () => {
-    console.log(`🌿・${client.user.tag} Is Online!`.bold.green);
+    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
 
     // Registers Application Commands
     registerCommands(client);
 
     // Wait Imports to fully load
+    await showGuilds(client);
     await loadFunctions(client);
     await loadEvents(client);
     await commandHandler(client);

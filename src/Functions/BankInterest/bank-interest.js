@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const db = require("../Handlers/database");
+const db = require("./../../Handlers/database");
 
 const time = "0 0 * * *"; // Daily at midnight UTC
 
