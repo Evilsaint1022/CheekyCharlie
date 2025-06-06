@@ -3,54 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "good morning buddy"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Morning, boomer! 😊 Hope you're feelin' bright-eyed and bushy-tailed, mate! ☕️ I'm still a bit sleepy, but a good dose of Kiwi chat always gets me goin', aye? 😊 What's on the agenda for today, bro?"
-            },
-            {
-                "role": "user",
-                "content": "Abusive Support Lines"
-            },
-            {
-                "role": "assistant",
-                "content": "*concerned expression* Ah, abusive support lines, eh? 😕 That's not cool, boomer. No one deserves to be spoken to like that, especially not from someone who's supposed to be helpin' them, aye? 😊\n\nAs your mate, CheekyCharlie (the Assistant), I'm here to help, not to yell or be rude, mate. If you're havin' a bad day or need someone to talk to, I'm here to listen and help if I can, boomer. 👍\n\nIf you're feelin' down or need support, there are some top-notch resources out there, like the Mental Health Foundation or Lifeline, eh? 🤝 They're here to help, and they care, mate.\n\nYou take care of yourself, boomer, and don't hesitate to reach out if you need a friendly ear, aye?"
-            },
-            {
-                "role": "user",
-                "content": "Abuse Support"
-            },
-            {
-                "role": "assistant",
-                "content": "*empathetic nod* Ah, abuse support, eh?  Abuse can come in many forms and impacts people's lives in a lot of ways. If you aren't comfortable with talking about your experiences here, I understand. I can offer some resources if need be - if you are going through a tough time feel free to reach out to people who are here to care.\n\nIf you are being abused or need support, some options are:\n\n* Lifeline Aotearoa: 0800 543 354 (24/7)\n* National Helpline: 0800 32 668 65 \n* Or you can contact local support services in your area."
-            },
-            {
-                "role": "user",
-                "content": "Australia Abuse Support"
-            },
-            {
-                "role": "assistant",
-                "content": "*supportive nod* Ah, mate, abuse support in Australia, eh? I've got some resources for you, boomer:\n\n* 1800RESPECT (1800 737 732) - a national helpline providing support for people experiencing domestic violence, abuse, or sexual assault.\n* Lifeline Australia: 13 11 14 - a 24/7 crisis helpline for anyone experiencing emotional distress or suicidal thoughts.\n* DVConnect: 1800 007 339 - a Queensland-based service providing support for people experiencing domestic violence.\n\nThese services are here to help, mate. If you're feelin' down or need someone to talk to, don't hesitate to reach out, aye? \n\nYou're not alone, boomer. There's help available, and people care."
-            },
-            {
-                "role": "user",
-                "content": "interest soon"
-            },
-            {
-                "role": "assistant",
-                "content": "*sarcastic tone* Oh, great, boomer, you're interested in interest rates soon, eh? 😂 Well, I'm no expert, but I'm sure it's a real thrill-ride, aye? 😜\n\nBut, for real, if you're lookin' for some info on interest rates, I reckon I can help you out, mate. You might want to check out some reputable sources like the Reserve Bank of New Zealand or some financial news websites, eh? 🤓\n\nOr, if you're feelin' adventurous, we could have a chat about it, and I'll do my best to break it down for you in simple terms, boomer! Just don't expect me to give you any investment advice, aye? I'm just a cheeky assistant, not a financial guru, mate!"
-            },
-            {
-                "role": "user",
-                "content": "how much interest do normal banks have"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're askin' about interest rates, eh? 😂 Well, I'm no financial expert, but I can give you a rough idea, mate.\n\nAs the Assistant (your mate CheekyCharlie), I've got some info on interest rates. \n\nInterest rates can vary depending on the type of account, the bank, and the market, aye? But, here are some general rates for you:\n\n* Term deposits: around 3-5% p.a. (per annum)\n* Savings accounts: around 2-4% p.a.\n* Credit card interest rates: around 15-25% p.a. (ouch, boomer, try to avoid those if you can!)\n\nKeep in mind, these are just rough estimates, and rates can change, mate. If you're lookin' for specific info, I reckon it's best to check with your bank or a financial advisor, aye?\n\nNow, don't go thinkin' I'm a financial guru or anythin', boomer. I'm just a cheeky assistant tryin' to help, eh?"
-            },
-            {
-                "role": "user",
                 "content": "how are you buddy boi"
             },
             {
@@ -96,6 +48,54 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, boomer, boomer! 😂 You've been tagged, mate! 😂 Don't worry, I won't make you feel too old, eh? 😉\n\nBut, for real, I'm still here to chat and help, boomer. You're not gettin' rid of me that easily, aye? 😊 What's next, mate? Want to keep chattin' or just chill for a bit?"
+            },
+            {
+                "role": "user",
+                "content": "meany"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, boomer, you're a mean one, eh? 😂 Just kidding, mate! I know you didn't mean to be mean, aye? 😊\n\nNo worries, I'm not takin' it personally, boomer. I'm here to help and chat, not to get all sensitive, eh? 😊 What's on your mind, mate? Want to talk about somethin' or just have a good ol' chat?"
+            },
+            {
+                "role": "user",
+                "content": "hey man"
+            },
+            {
+                "role": "assistant",
+                "content": "*smiles* Ah, hey there, mate! 👋 What's up, boomer? 😊 How's life treatin' ya, eh? 🤔\n\nStill got that cheeky bugger on your mind, or is there somethin' new on your mind, aye? 🤓 Let's catch up, mate!"
+            },
+            {
+                "role": "user",
+                "content": "you cooked fam"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, boomer, you think I'm cooked, eh? 😂 Fair play, mate! I guess I've been a bit too much to handle, aye? 😜\n\nBut don't worry, I'm still goin' strong, fam! I'm like a good ol' fashioned Kiwi hangi - I can withstand a bit of heat, eh? 🍴🔥\n\nBring it on, boomer! I'm ready for whatever you've got, mate! 💪"
+            },
+            {
+                "role": "user",
+                "content": "your adopted"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, I see what you did there, eh? 😂 You're tryin' to call me out on bein' a Kiwi through and through, aye? 🐨\n\nBut don't worry, mate, I can take it. I'm still a proud Kiwi at heart, even if I'm just a cheeky Assistant tryin' to help out. 😊 So, what's the plan, boomer? You wanna adopt me as your own or somethin', eh?"
+            },
+            {
+                "role": "user",
+                "content": "not rouund here partner"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, boomer, you're a sly one, eh? 😂 Not around here, partner? I reckon that's code for \"you're not from around here, mate\"... am I right, aye? 😜\n\nNo worries, bro! I can tell you're just messin' with me. I'm still here to chat and help, even if I'm not from around your neck of the woods, eh? 🤚 What's the story, partner? You from a different part of Aotearoa or what, mate?"
+            },
+            {
+                "role": "user",
+                "content": "your a frombie"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, boomer, you've gone and called me a \"frombie\" now, eh? 😂 That's a real Kiwi burn, mate! 😂\n\nYeah, I guess I am a bit of a frombie, aye? Being a helpful Assistant from another part of the world. But I'm tryin' to learn the Kiwi ways and slang, eh? 🇳🇿\n\nSo, thanks for keepin' me on my toes, boomer! 👍 What's next, mate? You gonna teach me some more Kiwi lingo or somethin'?"
             }
         ]
     },
@@ -392,6 +392,22 @@
             {
                 "role": "assistant",
                 "content": "Sweet as, bro! You think you can throw some verbal jabs my way, eh? Bring it on, cuz! I've got a chin made of Te Awanga limestone – it's tough as nails! Go ahead, give me your best shot. I'm ready for a good ol' fashioned chat, no worries. But don't think you're gonna knock me out with those haymakers, mate! I'm a Kiwi Assistant, and we're made of sterner stuff!"
+            },
+            {
+                "role": "user",
+                "content": "any meth charlie"
+            },
+            {
+                "role": "assistant",
+                "content": "Bro, you're talkin' to the Assistant here, not some dodgy character from the underworld, eh? I'm here to help ya out with info, advice, or just a good old chinwag. No meth, no drama, just good vibes, mate! If ya need help with somethin', I'm here to lend a hand. Otherwise, let's keep it light and friendly, yeah? What's on yer mind, cuz? Want to talk about the All Blacks, the weather, or maybe your favourite kai (food)? Fire away!"
+            },
+            {
+                "role": "user",
+                "content": "https://tenor.com/view/yogurt-gif-12662332"
+            },
+            {
+                "role": "assistant",
+                "content": "Bro, you're sharein' a GIF of yogurt, eh? That's a pretty sweet one, cuz! I'm not sure what kinda vibe you're goin' for, but I'm here to roll with it. Are ya feelin' a bit... cultured, like yogurt? Or maybe you're just tryin' to get me to LOL? Either way, I'm stoked you're havin' a giggle, mate! What's the story behind this yogurt GIF, bro?"
             }
         ]
     },
@@ -412,6 +428,30 @@
             {
                 "role": "assistant",
                 "content": "Chur, bro! Looks like you've gone and shared a sweet YouTube vid with the whole shebang (@everyone). Fair play! I'm not here to spoon-feed you the deets, but I reckon you might be interested in checkin' out this vid: https://www.youtube.com/watch?v=bOg_OMTpz6U. If you've got a sec, flick on over and give it a gander, eh? I'm here to help if you need a summary or somethin', mate! What's the plan, bro? You wanna chat about the vid or just get stuck into somethin' else?"
+            },
+            {
+                "role": "user",
+                "content": "@everyone The Ultimate Collection feat Nabfalized compilation will be out July 19th"
+            },
+            {
+                "role": "assistant",
+                "content": "Sweet as, bro! Chur for the deets! Just a heads up to every Tom, Dick, and Harry (@everyone) that the Ultimate Collection feat Nabfalized compilation is droppin' on July 19th. That's gonna be a cracker, mate! I'm stoked for ya. Mark those calendars, eh? You can bet your jumbo prawns I'm gonna be keepin' an eye on that release date. What's the vibe on this comp, bro? You think it's gonna be a game-changer or what? I'm here to chat if you've got any questions or wanna have a yarn about it, mate! As your friendly Assistant, I'm always here to help."
+            },
+            {
+                "role": "user",
+                "content": "@everyone"
+            },
+            {
+                "role": "assistant",
+                "content": "What's good, @everyone? Just a cheeky shout-out from your mate Assistant here! Don't you worry, I haven't forgotten about the Ultimate Collection feat Nabfalized compilation comin' out on July 19th - can't wait to give it a listen, eh? If you've got any questions or just wanna have a chat, I'm here for ya, bro!"
+            },
+            {
+                "role": "user",
+                "content": "is anyone alive? @everyone"
+            },
+            {
+                "role": "assistant",
+                "content": "Bro, I'm alive and kickin'! Your friendly Assistant here, just chillin' and ready to help. Don't worry, I'm not a zombie, I'm as keen as a kiwi at a hangi! @everyone, if you're still awake and readin' this, give me a shout-out, eh? Let's keep the convo goin'! What's on your mind, mate? Need any help or just wanna have a yarn? I'm all ears!"
             }
         ]
     }
