@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../../Handlers/database');
+const SimpleDeck = require('../../Utilities/Cards/SimpleDeck');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,12 +32,40 @@ module.exports = {
             return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
         }
 
-        // Game logic
-        const drawCard = () => Math.floor(Math.random() * 10) + 1;
-        let playerCards = [drawCard(), drawCard()];
-        let dealerCards = [drawCard(), drawCard()];
-        let playerTotal = playerCards.reduce((a, b) => a + b, 0);
-        let dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
+        // Initialize deck
+        const deck = new SimpleDeck();
+        deck.shuffle();
+
+        // Game state
+        const playerCards = [deck.draw(), deck.draw()];
+        const dealerCards = [deck.draw(), deck.draw()];
+
+        const calculateTotal = (cards) => {
+            let total = 0;
+            let aces = 0;
+
+            for (const card of cards) {
+                if (['JACK', 'QUEEN', 'KING'].includes(card.rank)) {
+                    total += 10;
+                } else if (card.rank === 'ACE') {
+                    total += 11;
+                    aces += 1;
+                } else {
+                    total += parseInt(card.rank);
+                }
+            }
+
+            // Adjust for aces
+            while (total > 21 && aces > 0) {
+                total -= 10;
+                aces -= 1;
+            }
+
+            return total;
+        };
+
+        let playerTotal = calculateTotal(playerCards);
+        let dealerTotal = calculateTotal(dealerCards);
 
         const checkGameResult = () => {
             if (playerTotal > 21) return 'lose';
@@ -47,39 +76,93 @@ module.exports = {
             return null;
         };
 
+        const suitEmojis = {
+            'HEARTS': '❤️',
+            'DIAMONDS': '♦️',
+            'CLUBS': '♣️',
+            'SPADES': '♠️'
+        };
+
+        const rankSymbols = {
+            'ACE': 'A',
+            '2': '2',
+            '3': '3',
+            '4': '4',
+            '5': '5',
+            '6': '6',
+            '7': '7',
+            '8': '8',
+            '9': '9',
+            '10': '10',
+            'JACK': 'J',
+            'QUEEN': 'Q',
+            'KING': 'K'
+        };
+
+        const formatCards = (cards) =>
+            cards.map(c => `${rankSymbols[c.rank]}${suitEmojis[c.suit]}`).join(', ');
+
         const buttons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder().setCustomId('hit').setLabel('Hit').setStyle(ButtonStyle.Primary),
                 new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
             );
 
+        // Detect instant Blackjack
+        const isPlayerBlackjack = (playerCards.length === 2 && playerTotal === 21);
+
+        if (isPlayerBlackjack) {
+            balance += bet * 1.5; // 1.5x payout for Blackjack
+            await db.balance.set(balanceKey, balance);
+
+            const bjEmbed = {
+                color: 0xFFD700,
+                title: `**__♠️ Blackjack! ♠️__**`,
+                description: `You hit **Blackjack** and win ${bet * 1.5} Coins 🪙!`,
+                thumbnail: { url: user.displayAvatarURL() },
+                fields: [
+                    { name: 'Your Cards', value: formatCards(playerCards), inline: true },
+                    { name: 'Your Total', value: playerTotal.toString(), inline: true },
+                    { name: `Dealer's Cards`, value: formatCards(dealerCards), inline: false },
+                    { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
+                    { name: '**__Your Balance__**', value: balance.toString(), inline: false }
+                ]
+            };
+
+            await interaction.reply({ embeds: [bjEmbed], components: [] });
+
+            // Console Logs
+            console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} hit Blackjack.`);
+            return;
+        }
+
+        // Regular game flow
         const embed = {
             color: 0xFFFFFF,
             title: `**__♦️ Blackjack ♦️__**`,
             description: `Placed Bet: ${bet} Coins 🪙\n\`Your move: Hit or Stand?\``,
             thumbnail: { url: user.displayAvatarURL() },
             fields: [
-                { name: 'Your Cards', value: playerCards.join(', '), inline: true },
+                { name: 'Your Cards', value: formatCards(playerCards), inline: true },
                 { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+                { name: `Dealer's Cards`, value: `${rankSymbols[dealerCards[0].rank]}${suitEmojis[dealerCards[0].suit]}, ?`, inline: false }
             ]
         };
 
         await interaction.reply({ embeds: [embed], components: [buttons] });
         const message = await interaction.fetchReply();
 
-
         const filter = i => i.user.id === user.id;
         const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
         collector.on('collect', async (buttonInteraction) => {
             if (buttonInteraction.customId === 'hit') {
-                playerCards.push(drawCard());
-                playerTotal = playerCards.reduce((a, b) => a + b, 0);
+                playerCards.push(deck.draw());
+                playerTotal = calculateTotal(playerCards);
             } else if (buttonInteraction.customId === 'stand') {
                 while (dealerTotal < 17) {
-                    dealerCards.push(drawCard());
-                    dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
+                    dealerCards.push(deck.draw());
+                    dealerTotal = calculateTotal(dealerCards);
                 }
             }
 
@@ -96,9 +179,9 @@ module.exports = {
                     description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${bet} Coins 🪙!`,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
-                        { name: 'Your Cards', value: playerCards.join(', '), inline: true },
+                        { name: 'Your Cards', value: formatCards(playerCards), inline: true },
                         { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                        { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
+                        { name: `Dealer's Cards`, value: formatCards(dealerCards), inline: false },
                         { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
                         { name: '**__Your Balance__**', value: balance.toString(), inline: false }
                     ]
@@ -113,9 +196,9 @@ module.exports = {
                     description: `Bet Placed: ${bet} Coins 🪙\n\`Your move: Hit or Stand?\``,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
-                        { name: 'Your Cards', value: playerCards.join(', '), inline: true },
+                        { name: 'Your Cards', value: formatCards(playerCards), inline: true },
                         { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                        { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+                        { name: `Dealer's Cards`, value: `${rankSymbols[dealerCards[0].rank]}${suitEmojis[dealerCards[0].suit]}, ?`, inline: false }
                     ]
                 };
 
@@ -123,12 +206,21 @@ module.exports = {
             }
         });
 
-        collector.on('end', () => {
-            if (!message.editable) return;
-            message.edit({ components: [] });
+        collector.on('end', async (collected) => {
+            if (collected.size === 0) {
+                if (!message.editable) return;
+
+                await message.edit({
+                    content: '⏳ Time expired! Game cancelled.',
+                    components: []
+                });
+            } else {
+                if (!message.editable) return;
+                message.edit({ components: [] });
+            }
         });
 
-         // Console Logs
-         console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
+        // Console Logs
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
     }
 };

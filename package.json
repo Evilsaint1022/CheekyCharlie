@@ -28,6 +28,7 @@
     "child_process": "^1.0.2",
     "cli-table3": "^0.6.5",
     "colors": "^1.4.0",
+    "deckofcards": "^1.2.2",
     "discord.js": "^14.19.3",
     "dotdatabase": "^1.0.4",
     "dotenv": "^16.5.0",
