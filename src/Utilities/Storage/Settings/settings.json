@@ -4,13 +4,23 @@
         "DropPartyChannel": "1346955022461829162",
         "JoinToCreateVC": "1347010006054342738",
         "LevelChannel": "1346998014115578010",
-        "DropPartyChannelId": "1130986095392346114",
-        "lastMessageDropTime": 1749557874417
+        "lastMessageDropTime": 1749567949525
     },
     "OᴄᴇᴀɴɪᴄBʀᴏs | 18+_1367474417784979507": {
         "DropPartyChannel": "1367474418992943136",
         "LevelChannel": "1367479019813212230",
         "JoinToCreateVC": "1367474418992943137",
-        "lastMessageDropTime": 1749566545850
-    }
+        "lastMessageDropTime": 1749567576797
+    },
+    "𝐊𝟐Chat 18+ [SFW]_1130986094758993960": {
+        "LevelChannel": "1131007407032643725",
+        "JoinToCreateVC": "1145881917036695612",
+        "DropPartyChannel": "1130986095392346114"
+    },
+    "The Cool Kids_1297062144080089088": {
+        "JoinToCreateVC": "1297062144759828526",
+        "DropPartyChannel": "1297062144759828525",
+        "LevelChannel": "1347401540054417408"
+    },
+    "modmailChannelId": "1376046599322603570"
 }
