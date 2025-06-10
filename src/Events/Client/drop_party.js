@@ -19,19 +19,21 @@ dropPartyEvent.clearDrop = function () {
 const cooldownDuration = 10 * 60 * 1000; // 10 minutes
 let isProcessing = false; // Lock to prevent concurrent execution
 
-async function getLastDropTime(guildId) {
+async function getLastDropTime(guildKey) {
     try {
-        const cooldownData = await db.settings.get(`${guildId}_dropPartyCooldown`);
-        return cooldownData?.lastMessageDropTime || 0;
+        const settingsData = await db.settings.get(guildKey);
+        return settingsData?.lastMessageDropTime || 0;
     } catch (error) {
         console.error('[🎉] [DROP PARTY] Error reading cooldown from database:', error);
         return 0;
     }
 }
 
-async function saveLastDropTime(guildId, timestamp) {
+async function saveLastDropTime(guildKey, timestamp) {
     try {
-        await db.settings.set(`${guildId}_dropPartyCooldown`, { lastMessageDropTime: timestamp });
+        const settingsData = await db.settings.get(guildKey) || {};
+        settingsData.lastMessageDropTime = timestamp;
+        await db.settings.set(guildKey, settingsData);
     } catch (error) {
         console.error('[🎉] [DROP PARTY] Error saving cooldown to database:', error);
     }
@@ -50,14 +52,15 @@ module.exports = {
 
         const guildId = message.guild.id;
         const guildName = message.guild.name;
+        const guildKey = `${guildName}_${guildId}`;
 
-        // Load the DropPartyChannelId from the database
-        let DropPartyChannelId;
+        // Load the DropPartyChannel from the database
+        let DropPartyChannel;
         try {
-            const settingsData = await db.settings.get(`${guildName}_${guildId}_channelSettings`);
-            DropPartyChannelId = settingsData?.DropPartyChannelId;
+            const settingsData = await db.settings.get(`${guildKey}`);
+            DropPartyChannel = settingsData?.DropPartyChannel;
 
-            if (!DropPartyChannelId) {
+            if (!DropPartyChannel) {
                 return;
             }
         } catch (err) {
@@ -65,12 +68,13 @@ module.exports = {
             return;
         }
 
-        if (message.channel.id !== DropPartyChannelId) {
+        if (message.channel.id !== DropPartyChannel) {
             return;
         }
 
         const currentTime = Date.now();
-        const lastMessageDropTime = await getLastDropTime(guildName + '_' + guildId);
+        const lastMessagesDropSettings = await db.settings.get(`${guildKey}`) || {};
+        const lastMessageDropTime = lastMessagesDropSettings.lastMessageDropTime || 0;
 
         if (currentTime - lastMessageDropTime < cooldownDuration || isProcessing) {
             return;
@@ -79,7 +83,7 @@ module.exports = {
         isProcessing = true;
 
         try {
-            const channel = await message.client.channels.fetch(DropPartyChannelId);
+            const channel = await message.client.channels.fetch(DropPartyChannel);
             if (channel) {
 
                 const dropMessage = await channel.send(
@@ -100,7 +104,7 @@ module.exports = {
                 console.log(`[🎉] [DROP PARTY] ${guildName} - Channel not found or could not be fetched.`);
             }
 
-            await saveLastDropTime(guildName + '_' + guildId, currentTime);
+            await saveLastDropTime(guildKey, currentTime);
         } catch (error) {
             console.error(`[🎉] [DROP PARTY] ${guildName} - Error sending drop party message:`, error);
         } finally {

@@ -11,6 +11,7 @@ module.exports = {
                 .setDescription('The channel to set')
                 .setRequired(true)
         ),
+        
     async execute(interaction) {
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
@@ -30,13 +31,19 @@ module.exports = {
 
         const channel = interaction.options.getChannel('channel');
 
-        // Update the database with the new Join To Create channel
-        db.settings.set(`${guildName}_${guildId}_joinToCreateVC`, channel.id);
+        // Fetch current settings or default to empty object
+        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+
+        // Update only the JoinToCreateVC field
+        currentSettings.JoinToCreateVC = channel.id;
+
+        // Save updated settings
+        db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${interaction.guild.name} ${guildName}_${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
+        console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
 
-        return interaction.reply({ content: `This channel is now set to Join To Create: <#${channel.id}>.`, flags: 64 });
+        return interaction.reply({ content: `✅ This channel is now set to Join To Create: <#${channel.id}>.`, flags: 64 });
     },
 };

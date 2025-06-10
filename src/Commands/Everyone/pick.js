@@ -53,7 +53,7 @@ module.exports = {
             balance += coinsEarned;
 
             // Console Logs
-            console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} picked ${coinsEarned} Coins. 🪙`);
+            console.log(`[${new Date().toLocaleTimeString()} [💰] ${interaction.guild.name} ${interaction.user.username} picked ${coinsEarned} Coins. 🪙`);
 
             // Save the updated balance to the database
             try {

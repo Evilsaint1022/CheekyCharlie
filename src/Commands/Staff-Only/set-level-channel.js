@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { PermissionsBitField } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
 const db = require('../../Handlers/database');
 
 module.exports = {
@@ -13,6 +11,7 @@ module.exports = {
                 .setDescription('The channel to send level-up messages')
                 .setRequired(true)
         ),
+
     async execute(interaction) {
         const guildName = interaction.guild.name;
         const guildId = interaction.guild.id;
@@ -28,27 +27,39 @@ module.exports = {
             !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
             !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
         ) {
-            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: 64, });
+            return interaction.reply({ content: 'You do not have permission to set the level-up channel!', flags: 64 });
         }
 
         const channel = interaction.options.getChannel('channel');
 
-        // Save the level-up channel ID to the database
-        db.settings.set(`${guildName}_${guildId}_levelChannelId`, channel.id);
+        // Fetch current settings or default to empty object
+        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+
+        // Update only the LevelChannelId field
+        currentSettings.LevelChannel = channel.id;
+
+        // Save updated settings
+        db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         // Logging the action
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
         console.log(`[${timestamp}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
 
-        return interaction.reply({ content: `Level-up messages will now be sent in <#${channel.id}>.`, flags: 64, });
+        return interaction.reply({ content: `✅ Level-up messages will now be sent in <#${channel.id}>.`, flags: 64 });
     },
 
     sendLevelUpMessage: async function (client, guildId, levelUpMessage, fallbackChannel) {
-        // Fetch the level-up channel ID from the database
-        const channelId = await db.settings.get(`${guildName}_${guildId}.levelChannelId`);
+        // Fetch guild name for the key (optional, fallback to unknown)
+        const guild = await client.guilds.fetch(guildId).catch(() => null);
+        const guildName = guild ? guild.name : 'UnknownGuild';
 
-        console.log(`Loaded channelId: ${channelId}`);
+        // Fetch the full settings object
+        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+
+        // Get LevelChannelId field
+        const channelId = currentSettings.LevelChannelId;
+        console.log(`Loaded LevelChannel: ${channelId}`);
 
         let targetChannel = null;
 

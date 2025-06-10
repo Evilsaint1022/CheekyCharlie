@@ -27,7 +27,8 @@ module.exports = {
         const guildId = guild.id;
         const guildName = guild.name;
 
-        const joinToCreateVC = await db.settings.get(`${guildName}_${guildId}_joinToCreateVC`);
+        const settings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const joinToCreateVC = settings.JoinToCreateVC;
 
         if (!joinToCreateVC || joinToCreateVC !== newState.channel.id) return;
 

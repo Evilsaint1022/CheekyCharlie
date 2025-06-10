@@ -21,22 +21,26 @@ module.exports = {
         ) {
             return interaction.reply({
                 content: 'You do not have permission to remove the party drops channel!',
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
+
+        // Fetch current settings or default to empty object
+        const channelSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
 
         // Check if a party drop channel is set
-        const channelSettings = await db.settings.get(`${guildName}_${guildId}_channelSettings`) || {};
-        if (!channelSettings.DropPartyChannelId) {
+        if (!channelSettings.DropPartyChannel) {
             return interaction.reply({
                 content: 'No party drop channel was set.',
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
 
-        // Remove the DropPartyChannelId from the database
-        delete channelSettings.DropPartyChannelId;
-        db.settings.set(`${guildName}_${guildId}_channelSettings`, channelSettings);
+        // Remove the DropPartyChannel field only
+        delete channelSettings.DropPartyChannel;
+
+        // Save updated settings object
+        db.settings.set(`${guildName}_${guildId}`, channelSettings);
 
         // Logging the action
         const timestamp = new Date().toISOString();
@@ -44,7 +48,7 @@ module.exports = {
 
         return interaction.reply({
             content: 'The party drops channel has been removed.',
-            flags: MessageFlags.Ephemeral,
+            flags: 64,
         });
     },
 };
