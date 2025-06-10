@@ -8,6 +8,7 @@ module.exports = {
         if (message.channel.isDMBased()) return;
 
         const timestamp = new Date().toLocaleTimeString();
+        const guild = message.guild;
         const guildId = message.guild.id;
         const guildName = message.guild.name;
         const userId = message.author.id;
@@ -29,16 +30,19 @@ module.exports = {
             userData.xp -= xpForNextLevel;
             userData.level += 1;
 
-            // Fetch the level-up channel ID from the database
-            const levelChannelId = await db.settings.get(`${guildName}_${guildId}_levelChannelId`);
-            let targetChannel = message.channel; // Default to the current channel
+        // Construct the guild settings key
+        const guildKey = `${guild.name}_${guild.id}`;
+
+        // Fetch the level-up channel ID from the database
+        const settings = await db.settings.get(guildKey) || {};
+        const levelChannelId = settings.LevelChannel;
 
             if (levelChannelId) {
-                const levelChannel = message.guild.channels.cache.get(levelChannelId);
-                if (levelChannel) {
-                    targetChannel = levelChannel; // Use the specified channel if valid
-                }
-            }
+        const levelChannel = message.guild.channels.cache.get(levelChannelId);
+            if (levelChannel) {
+            targetChannel = levelChannel; // Use the actual channel object
+        }
+    }
 
             // Send the level-up message
             targetChannel.send(`🎉**Congratulations ${message.author.username}!🎉**\n**You've leveled up to level ${userData.level}!**`).then(() => {
