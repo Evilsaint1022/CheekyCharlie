@@ -8,8 +8,20 @@ module.exports = {
     description: 'Get a random dog image from The Dog API',
   },
   async execute(interaction) {
+
+  // Prevent command usage in DMs
+    if (interaction.channel.isDMBased()) return;// Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
     const guildName = interaction.guild.name;
-        const guildId = interaction.guild.id;
+    const guildId = interaction.guild.id;
+
+
     try {
       const { data } = await axios.get('https://api.thedogapi.com/v1/images/search', {
         headers: { 'x-api-key': dogApiKey },

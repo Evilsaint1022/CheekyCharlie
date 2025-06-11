@@ -20,6 +20,14 @@ module.exports = {
     // Command execution
     async execute(interaction) {
 
+        // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
         // Get the target user (either the command executor or a mentioned user)
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;

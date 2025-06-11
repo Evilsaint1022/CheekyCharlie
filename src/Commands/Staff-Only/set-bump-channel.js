@@ -12,6 +12,15 @@ module.exports = {
     ),
 
   async execute(interaction) {
+
+    // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
     try {
       const { guild, user, options } = interaction;
       const guildId = guild.id;

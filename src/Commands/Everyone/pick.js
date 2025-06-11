@@ -11,6 +11,15 @@ module.exports = {
         .setDescription('Pick up the dropped coins for points!'),
 
     async execute(interaction) {
+
+        // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
         try {
             const guildId = interaction.guild.id;
             const userId = interaction.user.id;

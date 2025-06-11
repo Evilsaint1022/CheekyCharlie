@@ -7,6 +7,15 @@ module.exports = {
     .setDescription('Remove the currently set verified role.'),
 
   async execute(interaction) {
+
+   // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
     const member = interaction.member;
     const guild = interaction.guild;
     const guildId = interaction.guild.id;
