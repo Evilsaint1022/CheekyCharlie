@@ -21,6 +21,15 @@ module.exports = {
     ),
 
   async execute(interaction) {
+
+    // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
     const sender = interaction.user;
     const user = interaction.options.getUser('user');
     const amount = interaction.options.getInteger('amount');

@@ -5,6 +5,14 @@ module.exports = {
         .setName('invite')
         .setDescription('Invite your friends!'),
     async execute(interaction) {
+
+        // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
         const { channel, user, guild } = interaction;
 
         try {

@@ -12,6 +12,15 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
+
+        // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
         const { guild, user } = interaction;
         const bet = interaction.options.getInteger('bet');
         const balanceKey = `${user.username}_${user.id}.balance`;

@@ -7,6 +7,15 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
+
+       // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
         // Log command usage
         console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the leaderboard command.`);
 

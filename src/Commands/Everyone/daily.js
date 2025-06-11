@@ -14,6 +14,15 @@ module.exports = {
         .setDescription('Claim your daily points!'),
 
     async execute(interaction) {
+
+        // Prevent command usage in DMs
+        if (interaction.channel.isDMBased()) {
+        return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64 // Makes the reply ephemeral
+    });
+}
+
         const { user, guild } = interaction;
         const timestamp = new Date().toLocaleTimeString();
         const guildIconUrl = guild.iconURL({ dynamic: true, format: 'png' }) || '';
