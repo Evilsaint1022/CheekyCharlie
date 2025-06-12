@@ -4,55 +4,68 @@ const db = require('../../Handlers/database');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
-        if (message.author.bot) return;
-        if (message.channel.isDMBased()) return;
+        if (message.author.bot || message.channel.isDMBased()) return;
 
-        const timestamp = new Date().toLocaleTimeString();
-        const guild = message.guild;
-        const guildId = message.guild.id;
-        const guildName = message.guild.name;
-        const userId = message.author.id;
-        const username = message.author.username;
+        const { guild, member, author } = message;
 
-        // Fetch user level data from the database
-        const userKey = `${guildName}_${username}_${userId}_level`;
-        let userData = await db.levels.get(userKey) || { xp: 0, level: 1 };
+        const userId = author.id;
+        const username = author.username;
+        const guildId = guild.id;
+        const guildName = guild.name;
 
-        // Generate random XP between 5 and 15 for the user
+        const levelKey = `${guildName}_${username}_${userId}_level`;
+        const levelRolesKey = `${guildName}_${guildId}`;
+
+        // Get level data
+        let userData = await db.levels.get(levelKey) || { xp: 0, level: 1 };
+
+        // Generate XP and update
         const xpGain = Math.floor(Math.random() * 11) + 5;
         userData.xp += xpGain;
 
-        // Calculate XP required for the next level (increments of 350 per level)
         const xpForNextLevel = userData.level * 350;
 
-        // Level up if XP threshold is reached
         if (userData.xp >= xpForNextLevel) {
             userData.xp -= xpForNextLevel;
             userData.level += 1;
 
-        // Construct the guild settings key
-        const guildKey = `${guild.name}_${guild.id}`;
+            // Announce level up
+            message.channel.send(
+                `🎉 **Congratulations ${author}!**\nYou've leveled up to level **${userData.level}**!`
+            );
+        }
 
-        // Fetch the level-up channel ID from the database
-        const settings = await db.settings.get(guildKey) || {};
-        const levelChannelId = settings.LevelChannel;
+        // Save updated XP/Level
+        await db.levels.set(levelKey, userData);
 
-            if (levelChannelId) {
-        const levelChannel = message.guild.channels.cache.get(levelChannelId);
-            if (levelChannel) {
-            targetChannel = levelChannel; // Use the actual channel object
+        // Retrieve level role milestones from DB
+        const levelRoles = await db.levelroles.get(levelRolesKey) || {};
+        const currentLevel = userData.level;
+
+        try {
+            const userRoles = member.roles.cache;
+
+            // Get highest milestone role the user qualifies for
+            const milestoneRoleId = Object.entries(levelRoles)
+                .filter(([level]) => currentLevel >= parseInt(level))
+                .map(([, roleId]) => roleId)
+                .pop();
+
+            // Remove all milestone roles that shouldn't be held
+            for (const [, roleId] of Object.entries(levelRoles)) {
+                if (roleId !== milestoneRoleId && userRoles.has(roleId)) {
+                    await member.roles.remove(roleId);
+                }
+            }
+
+            // Add the correct milestone role if needed
+            if (milestoneRoleId && !userRoles.has(milestoneRoleId)) {
+                const role = guild.roles.cache.get(milestoneRoleId);
+                if (role) await member.roles.add(role);
+            }
+
+        } catch (err) {
+            console.error(`Failed to update roles for ${author.tag}:`, err);
         }
     }
-
-            // Send the level-up message
-            targetChannel.send(`🎉**Congratulations ${message.author.username}!🎉**\n**You've leveled up to level ${userData.level}!**`).then(() => {
-                console.log(`[${timestamp}] ${guildName}_${guildId} Level-up message sent to channel ${targetChannel.id} for the user ${message.author.tag}.`);
-            }).catch(error => {
-                console.error(`Failed to send level-up message to channel ${targetChannel.id}:`, error);
-            });
-        }
-
-        // Save updated user level data to the database
-        db.levels.set(userKey, userData);
-    },
 };

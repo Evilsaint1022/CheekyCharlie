@@ -305,6 +305,36 @@ const commands = [
             }
         ]
     },
+    {
+        name: "set-level-role",
+        description: "Assigns a role to a specific level.",
+        options: [
+            {
+                name: "level",
+                description: "The level to assign the role to",
+                type: 4,
+                required: true,
+            },
+            {
+                name: "role",
+                description: "The role to assign at that level",
+                type: 8,
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "remove-level-role",
+        description: "Removes the role assigned to a specific level.",
+        options: [
+            {
+                name: "level",
+                description: "The level to remove the role from",
+                type: 4,
+                required: true,
+            }
+        ]
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
