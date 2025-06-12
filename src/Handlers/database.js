@@ -11,6 +11,7 @@ const db = {
     balance: new DotDB("./src/Utilities/Storage/Global/Economy/Balance/balance.json"),
     bank: new DotDB("./src/Utilities/Storage/Global/Economy/Bank/bank.json"),
     levels: new DotDB("./src/Utilities/Storage/Levels/levels.json"),
+    levelroles: new DotDB("./src/Utilities/Storage/Levels/levelroles.json"),
     settings: new DotDB(`./src/Utilities/Storage/Settings/settings.json`),
     starboard: new DotDB("./src/Utilities/Storage/Settings/Starboard/starboardsettings.json"),
     starboardids: new DotDB("./src/Utilities/Storage/Settings/Starboard/Starboard_Ids.json"),
