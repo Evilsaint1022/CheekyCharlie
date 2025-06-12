@@ -4,7 +4,7 @@ const db = require('../../Handlers/database');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('level')
-        .setDescription('Check your current level or another user\'s level.')
+        .setDescription("Check your current level or another user's level.")
         .addUserOption(option =>
             option.setName('user')
                 .setDescription('The user to check the level of')
@@ -12,52 +12,53 @@ module.exports = {
         ),
 
     async execute(interaction) {
-
         // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
-        return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64 // Ephemeral
+            });
+        }
 
-        // Log the command usage in the console
-        const guildName = interaction.guild.name;
-        const guildId = interaction.guild.id;
-        const username = interaction.user.username;
-
-        // Console Log
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${username} used the level command.`);
-
+        const guild = interaction.guild;
         const targetUser = interaction.options.getUser('user') || interaction.user;
 
-        try {
-            // Fetch user level data from the economy database
-            const userKey = `${guildName}_${targetUser.username}_${targetUser.id}_level`;
-            const userData = await db.levels.get(userKey);
+        const guildKey = `${guild.name}_${guild.id}`;
+        const userKey = `${targetUser.username}_${targetUser.id}`;
 
-            if (!userData) {
-                return interaction.reply(`${targetUser.username} hasn't gained any XP yet. They need to participate to earn XP!`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${targetUser.username} used the level command.`);
+
+        try {
+            const levelsData = await db.levels.get(guildKey);
+
+            if (!levelsData || !levelsData[userKey]) {
+                return interaction.reply({
+                    content: `${targetUser.username} hasn't gained any XP yet. They need to participate to earn XP!`,
+                    flags: 64
+                });
             }
 
-            const { level: userLevel, xp: userXp } = userData;
-            const nextLevelXp = userLevel * 350 + 350;
+            const { xp, level } = levelsData[userKey];
+            const nextLevelXp = level * 350 + 350;
 
-            // Create an embed to show the user's level and XP information
             const embed = new EmbedBuilder()
                 .setColor(0xFFFFFF)
                 .setTitle(`**${targetUser.username}'s Level**`)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .addFields(
-                    { name: 'Level', value: `${userLevel}`, inline: true },
-                    { name: 'XP', value: `${userXp} / ${nextLevelXp}`, inline: true }
+                    { name: 'Level', value: `${level}`, inline: true },
+                    { name: 'XP', value: `${xp} / ${nextLevelXp}`, inline: true }
                 )
                 .setFooter({ text: 'Keep earning XP to level up!' });
 
             return interaction.reply({ embeds: [embed] });
+
         } catch (error) {
-            console.error('Error accessing user level data:', error);
-            return interaction.reply('There was an error accessing level data. Please try again later.');
+            console.error('Error accessing level data:', error);
+            return interaction.reply({
+                content: 'There was an error accessing level data. Please try again later.',
+                flags: 64
+            });
         }
     },
 };
