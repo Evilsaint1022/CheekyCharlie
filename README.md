@@ -16,6 +16,20 @@ https://github.com/NZ-Linix/dotdatabase
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+# ✨ Features
+
+-> Play games like Blackjack  
+-> Full economy system  
+   -> Bank and wallet  
+   -> Daily commands and drop events  
+-> Level system with a leaderboard  
+-> Join-to-create voice channels  
+-> Custom starboard  
+-> Bump reminder  
+-> Custom AI chat  
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
 # 🎮 Application Commands
 
 **Available for Everyone:**
@@ -66,8 +80,6 @@ https://github.com/NZ-Linix/dotdatabase
 
 # 🐞 Bugs
 - No current bugs at this moment...
-
-`We apologize for the inconvenience. ❤️`
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@linix_red`
