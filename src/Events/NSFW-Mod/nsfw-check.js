@@ -18,7 +18,7 @@ module.exports = {
             // NSFW filter is disabled, do nothing
             return;
         }
-
+        const guildName = message.guild.name;
         const messageContent = message.content;
         const messageAttachments = message.attachments;
         const messageAttachmentURLs = messageAttachments.map(attachment => attachment.url);
@@ -214,7 +214,7 @@ module.exports = {
                         .catch(error => {console.log(error); return null;});
 
                         if (nsfwContainerMessage) {
-                            console.log('Message sent successfully:', nsfwContainerMessage.id);
+                            console.log(`[NSFW] ${guildName} - Message has been deleted:`, nsfwContainerMessage.id);
                         } else {
                             console.log('Message failed to send');
                         }
