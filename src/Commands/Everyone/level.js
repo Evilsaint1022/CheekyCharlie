@@ -21,12 +21,13 @@ module.exports = {
         }
 
         const guild = interaction.guild;
+        const interactionUser = interaction.user;
         const targetUser = interaction.options.getUser('user') || interaction.user;
 
         const guildKey = `${guild.name}_${guild.id}`;
         const userKey = `${targetUser.username}_${targetUser.id}`;
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${targetUser.username} used the level command.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interactionUser.username} used the level command to get ${targetUser.username}'s level.`);
 
         try {
             const levelsData = await db.levels.get(guildKey);
