@@ -80,7 +80,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 - 
-- `/toggle-nsfw-filter` - toggles the AI nsfw filtre.
+- `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
