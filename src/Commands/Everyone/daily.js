@@ -1,12 +1,9 @@
 // daily.js
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
-
 const db = require("../../Handlers/database");
 
-const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-const rewardAmount = 100; // Points to give
+const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
+const rewardAmount = 100; // Daily reward
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,24 +11,23 @@ module.exports = {
         .setDescription('Claim your daily points!'),
 
     async execute(interaction) {
-
-        // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
-        return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
         const { user, guild } = interaction;
+        const username = user.username;
+        const safeUsername = username.replace(/\./g, '_');
+        const keyBase = `${safeUsername}_${user.id}`;
         const timestamp = new Date().toLocaleTimeString();
-        const guildIconUrl = guild.iconURL({ dynamic: true, format: 'png' }) || '';
 
-        const lastClaim = await db.lastclaim.get(user.username + "_" + user.id + ".lastClaim") || 0;
-
+        const lastClaim = await db.lastclaim.get(`${keyBase}.lastClaim`) || 0;
         const currentTime = Date.now();
 
-        if (currentTime && (currentTime - lastClaim < dailyCooldown)) {
+        if (currentTime - lastClaim < dailyCooldown) {
             const timeLeft = dailyCooldown - (currentTime - lastClaim);
             const hours = Math.floor(timeLeft / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -43,30 +39,26 @@ module.exports = {
             });
         }
 
-        let balance = await db.balance.get(user.username + "_" + user.id + ".balance") || 0;
-
+        // Get current balance
+        let balance = await db.balance.get(`${keyBase}.balance`) || 0;
         balance += rewardAmount;
 
-        await db.balance.set(user.username + "_" + user.id + ".balance", balance);
+        // Save updated values
+        await db.balance.set(`${keyBase}.balance`, balance);
+        await db.lastclaim.set(`${keyBase}.lastClaim`, currentTime);
 
-        await db.lastclaim.set(user.username + "_" + user.id + ".lastClaim", currentTime);
-
-        // Create an embed message
+        // Build embed
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF) // Green color
-            .setTitle(`${user.username}'s Daily Coins`)
+            .setColor(0xFFFFFF)
+            .setTitle(`${username}'s Daily Coins`)
             .setDescription(`You have claimed your daily reward of **${rewardAmount} Coins🪙**!`)
-            .addFields(
-                { name: 'Total Balance', value: `${balance} Coins`, inline: true }
-            )
+            .addFields({ name: 'Total Balance', value: `${balance} Coins`, inline: true })
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Come back tomorrow for more!' })
             .setTimestamp();
 
-        // Reply with the embed
         await interaction.reply({ embeds: [embed] });
 
-        // Console Logs
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${interaction.user.username} used the daily command.`);
+        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${username} used the daily command.`);
     }
 };

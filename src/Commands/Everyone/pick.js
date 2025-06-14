@@ -11,25 +11,25 @@ module.exports = {
         .setDescription('Pick up the dropped coins for points!'),
 
     async execute(interaction) {
-
-        // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
-        return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
         try {
             const guildId = interaction.guild.id;
             const userId = interaction.user.id;
             const username = interaction.user.username;
 
-            // Access the current drop data
+            // Use safe key for DB access (replace . with _)
+            const safeUsername = username.replace(/\./g, '_');
+            const dbKey = `${safeUsername}_${userId}`;
+
             const dropPartyData = dropPartyEvent.dropPartyData;
             const dropMessage = dropPartyData?.message;
 
-            // Validate drop message
             if (!dropMessage || dropMessage.channel.id !== interaction.channel.id) {
                 return interaction.reply({
                     content: '**🪙 No coins to pick up right now!**',
@@ -37,7 +37,6 @@ module.exports = {
                 });
             }
 
-            // Check if the user has already picked
             if (pickedUsers.has(userId)) {
                 return interaction.reply({
                     content: '**🪙 You have already picked these coins!**',
@@ -45,33 +44,28 @@ module.exports = {
                 });
             }
 
-            // Add the user to the picked set
             pickedUsers.add(userId);
 
             // Fetch the user's current balance from the database
             let balance = 0;
             try {
-                const userData = await db.balance.get(`${username}_${userId}`);
+                const userData = await db.balance.get(dbKey);
                 balance = userData?.balance || 0;
             } catch (error) {
                 console.error('Error fetching user balance from database:', error);
             }
 
-            // Calculate coins earned and update the balance
             const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 coins
             balance += coinsEarned;
 
-            // Console Logs
-            console.log(`[${new Date().toLocaleTimeString()} [💰] ${interaction.guild.name} ${interaction.user.username} picked ${coinsEarned} Coins. 🪙`);
+            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned} Coins. 🪙`);
 
-            // Save the updated balance to the database
             try {
-                await db.balance.set(`${username}_${userId}`, { balance });
+                await db.balance.set(dbKey, { balance });
             } catch (error) {
                 console.error('Error saving user balance to database:', error);
             }
 
-            // Send response embed
             await interaction.reply({
                 embeds: [
                     {
@@ -82,7 +76,6 @@ module.exports = {
                 ],
             });
 
-            // Delete the reply after 20 seconds
             setTimeout(async () => {
                 try {
                     const message = await interaction.fetchReply();
@@ -91,6 +84,7 @@ module.exports = {
                     console.error('Error deleting pick message:', err);
                 }
             }, 20000);
+
         } catch (error) {
             console.error('Error in pick command execution:', error);
             if (!interaction.replied) {

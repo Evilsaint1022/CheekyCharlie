@@ -3,66 +3,84 @@ const db = require('./../../Handlers/database');
 module.exports = {
     name: 'userUpdate',
     async execute(oldUser, newUser, client) {
+        // Only proceed if username changed
         if (oldUser.username !== newUser.username) {
-            console.log(`[UserUpdate] ${oldUser.username} -> ${newUser.username}`);
+            // Sanitize usernames by replacing dots with underscores
+            const oldUsernameRaw = oldUser.username;
+            const newUsernameRaw = newUser.username;
 
-            const oldNameKey = oldUser.username;
-            const oldNameIdKey = `${oldUser.username}_${oldUser.id}`;
+            const oldUsername = oldUsernameRaw.replace(/\./g, '_');
+            const newUsername = newUsernameRaw.replace(/\./g, '_');
 
-            const newNameKey = newUser.username;
-            const newNameIdKey = `${newUser.username}_${newUser.id}`;
+            console.log(`[UserUpdate] ${oldUsernameRaw} -> ${newUsernameRaw} (sanitized: ${oldUsername} -> ${newUsername})`);
 
+            const oldKeyBase = `${oldUsername}_${oldUser.id}`;
+            const newKeyBase = `${newUsername}_${newUser.id}`;
+
+            // Iterate through all DB namespaces like bank, balance, etc.
             for (const [dbName, database] of Object.entries(db)) {
                 try {
-                    const allEntries = Object.entries(await database.all());
-                    let foundAny = true;
+                    const allData = await database.all();
 
-                    for (const [key, value] of allEntries) {
-                        let newKey = null;
+                    for (const [guildKey, guildData] of Object.entries(allData)) {
+                        if (!guildData || typeof guildData !== 'object') continue;
 
-                        // Exactly old username key
-                        if (key === oldNameKey) {
-                            newKey = newNameKey;
-                        }
-                        // Exactly old username_userId key
-                        else if (key === oldNameIdKey) {
-                            newKey = newNameIdKey;
-                        }
-                        // Key starts with old username + underscore, rename prefix only and preserve suffix
-                        else if (key.startsWith(`${oldUser.username}_`)) {
-                            const suffix = key.slice(oldUser.username.length + 1);
-                            newKey = `${newUser.username}_${suffix}`;
-                        }
+                        let updated = true;
+                        const newGuildData = { ...guildData };
 
-                        if (newKey !== null) {
-                            foundAny = true;
+                        for (const [userKey, userValue] of Object.entries(guildData)) {
+                            let newUserKey = null;
 
-                            await database.set(newKey, value);
-                            await database.delete(key);
+                            // Sanitize userKey for comparison by replacing dots with underscores in the username part before underscore
+                            const underscoreIndex = userKey.lastIndexOf('_');
+                            if (underscoreIndex === -1) continue;
 
-                            console.log(`[UserUpdate] [${dbName}] Renamed key: ${key} -> ${newKey}`);
+                            const userKeyUsernamePart = userKey.substring(0, underscoreIndex).replace(/\./g, '_');
+                            const userKeyIdPart = userKey.substring(underscoreIndex + 1);
 
-                            // Update value if it contains old username string
-                            if (typeof value === 'string' && value.includes(oldUser.username)) {
-                                const newValue = value.replaceAll(oldUser.username, newUser.username);
-                                await database.set(newKey, newValue);
-                                console.log(`[UserUpdate] [${dbName}] Updated string value in key: ${newKey}`);
-                            } else if (typeof value === 'object' && value !== null) {
-                                const valStr = JSON.stringify(value);
-                                if (valStr.includes(oldUser.username)) {
-                                    const updatedValue = JSON.parse(valStr.replaceAll(oldUser.username, newUser.username));
-                                    await database.set(newKey, updatedValue);
-                                    console.log(`[UserUpdate] [${dbName}] Updated object value in key: ${newKey}`);
+                            // Rebuild sanitized userKey for comparison
+                            const sanitizedUserKey = `${userKeyUsernamePart}_${userKeyIdPart}`;
+
+                            // Check if userKey matches old username pattern (sanitized)
+                            if (sanitizedUserKey === oldUsername) {
+                                newUserKey = newUsername;
+                            } else if (sanitizedUserKey === oldKeyBase) {
+                                newUserKey = newKeyBase;
+                            } else if (userKeyUsernamePart === oldUsername && userKey.startsWith(`${oldUsername}_`)) {
+                                // Key starts with old username sanitized
+                                const suffix = userKey.slice(oldUsername.length + 1);
+                                newUserKey = `${newUsername}_${suffix}`;
+                            }
+
+                            if (newUserKey !== null) {
+                                updated = true;
+
+                                // Transfer value to new key, also update username mentions inside strings or objects
+                                let newValue = userValue;
+
+                                if (typeof userValue === 'string' && userValue.includes(oldUsernameRaw)) {
+                                    newValue = userValue.replaceAll(oldUsernameRaw, newUsernameRaw);
+                                } else if (typeof userValue === 'object' && userValue !== null) {
+                                    const valueStr = JSON.stringify(userValue);
+                                    if (valueStr.includes(oldUsernameRaw)) {
+                                        newValue = JSON.parse(valueStr.replaceAll(oldUsernameRaw, newUsernameRaw));
+                                    }
                                 }
+
+                                newGuildData[newUserKey] = newValue;
+                                delete newGuildData[userKey];
+
+                                console.log(`[UserUpdate] [${dbName}] Updated key in ${guildKey}: ${userKey} → ${newUserKey}`);
                             }
                         }
-                    }
 
-                    if (!foundAny) {
-                        console.log(`[UserUpdate] [${dbName}] No keys found matching username or username_*`);
+                        if (updated) {
+                            await database.set(guildKey, newGuildData);
+                            console.log(`[UserUpdate] [${dbName}] Guild data updated: ${guildKey}`);
+                        }
                     }
-                } catch (error) {
-                    console.error(`[UserUpdate] [${dbName}] Error processing:`, error);
+                } catch (err) {
+                    console.error(`[UserUpdate] [${dbName}] Error:`, err);
                 }
             }
         }

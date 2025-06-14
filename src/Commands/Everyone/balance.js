@@ -1,13 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
-const { readFile, writeFile } = require('fs/promises');
-const { join } = require('path');
-const fs = require('fs');
-
 const db = require("../../Handlers/database");
 
 module.exports = {
-    // Command registration data
     data: new SlashCommandBuilder()
         .setName('balance')
         .setDescription("Check your current balance or another user's balance.")
@@ -17,29 +12,28 @@ module.exports = {
                 .setRequired(false)
         ),
 
-    // Command execution
     async execute(interaction) {
-
-        // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
-        return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
-        // Get the target user (either the command executor or a mentioned user)
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
 
-        // Get values from database
-        const balance = await db.balance.get(targetUser.username + "_" + targetUser.id + ".balance") || 0;
-        const bank    = await db.bank.get(targetUser.username + "_" + targetUser.id + ".bank") || 0;
+        // Replace dots with underscores for the database key only
+        const safeUsername = targetUser.username.replace(/\./g, '_');
+        const dbKeyPrefix = `${safeUsername}_${targetUser.id}`;
 
-        // Create an embed message
+        // Load values from DB using the safe key
+        const balance = await db.balance.get(`${dbKeyPrefix}.balance`) || 0;
+        const bank = await db.bank.get(`${dbKeyPrefix}.bank`) || 0;
+
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF) // White color
-            .setTitle(`**${targetUser.username}'s Balance**`)
+            .setColor(0xFFFFFF)
+            .setTitle(`**${targetUser.username}'s Balance**`) // Show original username for display
             .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .addFields(
                 { name: '🪙 Wallet', value: `${balance} Coins`, inline: true },
@@ -48,10 +42,8 @@ module.exports = {
             .setFooter({ text: 'Use Your Coins Wisely!' })
             .setTimestamp();
 
-        // Reply with the embed
         await interaction.reply({ embeds: [embed] });
 
-        // Console Logs
         console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the balance command. ${targetUser.username}'s balance was checked.`);
     }
 };
