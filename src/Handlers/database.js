@@ -20,6 +20,7 @@ const db = {
     bumpcooldown: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcooldown.json"),
     lastbump: new DotDB("./src/Utilities/Storage/Settings/Bump/lastbump.json"),
     ai_history: new DotDB("./src/Utilities/Storage/Settings/AI/ai_history.json"),
+    ai_nsfw_training: new DotDB("./src/Utilities/Storage/Settings/AI/ai_nsfw_training.json"),
 }
 
 module.exports = db;
