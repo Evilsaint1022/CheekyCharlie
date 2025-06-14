@@ -13,20 +13,21 @@ module.exports = {
     const guildId = member.guild.id;
     const guildName = member.guild.name;
 
-    // Construct the settings key
-    const settingsKey = `${guildName}_${guildId}_verifiedRoleId`;
+    // Construct the settings key for the guild
+    const settingsKey = `${guildName}_${guildId}`;
 
-    // Retrieve the VerifiedRoleId from the database
-    let verifiedRoleId;
+    let guildSettings;
     try {
-      verifiedRoleId = await db.settings.get(settingsKey);
+      guildSettings = await db.settings.get(settingsKey);
     } catch (err) {
-      console.error(`Failed to retrieve role settings for guild ${settingsKey}:`, err);
+      console.error(`Failed to retrieve settings for guild ${settingsKey}:`, err);
       return;
     }
 
-    // Exit early if VerifiedRoleId isn't set
-    if (!verifiedRoleId) return;
+    // Exit early if the settings object or VerifiedRole field is missing
+    if (!guildSettings || !guildSettings.VerifiedRole) return;
+
+    const verifiedRoleId = guildSettings.VerifiedRole;
 
     // Set a timeout to check the member's role after 10 minutes
     setTimeout(async () => {
