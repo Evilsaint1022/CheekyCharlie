@@ -339,6 +339,22 @@ const commands = [
         name: "toggle-nsfw-filter",
         description: "Toggle the NSFW filter for the server.",
     },
+    {
+        name: "set-nsfw-logs-channel",
+        description: "Set the channel where NSFW logs will be sent.",
+        options: [
+            {
+                name: "channel",
+                description: "The channel to set as the NSFW logs channel.",
+                type: 7,
+                required: false,
+            }
+        ]
+    },
+    {
+        name: "remove-nsfw-logs-channel",
+        description: "Remove the NSFW logs channel for the server.",
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
