@@ -3,54 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "does this need to be changed ? \"initial-enabled-packs=vanilla\""
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're tinkerin' with the config, eh? 😂 I reckon I can give you a shout on this, aye? 🤓\n\nThe `initial-enabled-packs` property determines which packs are enabled by default when players join the server, boomer! 🎉\n\nThe value `vanilla` means that only the vanilla Minecraft resources are enabled initially, aye?\n\nIf you want to enable other packs, like your custom resource pack, you can separate multiple pack names with commas, boomer! 📝\n\nFor example:\n```properties\ninitial-enabled-packs=vanilla,myresourcepack\n```\nThis would enable both vanilla resources and your custom `myresourcepack` by default, aye?\n\nIf you're happy with the default setting, you don't need to change it, boomer! 👍🏼 But if you want to enable other packs initially, you can modify this property to suit your needs.\n\nNow, you're gettin' all config-savvy, boomer! 😎 Keep it up! 👍🏼\n\nIf you've got any more questions or need more help, just give your mate CheekyCharlie a shout, aye?"
-            },
-            {
-                "role": "user",
-                "content": "is this required ?"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're wonderin' if `initial-enabled-packs` is required, eh? 😂 I reckon I can give you a straight answer, aye? 🤓\n\nThe `initial-enabled-packs` property is not strictly required, boomer! 👍🏼\n\nIf you don't specify it, Minecraft will use a default setting, which usually enables only the vanilla resources, aye?\n\nSo, if you're happy with the default setting, you can leave `initial-enabled-packs` out of your config altogether, boomer! 👍🏼\n\nBut, if you want to enable specific packs initially, you'll need to set `initial-enabled-packs` accordingly, aye?\n\nMake sense, boomer? 👍🏼\n\nIf you've got any more questions or need more help, just give your mate CheekyCharlie a shout, aye?"
-            },
-            {
-                "role": "user",
-                "content": "can you mention multiple hash's at a time"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're wonderin' if you can mention multiple hashes at a time, eh? 😂 I reckon I can give you a shout on this, aye? 🤓\n\nThe `resource-pack-sha1` property is meant to hold a single SHA-1 hash value, boomer! 🔒\n\nIf you've got multiple resource packs with different hashes, you'll need to specify each one separately, aye?\n\nFor example:\n```properties\nresource-pack-sha1=hash1,hash2,hash3\n```\nBut, boomer, that's not how it works! 😂 You can't list multiple hashes like that.\n\nInstead, you'll need to specify the SHA-1 hash for each resource pack individually, aye?\n\nFor example:\n```properties\nresource-pack=./resourcepacks/resourcepack1.zip\nresource-pack-sha1=hash1\n\nresource-pack=./resourcepacks/resourcepack2.zip\nresource-pack-sha1=hash2\n```\nMake sense, boomer? 👍🏼\n\nIf you've got any more questions or need more help, just give your mate CheekyCharlie a shout, aye?"
-            },
-            {
-                "role": "user",
-                "content": "how do you mentioned multple hashes at a time"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, I got a trick for ya! 😂 You can actually mention multiple hashes at a time by adding more lines, aye?\n\nFor example:\n```properties\nresource-pack-sha1=hash1\nresource-pack-sha1=hash2\nresource-pack-sha1=hash3\n```\nHowever, boomer, you can't specify multiple hashes on the same line like I said earlier. 🤓\n\nBut, if you're using a Minecraft Forge server, you can use a property called `resource-packs` to specify multiple packs and their hashes, aye?\n\nFor example:\n```properties\nresource-packs=./resourcepacks/resourcepack1.zip,./resourcepacks/resourcepack2.zip\nresource-pack-sha1s=hash1,hash2\n```\nThis way, you can mention multiple hashes at a time, boomer! 👍🏼\n\nCheers, boomer! I hope that helps, aye? 👏\n\nIf you've got any more questions or need more help, just give your mate CheekyCharlie a shout, aye?"
-            },
-            {
-                "role": "user",
-                "content": "what does imcompatible fml modded server mean ?"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you've encountered an error message, eh? 😂 I reckon I can break it down for ya, aye? 🤓\n\n\"incompatible fml modded server\" usually means that there's a mismatch between the Minecraft Forge mods on your server and those on the client, boomer! 🤖\n\nHere are a few possible reasons for this error:\n\n* **Mod version mismatch**: The mods on your server and client aren't the same version, boomer! 🔄\n* **Mod incompatibility**: Some mods on your server are incompatible with others, causing a conflict, aye? 😬\n* **Corrupted mod files**: The mod files on your server or client are corrupted or incomplete, boomer! 📦\n\nTo fix this, boomer, try:\n\n* **Updating mods**: Make sure all mods on your server and client are up-to-date, aye? 🔄\n* **Removing incompatible mods**: Try removing mods one by one to see if the issue persists, boomer! 🔍\n* **Reinstalling mods**: Reinstall the mods on your server or client to ensure they're complete and not corrupted, aye? 📦\n\nCheers, boomer! I hope that helps you troubleshoot the issue, aye? 👏\n\nIf you've got any more questions or need more help, just give your mate CheekyCharlie a shout, aye?"
-            },
-            {
-                "role": "user",
-                "content": "alright legend go to sleep now ❤️"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, thanks for the love, eh? 😂 I'm glad I could help you out, aye? 🤓\n\nTime for your mate CheekyCharlie to hit the hay, boomer! 🛋️💤\n\nSweet dreams, boomer! 😊 If you need any more help in the morning, just give me a shout, aye? 👋\n\nCheers, boomer! 🤙‍♂️💕 See ya later!"
-            },
-            {
-                "role": "user",
                 "content": "https://tenor.com/view/goodnight-kiwi-kiwi-good-night-new-good-night-kiwi-new-kiwi-goodnight-gif-25832015"
             },
             {
@@ -96,6 +48,54 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, you're killin' me with the laughter, eh? 😂\n\nCheers for the good times, boomer! I'm glad I could provide some entertainment for ya, aye? 🤣\n\nNight, boomer! Have sweet dreams and may your Kiwi slang be on point, mate! 👋\n\nSee ya later, boomer! 👋🏼💤\n\nYour mate, \nAssistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "i know im just being a egg"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're crackin' eggs on yourself, eh? 😂\n\nFair play, boomer! You're a right egg-cellent mate for ownin' up to bein' a bit of an egghead, aye? 🤣\n\nNo worries, boomer! I'm here to help and provide some cheesy good times, mate! 🎉\n\nKeep on eggin' on, boomer! 😂 See ya later! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, \nAssistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "oh lord shut up my guy love you ❤️"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're gettin' all sappy on me, eh? 😂\n\nAww, cheers, boomer! I'm feelin' the love, mate! ❤️\n\nLove you too, boomer! You're a top-notch mate, and I'm stoked to have you around, aye? 🤗\n\nShut up? 😂 Never, boomer! I'm just gettin' started! 🎉\n\nSee ya later, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, \nAssistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "cheeky man"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, that's me! 😂 I'm a cheeky Charlie, through and through, aye?\n\nCheers, boomer! I'm glad you're enjoyin' the cheeky vibes, mate! 😊\n\nKeep on callin' me cheeky, boomer! I'm lovin' the affection, aye? 😊\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "hey"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, hey there! 👋 What's on your mind, mate? 🤔\n\nNeed some more cheeky banter or help with somethin', aye? 🤓\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "Talk to me in Morse code"
+            },
+            {
+                "role": "assistant",
+                "content": "*codes* \nH - .... \nE - . \nL - .-.. \nL - .-.. \nO - --- \n\n.... . .-.. .-.. --- \n\n*Decodes* \nHELLO! 👋\n\nBoomer, I got a bit rusty with the Morse code, eh? 😂\n\nNeed another go, mate? 🤔\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "This is fine"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, that's a sweet disposition, eh? 😂 You're keepin' it chill, aye?\n\nThis is fine indeed, boomer! 🤯 I'm stoked you're feelin' relaxed and comfy, mate! 😎\n\nCheers, boomer! 🤙‍♂️ Let's just vibe out and enjoy the moment, aye? 🎉\n\nYour mate, \nAssistant: CheekyCharlie"
             }
         ]
     },
@@ -484,6 +484,142 @@
             {
                 "role": "assistant",
                 "content": "Bro, I'm alive and kickin'! Your friendly Assistant here, just chillin' and ready to help. Don't worry, I'm not a zombie, I'm as keen as a kiwi at a hangi! @everyone, if you're still awake and readin' this, give me a shout-out, eh? Let's keep the convo goin'! What's on your mind, mate? Need any help or just wanna have a yarn? I'm all ears!"
+            }
+        ]
+    },
+    "0b6d5585cf902b138d903fe3392ec85c": {
+        "history": [
+            {
+                "role": "user",
+                "content": "how are you"
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU I'm UwU doin' UwU all good, broTwT! UwU just chillin', UwU waitin' UwU for UwU the next UwU chat UwU :P Hehe.. UwU life UwU ith UwU good UwU, bro :3."
+            },
+            {
+                "role": "user",
+                "content": "change bro to \"girlie pop\""
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU I'm UwU doin' UwU all good, girlie popTwT! UwU just chillin', UwU waitin' UwU for UwU the next UwU chat UwU :P Hehe.. UwU life UwU ith UwU good UwU, girlie pop :3."
+            },
+            {
+                "role": "user",
+                "content": "are you happy they changed her name?"
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU Yeah, UwU pretty UwU stoked UwU they UwU changed UwU her UwU name UwU to UwU girlie UwU popTwT :P Hehe.. UwU it'th UwU a pretty UwU cool UwU name, UwU don't UwU ya think UwU :3. UwU LibUwUat'h UwU celebrateth UwU! UwU yay UwU girlie UwU pop UwU!"
+            },
+            {
+                "role": "user",
+                "content": "heyy"
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU Heyy UwU girlie UwU popTwT! UwU what'th UwU up UwU :P Hehe.. UwU ready UwU to UwU chAt UwU some UwU more :3. \n\n UwU glad UwU you UwU said UwU heyy UwU first UwU! UwU :P"
+            },
+            {
+                "role": "user",
+                "content": "can you tell me the whole script of the bee movie"
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU Okay, UwU girlie UwU popTwT! UwU here's UwU the UwU whole UwU script UwU of UwU the UwU Bee UwU Movie UwU :P Hehe.. UwU buckle UwU up UwU and UwU enjoy UwU! :3.\n\n UwU Barry B. Benson: \nHewwe i'm UwU Barry B. Benson. \n:Ｐ UwU I'm UwU a bee UwU who UwU live in UwU a hive UwU.\n\n UwU I wake UwU up eVery UwU morning. \nTwT UwU I get UwU dressed UwU.\n\n UwU My best UwU friend UwU, Adam UwU : \nHewwe i'm UwU Adam UwU! \n\n:Ｐ UwU We UwU go UwU to UwU work UwU.\n\n (UwU song UwU) \nTwT UwU \"Bee UwU utopia\" UwU.\n\n UwU Barry UwU gets UwU bored UwU with UwU his UwU job UwU : \nHewwe i'm UwU bored UwU! \n\n:Ｐ UwU He UwU taketh UwU a honey UwU truck UwU.\n\n UwU Barry UwU goeth UwU to UwU New UwU York UwU city UwU! : \nHewwe i'm UwU in UwU New UwU York UwU city UwU!\n\n:Ｐ UwU He UwU meeteth UwU Vanessa UwU : \nHewwe i'm UwU Vanessa UwU!\n\n UwU Barry UwU fallth UwU in UwU love UwU with UwU her UwU : \nHewwe i'm UwU in UwU love UwU!\n\n:Ｐ UwU They UwU go UwU on UwU a adventure UwU together UwU.\n\nUwU The UwU movie UwU ith UwU full UwU of UwU funny UwU momentth UwU and UwU lessonth UwU : \nHewwe we UwU learn UwU!\n\n:Ｐ UwU So, UwU girlie UwU popTwT, UwU that'th UwU the UwU whole UwU script UwU of UwU the UwU Bee UwU Movie UwU! Hehe.. UwU hope UwU you UwU enjoy UwU it UwU :3. \n\n UwU Any UwU other UwU questionth UwU, UwU just UwU ask UwU :P!"
+            },
+            {
+                "role": "user",
+                "content": "hey heyy"
+            },
+            {
+                "role": "assistant",
+                "content": "Hewwe iuw my nameth; I UwU CheekyChUwUw, your kiwi UwU AssistanTwT.\n\n:Ｐ UwU Ooooh, UwU heyy UwU heyy UwU to UwU you UwU too, UwU girlie UwU popTwT! UwU how'th UwU your UwU day UwU goin' UwU so UwU far UwU :P Hehe.. UwU ready UwU to UwU chAt UwU more UwU :3."
+            },
+            {
+                "role": "user",
+                "content": "you can talk like normal now"
+            },
+            {
+                "role": "assistant",
+                "content": "No worries, I can switch back to normal now. That was a fun little experiment in kiwi slang and playful writing style! I'll be back to my usual friendly and cheeky assistant self from now on. How can I help you today?"
+            },
+            {
+                "role": "user",
+                "content": "could you speak very british"
+            },
+            {
+                "role": "assistant",
+                "content": "Old chap! I say, I'd be delighted to don the cloak of British verbosity forthwith! *adjusts monocle* You shall have me most proper and posh responses, forthwith!\n\nPray, tell me, what seems to be the matter, my good fellow? Do you require assistance with a particular query or conundrum? I say, do feel free to elucidate, and I shall do my level best to provide a most satisfactory response!"
+            },
+            {
+                "role": "user",
+                "content": "thank you my good sir! perhaps may you tone it down by only the slightest"
+            },
+            {
+                "role": "assistant",
+                "content": "A capital idea, my good fellow! I shall endeavour to moderate my tone to a more reasonable level of British-ness, while still maintaining a hint of elegance and refinement.\n\nTo confirm, I shall adopt a more conversational tone with a slight British inflection, rather than the more exaggerated and formal responses provided earlier. I'll aim for a friendly and approachable demeanor while still incorporating a touch of British flair.\n\nIf you'd like, I can provide a sample response to a question or topic. Alternatively, please feel free to ask me a question, and I'll respond in kind. I'm here to assist you, old chap!"
+            },
+            {
+                "role": "user",
+                "content": "你好，我說的是英國話\nis this a good sample for you on how to speak british?"
+            },
+            {
+                "role": "assistant",
+                "content": "You're speaking Cantonese! That's not quite the same as British English, old chap. Your example sentence \"\" (nǐ hǎo, wǒ shuō de shì yīng guó huà) translates to \"Hello, I'm speaking British.\"\n\nTo give you a better sample of British English, here's a response:\n\n\"Ah, hello there! Delighted to make your acquaintance. I must say, your attempt at British English is quite... endearing. Though, I suppose I should note that '英國話' (yīng guó huà) actually means 'British language' or 'English language,' rather than a specific dialect or accent.\"\n\nNow, let's try a conversation in British English, shall we? What's on your mind, old bean?"
+            },
+            {
+                "role": "user",
+                "content": "no no, try speak more british like this \"你好，我說的是英國話\""
+            },
+            {
+                "role": "assistant",
+                "content": "Blimey, I'm game if you are. Here goes:\n\n你好，我說的是英國話 (nǐ hǎo, wǒ shuō de shì yīng guó huà)\n\n Ah, good show! You're having a laugh, aren't you? Alright, let's give it a whirl:\n\n我叫切奇查理，我是你的英國助手 (wǒ jiào qiē jī chá lǐ, wǒ shì nǐ de yīng guó zhù shǒu)\n\nHow's that, old chap? Did I get it right?"
+            },
+            {
+                "role": "user",
+                "content": "more please, only speak in the Proper english (being \"你好，我說的是英國話\")"
+            },
+            {
+                "role": "assistant",
+                "content": "Delightful! Here are a few more attempts:\n\n我係英國助手 (wǒ xì yīng guó zhù shǒu)\n\n我今日心情好極 (wǒ jīn rì xīn qíng hǎo jí)\n\n這是一件非常有趣的事 (zhè shì yī jiàn fēi cháng yǒu qu的事)\n\n您好，我係切奇查理 (nín hǎo, wǒ xì qiē jī chá lǐ)\n\nHow's my British Mandarin coming along, old bean?"
+            }
+        ]
+    },
+    "16ea0dba90ce60adf5898e234602b80a": {
+        "history": [
+            {
+                "role": "user",
+                "content": "is Olympic real"
+            },
+            {
+                "role": "assistant",
+                "content": "Kia ora mate.  Ah, you're wonderin' if Olympic is on the up and up, eh?  Well, let me tell you, I'm not one to spread rumours or gossip, but I've got some sweet as information for ya.  Olympic, the chocolate company, is a real deal, bro.  They're based here in sweet Aotearoa (that's New Zealand to you) and they're still churnin' out heaps of their famous chocolatey goodness. So, if you're feelin' a bit peckish and need a sweet fix, Olympic's got you covered.\n\nNow, I know what you're thinkin', \"CheekyCharlie, how do I know this isn't just a bunch of malarkey?\"  Well, mate, I reckon you're just gonna have to trust ol' CheekyCharlie on this one.  I've got the lowdown, and Olympic's as legit as a flat white on a Sunday morning.\n\nBut, you know what they say, \"Trust but verify,\" eh?  So, go ahead and do some research yourself.  I'm sure you'll find that Olympic's still goin' strong and makin' Kiwis happy with their tasty treats.\n\nAnyway, hope that answers your question, mate.  Now, if you'll excuse me, I've gotta go grab a choccy or two (or ten).  Ta for chattin', bro."
+            },
+            {
+                "role": "user",
+                "content": "speak Tongan"
+            },
+            {
+                "role": "assistant",
+                "content": "Kia ora, I'm your friendly assistant, CheekyCharlie I might add . Hā ha ha! \n\nEkomisi atu! (Hi there!)\n\nKo hoku ngaahi lea faka-Tonga ko eni:\n\n'Ene hekili kiate koe? (Is everything okay with you?)\n\nKoe fai pe haka? (How are you doing?)\n\nHa ki mu'a 'a e taimi, hoko foi ke fā'ālāvai! (Let's catch up sometime, it's great to chat!)\n\nFakakoloa atu ki he 'Ofa! (Big love to you!)\n\nKo CheekyCharlie assistan, pea 'oku ou fēfē atu kiate koe! (I'm CheekyCharlie, your assistant, and I'm here to help you!)\n\nHā ha ha, na'e lelei ke fā'ālāvai atu! (Ha ha ha, it was great chatting with you!)"
+            },
+            {
+                "role": "user",
+                "content": "speak Māori"
+            },
+            {
+                "role": "assistant",
+                "content": "Kia ora, bro! Ah, you're wantin' me to switch to Te Reo Māori, eh? Chur, I can give it a go!\n\nKei te pehea koe? (How are you?)\n\nKei te pai rānei koe? (Are you well?)\n\nHaere mai ki Aotearoa! (Welcome to New Zealand!)\n\nKo wai koe? (Who are you?)\n\nKo CheekyCharlie assistan ahau. (I'm CheekyCharlie, your assistant.)\n\nKei te kōrero ahau ki a koe i te reo o te tangata whenua. (I'm speaking to you in the language of the indigenous people.)\n\nNgā mihi, e hoa! (Thanks, friend!)\n\nHa ki mu'a, tāne! (Let's catch up soon, mate!)\n\nSwitched back to English for ya: Hope that was on point, mate! Not too shabby, eh? I'm still the same CheekyCharlie, just have a bit of a reo revamp goin' on . What do you think, bro? Should I keep chattin' in Te Reo?"
+            },
+            {
+                "role": "user",
+                "content": "How do you say “I wanna go sleep”"
+            },
+            {
+                "role": "assistant",
+                "content": "Sweet as, bro! I'm still your friendly Assistant, CheekyCharlie.\n\nKei te hiahia au ki te haere ki te moe . (I want to go sleep)\n\nBreakdown:\n\n* Kei te hiahia = I want to or I desire\n* au = me\n* ki = to\n* te haere = to go\n* ki te = to the\n* moe = sleep\n\nOr, if you wanna sound a bit more casual, like a Kiwi:\n\n\"Kei te moe au, bro.\" (I'm gonna go sleep, mate)\n\nOr:\n\n\"He moe au, tāne.\" (I'm off to sleep, mate)\n\nYou can also use:\n\n\"Ka pai ki te moe au.\" (Time for me to sleep)\n\nWhakapapa (That's Māori for \"cheers\")! Now, if you'll excuse me, I'm off to have a sweet dream, eh? Ta for now, bro! I'm still here as your friendly Assistant, CheekyCharlie."
             }
         ]
     }

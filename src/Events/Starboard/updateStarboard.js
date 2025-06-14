@@ -10,6 +10,9 @@ module.exports = async function updateStarboard(reaction) {
   const userId = message.author.id;
   const username = message.author.username;
 
+  // Sanitize username by replacing dots with underscores
+  const safeUsername = username.replace(/\./g, '_');
+
   try {
     const [
       starboardChannelId,
@@ -48,8 +51,8 @@ module.exports = async function updateStarboard(reaction) {
     );
     const currentCount = currentReaction?.count || 0;
 
-    // Use message ID as unique identifier
-    const trackingIdKey = `${guildName}_${message.author.username}_${message.id}`;
+    // Use sanitized username for key
+    const trackingIdKey = `${guildName}_${safeUsername}_${message.id}`;
     const storedUrl = await db.starboardids.get(trackingIdKey);
 
     // If count is below threshold and message exists, delete it
@@ -66,8 +69,8 @@ module.exports = async function updateStarboard(reaction) {
     }
 
     const authorName = message.author.bot
-      ? `${message.author.username} [🤖]`
-      : message.author.username;
+      ? `${username} [🤖]`
+      : username;
 
     const lines = [
       `${reaction.emoji.toString()} | **${currentCount}** | ${message.url}`,

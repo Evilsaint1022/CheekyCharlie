@@ -7,33 +7,42 @@ module.exports = {
         .setDescription("Displays The Leaderboard"),
 
     async execute(interaction) {
-
-       // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
-        return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
-        // Log command usage
         console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the leaderboard command.`);
 
-         // Fetch all users' balances from the database
         const allKeys = await db.balance.keys();
+
         const balances = (await Promise.all(
             allKeys
-                .filter(key => key.endsWith('.balance')) // Filter keys that end with '.balance'
+                .filter(key => key.endsWith('.balance'))
                 .map(async key => {
-                    const [username, userId] = key.split('_');
+                    const rawKey = key.slice(0, -('.balance'.length));
+                    const lastUnderscoreIndex = rawKey.lastIndexOf('_');
+                    const safeUsername = rawKey.slice(0, lastUnderscoreIndex);
+                    const userId = rawKey.slice(lastUnderscoreIndex + 1);
                     const balance = await db.balance.get(key) || 0;
-                    return { userId, username, balance };
+
+                    return {
+                        userId,
+                        username: safeUsername.replace(/_/g, '.'), // Restore display format
+                        safeKey: `${safeUsername}_${userId}`,      // Keep for comparison
+                        balance
+                    };
                 })
         )).sort((a, b) => b.balance - a.balance);
 
-        const username = interaction.user.username;
-        const userBalanceEntry = balances.find(entry => entry.username === username);
-        const userRank = userBalanceEntry ? balances.indexOf(userBalanceEntry) + 1 : 'Unranked';
+        // Build a comparison-safe version of current user's ID
+        const safeUsername = interaction.user.username.replace(/\./g, '_');
+        const displayKey = `${safeUsername}_${interaction.user.id}`;
+
+        const userBalanceEntry = balances.find(entry => entry.safeKey === displayKey);
+        const userRank = userBalanceEntry ? balances.findIndex(entry => entry.safeKey === displayKey) + 1 : 'Unranked';
 
         const itemsPerPage = 10;
         const totalPages = Math.ceil(balances.length / itemsPerPage);

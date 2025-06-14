@@ -3,6 +3,11 @@ const { SlashCommandBuilder } = require('discord.js');
 // Replace with the actual path to your DotDatabase instance
 const db = require("../../Handlers/database");
 
+// Replace /\./g with _ when saving
+function escapeUsername(username) {
+  return username.replace(/\./g, '_');
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('pay')
@@ -21,14 +26,12 @@ module.exports = {
     ),
 
   async execute(interaction) {
-
-    // Prevent command usage in DMs
-        if (interaction.channel.isDMBased()) {
-        return interaction.reply({
+    if (interaction.channel.isDMBased()) {
+      return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
-    });
-}
+        flags: 64
+      });
+    }
 
     const sender = interaction.user;
     const user = interaction.options.getUser('user');
@@ -47,29 +50,25 @@ module.exports = {
     }
 
     try {
-      const senderKey = `${sender.username}_${sender.id}`;
-      const userKey = `${user.username}_${user.id}`;
+      const senderKey = `${escapeUsername(sender.username)}_${sender.id}`;
+      const userKey = `${escapeUsername(user.username)}_${user.id}`;
 
       const senderData = await db.balance.get(senderKey) ?? { balance: 0 };
       const userData = await db.balance.get(userKey) ?? { balance: 0 };
 
-      if (senderData.balance < amount) {
+      const senderBalance = senderData.balance || 0;
+      const userBalance = userData.balance || 0;
+
+      if (senderBalance < amount) {
         return interaction.reply({ content: `You do not have enough points to transfer ${amount}🪙.`, flags: 64 });
       }
 
-      // Update balances
-      senderData.balance -= amount;
-      userData.balance += amount;
-
-      // Save updated balances
-      await db.balance.set(senderKey, senderData);
-      await db.balance.set(userKey, userData);
+      await db.balance.set(senderKey, { balance: senderBalance - amount });
+      await db.balance.set(userKey, { balance: userBalance + amount });
 
       await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount} 🪙** to **${user.username}**.`);
 
-      // Console Log
-      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} has paid ${amount} Coins to ${user.username}.`);
-
+      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount} to ${user.username}`);
     } catch (error) {
       console.error(error);
       return interaction.reply({

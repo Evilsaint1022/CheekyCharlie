@@ -20,8 +20,8 @@ https://github.com/NZ-Linix/dotdatabase
 
 -> Play games like Blackjack  
 -> Full economy system  
-   -> Bank and wallet  
-   -> Daily commands and drop events  
+-> Bank and wallet  
+-> Daily commands and drop events  
 -> Level system with a leaderboard  
 -> Join-to-create voice channels  
 -> Custom starboard  
@@ -51,7 +51,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/daily` — Daily Currency Collect.
 - `/pick` - Picks coins when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
-- `/pay` - Pay Members Coins.
+- `/pay` - Pay other members coins.
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
