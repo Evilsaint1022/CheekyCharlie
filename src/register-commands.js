@@ -83,6 +83,18 @@ const commands = [
     {
         name: 'leaderboard',
         description: 'Displays The Leaderboard',
+        options: [
+            {
+                name: 'type',
+                description: 'Which leaderboard would you like to see?',
+                type: 3,
+                required: true,
+                choices: [
+                    { name: 'Balance', value: 'balance' },
+                    { name: 'Level', value: 'level' },
+                ],
+            },
+        ]
     },
     {
         name: 'level', 
