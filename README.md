@@ -28,6 +28,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> Custom starboard  
 -> Bump reminder  
 -> Custom AI chat
+    -> Ability to deactivate the AI in specific channels
 -> AI NSFW Content Filtering
     -> Ability to train the AI
 ```
@@ -83,6 +84,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
+-
+- `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels
+- `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 

@@ -8,8 +8,8 @@ module.exports = {
         .setName('remove-ignored-ai-channel')
         .setDescription('Remove a channel from the ignored AI channels list.')
         .addChannelOption(option => 
-            option.setName('channel')
-                .setDescription('The channel to remove.')
+            option.setName('channel-or-category')
+                .setDescription('The channel or category to remove.')
         ),
 
     async execute(interaction) {
@@ -47,7 +47,7 @@ module.exports = {
         const ignoredChannels = await db.settings.get(`${guildName}_${guildId}.ignoredAIChannels`) || [];
 
         if ( !ignoredChannels.includes(channel.id) ) {
-            return interaction.reply({ content: `Channel <#${channel.id}> is not ignored for AI responses.`, flags: 64 });
+            return interaction.reply({ content: `Channel / Category <#${channel.id}> is not ignored for AI responses.`, flags: 64 });
         }
 
         const index = ignoredChannels.indexOf(channel.id);
@@ -58,8 +58,8 @@ module.exports = {
         await db.settings.set(`${guildName}_${guildId}.ignoredAIChannels`, ignoredChannels);
 
         return interaction.reply({
-            content: `Channel <#${channel.id}> has been removed from the ignored AI channels list.`,
-            ephemeral: true
+            content: `Channel / Category <#${channel.id}> has been removed from the ignored AI channels list.`,
+            flags: 64
         });
         
     },
