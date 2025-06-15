@@ -27,7 +27,7 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
 
     try {
-      // Permission check with whitelisted roles
+      // Permission check
       const whitelistedRoles = await db.whitelisted.get(`${guildKey}.whitelistedRoles`) || [];
       const isAdmin = member.permissions.has(PermissionFlagsBits.Administrator);
       const hasWhitelistedRole = member.roles.cache.some(r => whitelistedRoles.includes(r.id));
@@ -38,23 +38,23 @@ module.exports = {
         });
       }
 
-      // Load existing roles map or empty object
       let roleMap = await db.levelroles.get(guildKey) || {};
 
-      if (!roleMap[level]) {
+      // Check if role exists at the given level
+      const removedRoleId = roleMap[level];
+      if (!removedRoleId) {
         return interaction.reply({
           content: `⚠️ No role is assigned to level ${level}.`,
           flags: 64,
         });
       }
 
-      // Remove the level from the map
+      // Delete and update
       delete roleMap[level];
-
       await db.levelroles.set(guildKey, roleMap);
 
       return interaction.reply({
-        content: `✅ Role assigned to level ${level} has been removed.`,
+        content: `✅ Removed role <@&${removedRoleId}> from level ${level}.`,
         flags: 64,
       });
 

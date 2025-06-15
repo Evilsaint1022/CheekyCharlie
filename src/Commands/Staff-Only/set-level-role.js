@@ -16,6 +16,11 @@ module.exports = {
         .setDescription('The role to assign at that level')
         .setRequired(true)
     )
+    .addBooleanOption(option =>
+      option.setName('sticky')
+        .setDescription('Whether to keep this role permanently')
+        .setRequired(false)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
@@ -28,6 +33,8 @@ module.exports = {
 
     const level = interaction.options.getInteger('level');
     const role = interaction.options.getRole('role');
+    const sticky = interaction.options.getBoolean('sticky') || false;
+
     const guild = interaction.guild;
     const member = interaction.member;
     const guildKey = `${guild.name}_${guild.id}`;
@@ -38,28 +45,32 @@ module.exports = {
       const hasWhitelistedRole = member.roles.cache.some(r => whitelistedRoles.includes(r.id));
       if (!isAdmin && !hasWhitelistedRole) {
         return interaction.reply({
-          content: '❌ You do not have permission to set the verified role!',
+          content: '❌ You do not have permission to set the level role!',
           flags: 64,
         });
       }
 
       let roleMap = await db.levelroles.get(guildKey) || {};
 
-      const oldRoleId = roleMap[level];
+      const existing = roleMap[level];
+      const newRoleObject = { roleId: role.id, sticky };
 
-      if (oldRoleId === role.id) {
+      if (existing && (
+        (typeof existing === 'string' && existing === role.id) ||
+        (typeof existing === 'object' && existing.roleId === role.id && existing.sticky === sticky)
+      )) {
         return interaction.reply({
-          content: `⚠️ Role **${role.name}** is already assigned to level ${level}.`,
+          content: `⚠️ Role **${role.name}** is already assigned to level ${level} with sticky: \`${sticky}\`.`,
           flags: 64,
         });
       }
 
-      roleMap[level] = role.id;
+      roleMap[level] = newRoleObject;
       await db.levelroles.set(guildKey, roleMap);
 
-      const msg = oldRoleId
-        ? `✅ Updated level ${level} role from <@&${oldRoleId}> to **${role.name}**.`
-        : `✅ Role **${role.name}** has been assigned to level ${level}.`;
+      const msg = existing
+        ? `✅ Updated level ${level} role to **${role.name}** (sticky: \`${sticky}\`).`
+        : `✅ Assigned role **${role.name}** to level ${level} (sticky: \`${sticky}\`).`;
 
       return interaction.reply({
         content: msg,
