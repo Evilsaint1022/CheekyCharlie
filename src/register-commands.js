@@ -367,6 +367,30 @@ const commands = [
         name: "remove-nsfw-logs-channel",
         description: "Remove the NSFW logs channel for the server.",
     },
+    {
+        name: 'add-ignored-ai-channel',
+        description: 'Add a channel to the ignored AI channels list.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to ignore AI responses in',
+                type: 7,
+                required: false,
+            },
+        ],
+    },
+    {
+        name: 'remove-ignored-ai-channel',
+        description: 'Remove a channel from the ignored AI channels list.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to remove.',
+                type: 7,
+                required: false,
+            },
+        ],
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------

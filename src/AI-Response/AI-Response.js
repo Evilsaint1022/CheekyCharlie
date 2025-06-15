@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const Groq = require("groq-sdk");
 const punycode = require('punycode/');
 const db = require('../Handlers/database');
+const { Client, Message } = require('discord.js');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
 const IV = Buffer.alloc(16, 0);
@@ -17,9 +18,20 @@ function encrypt(text) {
   return encrypted;
 }
 
+/**
+ * 
+ * @param {Client} client 
+ * @param {Message} message 
+ * @returns 
+ */
+
 async function handleAIMessage(client, message) {
   if (message.author.bot) return;
   if (!message.mentions.has(client.user)) return;
+
+  const ignoredChannels = await db.settings.get(`${message.guild.name}_${message.guild.id}.ignoredAIChannels`) || [];
+
+  if ( ignoredChannels.includes(message.channel.id) ) return
 
   const userContent = message.content.replace(`<@${client.user.id}>`, '').trim();
   const encryptedUsername = encrypt(message.author.tag);
