@@ -10,6 +10,7 @@ module.exports = {
         .addChannelOption(option => 
             option.setName('channel-or-category')
                   .setDescription('The channel or category to ignore AI responses in')
+                  .setRequired(true)
         ),
 
     async execute(interaction) {
@@ -21,7 +22,7 @@ module.exports = {
             });
         }
 
-        const channel = interaction.options.getChannel('channel') || interaction.channel;
+        const channel = interaction.options.getChannel('channel-or-category') || interaction.channel;
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
