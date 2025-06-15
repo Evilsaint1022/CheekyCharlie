@@ -72,10 +72,22 @@ module.exports = async function updateStarboard(reaction) {
       ? `${username} [🤖]`
       : username;
 
+    let messageContent = message.content || "_No Message Content_";
+
+    if ( message.stickers.size > 0 ) {
+
+        if ( !message.content ) {
+
+            messageContent = "[ Message contains stickers ]";
+
+        }
+
+    }
+
     const lines = [
       `${reaction.emoji.toString()} | **${currentCount}** | ${message.url}`,
       `**Author:** ${authorName}`,
-      `**Content:** ${message.content || "_No Message Content_"}`,
+      `**Content:** ${messageContent}`,
     ];
 
     if (message.attachments.size > 0) {
