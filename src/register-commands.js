@@ -332,6 +332,12 @@ const commands = [
                 description: "The role to assign at that level",
                 type: 8,
                 required: true,
+            },
+            {
+                name: "sticky",
+                description: "Whether to keep this role permanently",
+                type: 5,
+                required: false,
             }
         ]
     },

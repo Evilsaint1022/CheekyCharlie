@@ -10,13 +10,11 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
     const userKey = `${author.username}_${author.id}`;
 
-    // Load the guild's full leaderboard object
+    // Load guild XP/level data
     let guildData = await db.levels.get(guildKey) || {};
-
-    // Get or create this user's data
     let userData = guildData[userKey] || { xp: 0, level: 1 };
 
-    // Generate XP
+    // XP gain
     const xpGain = Math.floor(Math.random() * 11) + 5;
     userData.xp += xpGain;
 
@@ -27,30 +25,57 @@ module.exports = {
       message.channel.send(`🎉 **Congratulations ${author}!** You've leveled up to level **${userData.level}**!`);
     }
 
-    // Save back into guildData and store
+    // Save updated user data
     guildData[userKey] = userData;
     await db.levels.set(guildKey, guildData);
 
-    // Manage level roles
+    // Load level roles config
     const levelRoles = await db.levelroles.get(guildKey) || {};
     const currentLevel = userData.level;
-    try {
-      const userRoles = member.roles.cache;
-      const milestoneRoleId = Object.entries(levelRoles)
-        .filter(([level]) => currentLevel >= parseInt(level))
-        .map(([, roleId]) => roleId)
-        .pop();
 
-      for (const [, roleId] of Object.entries(levelRoles)) {
-        if (roleId !== milestoneRoleId && userRoles.has(roleId)) {
-          await member.roles.remove(roleId);
+    try {
+      const rolesToKeep = new Set(); // Sticky roles or latest earned role
+      let highestUnlocked = 0;
+      let highestRoleId = null;
+
+      // Iterate and find roles to keep or assign
+      for (const [levelStr, config] of Object.entries(levelRoles)) {
+        const level = parseInt(levelStr);
+        if (currentLevel >= level) {
+          const { roleId, sticky } = config;
+
+          if (sticky) {
+            rolesToKeep.add(roleId);
+          }
+
+          if (level > highestUnlocked) {
+            highestUnlocked = level;
+            highestRoleId = roleId;
+          }
         }
       }
 
-      if (milestoneRoleId && !userRoles.has(milestoneRoleId)) {
-        const role = guild.roles.cache.get(milestoneRoleId);
-        if (role) await member.roles.add(role);
+      if (highestRoleId) rolesToKeep.add(highestRoleId);
+
+      // Manage roles
+      const userRoles = member.roles.cache;
+      for (const role of userRoles.values()) {
+        if (
+          Object.values(levelRoles).some(lr => lr.roleId === role.id) &&
+          !rolesToKeep.has(role.id)
+        ) {
+          await member.roles.remove(role.id);
+        }
       }
+
+      // Add missing roles
+      for (const roleId of rolesToKeep) {
+        if (!userRoles.has(roleId)) {
+          const role = guild.roles.cache.get(roleId);
+          if (role) await member.roles.add(role);
+        }
+      }
+
     } catch (err) {
       console.error(`Failed to update roles for ${author.tag}:`, err);
     }
