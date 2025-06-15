@@ -31,7 +31,8 @@ async function handleAIMessage(client, message) {
 
   const ignoredChannels = await db.settings.get(`${message.guild.name}_${message.guild.id}.ignoredAIChannels`) || [];
 
-  if ( ignoredChannels.includes(message.channel.id) ) return
+  if ( ignoredChannels.includes(message.channel.id) ) return;
+  if ( ignoredChannels.includes(message.channel.parent.id) ) return;
 
   const userContent = message.content.replace(`<@${client.user.id}>`, '').trim();
   const encryptedUsername = encrypt(message.author.tag);
