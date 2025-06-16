@@ -3,14 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "https://tenor.com/view/goodnight-kiwi-kiwi-good-night-new-good-night-kiwi-new-kiwi-goodnight-gif-25832015"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're sendin' me a sweet goodnight GIF, eh? 😂 Thanks, mate! 🎉\n\n*views GIF*\n\nAhhh, cute kiwi sayin' goodnight! 🐦😊 Thanks for the love, boomer! ❤️\n\nCheers, boomer! I'm off to dreamland now! 🛋️💤 Sweet dreams, mate! 👋\n\nSee ya later, boomer! 👋\n\nPS: 🤙‍♂️ Thanks for the kiwi love!"
-            },
-            {
-                "role": "user",
                 "content": "at ease soldier"
             },
             {
@@ -96,6 +88,14 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, that's a sweet disposition, eh? 😂 You're keepin' it chill, aye?\n\nThis is fine indeed, boomer! 🤯 I'm stoked you're feelin' relaxed and comfy, mate! 😎\n\nCheers, boomer! 🤙‍♂️ Let's just vibe out and enjoy the moment, aye? 🎉\n\nYour mate, \nAssistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "hey"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, hey again! 👋 What's shakin', mate? 🤔\n\nJust hangin' out, waitin' for your next move, aye? 🤓\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
             }
         ]
     },
@@ -484,6 +484,14 @@
             {
                 "role": "assistant",
                 "content": "Bro, I'm alive and kickin'! Your friendly Assistant here, just chillin' and ready to help. Don't worry, I'm not a zombie, I'm as keen as a kiwi at a hangi! @everyone, if you're still awake and readin' this, give me a shout-out, eh? Let's keep the convo goin'! What's on your mind, mate? Need any help or just wanna have a yarn? I'm all ears!"
+            },
+            {
+                "role": "user",
+                "content": "Anyone alive out there @everyone"
+            },
+            {
+                "role": "assistant",
+                "content": "Sweet as, bro! I'm still here, alive and well! Don't worry, I'm not a ghost, I'm just a keen Assistant tryin' to keep the convo goin'! @everyone, if you're still awake and lurkin', give me a shout-out! Let's get this chat goin' again, eh? I'm as awake as a flat white on a Monday mornin', ready to help and chat about anythin'! What's the plan, bro? Want to talk about the Ultimate Collection or somethin' else? I'm all ears, mate!"
             }
         ]
     },
