@@ -4,9 +4,16 @@
         "DropPartyChannel": "1346955022461829162",
         "JoinToCreateVC": "1347010006054342738",
         "LevelChannel": "1346998014115578010",
-        "lastMessageDropTime": 1749908222309,
+        "lastMessageDropTime": 1750047337038,
         "nsfwFilter": true,
-        "nsfwLogsChannel": "1346997847723348094"
+        "nsfwLogsChannel": "1346997847723348094",
+        "ignoredAIChannels": [
+            "1346995397385781340",
+            "1346995573596622928",
+            "1347009051443068998",
+            "1346997542386401413",
+            "1366546956683575316"
+        ]
     },
     "OᴄᴇᴀɴɪᴄBʀᴏs | 18+_1367474417784979507": {
         "DropPartyChannel": "1367474418992943136",
@@ -18,13 +25,13 @@
         "LevelChannel": "1131007407032643725",
         "JoinToCreateVC": "1145881917036695612",
         "DropPartyChannel": "1130986095392346114",
-        "lastMessageDropTime": 1749898662400
+        "lastMessageDropTime": 1750040365955
     },
     "The Cool Kids_1297062144080089088": {
         "JoinToCreateVC": "1297062144759828526",
         "DropPartyChannel": "1297062144759828525",
         "LevelChannel": "1347401540054417408",
-        "lastMessageDropTime": 1749911925887
+        "lastMessageDropTime": 1750038991275
     },
     "modmailChannelId": "1376046599322603570"
 }
