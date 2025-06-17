@@ -23,12 +23,12 @@ https://github.com/NZ-Linix/dotdatabase
 -> Full Economy System  
     ╰─> Bank and Wallet  
     ╰─> Daily commands and Drop Events  
--> Level system with a leaderboard  
--> Join-to-create voice channels  
+-> Level System with a Leaderboard  
+-> Join-to-create Voice Channels  
 -> Custom Starboard  
 -> Bump Reminder  
 -> Custom AI chat
-    ╰─> Ability to deactivate the AI in specific channels
+    ╰─> Ability to Deactivate the AI in specific channels
 -> AI NSFW Content Filtering
     ╰─> Ability to train the AI
 ```
