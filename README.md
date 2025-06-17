@@ -27,7 +27,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> Join-to-create Voice Channels  
 -> Custom Starboard  
 -> Bump Reminder  
--> Custom AI chat
+-> Custom AI Chat
     ╰─> Ability to Deactivate the AI in specific channels
 -> AI NSFW Content Filtering
     ╰─> Ability to train the AI
