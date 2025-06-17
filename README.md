@@ -19,18 +19,18 @@ https://github.com/NZ-Linix/dotdatabase
 # ✨ Features
 
 ```
--> Play games like Blackjack  
--> Full economy system  
-    -> Bank and wallet  
-    -> Daily commands and drop events  
+-> Play Games like Blackjack  
+-> Full Economy System  
+    ╰─> Bank and Wallet  
+    ╰─> Daily commands and Drop Events  
 -> Level system with a leaderboard  
 -> Join-to-create voice channels  
--> Custom starboard  
--> Bump reminder  
+-> Custom Starboard  
+-> Bump Reminder  
 -> Custom AI chat
-    -> Ability to deactivate the AI in specific channels
+    ╰─> Ability to deactivate the AI in specific channels
 -> AI NSFW Content Filtering
-    -> Ability to train the AI
+    ╰─> Ability to train the AI
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
