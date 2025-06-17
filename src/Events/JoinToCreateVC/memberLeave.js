@@ -8,61 +8,48 @@ module.exports = {
      * @param {VoiceState} newState
      */
     async execute(oldState, newState) {
-        // Ignore if the channel didn't actually change
         if (oldState.channelId === newState.channelId) return;
 
-        let event = "";
+        if (oldState.channel && !newState.channel) {
+            const guild = oldState.guild;
+            const guildId = guild.id;
+            const guildName = guild.name;
 
-        if (oldState.channel == null && newState.channel != null) {
-            event = "join";
-        }
+            const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
+            const activeVCs = await db.vc.get(activeIdsKey) || {};
 
-        if (oldState.channel != null && newState.channel == null) {
-            event = "leave";
-        }
+            if (!activeVCs[oldState.channel.id]) return;
 
-        if (event === "join") return;
+            const oldChannel = oldState.channel;
 
-        const guild = oldState.guild;
-        const guildId = guild.id;
-        const guildName = guild.name;
+            for (const [_, member] of oldChannel.members) {
+                if (member.user && member.user.bot) {
+                    try {
+                        await member.voice.disconnect();
+                    } catch (err) {
+                        console.error(`[TEMP VC / JOIN TO CREATE] Failed to disconnect bot ${member.user?.tag ?? member.id}:`, err);
+                    }
+                }
+            }
 
-        const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
-        const activeIds = await db.vc.get(activeIdsKey) || [];
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-        if (!activeIds.includes(oldState.channel.id)) return;
+            const refreshedChannel = guild.channels.cache.get(oldChannel.id);
 
-        const oldChannel = oldState.channel;
-
-        for (const [_, member] of oldChannel.members) {
-            if (member.user && member.user.bot) {
+            if (refreshedChannel && refreshedChannel.members.size === 0) {
                 try {
-                    await member.voice.disconnect();
+                    await refreshedChannel.delete();
                 } catch (err) {
-                    console.error(`[TEMP VC / JOIN TO CREATE] Failed to disconnect bot ${member.user?.tag ?? member.id}:`, err);
+                    if (err.code !== 10003) {
+                        console.error("[TEMP VC / JOIN TO CREATE] Error deleting channel.");
+                        console.error(err);
+                    }
                 }
+
+                delete activeVCs[oldChannel.id];
+
+                await db.vc.set(activeIdsKey, activeVCs);
             }
         }
-
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        const refreshedChannel = guild.channels.cache.get(oldChannel.id);
-
-        if (refreshedChannel && refreshedChannel.members.size === 0) {
-            try {
-                await refreshedChannel.delete();
-            } catch (err) {
-                if (err.code !== 10003) {
-                    console.error("[TEMP VC / JOIN TO CREATE] Error deleting channel.");
-                    console.error(err);
-                }
-            }
-
-            const index = activeIds.indexOf(oldChannel.id);
-            if (index > -1) activeIds.splice(index, 1);
-            db.vc.set(activeIdsKey, activeIds);
-        }
-
-        return;
     }
 };
