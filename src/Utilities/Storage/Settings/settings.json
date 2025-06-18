@@ -4,7 +4,7 @@
         "DropPartyChannel": "1346955022461829162",
         "JoinToCreateVC": "1347010006054342738",
         "LevelChannel": "1346998014115578010",
-        "lastMessageDropTime": 1750047337038,
+        "lastMessageDropTime": 1750247535130,
         "nsfwFilter": true,
         "nsfwLogsChannel": "1346997847723348094",
         "ignoredAIChannels": [
@@ -31,7 +31,7 @@
         "JoinToCreateVC": "1297062144759828526",
         "DropPartyChannel": "1297062144759828525",
         "LevelChannel": "1347401540054417408",
-        "lastMessageDropTime": 1750038991275
+        "lastMessageDropTime": 1750240097161
     },
     "modmailChannelId": "1376046599322603570"
 }
