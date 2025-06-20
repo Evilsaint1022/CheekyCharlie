@@ -14,6 +14,11 @@ module.exports = {
     let guildData = await db.levels.get(guildKey) || {};
     let userData = guildData[userKey] || { xp: 0, level: 1 };
 
+    // Load guild settings for LevelChannel
+    const settings = await db.settings.get(guildKey);
+    const levelChannelId = settings?.LevelChannel;
+    const levelChannel = levelChannelId ? guild.channels.cache.get(levelChannelId) : null;
+
     // XP gain
     const xpGain = Math.floor(Math.random() * 11) + 5;
     userData.xp += xpGain;
@@ -22,7 +27,14 @@ module.exports = {
     if (userData.xp >= xpForNextLevel) {
       userData.xp -= xpForNextLevel;
       userData.level += 1;
-      message.channel.send(`🎉 **Congratulations ${author}!** You've leveled up to level **${userData.level}**!`);
+
+      const levelMessage = `🎉 **Congratulations ${author}!**🎉\n**You've leveled up to level ${userData.level}**!`;
+
+      if (levelChannel) {
+        levelChannel.send(levelMessage).catch(console.error);
+      } else {
+        message.channel.send(levelMessage).catch(console.error);
+      }
     }
 
     // Save updated user data
@@ -64,7 +76,7 @@ module.exports = {
           Object.values(levelRoles).some(lr => lr.roleId === role.id) &&
           !rolesToKeep.has(role.id)
         ) {
-          await member.roles.remove(role.id);
+          await member.roles.remove(role.id).catch(console.error);
         }
       }
 
@@ -72,7 +84,7 @@ module.exports = {
       for (const roleId of rolesToKeep) {
         if (!userRoles.has(roleId)) {
           const role = guild.roles.cache.get(roleId);
-          if (role) await member.roles.add(role);
+          if (role) await member.roles.add(role).catch(console.error);
         }
       }
 
