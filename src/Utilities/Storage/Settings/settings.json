@@ -4,7 +4,7 @@
         "DropPartyChannel": "1346955022461829162",
         "JoinToCreateVC": "1347010006054342738",
         "LevelChannel": "1346998014115578010",
-        "lastMessageDropTime": 1750250508124,
+        "lastMessageDropTime": 1750395244799,
         "nsfwFilter": true,
         "nsfwLogsChannel": "1346997847723348094",
         "ignoredAIChannels": [
@@ -19,19 +19,18 @@
         "DropPartyChannel": "1367474418992943136",
         "LevelChannel": "1367479019813212230",
         "JoinToCreateVC": "1367474418992943137",
-        "lastMessageDropTime": 1749908742849
+        "lastMessageDropTime": 1750312141068
     },
     "𝗠𝗶𝗱𝗻𝗶𝗴𝗵𝘁 𝗪𝗼𝗲 18+ [SFW]_1130986094758993960": {
         "LevelChannel": "1131007407032643725",
         "JoinToCreateVC": "1145881917036695612",
         "DropPartyChannel": "1130986095392346114",
-        "lastMessageDropTime": 1750234662971
+        "lastMessageDropTime": 1750386175588
     },
     "The Cool Kids_1297062144080089088": {
         "JoinToCreateVC": "1297062144759828526",
-        "DropPartyChannel": "1297062144759828525",
         "LevelChannel": "1347401540054417408",
-        "lastMessageDropTime": 1750240097161
+        "lastMessageDropTime": 1750346946131
     },
     "modmailChannelId": "1376046599322603570"
 }
