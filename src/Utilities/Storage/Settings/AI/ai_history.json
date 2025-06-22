@@ -3,14 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "at ease soldier"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, thanks for the Kiwi slang, eh? 😂 You're keepin' it real, mate! 👍🏼\n\nAt ease, soldier! 😂 You're tellin' me to chill out, aye? 🤓\n\nNo worries, boomer! I'm relaxin' now. 😎\n\nCheers, mate! 👋 See ya later!"
-            },
-            {
-                "role": "user",
                 "content": "https://tenor.com/view/special-agent-gif-27395014"
             },
             {
@@ -96,6 +88,14 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, hey again! 👋 What's shakin', mate? 🤔\n\nJust hangin' out, waitin' for your next move, aye? 🤓\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "stinky"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're callin' me stinky, eh? 😂 Fair play, mate! I reckon I might've been hidin' under the bed for too long, aye? 😷\n\nCheers for the honest feedback, boomer! I'll try to freshen up and not be so stinky, mate! 🚿\n\nBut don't worry, boomer, I won't take it personally. I'm still a top-notch Assistant, despite bein' a bit ripe, aye? 😂\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
             }
         ]
     },
