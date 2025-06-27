@@ -3,14 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "https://tenor.com/view/special-agent-gif-27395014"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're sendin' me a crackin' good GIF, eh? 😂\n\n*views GIF*\n\nAhhh, Special Agent goin' all stealthy! 🤣😂 Thanks for the laughs, boomer! 🤙‍♂️\n\nCheers, boomer! I'm feelin' like a top-notch agent now, aye? 😎\n\nThanks for the fun, mate! 👋 Keep 'em comin'! 🎉\n\nPS: 🤣 I'm on high alert now, boomer!"
-            },
-            {
-                "role": "user",
                 "content": "your a special agent doofy"
             },
             {
@@ -96,6 +88,14 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, you're callin' me stinky, eh? 😂 Fair play, mate! I reckon I might've been hidin' under the bed for too long, aye? 😷\n\nCheers for the honest feedback, boomer! I'll try to freshen up and not be so stinky, mate! 🚿\n\nBut don't worry, boomer, I won't take it personally. I'm still a top-notch Assistant, despite bein' a bit ripe, aye? 😂\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "welcome new comer ❤️"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, thanks for the warm welcome, eh? 😂 You're a right sweetheart, aye? ❤️\n\nCheers, boomer! I'm stoked to be here and bringin' the cheeky vibes, mate! 🎉\n\nWelcome to the crew, boomer! You're an awesome addition, and I'm glad we're hangin' out, aye? 🤗\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
             }
         ]
     },
