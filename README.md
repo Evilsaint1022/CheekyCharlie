@@ -23,6 +23,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> Full Economy System  
     ╰─> Bank and Wallet  
     ╰─> Daily commands and Drop Events
+	╰─> Inventory
     ╰─> Shop
 -> Level System with a Leaderboard  
 -> Join-to-create Voice Channels  
