@@ -21,6 +21,8 @@ const db = {
     lastbump: new DotDB("./src/Utilities/Storage/Settings/Bump/lastbump.json"),
     ai_history: new DotDB("./src/Utilities/Storage/Settings/AI/ai_history.json"),
     ai_nsfw_training: new DotDB("./src/Utilities/Storage/Settings/AI/ai_nsfw_training.json"),
+    shop: new DotDB("./src/Utilities/Storage/Shop/shop.json"),
+    inventory: new DotDB("./src/Utilities/Storage/Inventory/inventory.json"),
 }
 
 module.exports = db;

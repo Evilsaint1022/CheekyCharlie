@@ -142,6 +142,34 @@ const commands = [
            },
        ],
     },
+    {
+        name: 'shop',
+        description: 'View the items available in the shop.',
+    },
+    {
+        name: 'buy',
+        description: 'Buy an item from the shop.',
+    },
+    {
+        name: 'use',
+        description: 'Use an item from your inventory.',
+    },
+    {
+        name: 'refund',
+        description: 'Refund an item from your inventory and get your coins back.',
+    },
+    {
+        name: 'inventory',
+        description: 'View your inventory.',
+        options: [
+            {
+                name: 'user',
+                description: 'The user to view their inventory.',
+                type: 6,
+                required: false,
+            },
+        ]
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
@@ -396,6 +424,97 @@ const commands = [
                 required: true,
             },
         ],
+    },
+    {
+        name: 'add-shop-item',
+        description: 'Add a new item to the shop.',
+        options: [
+            {
+                name: 'title',
+                description: 'The name of the item.',
+                type: 3,
+                required: true,
+            },
+            {
+                name: 'description',
+                description: 'A description of the item.',
+                type: 3,
+                required: true,
+            },
+            {
+                name: 'role',
+                description: 'The role ID granted by purchasing this item.',
+                type: 8,
+                required: true,
+            },
+            {
+                name: 'price',
+                description: 'The price of the item.',
+                type: 4,
+                required: true,
+            },
+            {
+                name: 'stock',
+                description: 'The amount of this item available (leave empty for unlimited).',
+                type: 4,
+                required: false,
+            },
+        ]
+    },
+    {
+        name: 'remove-shop-item',
+        description: 'Remove an item from the shop by its title.',
+        options: [
+            {
+                name: 'title',
+                description: 'The exact title of the shop item to remove',
+                type: 3,
+                required: true,
+            },
+        ]
+    },
+    {
+        name: 'edit-shop-item',
+        description: 'Edit an item in the shop by its title.',
+        options: [
+            {
+                name: 'current_title',
+                description: 'The current title of the item to edit',
+                type: 3,
+                required: true,
+            },
+            {
+                name: 'new_title',
+                description: 'The exact title of the shop item to edit',
+                type: 3,
+                required: false,
+            },
+            {
+                name: 'description',
+                description: 'New description (optional)',
+                type: 3,
+                required: false,
+
+            },
+            {
+                name: 'role',
+                description: 'The role ID granted by purchasing this item.',
+                type: 8,
+                required: false,
+            },
+            {
+                name: 'price',
+                description: 'The price of the item.',
+                type: 4,
+                required: false,
+            },
+            {
+                name: 'stock',
+                description: 'The amount of this item available (leave empty for unlimited).',
+                type: 4,
+                required: false,
+            },
+        ]
     },
 ];
 
