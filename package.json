@@ -22,7 +22,7 @@
     "@discordjs/builders": "^1.11.2",
     "@discordjs/rest": "^2.5.1",
     "@discordjs/voice": "^0.18.0",
-    "@napi-rs/canvas": "^0.1.72",
+    "@napi-rs/canvas": "^0.1.73",
     "ascii-table": "^0.0.9",
     "axios": "^1.10.0",
     "child_process": "^1.0.2",
@@ -30,8 +30,8 @@
     "colors": "^1.4.0",
     "deckofcards": "^1.2.2",
     "discord.js": "^14.21.0",
-    "dotdatabase": "^1.1.2",
-    "dotenv": "^16.6.0",
+    "dotdatabase": "1.0.4",
+    "dotenv": "^17.0.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.0",
     "groq-sdk": "^0.26.0",
@@ -39,14 +39,14 @@
     "node-cron": "^4.1.1",
     "node-fetch": "^3.3.2",
     "npm": "^11.4.2",
-    "openai": "^5.8.1",
+    "openai": "^5.8.2",
     "path": "^0.12.7",
     "punycode": "^2.3.1",
     "register-commands": "^1.0.0",
     "table": "^6.9.0"
   },
   "devDependencies": {
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "nodemon": "^3.1.10"
   },
   "overrides": {

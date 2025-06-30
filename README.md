@@ -22,7 +22,8 @@ https://github.com/NZ-Linix/dotdatabase
 -> Play Games like Blackjack  
 -> Full Economy System  
     ╰─> Bank and Wallet  
-    ╰─> Daily commands and Drop Events  
+    ╰─> Daily commands and Drop Events
+    ╰─> Shop
 -> Level System with a Leaderboard  
 -> Join-to-create Voice Channels  
 -> Custom Starboard  
@@ -57,6 +58,11 @@ https://github.com/NZ-Linix/dotdatabase
 - `/pick` - Picks coins when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
 - `/pay` - Pay other members coins.
+- `/shop` - checks the server shop.
+- `/buy` - buys a item from the shop.
+- `/use` - uses the item bought from from the shop.
+- `/refund` - refunds the item from the shop.
+- `/inventory` - checks the items in the users inventory.
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
@@ -87,6 +93,10 @@ https://github.com/NZ-Linix/dotdatabase
 -
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels
+-
+- `/add-shop-item` - Adds items to the servers shop.
+- `/remove-shop-item` - Removes Shop items by name.
+- `/edit-shop-item` - Edits Items in the server shop.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
