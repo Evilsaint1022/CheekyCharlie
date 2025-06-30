@@ -59,6 +59,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/pick` - Picks coins when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
 - `/pay` - Pay other members coins.
+- 
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.
 - `/use` - uses the item bought from from the shop.
@@ -84,17 +85,17 @@ https://github.com/NZ-Linix/dotdatabase
 - 
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.
--
+- 
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 - 
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
--
+- 
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels
--
+- 
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
