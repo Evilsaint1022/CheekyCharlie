@@ -36,6 +36,7 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Ability to Deactivate the AI in specific channels
 -> AI NSFW Content Filtering
     ╰─> Ability to train the AI
+-> RSS Feed news
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -96,12 +97,15 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 - 
-- `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels
-- `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels
+- `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
+- `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 - 
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
+-
+- `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
+- `/remove-rss-channel` - Removes the RSS feed news channel.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 

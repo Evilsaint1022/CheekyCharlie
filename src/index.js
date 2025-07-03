@@ -79,6 +79,18 @@ client.once("ready", async () => {
     console.log(`successfully finished startup`.bold.green);
 });
 
+// Run RSS News once client is ready -----------------------------------------------------------------------------------------------
+
+(async () => {
+    if (!client.isReady()) {
+        await new Promise(resolve => {
+            client.once('ready', resolve);
+        });
+    }
+
+    const runRSSNews = require('./Utilities/RSS/rss-news-check');
+    await runRSSNews(client);
+})();
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------
 
