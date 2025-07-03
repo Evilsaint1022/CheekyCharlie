@@ -23,6 +23,8 @@ const db = {
     ai_nsfw_training: new DotDB("./src/Utilities/Storage/Settings/AI/ai_nsfw_training.json"),
     shop: new DotDB("./src/Utilities/Storage/Shop/shop.json"),
     inventory: new DotDB("./src/Utilities/Storage/Inventory/inventory.json"),
+    rss: new DotDB("./src/Utilities/Storage/Rss/rss.json")
+    
 }
 
 module.exports = db;

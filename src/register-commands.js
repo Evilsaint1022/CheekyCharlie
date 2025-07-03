@@ -516,6 +516,22 @@ const commands = [
             },
         ]
     },
+    {
+        name: 'set-rss-channel',
+        description: 'The channel where rss news will be sent',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for rss news',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-rss-channel',
+        description: 'Remove the channel where rss news will be sent',
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
