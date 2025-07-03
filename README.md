@@ -103,7 +103,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
-- No current bugs at this moment...
+- [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@linix_red`
