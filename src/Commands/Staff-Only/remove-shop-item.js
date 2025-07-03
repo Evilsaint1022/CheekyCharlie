@@ -20,7 +20,7 @@ module.exports = {
                 flags: 64
             });
         }
-
+        
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
         const userId = interaction.user.id;
@@ -79,6 +79,9 @@ module.exports = {
       console.error('Error saving updated shop:', error);
       return interaction.reply({ content: 'Failed to save changes to the shop.', flags: 64 });
     }
+
+    //console logs
+    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-shop-item command.`);
 
     return interaction.reply({ content: `Removed "${titleToRemove}" from the shop.`, flags: 64 });
   },

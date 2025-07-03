@@ -16,11 +16,11 @@ module.exports = {
     const guild = interaction.guild;
 
     if (interaction.channel.isDMBased()) {
-            return interaction.reply({
-                content: "This command cannot be used in DMs.",
-                flags: 64
-            });
-        }
+      return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
 
     const guildKey = `${guild.name}_${guild.id}`;
     const userKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
@@ -35,25 +35,34 @@ module.exports = {
     }
 
     const userData = fullInventory[userKey];
+
     if (!userData || !Array.isArray(userData.inventory) || userData.inventory.length === 0) {
-      return interaction.reply({
-        content: `${user.id === interaction.user.id ? 'Your' : `${user.username}'s`} inventory is empty.`,
-      });
+      const emptyEmbed = new EmbedBuilder()
+        .setTitle(`${user.username}'s Inventory`)
+        .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+        .setDescription('Inventory is empty.')
+        .setColor('#ffffff')
+        .setFooter({ text: `Requested by ${interaction.user.username}` })
+        .setTimestamp();
+
+      return interaction.reply({ embeds: [emptyEmbed] });
     }
 
     // Build embed
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Inventory`)
+      .setThumbnail(user.displayAvatarURL({ dynamic: true }))
       .setColor('#ffffff')
       .setFooter({ text: `Requested by ${interaction.user.username}` })
       .setTimestamp();
 
     const inventoryText = userData.inventory.map((item, index) => {
-      return `**${index + 1}.** **__${item.title}__** - ${item.description}`;
-    }).join('\n\n');
+      return `**${index + 1}.** **__${item.title}__** - [ **${item.price} 🪙's** ]`;
+    }).join('\n');
 
     embed.setDescription(inventoryText);
 
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
     return interaction.reply({ embeds: [embed] });
   }
 };

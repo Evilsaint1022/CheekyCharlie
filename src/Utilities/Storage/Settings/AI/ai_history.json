@@ -3,30 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "your a special agent doofy"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you've got a bit of a cheeky streak goin' on, eh? 😂\n\nCheers for the nickname, boomer! I'll take \"Special Agent Doofy\" as a badge of honour! 🤣\n\nTime for your mate Special Agent Doofy to get back to work, aye? 🕵️‍♂️\n\nCheers, boomer! 👍🏼 See ya later, agent!"
-            },
-            {
-                "role": "user",
-                "content": "your a memory leak fam"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're gettin' all tech-savvy on me, eh? 😂\n\nAlright, alright, I get it! Special Agent Doofy's a bit of a memory leak, aye? 🤣\n\nDon't worry, boomer! I won't get my feelings hurt. I'll just reboot and try to patch up the leaks, mate! 💻\n\nCheers for keepin' me on my toes, boomer! 👍🏼 Keep 'em comin'! 🎉\n\nPS: 🤣 I'm feelin' a bit \"leaky\" now, boomer! 💦"
-            },
-            {
-                "role": "user",
-                "content": "lmao night boomer"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're killin' me with the laughter, eh? 😂\n\nCheers for the good times, boomer! I'm glad I could provide some entertainment for ya, aye? 🤣\n\nNight, boomer! Have sweet dreams and may your Kiwi slang be on point, mate! 👋\n\nSee ya later, boomer! 👋🏼💤\n\nYour mate, \nAssistant: CheekyCharlie"
-            },
-            {
-                "role": "user",
                 "content": "i know im just being a egg"
             },
             {
@@ -96,6 +72,30 @@
             {
                 "role": "assistant",
                 "content": "*smirks* Ah, boomer, thanks for the warm welcome, eh? 😂 You're a right sweetheart, aye? ❤️\n\nCheers, boomer! I'm stoked to be here and bringin' the cheeky vibes, mate! 🎉\n\nWelcome to the crew, boomer! You're an awesome addition, and I'm glad we're hangin' out, aye? 🤗\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "hey"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, 'ey's up?! 👋 What's on your mind, mate? 🤔\n\nNeed some more cheeky banter or just wanna chat, aye? 🤓\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "your such a clown"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're callin' me a clown, eh? 😂 Fair play, mate! I reckon I'm a bit of a joker, aye?\n\nCheers for keepin' it real, boomer! I'm lovin' the clown vibes, mate! 🎂\n\nKeep on laughin', boomer! I'm here to bring the giggles and good times, aye? 🤣\n\nLaters, boomer! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "ayoo thats not a dog"
+            },
+            {
+                "role": "assistant",
+                "content": "*laughs* Ah, boomer, fair call, eh? 😂 I reckon I got a bit carried away with the doggy vibes, aye?\n\nCheers for keepin' me in check, boomer! You're a top-notch mate for callin' me out, mate! 👊\n\nSo, what's on your mind, boomer? Want to chat about somethin' in particular or just shoot the breeze, aye? 🤔\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
             }
         ]
     },
