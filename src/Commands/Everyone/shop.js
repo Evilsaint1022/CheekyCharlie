@@ -13,6 +13,7 @@ module.exports = {
     .setDescription('View the items available in the shop.'),
 
   async execute(interaction) {
+    const guild = interaction.guild;
 
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
@@ -72,7 +73,7 @@ module.exports = {
         { name: '\n', value: `*🌿Thanks for using The ${interaction.guild.name} Shop!*` },
         { name: '\n', value: '**╰────────────────────────────╯**' }
       );
-
+      console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the shop command.`);
       return embed;
     };
 

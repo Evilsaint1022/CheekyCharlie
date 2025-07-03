@@ -173,5 +173,6 @@ module.exports = {
         }).catch(() => {});
       }
     });
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
   }
 };

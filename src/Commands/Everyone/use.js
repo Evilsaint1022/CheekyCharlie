@@ -33,6 +33,9 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
     const userKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
 
+    // console logs
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
+
     // Load inventory
     let fullInventory = {};
     try {

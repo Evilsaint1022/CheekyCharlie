@@ -44,7 +44,8 @@ module.exports = {
                 flags: 64
             });
         }
-
+        const user = interaction.user;
+        const guild = interaction.guild;
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
         const userId = interaction.user.id;
@@ -114,6 +115,9 @@ module.exports = {
       console.error('DB Save Error:', err);
       return interaction.reply({ content: 'Failed to save updated shop item.', flags: 64 });
     }
+
+    //console logs
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the edit-shop-item command.`);
 
     return interaction.reply({
       content: `Successfully updated the item "${currentTitle}".`,

@@ -34,7 +34,6 @@ module.exports = {
                 flags: 64
             });
         }
-
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
         const userId = interaction.user.id;
@@ -85,6 +84,10 @@ module.exports = {
       // Save back to db
       await db.shop.set(guildKey, shopItems);
 
+      //console logs
+      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the add-shop-item command.`);
+      
+      //reply interaction
       return interaction.reply({
         content: `✅ Item "${title}" added to the shop with a stock of ${stock === -1 ? 'unlimited' : stock}.`,
         flags: 64
