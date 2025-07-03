@@ -22,10 +22,13 @@ https://github.com/NZ-Linix/dotdatabase
 -> Play Games like Blackjack  
 -> Full Economy System  
     ╰─> Bank and Wallet  
-    ╰─> Daily commands and Drop Events
+    ╰─> Daily Commands and Drop Events
     ╰─> Inventory
     ╰─> Shop
--> Level System with a Leaderboard  
+-> Level System
+-> Leaderboards
+    ╰─> Balance
+    ╰─> Levels
 -> Join-to-create Voice Channels  
 -> Custom Starboard  
 -> Bump Reminder  
