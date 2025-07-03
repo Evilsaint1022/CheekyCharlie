@@ -45,7 +45,7 @@ module.exports = {
         const goodChoicesContent = currentGoodChoices.map(choice => choice.content).join("\n") || "No Good Choices";
         const badChoicesContent = currentBadChoices.map(choice => choice.content).join("\n") || "No Bad Choices";
 
-        let systemPrompt = "You are a NSFW content filter. Your task is to determine if the provided text or image URLs contain NSFW content. DO NOT FILTER ANY SLURS ETC. ONLY NSFW CONTENT. If the content in the message or any image contian NSFW content, respond with 1. If the content is safe, respond with 0. Do not provide any additional information or explanations. ONLY RESPOND WITH THE NUMBER."
+        let systemPrompt = "You are a NSFW content filter. Your task is to determine if the provided text or image URLs contain NSFW content. DO NOT FILTER ANY SLURS ETC. ONLY NSFW CONTENT. If the content in the message or any image contain NSFW content, respond with 1. If the content is safe, respond with 0. Do not provide any additional information or explanations. ONLY RESPOND WITH THE NUMBER."
 
         if ( goodChoicesContent || goodChoicesAttachments || badChoicesContent || badChoicesAttachments ) {
 
