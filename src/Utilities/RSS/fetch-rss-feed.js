@@ -1,7 +1,6 @@
 // rssSender.js
-const fetch  = require("node-fetch");
 const Parser = require("rss-parser");
-const db     = require("../../Handlers/database");
+const db = require("../../Handlers/database");
 
 const parser  = new Parser();
 const RSS_URL = "https://www.rnz.co.nz/rss/national.xml";
