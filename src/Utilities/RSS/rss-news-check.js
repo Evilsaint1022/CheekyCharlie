@@ -15,7 +15,6 @@ async function runRSSNews(client) {
         try {
 
             if ( working == true ) {
-                console.log("[RSS] Already working on fetching RSS feeds. Skipping this cycle.");
                 return;
             }
 
@@ -31,16 +30,12 @@ async function runRSSNews(client) {
                 const rssChannel = await db.rss.get(`${serverName}_${serverId}_rssNewsChannel`);
 
                 if ( !rssChannel ) {
-                    console.log(`[RSS] No RSS channel set for ${serverName} (${serverId}). Skipping...`);
                     continue;
                 }
 
                 const newRssItems = await fetchRSS(serverId);
 
                 if ( newRssItems.length === 0 ) {
-
-                    console.log(`[RSS] No new RSS items found for ${serverName} (${serverId}). Skipping...`);
-
                 }
 
                 for ( const newItem of newRssItems ) {
@@ -48,7 +43,6 @@ async function runRSSNews(client) {
                     const channel = client.channels.cache.get(rssChannel);
 
                     if ( !channel ) {
-                        console.log(`[RSS] Channel ${rssChannel} not found in ${serverName} (${serverId}). Skipping...`);
                         continue;
                     }
 
