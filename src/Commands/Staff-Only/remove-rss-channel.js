@@ -33,7 +33,8 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-        await db.rss.delete(`${guildName}_${guildId}_rssNewsChannel`, channel.id);
+        await db.settings.delete(`${guildName}_${guildId}.rssTopics`);
+        await db.settings.delete(`${guildName}_${guildId}.rssNewsChannel`, channel.id);
 
         await interaction.reply({ content: `RSS channel has been removed. Previous: ${channel.url}.`, flags: MessageFlags.Ephemeral });
 
