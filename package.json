@@ -22,6 +22,7 @@
     "@discordjs/builders": "^1.11.2",
     "@discordjs/rest": "^2.5.1",
     "@discordjs/voice": "^0.18.0",
+    "@dotenvx/dotenvx": "^1.45.2",
     "@napi-rs/canvas": "^0.1.73",
     "ascii-table": "^0.0.9",
     "axios": "^1.10.0",

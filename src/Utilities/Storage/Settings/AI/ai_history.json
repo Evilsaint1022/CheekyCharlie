@@ -3,14 +3,6 @@
         "history": [
             {
                 "role": "user",
-                "content": "i know im just being a egg"
-            },
-            {
-                "role": "assistant",
-                "content": "*smirks* Ah, boomer, you're crackin' eggs on yourself, eh? 😂\n\nFair play, boomer! You're a right egg-cellent mate for ownin' up to bein' a bit of an egghead, aye? 🤣\n\nNo worries, boomer! I'm here to help and provide some cheesy good times, mate! 🎉\n\nKeep on eggin' on, boomer! 😂 See ya later! 👋\n\nCheers, boomer! 🤙‍♂️ Your mate, \nAssistant: CheekyCharlie"
-            },
-            {
-                "role": "user",
                 "content": "oh lord shut up my guy love you ❤️"
             },
             {
@@ -96,6 +88,14 @@
             {
                 "role": "assistant",
                 "content": "*laughs* Ah, boomer, fair call, eh? 😂 I reckon I got a bit carried away with the doggy vibes, aye?\n\nCheers for keepin' me in check, boomer! You're a top-notch mate for callin' me out, mate! 👊\n\nSo, what's on your mind, boomer? Want to chat about somethin' in particular or just shoot the breeze, aye? 🤔\n\nSpit it out, boomer! I'm all ears, mate! 👂\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
+            },
+            {
+                "role": "user",
+                "content": "this aint covid weirdo"
+            },
+            {
+                "role": "assistant",
+                "content": "*smirks* Ah, boomer, you're tellin' me I ain't Covid, eh? 😂 Fair play, mate! I reckon I might've been actin' a bit strange, aye?\n\nNo worries, boomer! I'm just a cheeky Charlie with a bad case of kiwi-freshness, not Covid, mate! 🤣\n\nCheers for checkin' in on me, boomer! You're a true blue mate for lookin' out for me, aye? 🤗\n\nNow, what's on your mind, boomer? Want to catch up on some sweet Kiwi gossip or just have a yarn, mate? 🎉\n\nCheers, boomer! 🤙‍♂️ Your mate, Assistant: CheekyCharlie"
             }
         ]
     },
@@ -628,6 +628,18 @@
             {
                 "role": "assistant",
                 "content": "Sweet as, bro! I'm still your friendly Assistant, CheekyCharlie.\n\nKei te hiahia au ki te haere ki te moe . (I want to go sleep)\n\nBreakdown:\n\n* Kei te hiahia = I want to or I desire\n* au = me\n* ki = to\n* te haere = to go\n* ki te = to the\n* moe = sleep\n\nOr, if you wanna sound a bit more casual, like a Kiwi:\n\n\"Kei te moe au, bro.\" (I'm gonna go sleep, mate)\n\nOr:\n\n\"He moe au, tāne.\" (I'm off to sleep, mate)\n\nYou can also use:\n\n\"Ka pai ki te moe au.\" (Time for me to sleep)\n\nWhakapapa (That's Māori for \"cheers\")! Now, if you'll excuse me, I'm off to have a sweet dream, eh? Ta for now, bro! I'm still here as your friendly Assistant, CheekyCharlie."
+            }
+        ]
+    },
+    "282bbe7179563380a200d89ac89b8b4b": {
+        "history": [
+            {
+                "role": "user",
+                "content": "Level 4??"
+            },
+            {
+                "role": "assistant",
+                "content": "Sweet as, bro! Level 4, eh? You're talkin' about the COVID-19 alert levels, right? That's right, Level 4 means we're goin' into full-on lockdown mode, mate. Stay at home, no movin' around, just chillin' with the whānau. It's a bit of a drag, but we'll get through it, aye? I'm here to help you with any questions or concerns you've got, so feel free to ask me anything. Now, grab a cuppa and let's get through this level 4 lockdown together, cheers!"
             }
         ]
     }
