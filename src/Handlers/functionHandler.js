@@ -26,6 +26,11 @@ function loadFunctions(client) {
             }
 
             for (const file of files) {
+
+                const fileContent = fs.readFileSync(path.join(folderPath, file), 'utf-8');
+
+                if ( fileContent.includes('// EXCLUDE') ) continue;
+
                 try {
                     const func = require(path.join(folderPath, file)); // Load the function file
 

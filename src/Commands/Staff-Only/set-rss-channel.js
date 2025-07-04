@@ -44,7 +44,8 @@ module.exports = {
             return interaction.reply({ content: 'Please select a valid text channel.', flags: MessageFlags.Ephemeral });
         }
 
-        await db.rss.set(`${guildName}_${guildId}_rssNewsChannel`, channel.id);
+        await db.settings.set(`${guildName}_${guildId}.rssTopics`, []);
+        await db.settings.set(`${guildName}_${guildId}.rssNewsChannel`, channel.id);
 
         await interaction.reply({ content: `RSS channel set to ${channel.url}.`, flags: MessageFlags.Ephemeral });
 
