@@ -14,50 +14,34 @@ async function runRSSNews(client) {
 
         try {
 
-            if ( working == true ) {
-                return;
-            }
+            if (working) return;
 
             working = true;
 
             const clientGuilds = await client.guilds.cache.map(guild => ({ name: guild.name, id: guild.id }));
 
-            for ( const guild of clientGuilds ) {
+            for (const guild of clientGuilds) {
 
                 const serverName = guild.name;
                 const serverId   = guild.id;
 
                 const rssChannel = await db.rss.get(`${serverName}_${serverId}_rssNewsChannel`);
 
-                if ( !rssChannel ) {
-                    continue;
-                }
+                if (!rssChannel) continue;
 
                 const newRssItems = await fetchRSS(serverId);
 
-                if ( newRssItems.length === 0 ) {
-                }
+                if (newRssItems.length === 0) continue;
 
-                for ( const newItem of newRssItems ) {
+                for (const newItem of newRssItems) {
+                const channel = client.channels.cache.get(rssChannel);
 
-                    const channel = client.channels.cache.get(rssChannel);
+                if (!channel) continue;
 
-                    if ( !channel ) {
-                        continue;
-                    }
+            await channel.send(`# **__${newItem.title}__**\n${newItem.url}`);
 
-                    await channel.send({
-                        embeds: [{
-                            title: newItem.title,
-                            url: newItem.link,
-                            description: newItem.desc || "`No description available.`",
-                            timestamp: newItem.time,
-                        }]
-                    });
-
-                    console.log(`[RSS] Sent RSS item to ${serverName} (${serverId}): ${newItem.title}`);
-
-                }
+            console.log(`[RSS] Sent RSS link to ${serverName} (${serverId}): ${newItem.url}`);
+            }
 
             }
 
@@ -65,6 +49,7 @@ async function runRSSNews(client) {
 
         } catch (error) {
             console.error('Error checking RSS feeds:', error);
+            working = false;
         }
 
     }, 1000);
