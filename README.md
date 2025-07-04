@@ -37,6 +37,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> AI NSFW Content Filtering
     ╰─> Ability to train the AI
 -> RSS Feed news
+    ╰─> Choose from our library, or add own ones (self-host)
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -105,6 +106,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/edit-shop-item` - Edits Items in the server shop.
 -
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
+- `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
