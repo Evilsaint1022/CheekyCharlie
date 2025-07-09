@@ -2,7 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, ChannelType, Tex
 const fs = require('fs');
 const path = require('path');
 const db = require('../../Handlers/database');
-const availableTopics = require("../../rssconfig");
+const availableTopics = require("../../../src/Utilities/Storage/Rss/rssconfig");
 
 module.exports = {
     data: new SlashCommandBuilder()
