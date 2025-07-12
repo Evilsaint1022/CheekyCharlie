@@ -10,6 +10,12 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
     const userKey = `${author.username}_${author.id}`;
 
+    // Check if levels feature is enabled for this guild
+    const levelsSetting = await db.settings.get(guildKey);
+    if (!levelsSetting || levelsSetting.levels !== true) {
+      return;
+    }
+
     // Load guild XP/level data
     let guildData = await db.levels.get(guildKey) || {};
     let userData = guildData[userKey] || { xp: 0, level: 1 };
