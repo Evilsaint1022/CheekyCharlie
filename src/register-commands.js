@@ -535,6 +535,10 @@ const commands = [
     {
         name: 'set-rss-topics',
         description: 'Set the topics for the RSS News Channel',
+    },
+    {
+        name: 'toggle-levels',
+        description: 'Toggle the levels feature on or off for this server.',
     }
 ];
 
