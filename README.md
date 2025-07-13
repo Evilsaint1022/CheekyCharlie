@@ -78,6 +78,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 - 
+- `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
 - 
