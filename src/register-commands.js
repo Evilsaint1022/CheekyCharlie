@@ -50,7 +50,7 @@ const commands = [
     },
     {
         name: 'daily',
-        description: 'Claim your daily coins!',
+        description: 'Claim your daily ferns!',
     },
     {
         name: 'invite',
@@ -156,7 +156,7 @@ const commands = [
     },
     {
         name: 'refund',
-        description: 'Refund an item from your inventory and get your coins back.',
+        description: 'Refund an item from your inventory and get your ferns back.',
     },
     {
         name: 'inventory',

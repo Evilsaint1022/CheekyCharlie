@@ -56,14 +56,14 @@ https://github.com/NZ-Linix/dotdatabase
 - 
 - `/level` — Check Current Level.
 - 
-- `/deposit` — Deposit Currency into your Bank.
-- `/withdraw` — Withdraw Currency from your Bank.
-- `/balance` — Check your balance.
-- `/leaderboard` — Balance Leaderboard.
+- `/deposit` — Deposit Ferns into your Bank.
+- `/withdraw` — Withdraw Ferns from your Bank.
+- `/balance` — Check your Ferns balance.
+- `/leaderboard` — Balance/Level Leaderboard.
 - `/daily` — Daily Currency Collect.
-- `/pick` - Picks coins when the dropparty's drops.
+- `/pick` - Picks Ferns when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
-- `/pay` - Pay other members coins.
+- `/pay` - Pay other members Ferns.
 - 
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.

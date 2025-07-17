@@ -4,11 +4,11 @@ const db = require('../../Handlers/database');
 
 // Track users who have picked the coin for the current drop
 const pickedUsers = new Set();
-
+const ferns = '<:Ferns:1395219665638391818>';
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pick')
-        .setDescription('Pick up the dropped coins for points!'),
+        .setDescription(`Pick up the dropped ${ferns} for points!`),
 
     async execute(interaction) {
         if (interaction.channel.isDMBased()) {
@@ -32,14 +32,14 @@ module.exports = {
 
             if (!dropMessage || dropMessage.channel.id !== interaction.channel.id) {
                 return interaction.reply({
-                    content: '**🪙 No coins to pick up right now!**',
+                    content: `**${ferns} No Ferns to pick up right now!**`,
                     flags: 64,
                 });
             }
 
             if (pickedUsers.has(userId)) {
                 return interaction.reply({
-                    content: '**🪙 You have already picked these coins!**',
+                    content: `**${ferns} You have already picked these ferns!**`,
                     flags: 64,
                 });
             }
@@ -55,10 +55,10 @@ module.exports = {
                 console.error('Error fetching user balance from database:', error);
             }
 
-            const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 coins
+            const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
             balance += coinsEarned;
 
-            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned} Coins. 🪙`);
+            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned} ${ferns}`);
 
             try {
                 await db.balance.set(dbKey, { balance });
@@ -69,8 +69,8 @@ module.exports = {
             await interaction.reply({
                 embeds: [
                     {
-                        title: '🪙 Coins Picked!',
-                        description: `You picked **${coinsEarned}** coins!`,
+                        title: `${ferns} Picked!`,
+                        description: `You picked **${coinsEarned}${ferns}!**`,
                         color: 0xFFD700,
                     },
                 ],
@@ -89,7 +89,7 @@ module.exports = {
             console.error('Error in pick command execution:', error);
             if (!interaction.replied) {
                 await interaction.reply({
-                    content: '**🪙 Something went wrong while picking up the coins.**',
+                    content: `**${ferns} Something went wrong while picking up the Ferns.**`,
                     flags: 64,
                 });
             }

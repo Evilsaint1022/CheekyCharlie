@@ -65,7 +65,7 @@ module.exports = {
 
         embed.addFields({
           name: `${globalIndex} 🌿**__${item.title}__**`,
-          value: `${item.description}\n> • **Role Reward:** <@&${item.roleId}>\n> • **Price:** 🪙 ${item.price}\n> • **Stock:** ${displayStock}`
+          value: `${item.description}\n> • **Role Reward:** <@&${item.roleId}>\n> • **Price:** <:Ferns:1395219665638391818> ${item.price}\n> • **Stock:** ${displayStock}`
         });
       });
 

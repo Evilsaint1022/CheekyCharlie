@@ -19,7 +19,7 @@ module.exports = {
                 flags: 64
             });
         }
-
+        const ferns = "<:Ferns:1395219665638391818>"
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
 
@@ -36,14 +36,14 @@ module.exports = {
             .setTitle(`**${targetUser.username}'s Balance**`) // Show original username for display
             .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .addFields(
-                { name: '🪙 Wallet', value: `${balance} Coins`, inline: true },
-                { name: '🏦 Bank', value: `${bank} Coins`, inline: true }
+                { name: '🪙 Wallet', value: `${balance} ${ferns}`, inline: true },
+                { name: '🏦 Bank', value: `${bank} ${ferns}`, inline: true }
             )
-            .setFooter({ text: 'Use Your Coins Wisely!' })
+            .setFooter({ text: `Use Your Ferns Wisely!` })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the balance bommand. ${targetUser.username}'s balance was checked.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the balance command. ${targetUser.username}'s balance was checked.`);
     }
 };
