@@ -56,11 +56,11 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Deposit**`)
-            .setDescription(`Successfully deposited **${depositAmount.toLocaleString()} ${ferns}** from your Wallet to your Bank.`)
+            .setDescription(`Successfully deposited **${ferns}${depositAmount.toLocaleString()}**`)
 
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${balance.toLocaleString()} ${ferns}`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bank.toLocaleString()} ${ferns}`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${ferns}${balance.toLocaleString()}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${ferns}${bank.toLocaleString()}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Savings are Growing!' })

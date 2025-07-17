@@ -53,10 +53,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Withdrawal**`)
-            .setDescription(`Successfully withdrew **${withdrawAmount.toLocaleString()} ${ferns}** from your Bank to your Wallet.`)
+            .setDescription(`Successfully withdrew **${ferns}${withdrawAmount.toLocaleString()}**`)
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${walletBalance.toLocaleString()} ${ferns}`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bankBalance.toLocaleString()} ${ferns}`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${ferns}${walletBalance.toLocaleString()}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${ferns}${bankBalance.toLocaleString()}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Wallet is Growing!' })

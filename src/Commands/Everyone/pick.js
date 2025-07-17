@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { dropPartyEvent } = require('../../Events/Client/drop_party.js');
+const { dropPartyEvent } = require('../../Events/Client/drop_party');
 const db = require('../../Handlers/database');
 
 // Track users who have picked the coin for the current drop
@@ -59,7 +59,7 @@ module.exports = {
             const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
             balance += coinsEarned;
 
-            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
+            console.log(`[🌿] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
 
             try {
                 await db.balance.set(dbKey, { balance });
@@ -70,8 +70,8 @@ module.exports = {
             await interaction.reply({
                 embeds: [
                     {
-                        title: `🎉Picked!🎉`,
-                        description: `You picked **${coinsEarned.toLocaleString()}${ferns}!**`,
+                        title: `${ferns} Ferns Picked!`,
+                        description: `You picked **${ferns}${coinsEarned.toLocaleString()}**`,
                         color: 0xFFD700,
                     },
                 ],
