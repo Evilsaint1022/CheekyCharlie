@@ -15,7 +15,7 @@ module.exports = {
         const bet = interaction.options.getInteger('bet');
         const balanceKey = `${user.username}_${user.id}.balance`;
         const ferns = '<:Ferns:1395219665638391818>';
-        // Retrieve balance
+
         let balance = await db.balance.get(balanceKey);
 
         if (balance === undefined || isNaN(parseInt(balance))) {
@@ -24,14 +24,12 @@ module.exports = {
 
         balance = parseInt(balance);
 
-        // Validate bet
         if (bet > balance) {
             return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
         } else if (bet <= 0) {
             return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
         }
 
-        // Game logic
         const drawCard = () => Math.floor(Math.random() * 10) + 1;
         let playerCards = [drawCard(), drawCard()];
         let dealerCards = [drawCard(), drawCard()];
@@ -67,7 +65,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [embed], components: [buttons] });
         const message = await interaction.fetchReply();
-
 
         const filter = i => i.user.id === user.id;
         const collector = message.createMessageComponentCollector({ filter, time: 60000 });
@@ -128,7 +125,6 @@ module.exports = {
             message.edit({ components: [] });
         });
 
-         // Console Logs
-         console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
     }
 };

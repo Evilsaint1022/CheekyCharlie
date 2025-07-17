@@ -5,6 +5,7 @@ const db = require('../../Handlers/database');
 // Track users who have picked the coin for the current drop
 const pickedUsers = new Set();
 const ferns = '<:Ferns:1395219665638391818>';
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pick')
@@ -58,7 +59,7 @@ module.exports = {
             const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
             balance += coinsEarned;
 
-            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned} ${ferns}`);
+            console.log(`[${new Date().toLocaleTimeString()}] [💰] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
 
             try {
                 await db.balance.set(dbKey, { balance });
@@ -69,8 +70,8 @@ module.exports = {
             await interaction.reply({
                 embeds: [
                     {
-                        title: `${ferns} Picked!`,
-                        description: `You picked **${coinsEarned}${ferns}!**`,
+                        title: `🎉Picked!🎉`,
+                        description: `You picked **${coinsEarned.toLocaleString()}${ferns}!**`,
                         color: 0xFFD700,
                     },
                 ],

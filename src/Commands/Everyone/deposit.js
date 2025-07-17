@@ -56,10 +56,11 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Deposit**`)
-            .setDescription(`Successfully deposited **${depositAmount} ${ferns}** from your Wallet to your Bank.`)
+            .setDescription(`Successfully deposited **${depositAmount.toLocaleString()} ${ferns}** from your Wallet to your Bank.`)
+
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${balance} ${ferns}`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bank} ${ferns}`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${balance.toLocaleString()} ${ferns}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${bank.toLocaleString()} ${ferns}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Savings are Growing!' })
@@ -68,6 +69,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount} Ferns`);
+        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount.toLocaleString()} Ferns`);
     },
 };

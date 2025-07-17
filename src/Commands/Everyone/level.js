@@ -47,9 +47,10 @@ module.exports = {
                 .setTitle(`**${targetUser.username}'s Level**`)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .addFields(
-                    { name: 'Level', value: `${level}`, inline: true },
-                    { name: 'XP', value: `${xp} / ${nextLevelXp}`, inline: true }
+                    { name: 'Level', value: `${level.toLocaleString()}`, inline: true },
+                    { name: 'XP', value: `${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()}`, inline: true }
                 )
+
                 .setFooter({ text: 'Keep earning XP to level up!' });
 
             return interaction.reply({ embeds: [embed] });

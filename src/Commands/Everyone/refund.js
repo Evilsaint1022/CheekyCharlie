@@ -89,7 +89,7 @@ module.exports = {
       await db.balance.set(userKey, balanceData);
 
       return selectInteraction.update({
-        content: `You refunded **${selectedItem.title}** for **${refundAmount}${ferns}!**`,
+        content: `You refunded **${selectedItem.title}** for **${refundAmount.toLocaleString()}${ferns}!**`,
         components: []
       });
     });

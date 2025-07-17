@@ -82,15 +82,14 @@ module.exports = {
     let currentPage = 0;
 
     const generateLeaderboardEmbed = (page) => {
-      const start = page * itemsPerPage;
-      const leaderboard = entries.slice(start, start + itemsPerPage)
+    const start = page * itemsPerPage;
+    const leaderboard = entries.slice(start, start + itemsPerPage)
         .map((entry, index) => {
-          const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
-          return type === 'balance'
-            ? `${base} \n♢  ${ferns}${entry.stat}**`
-            : `${base} \n♢  ⬆️Level ${entry.stat} (${entry.xp} XP)**`;
-        })
-        .join('\n');
+    const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
+      return type === 'balance'
+    ? `${base} \n♢  ${ferns}${entry.stat.toLocaleString()}**`
+    : `${base} \n♢  ⬆️Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
+      }).join('\n');
 
       return new EmbedBuilder()
         .setTitle(`**╭─── ${type === 'balance' ? 'Balance' : 'Level'} Leaderboard ───╮**`)

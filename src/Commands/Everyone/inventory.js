@@ -21,6 +21,7 @@ module.exports = {
         flags: 64
       });
     }
+
     const ferns = '<:Ferns:1395219665638391818>';
     const guildKey = `${guild.name}_${guild.id}`;
     const userKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
@@ -57,7 +58,7 @@ module.exports = {
       .setTimestamp();
 
     const inventoryText = userData.inventory.map((item, index) => {
-      return `**${index + 1}.** **__${item.title}__** - [ **${item.price}${ferns}** ]`;
+      return `**${index + 1}.** **__${item.title}__** - [ **${item.price.toLocaleString()}${ferns}** ]`;
     }).join('\n');
 
     embed.setDescription(inventoryText);

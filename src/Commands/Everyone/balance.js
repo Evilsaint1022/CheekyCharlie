@@ -32,15 +32,15 @@ module.exports = {
         const bank = await db.bank.get(`${dbKeyPrefix}.bank`) || 0;
 
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF)
-            .setTitle(`**${targetUser.username}'s Balance**`) // Show original username for display
-            .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-            .addFields(
-                { name: '🪙 Wallet', value: `${balance} ${ferns}`, inline: true },
-                { name: '🏦 Bank', value: `${bank} ${ferns}`, inline: true }
-            )
-            .setFooter({ text: `Use Your Ferns Wisely!` })
-            .setTimestamp();
+        .setColor(0xFFFFFF)
+        .setTitle(`**${targetUser.username}'s Balance**`)
+        .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
+        .addFields(
+            { name: '🪙 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
+            { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true }
+        )
+        .setFooter({ text: `Use Your Ferns Wisely!` })
+        .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 

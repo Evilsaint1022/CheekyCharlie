@@ -53,11 +53,11 @@ module.exports = {
       .setPlaceholder('Select an item to buy')
       .addOptions(
         shopItems.map((item, index) => ({
-          label: item.title.slice(0, 100),
-          description: item.description.slice(0, 100),
-          value: index.toString()
-        }))
-      );
+        label: `${item.title.slice(0, 75)} - ${item.price.toLocaleString()}${ferns}`,
+        description: item.description.slice(0, 100),
+        value: index.toString()
+      }))
+    );
 
     const row = new ActionRowBuilder().addComponents(menu);
 
@@ -92,7 +92,7 @@ module.exports = {
 
       if (balance < selectedItem.price) {
         return select.update({
-          content: `You need ${selectedItem.price}${ferns} to buy **${selectedItem.title}**.`,
+          content: `You need ${selectedItem.price.toLocaleString()}${ferns} to buy **${selectedItem.title}**.`,
           components: [],
           flags: 64
         });
@@ -158,7 +158,7 @@ module.exports = {
       }
 
       return select.update({
-        content: `You bought **${selectedItem.title}** for ${selectedItem.price}${ferns}!`,
+        content: `You bought **${selectedItem.title}** for ${selectedItem.price.toLocaleString()}${ferns}!`,
         components: [],
         flags: 64
       });
