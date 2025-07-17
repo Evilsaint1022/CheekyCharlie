@@ -76,7 +76,7 @@ module.exports = {
           components: []
         });
       }
-
+      const ferns = '<:Ferns:1395219665638391818>';
       const refundAmount = selectedItem.price || 0;
 
       // Remove item from inventory
@@ -89,7 +89,7 @@ module.exports = {
       await db.balance.set(userKey, balanceData);
 
       return selectInteraction.update({
-        content: `You refunded **${selectedItem.title}** for **${refundAmount}** 🪙's!`,
+        content: `You refunded **${selectedItem.title}** for **${refundAmount}${ferns}!**`,
         components: []
       });
     });

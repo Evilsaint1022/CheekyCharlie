@@ -17,7 +17,7 @@ module.exports = {
                 flags: 64
             });
         }
-
+        const ferns = '<:Ferns:1395219665638391818>';
         const { user, guild } = interaction;
         const username = user.username;
         const safeUsername = username.replace(/\./g, '_');
@@ -50,9 +50,9 @@ module.exports = {
         // Build embed
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
-            .setTitle(`${username}'s Daily Coins`)
-            .setDescription(`You have claimed your daily reward of **${rewardAmount} Coins🪙**!`)
-            .addFields({ name: 'Total Balance', value: `${balance} Coins`, inline: true })
+            .setTitle(`${username}'s Daily ${ferns}`)
+            .setDescription(`You have claimed your daily reward of **${rewardAmount} ${ferns}**!`)
+            .addFields({ name: 'Total Balance', value: `${balance} ${ferns}`, inline: true })
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Come back tomorrow for more!' })
             .setTimestamp();

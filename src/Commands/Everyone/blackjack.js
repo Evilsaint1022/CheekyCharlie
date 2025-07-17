@@ -14,7 +14,7 @@ module.exports = {
         const { guild, user } = interaction;
         const bet = interaction.options.getInteger('bet');
         const balanceKey = `${user.username}_${user.id}.balance`;
-
+        const ferns = '<:Ferns:1395219665638391818>';
         // Retrieve balance
         let balance = await db.balance.get(balanceKey);
 
@@ -56,7 +56,7 @@ module.exports = {
         const embed = {
             color: 0xFFFFFF,
             title: `**__♦️ Blackjack ♦️__**`,
-            description: `Placed Bet: ${bet} Coins 🪙\n\`Your move: Hit or Stand?\``,
+            description: `Placed Bet: ${bet} ${ferns}\n\n\`Your move: Hit or Stand?\``,
             thumbnail: { url: user.displayAvatarURL() },
             fields: [
                 { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -93,7 +93,7 @@ module.exports = {
                 const resultEmbed = {
                     color: result === 'win' ? 0x00FF00 : result === 'lose' ? 0xFF0000 : 0xFFFF00,
                     title: `**__♠️ Blackjack Results ♠️__**`,
-                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${bet} Coins 🪙!`,
+                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${bet}${ferns}!`,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
                         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -110,7 +110,7 @@ module.exports = {
                 const updatedEmbed = {
                     color: 0xFFFFFF,
                     title: `**__♣️ Blackjack ♣️__**`,
-                    description: `Bet Placed: ${bet} Coins 🪙\n\`Your move: Hit or Stand?\``,
+                    description: `Bet Placed: ${bet} ${ferns}\n\`Your move: Hit or Stand?\``,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
                         { name: 'Your Cards', value: playerCards.join(', '), inline: true },

@@ -73,7 +73,7 @@ module.exports = {
         };
       }).sort((a, b) => b.stat - a.stat);
     }
-
+    const ferns = '<:Ferns:1395219665638391818>';
     const userEntry = entries.find(entry => entry.safeKey === displayKey);
     const userRank = userEntry ? entries.findIndex(entry => entry.safeKey === displayKey) + 1 : 'Unranked';
 
@@ -87,7 +87,7 @@ module.exports = {
         .map((entry, index) => {
           const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
           return type === 'balance'
-            ? `${base} \n♢  🪙${entry.stat}**`
+            ? `${base} \n♢  ${ferns}${entry.stat}**`
             : `${base} \n♢  ⬆️Level ${entry.stat} (${entry.xp} XP)**`;
         })
         .join('\n');

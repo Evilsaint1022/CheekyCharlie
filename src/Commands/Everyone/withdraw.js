@@ -18,7 +18,7 @@ module.exports = {
                 flags: 64 // Makes the reply ephemeral
             });
         }
-
+        const ferns = '<:Ferns:1395219665638391818>';
         const { guild, user } = interaction;
         const timestamp = new Date().toLocaleTimeString();
 
@@ -38,7 +38,7 @@ module.exports = {
 
         if (bankBalance < withdrawAmount || withdrawAmount <= 0) {
             return interaction.reply({
-                content: '❌ You do not have enough points in your Bank to withdraw or you entered an invalid amount.',
+                content: '❌ You do not have enough Ferns in your Bank to withdraw or you entered an invalid amount.',
                 flags: 64
             });
         }
@@ -53,10 +53,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Withdrawal**`)
-            .setDescription(`Successfully withdrew **${withdrawAmount} Coins 🪙** from your Bank to your Wallet.`)
+            .setDescription(`Successfully withdrew **${withdrawAmount} ${ferns}** from your Bank to your Wallet.`)
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${walletBalance} Coins`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bankBalance} Coins`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${walletBalance} ${ferns}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${bankBalance} ${ferns}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Wallet is Growing!' })
@@ -65,6 +65,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount} Coins 🪙`);
+        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount} Ferns.`);
     }
 };

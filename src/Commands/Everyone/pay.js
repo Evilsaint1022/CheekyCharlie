@@ -32,7 +32,7 @@ module.exports = {
         flags: 64
       });
     }
-
+    const ferns = '<:Ferns:1395219665638391818>';
     const sender = interaction.user;
     const user = interaction.options.getUser('user');
     const amount = interaction.options.getInteger('amount');
@@ -42,7 +42,7 @@ module.exports = {
     }
 
     if (user.bot) {
-      return interaction.reply({ content: `You cannot transfer 🪙's to bots!`, flags: 64 });
+      return interaction.reply({ content: `You cannot transfer ${ferns}'s to bots!`, flags: 64 });
     }
 
     if (amount <= 0) {
@@ -60,15 +60,15 @@ module.exports = {
       const userBalance = userData.balance || 0;
 
       if (senderBalance < amount) {
-        return interaction.reply({ content: `You do not have enough points to transfer ${amount}🪙.`, flags: 64 });
+        return interaction.reply({ content: `You do not have enough points to transfer ${amount}${ferns}.`, flags: 64 });
       }
 
       await db.balance.set(senderKey, { balance: senderBalance - amount });
       await db.balance.set(userKey, { balance: userBalance + amount });
 
-      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount} 🪙** to **${user.username}**.`);
+      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount}${ferns}** to **${user.username}**.`);
 
-      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount} to ${user.username}`);
+      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount} Ferns to ${user.username}`);
     } catch (error) {
       console.error(error);
       return interaction.reply({

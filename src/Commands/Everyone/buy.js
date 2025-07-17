@@ -28,7 +28,7 @@ module.exports = {
         flags: 64
       });
     }
-
+    const ferns = '<:Ferns:1395219665638391818>';
     const safeUsername = user.username.replace(/\./g, '_');
     const dbKeyPrefix = `${safeUsername}_${user.id}`;
     const guildKey = `${guild.name}_${guild.id}`;
@@ -92,7 +92,7 @@ module.exports = {
 
       if (balance < selectedItem.price) {
         return select.update({
-          content: `You need ${selectedItem.price} 🪙's to buy **${selectedItem.title}**.`,
+          content: `You need ${selectedItem.price}${ferns} to buy **${selectedItem.title}**.`,
           components: [],
           flags: 64
         });
@@ -158,7 +158,7 @@ module.exports = {
       }
 
       return select.update({
-        content: `You bought **${selectedItem.title}** for ${selectedItem.price} 🪙's!`,
+        content: `You bought **${selectedItem.title}** for ${selectedItem.price}${ferns}!`,
         components: [],
         flags: 64
       });

@@ -18,7 +18,7 @@ module.exports = {
                 flags: 64 // ephemeral
             });
         }
-
+        const ferns = '<:Ferns:1395219665638391818>';
         const timestamp = new Date().toLocaleTimeString();
         const { guild, user } = interaction;
 
@@ -56,10 +56,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Deposit**`)
-            .setDescription(`Successfully deposited **${depositAmount} Coins🪙** from your Wallet to your Bank.`)
+            .setDescription(`Successfully deposited **${depositAmount} ${ferns}** from your Wallet to your Bank.`)
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${balance} Coins`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bank} Coins`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${balance} ${ferns}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${bank} ${ferns}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Savings are Growing!' })
@@ -68,6 +68,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount} Coins 🪙`);
+        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount} Ferns`);
     },
 };
