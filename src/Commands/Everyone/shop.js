@@ -61,11 +61,11 @@ module.exports = {
 
       items.forEach((item, index) => {
         const globalIndex = start + index + 1;
-        const displayStock = item.stock === -1 || item.stock === undefined ? '∞' : item.stock;
+        const displayStock = item.stock === -1 || item.stock === undefined ? '∞' : item.stock.toLocaleString();
 
         embed.addFields({
           name: `${globalIndex} 🌿**__${item.title}__**`,
-          value: `${item.description}\n> • **Role Reward:** <@&${item.roleId}>\n> • **Price:** <:Ferns:1395219665638391818> ${item.price}\n> • **Stock:** ${displayStock}`
+          value: `${item.description}\n> • **Role Reward:** <@&${item.roleId}>\n> • **Price:** <:Ferns:1395219665638391818> ${item.price.toLocaleString()}\n> • **Stock:** ${displayStock}`
         });
       });
 

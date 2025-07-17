@@ -60,15 +60,15 @@ module.exports = {
       const userBalance = userData.balance || 0;
 
       if (senderBalance < amount) {
-        return interaction.reply({ content: `You do not have enough points to transfer ${amount}${ferns}.`, flags: 64 });
+        return interaction.reply({ content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`, flags: 64 });
       }
 
       await db.balance.set(senderKey, { balance: senderBalance - amount });
       await db.balance.set(userKey, { balance: userBalance + amount });
 
-      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount}${ferns}** to **${user.username}**.`);
+      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount.toLocaleString()}${ferns}** to **${user.username}**.`);
 
-      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount} Ferns to ${user.username}`);
+      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
     } catch (error) {
       console.error(error);
       return interaction.reply({

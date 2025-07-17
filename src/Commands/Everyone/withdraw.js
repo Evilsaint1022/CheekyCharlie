@@ -53,10 +53,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`**${user.username}'s Withdrawal**`)
-            .setDescription(`Successfully withdrew **${withdrawAmount} ${ferns}** from your Bank to your Wallet.`)
+            .setDescription(`Successfully withdrew **${withdrawAmount.toLocaleString()} ${ferns}** from your Bank to your Wallet.`)
             .addFields(
-                { name: '🪙 Wallet Balance', value: `${walletBalance} ${ferns}`, inline: true },
-                { name: '🏦 Bank Balance', value: `${bankBalance} ${ferns}`, inline: true }
+                { name: '🪙 Wallet Balance', value: `${walletBalance.toLocaleString()} ${ferns}`, inline: true },
+                { name: '🏦 Bank Balance', value: `${bankBalance.toLocaleString()} ${ferns}`, inline: true }
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Your Wallet is Growing!' })
@@ -65,6 +65,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount} Ferns.`);
+        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount.toLocaleString()} Ferns.`);
     }
 };
