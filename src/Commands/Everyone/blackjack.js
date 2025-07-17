@@ -16,6 +16,10 @@ module.exports = {
         const balanceKey = `${user.username}_${user.id}.balance`;
         const ferns = '<:Ferns:1395219665638391818>';
 
+        // console logs place here on purpose.
+        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
+        console.log(`[${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
+
         let balance = await db.balance.get(balanceKey);
 
         if (balance === undefined || isNaN(parseInt(balance))) {
@@ -82,8 +86,14 @@ module.exports = {
 
             const result = checkGameResult();
             if (result) {
-                if (result === 'win') balance += bet;
-                else if (result === 'lose') balance -= bet;
+            if (result === 'win') {
+                balance += bet;
+            console.log(`[${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
+             }
+            else if (result === 'lose') {
+                balance -= bet;
+            console.log(`[${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
+            }
 
                 await db.balance.set(balanceKey, balance);
 
@@ -124,7 +134,5 @@ module.exports = {
             if (!message.editable) return;
             message.edit({ components: [] });
         });
-
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
     }
 };
