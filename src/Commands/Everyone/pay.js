@@ -68,7 +68,7 @@ module.exports = {
 
       await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount.toLocaleString()}${ferns}** to **${user.username}**.`);
 
-      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} (${interaction.guild.id}) — ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
+      console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
     } catch (error) {
       console.error(error);
       return interaction.reply({
