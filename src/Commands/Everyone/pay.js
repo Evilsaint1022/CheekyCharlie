@@ -66,7 +66,7 @@ module.exports = {
       await db.balance.set(senderKey, { balance: senderBalance - amount });
       await db.balance.set(userKey, { balance: userBalance + amount });
 
-      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${amount.toLocaleString()}${ferns}** to **${user.username}**.`);
+      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`);
 
       console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
     } catch (error) {
