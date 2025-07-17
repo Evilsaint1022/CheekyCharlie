@@ -54,7 +54,7 @@ module.exports = {
         const embed = {
             color: 0xFFFFFF,
             title: `**__♦️ Blackjack ♦️__**`,
-            description: `Placed Bet: ${bet} ${ferns}\n\n\`Your move: Hit or Stand?\``,
+            description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
             thumbnail: { url: user.displayAvatarURL() },
             fields: [
                 { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -90,14 +90,14 @@ module.exports = {
                 const resultEmbed = {
                     color: result === 'win' ? 0x00FF00 : result === 'lose' ? 0xFF0000 : 0xFFFF00,
                     title: `**__♠️ Blackjack Results ♠️__**`,
-                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${bet}${ferns}!`,
+                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${ferns}${bet.toLocaleString()}`,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
                         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
                         { name: 'Your Total', value: playerTotal.toString(), inline: true },
                         { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
                         { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-                        { name: '**__Your Balance__**', value: balance.toString(), inline: false }
+                        { name: '**__ _New Balance_ __**', value: `${ferns}`+balance.toLocaleString(), inline: false }
                     ]
                 };
 
@@ -107,7 +107,7 @@ module.exports = {
                 const updatedEmbed = {
                     color: 0xFFFFFF,
                     title: `**__♣️ Blackjack ♣️__**`,
-                    description: `Bet Placed: ${bet} ${ferns}\n\`Your move: Hit or Stand?\``,
+                    description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
                         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
