@@ -23,7 +23,6 @@
     "@discordjs/rest": "^2.5.1",
     "@discordjs/voice": "^0.18.0",
     "@napi-rs/canvas": "^0.1.74",
-    "ascii-table": "^0.0.9",
     "axios": "^1.10.0",
     "cheerio": "^1.1.0",
     "child_process": "^1.0.2",
@@ -35,7 +34,6 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.0",
     "groq-sdk": "^0.27.0",
-    "install": "^0.13.0",
     "node": "^24.4.1",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
@@ -44,8 +42,7 @@
     "path": "^0.12.7",
     "punycode": "^2.3.1",
     "register-commands": "^1.0.0",
-    "rss-parser": "^3.13.0",
-    "table": "^6.9.0"
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
     "eslint": "^9.31.0",
