@@ -72,7 +72,7 @@ module.exports = {
                     {
                         title: `${ferns} Ferns Picked!`,
                         description: `You picked **${ferns}${coinsEarned.toLocaleString()}**`,
-                        color: 0xFFD700,
+                        color: 0xFFFFFF,
                     },
                 ],
             });
