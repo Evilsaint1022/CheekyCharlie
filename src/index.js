@@ -66,8 +66,10 @@ client.once("ready", async () => {
         "Dm if you have any issues."
     ];
 
-    //Afk Activity list
-    const afk = ['🔨 - Under Maintenance'];
+    // Afk Activity list
+    const afk = ['🔴・𝗖𝘂𝗿𝗿𝗲𝗻𝘁𝗹𝘆 𝗗𝗼𝘄𝗻'];
+	// Backup because of issues with bisechosting
+   // const afk = ['🔨・𝗨𝗻𝗱𝗲𝗿 𝗠𝗮𝗶𝗻𝘁𝗲𝗻𝗮𝗻𝗰𝗲'];
 
     setInterval(() => {
         const list = afkStatus ? afk : activities;
