@@ -27,13 +27,12 @@ https://github.com/NZ-Linix/dotdatabase
 -> Economy Games 
     ╰─> Blackjack 
 -> Level System
-    ╰─> Level-Roles
-    ╰─> Sticky-Roles
 -> Leaderboards
     ╰─> Balance
     ╰─> Levels
--> Join-to-create Voice Channels  
--> Custom Starboard  
+-> Voice Channels
+    ╰─>Join-to-create
+-> Custom Starboard
 -> Bump Reminder  
 -> Custom AI Chat
     ╰─> Ability to Deactivate the AI in specific channels
