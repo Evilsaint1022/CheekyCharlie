@@ -36,7 +36,7 @@ async function sendCommitNotification(client, commit) {
     // Send message to Discord
     const channel = await client.channels.fetch(discordChannelId);
     await channel.send(
-      `# ⭐ New Commit to \`${repo}\`\nㅤ\n**${message}**\n\`By ${authorName}\`\n\n🔗 [GITHUB-LINK](${htmlUrl})`
+      `# ⭐ New Update to \`${repo}\`\nㅤ\n**${message}**\n\`By ${authorName}\`\n\n🔗 [GITHUB-LINK](${htmlUrl})`
     );
 
     // Save SHA to DB
