@@ -74,8 +74,7 @@ const downstatus = [
 ];
 
 const issuesstatus = [
-    "⚠️・Experiencing Issues",
-    "⚠️・Connection Problems"
+    "⚠️・Experiencing Issues"
 ];
 
 // Combine all enabled statuses
