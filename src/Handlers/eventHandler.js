@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 function loadEvents(client) {
+
+    client.setMaxListeners(20)
+
     const table = new Table({
         head: ['Events', 'Status'],
         style: { head: ['cyan'], border: ['grey'] },

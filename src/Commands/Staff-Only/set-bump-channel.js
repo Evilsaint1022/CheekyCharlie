@@ -26,6 +26,9 @@ module.exports = {
       const guildId = guild.id;
       const guildName = guild.name;
       const userId = user.id;
+      
+      //console logs
+      console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-bump-channel command.`);
 
       const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
       const member = guild.members.cache.get(userId);
