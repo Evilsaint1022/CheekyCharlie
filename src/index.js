@@ -53,9 +53,9 @@ client.once("ready", async () => {
     await registerAIHandler(client);
 
     // Status Toggles
-    const normal = false;
+    const normal = true;
     const down = false;
-    const issues = true;
+    const issues = false;
 
     // Status Groups
     const normalstatus = [
