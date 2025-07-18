@@ -19,12 +19,13 @@ https://github.com/NZ-Linix/dotdatabase
 # ✨ Features
 
 ```
--> Play Games like Blackjack  
 -> Full Economy System  
     ╰─> Bank and Wallet  
     ╰─> Daily Commands and Drop Events
     ╰─> Inventory
     ╰─> Shop
+-> Economy Games 
+    ╰─> Blackjack 
 -> Level System
 -> Leaderboards
     ╰─> Balance
