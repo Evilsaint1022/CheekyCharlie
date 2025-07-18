@@ -27,6 +27,8 @@ https://github.com/NZ-Linix/dotdatabase
 -> Economy Games 
     ╰─> Blackjack 
 -> Level System
+    ╰─> Level-Roles
+    ╰─> Sticky-Roles
 -> Leaderboards
     ╰─> Balance
     ╰─> Levels
