@@ -19,3 +19,5 @@ start.sh
 /src/Utilities/Storage/Economy/Shop/shop.json
 /src/Utilities/Storage/Economy/Inventory/inventory.json
 /src/Utilities/Storage/Settings/Rss/rss.json
+/src/Utilities/Storage/Settings/Counting/counting.json
+/src/Utilities/Storage/Settings/Counting/countingemojis.json

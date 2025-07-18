@@ -38,6 +38,8 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Ability to train the AI
 -> RSS Feed news
     ╰─> Choose from our library, or add own ones (self-host)
+-> Entertainment
+    ╰─> Counting (includes custom emojis)
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -109,6 +111,11 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
+- 
+- `/set-counting-channel` - Sets the counting entertainment channel.
+- `/set-counting-emojis` - Sets custom emojis for reactions.
+- `/remove-counting-channel` - Removes the set counting channel.
+- `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 

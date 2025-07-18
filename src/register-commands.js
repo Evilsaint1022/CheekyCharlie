@@ -539,6 +539,44 @@ const commands = [
     {
         name: 'toggle-levels',
         description: 'Toggle the levels feature on or off for this server.',
+    },
+    {
+        name: 'set-counting-channel',
+        description: 'Set the channel where the counting game will happen.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The counting channel',
+                type: 7,
+                required: true,
+            },
+        ]
+    },
+    {
+        name: 'remove-counting-channel',
+        description: 'Remove the counting channel.',
+    },
+    {
+        name: 'set-counting-emojis',
+        description: 'Set the custom counting emojis.',
+        options: [
+            {
+                name: 'correct_emoji',
+                description: 'Emoji to show when the number is correct',
+                type: 3,
+                required: true,
+            },
+            {
+                name: 'wrong_emoji',
+                description: 'Emoji to show when the number is wrong',
+                type: 3,
+                required: true,
+            },
+        ]
+    },
+    {
+        name: 'remove-counting-emojis',
+        description: 'Reset the custom emojis for counting feedback.',
     }
 ];
 

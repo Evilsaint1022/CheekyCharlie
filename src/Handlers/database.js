@@ -23,7 +23,9 @@ const db = {
     ai_nsfw_training: new DotDB("./src/Utilities/Storage/Settings/AI/ai_nsfw_training.json"),
     shop: new DotDB("./src/Utilities/Storage/Economy/Shop/shop.json"),
     inventory: new DotDB("./src/Utilities/Storage/Economy/Inventory/inventory.json"),
-    rss: new DotDB("./src/Utilities/Storage/Settings/Rss/rss.json")
+    rss: new DotDB("./src/Utilities/Storage/Settings/Rss/rss.json"),
+    counting: new DotDB("./src/Utilities/Storage/Settings/Counting/counting.json"),
+    countingemojis: new DotDB("./src/Utilities/Storage/Settings/Counting/countingemojis.json"),
     
 }
 
