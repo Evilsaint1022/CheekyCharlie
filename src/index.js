@@ -52,30 +52,45 @@ client.once("ready", async () => {
     await commandHandler(client);
     await registerAIHandler(client);
 
-    // Bot activity logic
-    let afkStatus = true;
+    // Status Toggles
+    const normal = false;
+    const down = false;
+    const issues = true;
 
-    //Activity list
-    const activities = [
-        "Shopping at PaknSave",
-        "✌🏻Nek Minnit",
-        "Awww Gummon",
-        "🗿Built Like a Mitre 10",
-        "Made in New Zealand",
-        "@ping me for help",
-        "Dm if you have any issues."
-    ];
+    // Status Groups
+    const normalstatus = [
+    "Shopping at PaknSave",
+    "✌🏻Nek Minnit",
+    "Awww Gummon",
+    "🗿Built Like a Mitre 10",
+    "Made in New Zealand",
+    "@ping me for help",
+    "Dm if you have any issues."
+];
 
-    // Afk Activity list
-    const afk = ['🔴・𝗖𝘂𝗿𝗿𝗲𝗻𝘁𝗹𝘆 𝗗𝗼𝘄𝗻'];
-	// Backup because of issues with bisechosting
-   // const afk = ['🔨・𝗨𝗻𝗱𝗲𝗿 𝗠𝗮𝗶𝗻𝘁𝗲𝗻𝗮𝗻𝗰𝗲'];
+const downstatus = [
+    "🔴・𝗖𝘂𝗿𝗿𝗲𝗻𝘁𝗹𝘆 𝗗𝗼𝘄𝗻",
+    "🔧・Server Restarting Soon"
+];
 
-    setInterval(() => {
-        const list = afkStatus ? afk : activities;
-        const activity = list[Math.floor(Math.random() * list.length)];
-        client.user.setActivity(activity, { type: ActivityType.Custom });
-    }, 5000);
+const issuesstatus = [
+    "⚠️・Experiencing Issues",
+    "⚠️・Connection Problems"
+];
+
+// Combine all enabled statuses
+const activeStatuses = [
+    ...(normal ? normalstatus : []),
+    ...(down ? downstatus : []),
+    ...(issues ? issuesstatus : [])
+];
+
+// Set Activity
+setInterval(() => {
+    if (activeStatuses.length === 0) return; // Prevent crash if no statuses are enabled
+    const activity = activeStatuses[Math.floor(Math.random() * activeStatuses.length)];
+    client.user.setActivity(activity, { type: ActivityType.Custom });
+}, 5000);
 
     // Bisechosting Finished Startup
     console.log(`successfully finished startup`.bold.green);
