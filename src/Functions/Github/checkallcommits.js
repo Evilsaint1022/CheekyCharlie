@@ -17,7 +17,6 @@ async function checkAllCommits() {
     const commits = await response.json();
 
     if (!Array.isArray(commits) || commits.length === 0) {
-      console.log('[Github] No commits found.');
       return [];
     }
 

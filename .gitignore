@@ -21,3 +21,4 @@ start.sh
 /src/Utilities/Storage/Settings/Rss/rss.json
 /src/Utilities/Storage/Settings/Counting/counting.json
 /src/Utilities/Storage/Settings/Counting/countingemojis.json
+/src/Utilities/Storage/Settings/Github/github.json
