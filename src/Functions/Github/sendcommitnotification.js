@@ -4,7 +4,7 @@ const db = require('../../Handlers/database');
 
 const owner = 'Evilsaint1022';
 const repo = 'CheekyCharlie';
-const discordChannelId = '1395841321083863270';
+const discordChannelId = '1347795697369350244';
 const repoKey = `${owner}_${repo}`;
 
 async function sendCommitNotification(client, commit) {
