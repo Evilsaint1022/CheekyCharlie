@@ -26,7 +26,6 @@ const db = {
     rss: new DotDB("./src/Utilities/Storage/Settings/Rss/rss.json"),
     counting: new DotDB("./src/Utilities/Storage/Settings/Counting/counting.json"),
     countingemojis: new DotDB("./src/Utilities/Storage/Settings/Counting/countingemojis.json"),
-    github: new DotDB("./src/Utilities/Storage/Settings/Github/github.json"),
     
 }
 
