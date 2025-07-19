@@ -25,7 +25,6 @@ const colors = require('colors'); // For console colors
 // loads colors globally for console use.
 
 // ----------------------------------------------------------------------------------------------------------------------------------
-
 const client = new Client({
     intents: 53608447, // All intents
     partials: [user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound],
@@ -38,7 +37,6 @@ client.events = new Collection();
 client.commands = new Collection();
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
-
 client.once("ready", async () => {
     console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
 
@@ -113,3 +111,27 @@ client.on('interactionCreate', async interaction => {
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
 client.login(process.env.TOKEN);
+
+// Graceful shutdown handler
+const shutdown = async () => {
+  try {
+    console.log('\n[INFO] Caught shutdown signal. Logging out bot...');
+
+    if (client && client.isReady()) {
+      await client.destroy();
+      console.log('[INFO] Bot logged out. Exiting process.');
+    } else {
+      console.warn('[WARN] Client not ready or already destroyed.');
+    }
+
+    process.exit(0);
+  } catch (error) {
+    console.error('[ERROR] Error during shutdown:', error);
+    process.exit(1);
+  }
+};
+
+// Register only safe signals (SIGINT, SIGTERM)
+['SIGINT', 'SIGTERM'].forEach(signal => {
+  process.on(signal, shutdown);
+});
