@@ -13,7 +13,6 @@ module.exports = {
     if (!message.guild) return;
 
     const guildKey = `${message.guild.name}_${message.guild.id}`;
-    const cooldownKey = guildKey;
 
     try {
       const bumpData = await db.bump.get(guildKey);
@@ -28,15 +27,14 @@ module.exports = {
 
       const now = Date.now();
 
-      // Save both timestamp and userId to DB
+      // Save both timestamp and userId to DB (only lastbump)
       const bumpRecord = { timestamp: now, userId: message.author.id };
-      await db.bumpcooldown.set(cooldownKey, bumpRecord);
-      await db.lastbump.set(cooldownKey, bumpRecord);
+      await db.lastbump.set(guildKey, bumpRecord);
 
       // Update in-memory cache
-      lastBumpCache.set(cooldownKey, bumpRecord);
+      lastBumpCache.set(guildKey, bumpRecord);
 
-      scheduleReminder(message.client, channelId, roleId, cooldownKey, guildKey);
+      scheduleReminder(message.client, channelId, roleId, guildKey, guildKey);
     } catch (err) {
       console.error(`[⬆️] [BUMP] Error handling bump message:`, err);
     }
@@ -46,12 +44,12 @@ module.exports = {
 // Load last bump data on startup
 async function loadLastBumpCache(client) {
   try {
-    const allCooldowns = await db.bumpcooldown.getAll(); // { key: { timestamp, userId } }
+    const allLastBumps = await db.lastbump.getAll(); // { key: { timestamp, userId } }
 
-    if (!allCooldowns) return;
+    if (!allLastBumps) return;
 
-    for (const [cooldownKey, bumpRecord] of Object.entries(allCooldowns)) {
-      lastBumpCache.set(cooldownKey, bumpRecord);
+    for (const [guildKey, bumpRecord] of Object.entries(allLastBumps)) {
+      lastBumpCache.set(guildKey, bumpRecord);
     }
 
     console.log(`[⬆️] [BUMP] Loaded ${lastBumpCache.size} last bump records into cache`);
@@ -63,20 +61,20 @@ async function loadLastBumpCache(client) {
 }
 
 async function startReminderLoop(client) {
-  for (const [cooldownKey, bumpRecord] of lastBumpCache.entries()) {
+  for (const [guildKey, bumpRecord] of lastBumpCache.entries()) {
     try {
-      const bumpData = await db.bump.get(cooldownKey);
+      const bumpData = await db.bump.get(guildKey);
       if (!bumpData) continue;
 
-      scheduleReminder(client, bumpData.channelId, bumpData.roleId, cooldownKey, cooldownKey);
+      scheduleReminder(client, bumpData.channelId, bumpData.roleId, guildKey, guildKey);
     } catch (err) {
-      console.error(`[⬆️] [BUMP] Failed to schedule reminder for ${cooldownKey}:`, err);
+      console.error(`[⬆️] [BUMP] Failed to schedule reminder for ${guildKey}:`, err);
     }
   }
 }
 
-async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey) {
-  const bumpRecord = lastBumpCache.get(cooldownKey);
+async function scheduleReminder(client, channelId, roleId, guildKey, displayKey) {
+  const bumpRecord = lastBumpCache.get(guildKey);
   if (!bumpRecord) return;
 
   const timePassed = Date.now() - bumpRecord.timestamp;
@@ -88,17 +86,17 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
       if (!channel) return;
 
       await channel.send(`<@&${roleId}>\n**It's time to bump the server again! ❤️**`);
-      console.log(`[⬆️] [BUMP] Reminder Sent in ${guildKey}`);
+      console.log(`[⬆️] [BUMP] Reminder Sent in ${displayKey}`);
 
       const now = Date.now();
       const newBumpRecord = { timestamp: now, userId: bumpRecord.userId }; // keep userId or reset if you want
 
-      // Update cache & DB with new timestamp (userId can stay or reset to null)
-      lastBumpCache.set(cooldownKey, newBumpRecord);
-      await db.bumpcooldown.set(cooldownKey, newBumpRecord);
+      // Update cache & DB with new timestamp (userId can stay or reset)
+      lastBumpCache.set(guildKey, newBumpRecord);
+      await db.lastbump.set(guildKey, newBumpRecord);
 
       // Schedule next reminder
-      scheduleReminder(client, channelId, roleId, cooldownKey, guildKey);
+      scheduleReminder(client, channelId, roleId, guildKey, displayKey);
     } catch (err) {
       console.error(`[⬆️] [BUMP] Failed to send reminder:`, err);
     }
