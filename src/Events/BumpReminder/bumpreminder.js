@@ -44,12 +44,27 @@ module.exports = {
 // Load last bump data on startup
 async function loadLastBumpCache(client) {
   try {
-    const allLastBumps = await db.lastbump.getAll(); // { key: { timestamp, userId } }
+    const allLastBumps = await db.lastbump.get(); // get ALL entries
 
     if (!allLastBumps) return;
 
     for (const [guildKey, bumpRecord] of Object.entries(allLastBumps)) {
-      lastBumpCache.set(guildKey, bumpRecord);
+      let record;
+      if (typeof bumpRecord === 'object' && bumpRecord !== null && 'timestamp' in bumpRecord) {
+        record = {
+          timestamp: bumpRecord.timestamp,
+          userId: bumpRecord.userId || null,
+        };
+      } else if (typeof bumpRecord === 'number') {
+        record = {
+          timestamp: bumpRecord,
+          userId: null,
+        };
+      } else {
+        console.warn(`[⬆️] [BUMP] Unexpected lastBump format for ${guildKey}:`, bumpRecord);
+        continue;
+      }
+      lastBumpCache.set(guildKey, record);
     }
 
     console.log(`[⬆️] [BUMP] Loaded ${lastBumpCache.size} last bump records into cache`);
@@ -64,7 +79,7 @@ async function startReminderLoop(client) {
   for (const [guildKey, bumpRecord] of lastBumpCache.entries()) {
     try {
       const bumpData = await db.bump.get(guildKey);
-      if (!bumpData) continue;
+      if (!bumpData || !bumpData.channelId || !bumpData.roleId) continue;
 
       scheduleReminder(client, bumpData.channelId, bumpData.roleId, guildKey, guildKey);
     } catch (err) {
@@ -72,6 +87,7 @@ async function startReminderLoop(client) {
     }
   }
 }
+
 
 async function scheduleReminder(client, channelId, roleId, guildKey, displayKey) {
   const bumpRecord = lastBumpCache.get(guildKey);
