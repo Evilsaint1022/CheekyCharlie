@@ -577,6 +577,22 @@ const commands = [
     {
         name: 'remove-counting-emojis',
         description: 'Reset the custom emojis for counting feedback.',
+    },
+    {
+        name: 'set-color-of-the-week',
+        description: 'Set the color of the week Role.',
+        options: [
+            {
+                name: 'role',
+                description: 'The role to update colors on',
+                type: 8,
+                required: true,
+            },
+        ]
+    },
+    {
+        name: 'remove-color-of-the-week',
+        description: 'Remove the Color of the Week role setting for this server.',
     }
 ];
 
