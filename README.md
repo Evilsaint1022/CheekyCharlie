@@ -121,6 +121,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-counting-emojis` - Sets custom emojis for reactions.
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
+- 
+- `/set-color-of-the-week` - Sets a role for color of the week
+- `/remove-color-of-the-week` - Removes role set for color of the week
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
