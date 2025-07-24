@@ -48,7 +48,7 @@ module.exports = {
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         // Logging the action
-        const timestamp = new Date().toISOString();
+        const timestamp = new Date().toLocaleTimeString();
         console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} removed the Join To Create channel.`);
 
         return interaction.reply({ content: '✅ The Join To Create channel has been removed.', flags: 64 });

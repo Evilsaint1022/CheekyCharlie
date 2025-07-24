@@ -50,7 +50,7 @@ module.exports = {
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         // Logging the action
-        const timestamp = new Date().toISOString();
+        const timestamp = new Date().toLocaleTimeString();
         console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
 
         return interaction.reply({ content: `✅ This channel is now set to Join To Create: <#${channel.id}>.`, flags: 64 });
