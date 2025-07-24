@@ -25,10 +25,12 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Inventory
     ╰─> Shop
 -> Economy Games 
-    ╰─> Blackjack 
+    ╰─> Blackjack
 -> Level System
+    ╰─> Level Roles
+    ╰─> Sticky Roles (dont get removed while leveling up)
 -> Leaderboards
-    ╰─> Balance
+    ╰─> Balance (Global)
     ╰─> Levels
 -> Voice Channels
     ╰─>Join-to-create
@@ -40,6 +42,7 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Ability to train the AI
 -> RSS Feed news
     ╰─> Choose from our library, or add own ones (self-host)
+-> Color-of-the-Week ( updates every week )
 -> Entertainment
     ╰─> Counting (includes custom emojis)
 ```
