@@ -13,7 +13,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
-
+    const user = interaction.user;
     const role = interaction.options.getRole('role');
     const guild = interaction.guild;
     const guildKey = `${guild.name}_${guild.id}`;
@@ -60,5 +60,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the set-color-of-the-week command.`);
   }
 };

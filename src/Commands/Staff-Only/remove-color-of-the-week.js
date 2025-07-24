@@ -10,7 +10,7 @@ module.exports = {
   async execute(interaction) {
     const guild = interaction.guild;
     const guildKey = `${guild.name}_${guild.id}`;
-
+    const user = interaction.user;
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
@@ -54,5 +54,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
+    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the remove-color-of-the-week command.`);
   }
 };
