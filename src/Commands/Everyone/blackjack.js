@@ -17,8 +17,8 @@ module.exports = {
         const ferns = '<:Ferns:1395219665638391818>';
 
         // console logs place here on purpose.
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
-        console.log(`[${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
         let balance = await db.balance.get(balanceKey);
 
@@ -88,11 +88,11 @@ module.exports = {
             if (result) {
             if (result === 'win') {
                 balance += bet;
-            console.log(`[${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
+            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
              }
             else if (result === 'lose') {
                 balance -= bet;
-            console.log(`[${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
+            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
             }
 
                 await db.balance.set(balanceKey, balance);
