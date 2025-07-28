@@ -26,11 +26,11 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Shop
 -> Economy Games 
     ╰─> Blackjack
+    ╰─> Slots
 -> Level System
-    ╰─> Level Roles
-    ╰─> Sticky Roles (dont get removed while leveling up)
+    ╰─> Level Roles (stickyRoles)
 -> Leaderboards
-    ╰─> Balance (Global)
+    ╰─> Balance
     ╰─> Levels
 -> Voice Channels
     ╰─>Join-to-create
@@ -70,6 +70,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/daily` — Daily Currency Collect.
 - `/pick` - Picks Ferns when the dropparty's drops.
 - `/blackjack` - Starts a game of blackjack.
+- `/slots` - Starts a game of slots.
 - `/pay` - Pay other members Ferns.
 - 
 - `/shop` - checks the server shop.
