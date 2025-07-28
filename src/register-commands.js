@@ -170,6 +170,18 @@ const commands = [
             },
         ]
     },
+    {
+        name: 'slots',
+        description: 'Spin the slot machine and try your luck!',
+        options: [
+            {
+                name: 'bet',
+                description: 'The amount of points to bet.',
+                type: 4,
+                required: true,
+            },
+        ]
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 

@@ -36,7 +36,7 @@ module.exports = {
         .setTitle(`**${targetUser.username}'s Balance**`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
         .addFields(
-            { name: '🪙 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
+            { name: '💰 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
             { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true }
         )
         .setFooter({ text: `Use Your Ferns Wisely!` })
