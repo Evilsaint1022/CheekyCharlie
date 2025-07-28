@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../../Handlers/database');
 
+const COOLDOWN_TIME = 60 * 1000; // 1 minute
+const GLOBAL_COOLDOWN_KEY = `blackjack_global`;
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('blackjack')
@@ -10,24 +13,34 @@ module.exports = {
                 .setDescription('The amount to bet')
                 .setRequired(true)
         ),
+
     async execute(interaction) {
         const { guild, user } = interaction;
         const bet = interaction.options.getInteger('bet');
         const balanceKey = `${user.username}_${user.id}.balance`;
         const ferns = '<:Ferns:1395219665638391818>';
 
-        // console logs place here on purpose.
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the BlackJack command.`);
+        // 🌐 GLOBAL COOLDOWN CHECK
+        const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
+        const now = Date.now();
+
+        if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
+            const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
+            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+        }
+
+        // Set the global cooldown
+        await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
+
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the BlackJack command.`);
         console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
         let balance = await db.balance.get(balanceKey);
-
         if (balance === undefined || isNaN(parseInt(balance))) {
             return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
         }
 
         balance = parseInt(balance);
-
         if (bet > balance) {
             return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
         } else if (bet <= 0) {
@@ -86,14 +99,13 @@ module.exports = {
 
             const result = checkGameResult();
             if (result) {
-            if (result === 'win') {
-                balance += bet;
-            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
-             }
-            else if (result === 'lose') {
-                balance -= bet;
-            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
-            }
+                if (result === 'win') {
+                    balance += bet;
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
+                } else if (result === 'lose') {
+                    balance -= bet;
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
+                }
 
                 await db.balance.set(balanceKey, balance);
 
@@ -107,7 +119,7 @@ module.exports = {
                         { name: 'Your Total', value: playerTotal.toString(), inline: true },
                         { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
                         { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-                        { name: '**__ _New Balance_ __**', value: `${ferns}`+balance.toLocaleString(), inline: false }
+                        { name: '**__ _New Balance_ __**', value: `${ferns}${balance.toLocaleString()}`, inline: false }
                     ]
                 };
 

@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const db = require('../../Handlers/database');
 
+const COOLDOWN_TIME = 60 * 1000; // 1 minute
+const GLOBAL_COOLDOWN_KEY = 'slots_global';
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('slots')
@@ -16,6 +19,18 @@ module.exports = {
     const bet = interaction.options.getInteger('bet');
     const balanceKey = `${user.username}_${user.id}.balance`;
     const ferns = '<:Ferns:1395219665638391818>';
+
+    // 🌐 Global cooldown check
+    const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
+    const now = Date.now();
+
+    if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
+      const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
+      return interaction.reply({ content: `⏳ The /slots command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+    }
+
+    // Set the cooldown
+    await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
     console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the Slots command.`);
     console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
