@@ -28,6 +28,7 @@ const db = {
     github: new DotDB("./src/Utilities/Storage/Settings/Github/github.json"),
     coloroftheweek: new DotDB("./src/Utilities/Storage/Settings/ColoroftheWeek/cotw.json"),
     cooldowns: new DotDB("./src/Utilities/Storage/Settings/Cooldowns/cooldowns.json"),
+    lastban: new DotDB("./src/Utilities/Storage/Settings/BanCount/lastban.json"),
     
 }
 
