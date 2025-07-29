@@ -3,6 +3,9 @@
 start.sh
 /src/Utilities/Storage/Settings/VoiceChannels/vc.json
 /src/Utilities/Storage/Settings/Whitelisted/whitelisted.json
+/src/Utilities/Storage/Economy/Balance/balance.json
+/src/Utilities/Storage/Economy/Bank/bank.json
+/src/Utilities/Storage/Economy/Levels/levels.json
 /src/Utilities/Storage/Settings/LevelRoles/levelroles.json
 /src/Utilities/Storage/Settings/settings.json
 /src/Utilities/Storage/Settings/Starboard/starboardsettings.json
@@ -13,6 +16,8 @@ start.sh
 /src/Utilities/Storage/Settings/Bump/lastbump.json
 /src/Utilities/Storage/Settings/AI/ai_history.json
 /src/Utilities/Storage/Settings/AI/ai_nsfw_training.json
+/src/Utilities/Storage/Economy/Shop/shop.json
+/src/Utilities/Storage/Economy/Inventory/inventory.json
 /src/Utilities/Storage/Settings/Rss/rss.json
 /src/Utilities/Storage/Settings/Counting/counting.json
 /src/Utilities/Storage/Settings/Counting/countingemojis.json
@@ -20,10 +25,3 @@ start.sh
 /src/Utilities/Storage/Settings/ColoroftheWeek/cotw.json
 /src/Utilities/Storage/Settings/Cooldowns/cooldowns.json
 /src/Utilities/Storage/Settings/BanCount/lastban.json
-/src/Utilities/Storage/Shop/shop.json
-/src/Utilities/Storage/Rss/rss.json
-/src/Utilities/Storage/Levels/levelroles.json
-/src/Utilities/Storage/Levels/levels.json
-/src/Utilities/Storage/Inventory/inventory.json
-/src/Utilities/Storage/Global/Economy/Balance/balance.json
-/src/Utilities/Storage/Global/Economy/Bank/bank.json
