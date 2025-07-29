@@ -1,5 +1,8 @@
 const { Events } = require('discord.js');
-const db = require('../../Handlers/database'); // Main DB handler
+const db = require('../../Handlers/database');
+
+// Prevent race conditions with a lock per guild
+const processingLocks = new Set();
 
 module.exports = {
   name: Events.MessageCreate,
@@ -11,55 +14,74 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
     const currentChannelId = message.channel.id;
 
-    // Fetch counting channel from settings
-    const guildSettings = await db.settings.get(guildKey);
-    const countingChannelId = guildSettings?.counting_channel;
+    // Exit early if already processing
+    if (processingLocks.has(guildKey)) return;
+    processingLocks.add(guildKey);
 
-    if (!countingChannelId || currentChannelId !== countingChannelId) return;
+    try {
+      const guildSettings = await db.settings.get(guildKey);
+      const countingChannelId = guildSettings?.counting_channel;
+      if (!countingChannelId || currentChannelId !== countingChannelId) return;
 
-    // Fetch custom emojis or use defaults
-    const emojiData = await db.countingemojis.get(guildKey) || {};
-    const CORRECT_EMOJI = emojiData.correct_emoji || "✅";
-    const WRONG_EMOJI = emojiData.wrong_emoji || "❌";
+      const emojiData = await db.countingemojis.get(guildKey) || {};
+      const CORRECT_EMOJI = emojiData.correct_emoji || "✅";
+      const WRONG_EMOJI = emojiData.wrong_emoji || "❌";
 
-    // Fetch current count state
-    const countData = await db.counting.get(guildKey) || {
-      current: 0,
-      expected: 1,
-      lastUserId: null
-    };
-
-    // Parse message content as integer
-    const userNumber = parseInt(message.content.trim());
-
-    // Ignore if message is not a pure number
-    if (isNaN(userNumber) || message.content.trim() !== userNumber.toString()) {
-      return;
-    }
-
-    const isCorrect = userNumber === countData.expected;
-
-    if (!isCorrect) {
-      await message.react(WRONG_EMOJI).catch(() => null);
-
-      await message.reply({
-        content: `${WRONG_EMOJI} **${message.author.username}** ruined the count at **${countData.current}**! Start again from **1**.`,
-        allowedMentions: { repliedUser: true }
-      });
-
-      await db.counting.set(guildKey, {
+      const countData = await db.counting.get(guildKey) || {
         current: 0,
         expected: 1,
         lastUserId: null
-      });
-    } else {
-      await message.react(CORRECT_EMOJI).catch(() => null);
+      };
 
-      await db.counting.set(guildKey, {
-        current: userNumber,
-        expected: userNumber + 1,
-        lastUserId: message.author.id
-      });
+      const userNumber = parseInt(message.content.trim());
+      if (isNaN(userNumber) || message.content.trim() !== userNumber.toString()) return;
+
+      // ❌ Same user sent a message twice — reset the count!
+      if (message.author.id === countData.lastUserId) {
+        await message.react(WRONG_EMOJI).catch(() => null);
+
+        await message.reply({
+          content: `${WRONG_EMOJI} **${message.author.username}** counted twice in a row and ruined the count at **${countData.current}**! Start again from **1**.`,
+          allowedMentions: { repliedUser: true }
+        }).catch(() => null);
+
+        await db.counting.set(guildKey, {
+          current: 0,
+          expected: 1,
+          lastUserId: null
+        });
+
+        return;
+      }
+
+      // ✅ Correct number
+      const isCorrect = userNumber === countData.expected;
+
+      if (!isCorrect) {
+        await message.react(WRONG_EMOJI).catch(() => null);
+
+        await message.reply({
+          content: `${WRONG_EMOJI} **${message.author.username}** ruined the count at **${countData.current}**! Start again from **1**.`,
+          allowedMentions: { repliedUser: true }
+        }).catch(() => null);
+
+        await db.counting.set(guildKey, {
+          current: 0,
+          expected: 1,
+          lastUserId: null
+        });
+      } else {
+        await message.react(CORRECT_EMOJI).catch(() => null);
+
+        await db.counting.set(guildKey, {
+          current: userNumber,
+          expected: userNumber + 1,
+          lastUserId: message.author.id
+        });
+      }
+
+    } finally {
+      processingLocks.delete(guildKey);
     }
   }
 };
