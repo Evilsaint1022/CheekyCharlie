@@ -45,6 +45,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> Color-of-the-Week ( updates every week )
 -> Entertainment
     ╰─> Counting (includes custom emojis)
+    ╰─> Ban-Count (^banned)
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -125,6 +126,9 @@ https://github.com/NZ-Linix/dotdatabase
 - 
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
+- 
+- `/set-ban-channel` - Sets the ^banned channel.
+- `/remove-ban-channel` - Removes the ^banned channel.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
