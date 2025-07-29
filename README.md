@@ -46,6 +46,7 @@ https://github.com/NZ-Linix/dotdatabase
 -> Entertainment
     ╰─> Counting (includes custom emojis)
     ╰─> Ban-Count (^banned)
+    ╰─> One-Word-Story
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -79,6 +80,8 @@ https://github.com/NZ-Linix/dotdatabase
 - `/use` - uses the item bought from from the shop.
 - `/refund` - refunds the item from the shop.
 - `/inventory` - checks the items in the users inventory.
+-
+- `/view-one-word-story` - view the current story in the server
 
 **Staff-Only Commands:** (`Administrator permissions required`)
 
@@ -129,6 +132,10 @@ https://github.com/NZ-Linix/dotdatabase
 - 
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
+- 
+- `/set-story-channel` - Sets the channel for the one-word story game.
+- `/remove-story-channel` - Removes the currently set one-word story channel.
+- `/reset-one-word-story` - Resets the current one-word story in the server.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
