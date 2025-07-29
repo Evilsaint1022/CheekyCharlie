@@ -605,7 +605,31 @@ const commands = [
     {
         name: 'remove-color-of-the-week',
         description: 'Remove the Color of the Week role setting for this server.',
-    }
+    },
+    {
+        name: 'set-story-channel',
+        description: 'Set the channel where the story game will happen.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The story channel',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-story-channel',
+        description: 'Remove the currently set story channel.',
+    },
+    {
+        name: 'view-one-word-story',
+        description: 'View the current one-word story.',
+    },
+    {
+        name: 'reset-one-word-story',
+        description: 'Reset the current one-word story.',
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
