@@ -10,8 +10,9 @@ module.exports = async function updateStarboard(reaction) {
   const userId = message.author.id;
   const username = message.author.username;
 
-  // Sanitize username by replacing dots with underscores
   const safeUsername = username.replace(/\./g, '_');
+  const messageId = message.id;
+  const guildKey = `${guildName}_${guildId}`; // Guild key for storage
 
   try {
     const [
@@ -51,19 +52,25 @@ module.exports = async function updateStarboard(reaction) {
     );
     const currentCount = currentReaction?.count || 0;
 
-    // Use sanitized username for key
-    const trackingIdKey = `${guildName}_${safeUsername}_${message.id}`;
-    const storedUrl = await db.starboardids.get(trackingIdKey);
+    // Load current tracking list for the guild
+    const trackingList = (await db.starboardids.get(guildKey)) || [];
 
-    // If count is below threshold and message exists, delete it
+    const entryIndex = trackingList.findIndex(entry =>
+      entry.user === safeUsername && entry.messageId === messageId
+    );
+
+    const storedUrl = entryIndex !== -1 ? trackingList[entryIndex].url : null;
+
     if (currentCount < parseInt(starboardCount)) {
+      // Below threshold, delete from starboard and remove entry
       if (storedUrl) {
         const oldId = storedUrl.split('/').pop();
         try {
           const oldMsg = await starboardChannel.messages.fetch(oldId);
           if (oldMsg) await oldMsg.delete();
         } catch (_) {}
-        await db.starboardids.delete(trackingIdKey);
+        trackingList.splice(entryIndex, 1); // Remove entry from array
+        await db.starboardids.set(guildKey, trackingList);
       }
       return;
     }
@@ -74,14 +81,8 @@ module.exports = async function updateStarboard(reaction) {
 
     let messageContent = message.content || "_No Message Content_";
 
-    if ( message.stickers.size > 0 ) {
-
-        if ( !message.content ) {
-
-            messageContent = "[ Message contains stickers ]";
-
-        }
-
+    if (message.stickers.size > 0 && !message.content) {
+      messageContent = "[ Message contains stickers ]";
     }
 
     const lines = [
@@ -97,7 +98,7 @@ module.exports = async function updateStarboard(reaction) {
       }
     }
 
-    // Edit existing starboard post if it exists
+    // Edit old starboard post if it exists
     if (storedUrl) {
       const oldId = storedUrl.split('/').pop();
       try {
@@ -107,7 +108,7 @@ module.exports = async function updateStarboard(reaction) {
           return;
         }
       } catch (_) {
-        // Message no longer exists
+        // Post is missing, fallthrough to recreate it
       }
     }
 
@@ -116,7 +117,19 @@ module.exports = async function updateStarboard(reaction) {
     await newMsg.react(emojiForReaction);
 
     const newUrl = `https://discord.com/channels/${guildId}/${starboardChannel.id}/${newMsg.id}`;
-    await db.starboardids.set(trackingIdKey, newUrl);
+
+    // Save or update entry
+    if (entryIndex !== -1) {
+      trackingList[entryIndex].url = newUrl;
+    } else {
+      trackingList.push({
+        user: safeUsername,
+        messageId,
+        url: newUrl
+      });
+    }
+
+    await db.starboardids.set(guildKey, trackingList);
 
   } catch (err) {
     console.error('Error in updateStarboard:', err);
