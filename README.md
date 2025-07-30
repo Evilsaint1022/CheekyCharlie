@@ -97,9 +97,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-drop-party-channel` — Set Drop Party Channel.
 - `/remove-drop-party-channel` — Remove Drop Party Channel.
 - 
-- `/starboard-set-channel` - Sets Starboard Channel.
-- `/starboard-set-count` - Sets Amount of emojis needed for Starboard.
-- `/starboard-set-emoji` - Sets sets Starboard Emoji.
+- `/set-starboard-channel` - Sets Starboard Channel.
+- `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
+- `/set-starboard-emoji` - Sets sets Starboard Emoji.
 - 
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.

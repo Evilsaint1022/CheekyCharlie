@@ -15,26 +15,19 @@ module.exports = async function updateStarboard(reaction) {
   const guildKey = `${guildName}_${guildId}`; // Guild key for storage
 
   try {
-    const [
-      starboardChannelId,
-      configuredEmoji,
-      starboardCount
-    ] = await Promise.all([
-      db.starboard.get(`${guildKey}_starboardChannel`),
-      db.starboard.get(`${guildKey}_starboardEmoji`),
-      db.starboard.get(`${guildKey}_starboardCount`),
-    ]);
+    const config = await db.starboard.get(guildKey);
+    if (!config || !config.starboardChannel || !config.starboardEmoji || !config.starboardCount) return;
 
-    if (!starboardChannelId || !configuredEmoji || !starboardCount) return;
+    const { starboardChannel, starboardEmoji, starboardCount } = config;
 
-    const starboardChannel = guild.channels.cache.get(starboardChannelId);
-    if (!starboardChannel || message.channel.id === starboardChannelId) return;
+    const starboardChannelObj = guild.channels.cache.get(starboardChannel);
+    if (!starboardChannelObj || message.channel.id === starboardChannel) return;
 
-    let emojiName = configuredEmoji;
-    let emojiForReaction = configuredEmoji;
+    let emojiName = starboardEmoji;
+    let emojiForReaction = starboardEmoji;
 
-    if (configuredEmoji.includes(':')) {
-      const emojiId = configuredEmoji.split(':')[2]?.slice(0, -1);
+    if (starboardEmoji.includes(':')) {
+      const emojiId = starboardEmoji.split(':')[2]?.slice(0, -1);
       const emoji = guild.emojis.cache.get(emojiId);
       if (!emoji) return;
       emojiName = emoji.name;
@@ -60,12 +53,11 @@ module.exports = async function updateStarboard(reaction) {
 
     const storedUrl = entryIndex !== -1 ? trackingList[entryIndex].url : null;
 
-    // If below threshold and already posted, remove it
     if (currentCount < parseInt(starboardCount)) {
       if (storedUrl) {
         const oldId = storedUrl.split('/').pop();
         try {
-          const oldMsg = await starboardChannel.messages.fetch(oldId);
+          const oldMsg = await starboardChannelObj.messages.fetch(oldId);
           if (oldMsg) await oldMsg.delete();
         } catch (_) {}
         trackingList.splice(entryIndex, 1);
@@ -97,25 +89,23 @@ module.exports = async function updateStarboard(reaction) {
       }
     }
 
-    // ✅ If starboard message already exists, update it only
     if (storedUrl) {
       const oldId = storedUrl.split('/').pop();
       try {
-        const oldMsg = await starboardChannel.messages.fetch(oldId);
+        const oldMsg = await starboardChannelObj.messages.fetch(oldId);
         if (oldMsg) {
           await oldMsg.edit({ content: lines.join('\n') });
-          return; // ✅ Prevent multiple posts
+          return;
         }
       } catch (_) {
-        // Continue to post new one if original is deleted/missing
+        // Continue to post a new one if original is deleted
       }
     }
 
-    // ✅ Post new starboard message (only if no valid storedUrl found or fetch failed)
-    const newMsg = await starboardChannel.send({ content: lines.join('\n') });
+    const newMsg = await starboardChannelObj.send({ content: lines.join('\n') });
     await newMsg.react(emojiForReaction);
 
-    const newUrl = `https://discord.com/channels/${guildId}/${starboardChannel.id}/${newMsg.id}`;
+    const newUrl = `https://discord.com/channels/${guildId}/${starboardChannelObj.id}/${newMsg.id}`;
 
     if (entryIndex !== -1) {
       trackingList[entryIndex].url = newUrl;
