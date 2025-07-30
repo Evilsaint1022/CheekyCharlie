@@ -20,9 +20,9 @@ module.exports = async function updateStarboard(reaction) {
       configuredEmoji,
       starboardCount
     ] = await Promise.all([
-      db.starboard.get(`${guildName}_${guildId}_starboardChannel`),
-      db.starboard.get(`${guildName}_${guildId}_starboardEmoji`),
-      db.starboard.get(`${guildName}_${guildId}_starboardCount`),
+      db.starboard.get(`${guildKey}_starboardChannel`),
+      db.starboard.get(`${guildKey}_starboardEmoji`),
+      db.starboard.get(`${guildKey}_starboardCount`),
     ]);
 
     if (!starboardChannelId || !configuredEmoji || !starboardCount) return;
@@ -52,7 +52,6 @@ module.exports = async function updateStarboard(reaction) {
     );
     const currentCount = currentReaction?.count || 0;
 
-    // Load current tracking list for the guild
     const trackingList = (await db.starboardids.get(guildKey)) || [];
 
     const entryIndex = trackingList.findIndex(entry =>
@@ -61,15 +60,15 @@ module.exports = async function updateStarboard(reaction) {
 
     const storedUrl = entryIndex !== -1 ? trackingList[entryIndex].url : null;
 
+    // If below threshold and already posted, remove it
     if (currentCount < parseInt(starboardCount)) {
-      // Below threshold, delete from starboard and remove entry
       if (storedUrl) {
         const oldId = storedUrl.split('/').pop();
         try {
           const oldMsg = await starboardChannel.messages.fetch(oldId);
           if (oldMsg) await oldMsg.delete();
         } catch (_) {}
-        trackingList.splice(entryIndex, 1); // Remove entry from array
+        trackingList.splice(entryIndex, 1);
         await db.starboardids.set(guildKey, trackingList);
       }
       return;
@@ -98,27 +97,26 @@ module.exports = async function updateStarboard(reaction) {
       }
     }
 
-    // Edit old starboard post if it exists
+    // ✅ If starboard message already exists, update it only
     if (storedUrl) {
       const oldId = storedUrl.split('/').pop();
       try {
         const oldMsg = await starboardChannel.messages.fetch(oldId);
         if (oldMsg) {
           await oldMsg.edit({ content: lines.join('\n') });
-          return;
+          return; // ✅ Prevent multiple posts
         }
       } catch (_) {
-        // Post is missing, fallthrough to recreate it
+        // Continue to post new one if original is deleted/missing
       }
     }
 
-    // Create a new starboard message
+    // ✅ Post new starboard message (only if no valid storedUrl found or fetch failed)
     const newMsg = await starboardChannel.send({ content: lines.join('\n') });
     await newMsg.react(emojiForReaction);
 
     const newUrl = `https://discord.com/channels/${guildId}/${starboardChannel.id}/${newMsg.id}`;
 
-    // Save or update entry
     if (entryIndex !== -1) {
       trackingList[entryIndex].url = newUrl;
     } else {
