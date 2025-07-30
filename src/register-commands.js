@@ -270,7 +270,7 @@ const commands = [
         description: 'Remove the configured join to create channel',
     },
     {
-        name: "starboard-set-channel",
+        name: "set-starboard-channel",
         description: "Set the channel where starboard messages will be sent",
         options: [
             {
@@ -282,7 +282,7 @@ const commands = [
         ]
     },
     {
-        name: "starboard-set-count",
+        name: "set-starboard-count",
         description: "Set how many reactions are needed to send a message to the starboard",
         options: [
             {
@@ -294,7 +294,7 @@ const commands = [
         ]
     },
     {
-        name: "starboard-set-emoji",
+        name: "set-starboard-emoji",
         description: "Set the emoji used for starboard reactions",
         options: [
             {
