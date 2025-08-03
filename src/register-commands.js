@@ -182,6 +182,14 @@ const commands = [
             },
         ]
     },
+    {
+        name: 'lock-vc',
+        description: 'Locks the voice channel.',
+    },
+    {
+        name: 'unlock-vc',
+        description: 'Unlocks the voice channel.',
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
