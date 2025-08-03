@@ -81,6 +81,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/refund` - refunds the item from the shop.
 - `/inventory` - checks the items in the users inventory.
 -
+- `/lock-vc` - locks the join-to-create vc channel.
+- `/unlock-vc` - unlocks the join-to-create vc channel.
+-
 - `/view-one-word-story` - view the current story in the server
 
 **Staff-Only Commands:** (`Administrator permissions required`)
