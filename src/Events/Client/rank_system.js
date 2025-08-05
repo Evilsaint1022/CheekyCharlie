@@ -26,7 +26,16 @@ module.exports = {
     const levelChannel = levelChannelId ? guild.channels.cache.get(levelChannelId) : null;
 
     // XP gain
-    const xpGain = Math.floor(Math.random() * 11) + 5;
+    let xpGain = Math.floor(Math.random() * 11) + 5;
+
+    // Check if boosters role is set in settings
+    const boostersRoleId = settings?.boostersRoleId;
+
+    // If boostersRoleId exists and the member has the role, double the XP
+    if (boostersRoleId && member.roles.cache.has(boostersRoleId)) {
+      xpGain *= 2;
+    }
+
     userData.xp += xpGain;
 
     const xpForNextLevel = userData.level * 350;

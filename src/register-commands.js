@@ -638,6 +638,22 @@ const commands = [
         name: 'reset-one-word-story',
         description: 'Reset the current one-word story.',
     },
+    {
+        name: 'set-boosters-role',
+        description: 'Set the server boosters role.',
+        options: [
+            {
+                name: 'role',
+                description: 'Select the boosters role',
+                type: 8,
+                required: true,
+            },
+        ]
+    },
+    {
+        name: 'remove-boosters-role',
+        description: 'Remove the server boosters role.',
+    }
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
