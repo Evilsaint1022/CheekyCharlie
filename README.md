@@ -93,7 +93,7 @@ https://github.com/NZ-Linix/dotdatabase
 **One-Word-Story - Commands**
 - `/view-one-word-story` - view the current story in the server
 
-# **Staff-Only Commands:** (`Administrator permissions required`)
+# **Staff-Only Commands:**
 
 **Set-Whitelisted-Role**
 - `/set-whitelisted-roles` — Set whitelisted Roles.
