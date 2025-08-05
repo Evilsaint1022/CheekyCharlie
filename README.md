@@ -53,7 +53,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 # 🎮 Application Commands
 
-# **Available for Everyone:**
+# _🌿・**Available for Everyone:**・🌿_
 
 ## **Economy - Commands**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -65,7 +65,6 @@ https://github.com/NZ-Linix/dotdatabase
 - `/pick` - Picks Ferns when the dropparty's drops.
 - `/pay` - Pay other members Ferns.
 
-## **Economy Games - Commands**
 - `/blackjack` - Starts a game of blackjack.
 - `/slots` - Starts a game of slots.
 
@@ -80,6 +79,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/lock-vc` - locks the join-to-create vc channel.
 - `/unlock-vc` - unlocks the join-to-create vc channel.
 
+## **One-Word-Story - Commands**
+- `/view-one-word-story` - view the current story in the server
+
 ## **Fun - Commands**
 - `/avatar` — View your's or someone elses avatar.
 - `/ping` — Check Bots Latency.
@@ -88,12 +90,9 @@ https://github.com/NZ-Linix/dotdatabase
 
 ## **Other - Commands**
 - `/github` — Github link to CheeckyCharlies Repo.
-- `/invite` — Generates a random invite link.
+- `/invite` — Generates a temporary invite link.
 
-## **One-Word-Story - Commands**
-- `/view-one-word-story` - view the current story in the server
-
-# **Staff-Only Commands:**
+# _🌿・**Staff-Only Commands:**・🌿_
 
 ## **Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
@@ -173,6 +172,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # 🐞 Bugs
+
 - [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
