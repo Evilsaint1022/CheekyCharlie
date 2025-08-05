@@ -53,7 +53,9 @@ https://github.com/NZ-Linix/dotdatabase
 
 # 🎮 Application Commands
 
-# 🌿・**__Available for Everyone:__**・🌿
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# 🌿・**Available for Everyone:**・🌿
 
 ## **Economy - Commands**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -91,10 +93,11 @@ https://github.com/NZ-Linix/dotdatabase
 ## **Other - Commands**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
-- 
-- 
 
-# 🌿・**__Staff-Only Commands:__**・🌿
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# 🌿・**Staff-Only Commands:**・🌿
 
 ## **Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
