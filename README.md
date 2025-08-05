@@ -129,7 +129,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
-**AI RESPONSE - Commands** ( WhitelistedRole permission required )
+**AI Response - Commands** ( WhitelistedRole permission required )
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
@@ -138,7 +138,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
 
-**RSS FEED - Commands** ( WhitelistedRole permission required )
+**RSS Feed - Commands** ( WhitelistedRole permission required )
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
@@ -153,7 +153,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
 
-**BanCount - Commands** ( WhitelistedRole permission required )
+**Ban-Count - Commands** ( WhitelistedRole permission required )
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
@@ -165,6 +165,10 @@ https://github.com/NZ-Linix/dotdatabase
 **Boosters Role - Commands** ( WhitelistedRole permission required )
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
+
+**Join to Create VC - Commands** ( WhitelistedRole permission required )
+- `/set-join-to-create-vc` - Sets the Join to Create VC channel.
+- `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
