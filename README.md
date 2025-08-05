@@ -74,7 +74,6 @@ https://github.com/NZ-Linix/dotdatabase
 - `/blackjack` - Starts a game of blackjack.
 - `/slots` - Starts a game of slots.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Shop - Commands**
 - `/shop` - checks the server shop.
@@ -83,18 +82,15 @@ https://github.com/NZ-Linix/dotdatabase
 - `/refund` - refunds the item from the shop.
 - `/inventory` - checks the items in the users inventory.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Join-to-Create VC - Commands**
 - `/lock-vc` - locks the join-to-create vc channel.
 - `/unlock-vc` - unlocks the join-to-create vc channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **One-Word-Story - Commands**
 - `/view-one-word-story` - view the current story in the server
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Fun - Commands**
 - `/avatar` — View your's or someone elses avatar.
@@ -102,7 +98,6 @@ https://github.com/NZ-Linix/dotdatabase
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Other - Commands**
 - `/github` — Github link to CheeckyCharlies Repo.
@@ -118,7 +113,6 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Counting - Commands**
 - `/set-counting-channel` - Sets the counting entertainment channel.
@@ -126,97 +120,82 @@ https://github.com/NZ-Linix/dotdatabase
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **RSS Feed - Commands**
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Shop - Commands**
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **One-Word-Story - Commands**
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **NSFW Filter - Commands**
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **AI Response - Commands**
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Levels - Commands**
 - `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Starboard - Commands**
 - `/set-starboard-channel` - Sets Starboard Channel.
 - `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
 - `/set-starboard-emoji` - Sets sets Starboard Emoji.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Join to Create VC - Commands**
 - `/set-join-to-create-vc` - Sets the Join to Create VC channel.
 - `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Boosters Role - Commands**
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Verified Role - Commands**
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Drop Party - Commands**
 - `/set-drop-party-channel` — Set Drop Party Channel.
 - `/remove-drop-party-channel` — Remove Drop Party Channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Color of the Week - Commands**
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **BumpReminder - Commands**
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Ban-Count - Commands**
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 ## **Echo - Command**
 - `/echo` — Echo Messages
