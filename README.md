@@ -58,7 +58,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 
-# 🌿・** Available for Everyone: **・🌿
+# 🌿・**_Available for Everyone:_**・🌿
 
 
 ## **Economy - Commands**
@@ -106,7 +106,7 @@ https://github.com/NZ-Linix/dotdatabase
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 
-# 🌿・**Staff-Only Commands: **・🌿
+# 🌿・**_Staff-Only Commands:_**・🌿
 
 
 ## **Set-Whitelisted-Role** ( Administrator Permission Required )
