@@ -139,6 +139,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
+-
+- `/set-boosters-role` - Sets the servers boosters role Id.
+- `/remove-boosters-role` - Removes the servers boosters role Id.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
