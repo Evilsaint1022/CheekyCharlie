@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
 const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
-const rewardAmount = 100; // Daily reward
+const baseRewardAmount = 100; // Base daily reward
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,8 +17,9 @@ module.exports = {
                 flags: 64
             });
         }
+
         const ferns = '<:Ferns:1395219665638391818>';
-        const { user, guild } = interaction;
+        const { user, guild, member } = interaction;
         const username = user.username;
         const safeUsername = username.replace(/\./g, '_');
         const keyBase = `${safeUsername}_${user.id}`;
@@ -39,6 +40,17 @@ module.exports = {
             });
         }
 
+        // Check for booster role in server settings
+        const guildKey = `${guild.name}_${guild.id}`;
+        const guildSettings = await db.settings.get(guildKey) || {};
+        const boosterRoleId = guildSettings.boostersRoleId;
+
+        // Determine reward multiplier
+        let rewardAmount = baseRewardAmount;
+        if (boosterRoleId && member.roles.cache.has(boosterRoleId)) {
+            rewardAmount *= 2;
+        }
+
         // Get current balance
         let balance = await db.balance.get(`${keyBase}.balance`) || 0;
         balance += rewardAmount;
@@ -49,14 +61,13 @@ module.exports = {
 
         // Build embed
         const embed = new EmbedBuilder()
-        .setColor(0xFFFFFF)
-        .setTitle(`${username}'s Daily ${ferns}'s`)
-        .setDescription(`You have claimed your daily reward of **${rewardAmount.toLocaleString()} ${ferns}**!`)
-        .addFields({ name: 'Total Balance', value: `${balance.toLocaleString()} ${ferns}`, inline: true })
-        .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-        .setFooter({ text: 'Come back tomorrow for more!' })
-        .setTimestamp();
-
+            .setColor(0xFFFFFF)
+            .setTitle(`${username}'s Daily ${ferns}'s`)
+            .setDescription(`You have claimed your daily reward of **${rewardAmount.toLocaleString()} ${ferns}**!`)
+            .addFields({ name: 'Total Balance', value: `${balance.toLocaleString()} ${ferns}`, inline: true })
+            .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+            .setFooter({ text: 'Come back tomorrow for more!' })
+            .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 

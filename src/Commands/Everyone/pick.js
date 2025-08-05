@@ -49,15 +49,26 @@ module.exports = {
 
             // Fetch the user's current balance from the database
             let balance = 0;
-            try {
-                const userData = await db.balance.get(dbKey);
-                balance = userData?.balance || 0;
-            } catch (error) {
-                console.error('Error fetching user balance from database:', error);
-            }
+        try {
+            const userData = await db.balance.get(dbKey);
+            balance = userData?.balance || 0;
+        }   catch (error) {
+            console.error('Error fetching user balance from database:', error);
+        }
 
-            const coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
+            let coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
+
+            // Check if user has booster role to apply 2x bonus
+            const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
+            const settings = await db.settings.get(guildKey);
+            const boostersRoleId = settings?.boostersRoleId;
+
+        if (boostersRoleId && interaction.member.roles.cache.has(boostersRoleId)) {
+            coinsEarned *= 2;
+        }
+
             balance += coinsEarned;
+
 
             console.log(`[🌿] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
 

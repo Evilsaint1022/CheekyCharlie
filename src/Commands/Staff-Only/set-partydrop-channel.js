@@ -52,7 +52,7 @@ module.exports = {
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         // Logging the action
-        const timestamp = new Date().toISOString();
+        const timestamp = new Date().toLocaleTimeString();
         console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} set the drop party channel to "${channel.id}"`);
 
         return interaction.reply({
