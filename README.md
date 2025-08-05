@@ -18,6 +18,8 @@ https://github.com/NZ-Linix/dotdatabase
 
 # ✨ Features
 
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
 ```
 -> Full Economy System  
     ╰─> Bank and Wallet  
