@@ -202,7 +202,9 @@ https://github.com/NZ-Linix/dotdatabase
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# 🐞 Bugs
+# 🐞 - Bugs
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 - [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593)
 
@@ -211,7 +213,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# 🌐 CheekyCharlie Support Server
+# 🌐 - CheekyCharlie Support Server
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 [Join our Support Server](https://discord.gg/W3ZRZukZmS)
 
