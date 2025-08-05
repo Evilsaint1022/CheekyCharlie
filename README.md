@@ -53,9 +53,9 @@ https://github.com/NZ-Linix/dotdatabase
 
 # 🎮 Application Commands
 
-**Available for Everyone:**
+# **Available for Everyone:**
 
-# **Economy - Commands**
+**Economy - Commands**
 - `/leaderboard` — Balance/Level Leaderboard.
 - `/balance` — Check your Ferns balance.
 - `/deposit` — Deposit Ferns into your Bank.
@@ -65,104 +65,104 @@ https://github.com/NZ-Linix/dotdatabase
 - `/pick` - Picks Ferns when the dropparty's drops.
 - `/pay` - Pay other members Ferns.
 
-# **Economy Games - Commands**
+**Economy Games - Commands**
 - `/blackjack` - Starts a game of blackjack.
 - `/slots` - Starts a game of slots.
 
-# **Shop - Commands**
+**Shop - Commands**
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.
 - `/use` - uses the item bought from from the shop.
 - `/refund` - refunds the item from the shop.
 - `/inventory` - checks the items in the users inventory.
 
-# **Join-to-Create VC - Commands**
+**Join-to-Create VC - Commands**
 - `/lock-vc` - locks the join-to-create vc channel.
 - `/unlock-vc` - unlocks the join-to-create vc channel.
 
-# **Fun - Commands**
+**Fun - Commands**
 - `/avatar` — View your's or someone elses avatar.
 - `/ping` — Check Bots Latency.
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 
-# **Other - Commands**
+**Other - Commands**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a random invite link.
 
-# **One-Word-Story - Commands**
+**One-Word-Story - Commands**
 - `/view-one-word-story` - view the current story in the server
 
-**Staff-Only Commands:** (`Administrator permissions required`)
+# **Staff-Only Commands:** (`Administrator permissions required`)
 
-# **Set-Whitelisted-Role**
+**Set-Whitelisted-Role**
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
-# **Fun - Commands** ( WhitelistedRole permission required )
+**Echo - Command** ( WhitelistedRole permission required )
 - `/echo` — Echo Messages
 
-# **Levels - Commands** ( WhitelistedRole permission required )
+**Levels - Commands** ( WhitelistedRole permission required )
 - `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
 
-# **Drop Party - Commands** ( WhitelistedRole permission required )
+**Drop Party - Commands** ( WhitelistedRole permission required )
 - `/set-drop-party-channel` — Set Drop Party Channel.
 - `/remove-drop-party-channel` — Remove Drop Party Channel.
 
-# **Starboard - Commands** ( WhitelistedRole permission required )
+**Starboard - Commands** ( WhitelistedRole permission required )
 - `/set-starboard-channel` - Sets Starboard Channel.
 - `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
 - `/set-starboard-emoji` - Sets sets Starboard Emoji.
 
-# **Verified Role - Commands** ( WhitelistedRole permission required )
+**Verified Role - Commands** ( WhitelistedRole permission required )
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
-# **BumpReminder - Commands** ( WhitelistedRole permission required )
+**BumpReminder - Commands** ( WhitelistedRole permission required )
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 
-# **NSFW Filter - Commands** ( WhitelistedRole permission required )
+**NSFW Filter - Commands** ( WhitelistedRole permission required )
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
-# **AI RESPONSE - Commands** ( WhitelistedRole permission required )
+**AI RESPONSE - Commands** ( WhitelistedRole permission required )
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
-# **Shop - Commands** ( WhitelistedRole permission required )
+**Shop - Commands** ( WhitelistedRole permission required )
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
 
-# **RSS FEED - Commands** ( WhitelistedRole permission required )
+**RSS FEED - Commands** ( WhitelistedRole permission required )
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
 
-# **Counting - Commands** ( WhitelistedRole permission required )
+**Counting - Commands** ( WhitelistedRole permission required )
 - `/set-counting-channel` - Sets the counting entertainment channel.
 - `/set-counting-emojis` - Sets custom emojis for reactions.
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
-# **Color of the Week - Commands** ( WhitelistedRole permission required )
+**Color of the Week - Commands** ( WhitelistedRole permission required )
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
 
-# **BanCount - Commands** ( WhitelistedRole permission required )
+**BanCount - Commands** ( WhitelistedRole permission required )
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
-# **One-Word-Story - Commands** ( WhitelistedRole permission required )
+**One-Word-Story - Commands** ( WhitelistedRole permission required )
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
 
-# **Boosters Role - Commands** ( WhitelistedRole permission required )
+**Boosters Role - Commands** ( WhitelistedRole permission required )
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
