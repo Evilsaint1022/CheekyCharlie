@@ -95,80 +95,80 @@ https://github.com/NZ-Linix/dotdatabase
 
 # **Staff-Only Commands:**
 
-### **Set-Whitelisted-Role**
+## **Set-Whitelisted-Role**
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
-### **Echo - Command** ( WhitelistedRole permission required )
-- `/echo` — Echo Messages
-
-### **Levels - Commands** ( WhitelistedRole permission required )
-- `/toggle-levels` - Toggles Levels On & Off
-- `/set-level-channel` — Set Level Notification Channel.
-- `/remove-level-channel` — Remove Level Notifcation Channel.
-
-### **Drop Party - Commands** ( WhitelistedRole permission required )
-- `/set-drop-party-channel` — Set Drop Party Channel.
-- `/remove-drop-party-channel` — Remove Drop Party Channel.
-
-### **Starboard - Commands** ( WhitelistedRole permission required )
-- `/set-starboard-channel` - Sets Starboard Channel.
-- `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
-- `/set-starboard-emoji` - Sets sets Starboard Emoji.
-
-### **Verified Role - Commands** ( WhitelistedRole permission required )
-- `/set-verified-role` - Sets a verified role for the auto_kick event.
-- `/remove-verified-role` - Removes the verified role that has been set.
-
-### **BumpReminder - Commands** ( WhitelistedRole permission required )
-- `/set-bump-channel` - Sets a channel for the bump reminder.
-- `/set-bump-role` - Sets a bump role for the bump reminder.
-
-### **NSFW Filter - Commands** ( WhitelistedRole permission required )
-- `/toggle-nsfw-filter` - toggles the AI nsfw filter.
-- `/set-nsfw-logs-channel` - sets a nsfw logs channel.
-- `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
-
-### **AI Response - Commands** ( WhitelistedRole permission required )
-- `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
-- `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
-
-### **Shop - Commands** ( WhitelistedRole permission required )
-- `/add-shop-item` - Adds items to the servers shop.
-- `/remove-shop-item` - Removes Shop items by name.
-- `/edit-shop-item` - Edits Items in the server shop.
-
-### **RSS Feed - Commands** ( WhitelistedRole permission required )
-- `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
-- `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
-- `/remove-rss-channel` - Removes the RSS feed news channel.
-
-### **Counting - Commands** ( WhitelistedRole permission required )
+## **Counting - Commands** ( WhitelistedRole permission )
 - `/set-counting-channel` - Sets the counting entertainment channel.
 - `/set-counting-emojis` - Sets custom emojis for reactions.
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
-### **Color of the Week - Commands** ( WhitelistedRole permission required )
-- `/set-color-of-the-week` - Sets a role for color of the week
-- `/remove-color-of-the-week` - Removes role set for color of the week
+## **RSS Feed - Commands** ( WhitelistedRole permission )
+- `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
+- `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
+- `/remove-rss-channel` - Removes the RSS feed news channel.
 
-### **Ban-Count - Commands** ( WhitelistedRole permission required )
-- `/set-ban-channel` - Sets the ^banned channel.
-- `/remove-ban-channel` - Removes the ^banned channel.
+## **Shop - Commands** ( WhitelistedRole permission )
+- `/add-shop-item` - Adds items to the servers shop.
+- `/remove-shop-item` - Removes Shop items by name.
+- `/edit-shop-item` - Edits Items in the server shop.
 
-### **One-Word-Story - Commands** ( WhitelistedRole permission required )
+## **One-Word-Story - Commands** ( WhitelistedRole permission )
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
 
-### **Boosters Role - Commands** ( WhitelistedRole permission required )
+## **NSFW Filter - Commands** ( WhitelistedRole permission )
+- `/toggle-nsfw-filter` - toggles the AI nsfw filter.
+- `/set-nsfw-logs-channel` - sets a nsfw logs channel.
+- `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
+
+## **AI Response - Commands** ( WhitelistedRole permission )
+- `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
+- `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
+
+## **Levels - Commands** ( WhitelistedRole permission )
+- `/toggle-levels` - Toggles Levels On & Off
+- `/set-level-channel` — Set Level Notification Channel.
+- `/remove-level-channel` — Remove Level Notifcation Channel.
+
+## **Starboard - Commands** ( WhitelistedRole permission )
+- `/set-starboard-channel` - Sets Starboard Channel.
+- `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
+- `/set-starboard-emoji` - Sets sets Starboard Emoji.
+
+## **Join to Create VC - Commands** ( WhitelistedRole permission )
+- `/set-join-to-create-vc` - Sets the Join to Create VC channel.
+- `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
+
+## **Boosters Role - Commands** ( WhitelistedRole permission )
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
-### **Join to Create VC - Commands** ( WhitelistedRole permission required )
-- `/set-join-to-create-vc` - Sets the Join to Create VC channel.
-- `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
+## **Verified Role - Commands** ( WhitelistedRole permission )
+- `/set-verified-role` - Sets a verified role for the auto_kick event.
+- `/remove-verified-role` - Removes the verified role that has been set.
+
+## **Drop Party - Commands** ( WhitelistedRole permission )
+- `/set-drop-party-channel` — Set Drop Party Channel.
+- `/remove-drop-party-channel` — Remove Drop Party Channel.
+
+## **Color of the Week - Commands** ( WhitelistedRole permission )
+- `/set-color-of-the-week` - Sets a role for color of the week
+- `/remove-color-of-the-week` - Removes role set for color of the week
+
+## **BumpReminder - Commands** ( WhitelistedRole permission )
+- `/set-bump-channel` - Sets a channel for the bump reminder.
+- `/set-bump-role` - Sets a bump role for the bump reminder.
+
+## **Ban-Count - Commands** ( WhitelistedRole permission )
+- `/set-ban-channel` - Sets the ^banned channel.
+- `/remove-ban-channel` - Removes the ^banned channel.
+
+## **Echo - Command** ( WhitelistedRole permission )
+- `/echo` — Echo Messages
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
