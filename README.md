@@ -61,7 +61,7 @@ https://github.com/NZ-Linix/dotdatabase
 # 🌿・**_Available for Everyone:_**・🌿
 
 
-## **Economy - Commands**
+## **Economy**
 - `/leaderboard` — Balance/Level Leaderboard.
 - `/balance` — Check your Ferns balance.
 - `/deposit` — Deposit Ferns into your Bank.
@@ -75,7 +75,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/slots` - Starts a game of slots.
 
 
-## **Shop - Commands**
+## **Shop**
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.
 - `/use` - uses the item bought from from the shop.
@@ -83,23 +83,23 @@ https://github.com/NZ-Linix/dotdatabase
 - `/inventory` - checks the items in the users inventory.
 
 
-## **Join-to-Create VC - Commands**
+## **Join-to-Create VC**
 - `/lock-vc` - locks the join-to-create vc channel.
 - `/unlock-vc` - unlocks the join-to-create vc channel.
 
 
-## **One-Word-Story - Commands**
+## **One-Word-Story**
 - `/view-one-word-story` - view the current story in the server
 
 
-## **Fun - Commands**
+## **Fun**
 - `/avatar` — View your's or someone elses avatar.
 - `/ping` — Check Bots Latency.
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 
 
-## **Other - Commands**
+## **Other**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
 
@@ -114,97 +114,97 @@ https://github.com/NZ-Linix/dotdatabase
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
 
-## **Counting - Commands**
+## **Counting Setup**
 - `/set-counting-channel` - Sets the counting entertainment channel.
 - `/set-counting-emojis` - Sets custom emojis for reactions.
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
 
-## **RSS Feed - Commands**
+## **RSS Feed Setup**
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
 
 
-## **Shop - Commands**
+## **Shop Setup**
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
 
 
-## **One-Word-Story - Commands**
+## **One-Word-Story Setup**
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
 
 
-## **NSFW Filter - Commands**
+## **NSFW Filter Setup**
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
 
-## **AI Response - Commands**
+## **AI Response Setup**
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
 
-## **Levels - Commands**
+## **Levels Setup**
 - `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
 
 
-## **Starboard - Commands**
+## **Starboard Setup**
 - `/set-starboard-channel` - Sets Starboard Channel.
 - `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
 - `/set-starboard-emoji` - Sets sets Starboard Emoji.
 
 
-## **Join to Create VC - Commands**
+## **Join to Create VC Setup**
 - `/set-join-to-create-vc` - Sets the Join to Create VC channel.
 - `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
 
 
-## **Boosters Role - Commands**
+## **Boosters Role Setup**
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
 
-## **Verified Role - Commands**
+## **Verified Role Setup**
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
 
-## **Drop Party - Commands**
+## **Drop Party Setup**
 - `/set-drop-party-channel` — Set Drop Party Channel.
 - `/remove-drop-party-channel` — Remove Drop Party Channel.
 
 
-## **Color of the Week - Commands**
+## **Color of the Week Setup**
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
 
 
-## **BumpReminder - Commands**
+## **BumpReminder Setup**
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 
 
-## **Ban-Count - Commands**
+## **Ban-Count Setup**
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
 
-## **Echo - Command**
+## **Echo Command**
 - `/echo` — Echo Messages
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # **🐞 - Bugs**
 
-- [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593)
+- --> [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593) <---
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@linix_red`
@@ -213,7 +213,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 # **🌐 - CheekyCharlie Support Server**
 
-[Join our Support Server](https://discord.gg/W3ZRZukZmS)
+[Join our Support Server here!](https://discord.gg/W3ZRZukZmS)
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
