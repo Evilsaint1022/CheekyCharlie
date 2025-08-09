@@ -190,6 +190,18 @@ const commands = [
         name: 'unlock-vc',
         description: 'Unlocks the voice channel.',
     },
+    {
+        name: 'ai-search',
+        description: 'Search for results using AI.',
+        options: [
+            {
+                name: 'query',
+                description: 'What do you want to search for?',
+                type: 3,
+                required: true,
+            },
+        ]
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
