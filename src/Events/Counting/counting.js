@@ -51,6 +51,8 @@ module.exports = {
           lastUserId: null
         });
 
+        console.log(`[Counting] User counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
+
         return;
       }
 
@@ -70,6 +72,9 @@ module.exports = {
           expected: 1,
           lastUserId: null
         });
+
+        console.log(`[Counting] User (${message.author.id}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
+
       } else {
         await message.react(CORRECT_EMOJI).catch(() => null);
 
@@ -78,6 +83,8 @@ module.exports = {
           expected: userNumber + 1,
           lastUserId: message.author.id
         });
+
+        console.log(`[Counting] User (${message.author.id}): From ${userNumber - 1} to ${userNumber}. Expected: ${userNumber + 1}`)
       }
 
     } finally {
