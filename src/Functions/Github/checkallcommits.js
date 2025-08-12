@@ -35,6 +35,7 @@ async function checkAllCommits() {
 
     return newCommits;
   } catch (err) {
+    if ( err.message === "fetch is not a function" ) return [];
     console.error(`[Github] ${err.message}`);
     return [];
   }
