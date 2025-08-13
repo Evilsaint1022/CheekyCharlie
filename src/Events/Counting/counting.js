@@ -9,7 +9,7 @@ module.exports = {
 
   async execute(message) {
     if (message.author.bot || !message.guild) return;
-
+    const username = message.author.username;
     const guild = message.guild;
     const guildKey = `${guild.name}_${guild.id}`;
     const currentChannelId = message.channel.id;
@@ -51,7 +51,7 @@ module.exports = {
           lastUserId: null
         });
 
-        console.log(`[Counting] User counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
+        console.log(`[Counting] ${guildKey} (${username}): counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
 
         return;
       }
@@ -73,7 +73,7 @@ module.exports = {
           lastUserId: null
         });
 
-        console.log(`[Counting] User (${message.author.id}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
+        console.log(`[Counting] ${guildKey} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
 
       } else {
         await message.react(CORRECT_EMOJI).catch(() => null);
@@ -84,7 +84,7 @@ module.exports = {
           lastUserId: message.author.id
         });
 
-        console.log(`[Counting] User (${message.author.id}): From ${userNumber - 1} to ${userNumber}. Expected: ${userNumber + 1}`)
+        console.log(`[Counting] ${guildKey} (${username}): From ${userNumber - 1} to ${userNumber}. Expected: ${userNumber + 1}`)
       }
 
     } finally {
