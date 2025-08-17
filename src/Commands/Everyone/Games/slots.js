@@ -17,7 +17,11 @@ module.exports = {
   async execute(interaction) {
     const { guild, user } = interaction;
     const bet = interaction.options.getInteger('bet');
-    const balanceKey = `${user.username}_${user.id}.balance`;
+
+    // ✅ Sanitize username for DB keys
+    const safeUsername = user.username.replace(/\./g, '_');
+    const balanceKey = `${safeUsername}_${user.id}.balance`;
+
     const ferns = '<:Ferns:1395219665638391818>';
 
     // 🌐 Global cooldown check
@@ -32,8 +36,8 @@ module.exports = {
     // Set the cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the Slots command.`);
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
+    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.balance.get(balanceKey);
 
@@ -87,9 +91,11 @@ module.exports = {
       if (spins >= maxSpins) {
         clearInterval(interval);
 
+        // 🎲 50/50 chance to win or lose
+        const win = Math.random() < 0.5;
+
         const final = spin();
         const finalResult = final.join(' | ');
-        const win = final.every((val) => val === final[0]);
 
         let resultText;
         let resultColor;
@@ -100,11 +106,12 @@ module.exports = {
           await db.balance.set(balanceKey, balance);
           resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
           resultColor = 0x00FF00;
-          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${user.username} WON a bet of ${bet.toLocaleString()} Ferns.`);
+          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
         } else {
+          await db.balance.set(balanceKey, balance);
           resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
           resultColor = 0xFF0000;
-          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${user.username} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
         }
 
         const resultEmbed = new EmbedBuilder()

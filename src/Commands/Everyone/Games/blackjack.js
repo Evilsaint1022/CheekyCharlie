@@ -17,12 +17,18 @@ module.exports = {
     async execute(interaction) {
         const { guild, user } = interaction;
         const bet = interaction.options.getInteger('bet');
-        const balanceKey = `${user.username}_${user.id}.balance`;
+
+        // ✅ Sanitize username for DB keys
+        const safeUsername = user.username.replace(/\./g, '_');
+        const balanceKey = `${safeUsername}_${user.id}.balance`;
+
         const ferns = '<:Ferns:1395219665638391818>';
 
         // 🌐 GLOBAL COOLDOWN CHECK
         const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
         const now = Date.now();
+
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
@@ -32,8 +38,8 @@ module.exports = {
         // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the BlackJack command.`);
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
         let balance = await db.balance.get(balanceKey);
         if (balance === undefined || isNaN(parseInt(balance))) {
@@ -47,6 +53,7 @@ module.exports = {
             return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
         }
 
+        // 🎴 Blackjack logic
         const drawCard = () => Math.floor(Math.random() * 10) + 1;
         let playerCards = [drawCard(), drawCard()];
         let dealerCards = [drawCard(), drawCard()];
@@ -101,10 +108,10 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Won a Bet of ${bet.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} Won a Bet of ${bet.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
                     balance -= bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${user.username} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
                 }
 
                 await db.balance.set(balanceKey, balance);
