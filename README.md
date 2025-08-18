@@ -98,6 +98,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
+- `/aishia` - Talk to Aishia using a prompt.
 
 
 ## **Other**
