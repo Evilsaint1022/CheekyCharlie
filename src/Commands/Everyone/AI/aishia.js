@@ -27,7 +27,7 @@ try {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-  name: "Karbs", // Will be handled as your discord username so AISHIA can refer to you by your name
+  name: interaction.user.displayName,
   messages: [
     { role: 'user', content: prompt }
   ]
@@ -37,9 +37,6 @@ try {
   const data = await response.json();
 
   const aiMessage = data.response;
-
-  // This is the time in seconds AISHIA needs to respond, you can use this, but dont need to
-  const aiDuration = data.duration;
 
   const embed = new EmbedBuilder()
     .setColor('Purple')
