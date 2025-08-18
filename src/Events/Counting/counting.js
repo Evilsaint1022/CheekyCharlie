@@ -33,8 +33,21 @@ module.exports = {
         lastUserId: null
       };
 
-      const userNumber = parseInt(message.content.trim());
-      if (isNaN(userNumber) || message.content.trim() !== userNumber.toString()) return;
+      let userNumber = parseInt(message.content.trim());
+      let userMessage = message.content.trim()
+      const userMsg_not_IsNumber = isNaN(userMessage)
+      let wasCalculated = false;
+
+      if (userMsg_not_IsNumber) {
+        
+        try {
+          const mathResult = eval(userMessage);
+          userNumber = mathResult;
+          wasCalculated = true;
+        } catch (e) {}
+      }
+
+      if (isNaN(userNumber) || (!wasCalculated && message.content.trim() !== userNumber.toString())) return;
 
       // ❌ Same user sent a message twice — reset the count!
       if (message.author.id === countData.lastUserId) {
@@ -77,6 +90,25 @@ module.exports = {
 
       } else {
         await message.react(CORRECT_EMOJI).catch(() => null);
+
+        if (wasCalculated) {
+
+          for ( const number of userNumber.toString() ) {
+
+            if (number === "0") message.react("0️⃣");
+            else if (number === "1") message.react("1️⃣");
+            else if (number === "2") message.react("2️⃣");
+            else if (number === "3") message.react("3️⃣");
+            else if (number === "4") message.react("4️⃣");
+            else if (number === "5") message.react("5️⃣");
+            else if (number === "6") message.react("6️⃣");
+            else if (number === "7") message.react("7️⃣");
+            else if (number === "8") message.react("8️⃣");
+            else if (number === "9") message.react("9️⃣");
+
+          }
+
+        }
 
         await db.counting.set(guildKey, {
           current: userNumber,
