@@ -94,7 +94,6 @@ https://github.com/NZ-Linix/dotdatabase
 
 ## **Fun**
 - `/avatar` — View your's or someone elses avatar.
-- `/ping` — Check Bots Latency.
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
@@ -104,6 +103,7 @@ https://github.com/NZ-Linix/dotdatabase
 ## **Other**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
+- `/ping` — Check Bots Latency.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
@@ -156,6 +156,8 @@ https://github.com/NZ-Linix/dotdatabase
 - `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
+- `/set-level-role` - Add a role to the level system.
+- `/remove-level-role` - Removes a level from the level system.
 
 
 ## **Starboard Setup**
