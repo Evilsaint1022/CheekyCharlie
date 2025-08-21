@@ -52,20 +52,28 @@ module.exports = {
           })
       )).sort((a, b) => b.stat - a.stat);
     } else if (type === 'level') {
-      const levelData = await db.levels.get(guildKey) || {};
-      entries = Object.entries(levelData).map(([key, data]) => {
-        const lastUnderscoreIndex = key.lastIndexOf('_');
-        const safeUsername = key.slice(0, lastUnderscoreIndex);
-        const userId = key.slice(lastUnderscoreIndex + 1);
-        return {
-          userId,
-          username: safeUsername.replace(/_/g, '.'),
-          safeKey: key,
-          stat: data.level || 0,
-          xp: data.xp || 0,
-        };
-      }).sort((a, b) => b.stat - a.stat);
+    const levelData = await db.levels.get(guildKey) || {};
+    entries = Object.entries(levelData).map(([key, data]) => {
+    const lastUnderscoreIndex = key.lastIndexOf('_');
+    const safeUsername = key.slice(0, lastUnderscoreIndex);
+    const userId = key.slice(lastUnderscoreIndex + 1);
+    return {
+      userId,
+      username: safeUsername.replace(/_/g, '.'),
+      safeKey: key,
+      stat: data.level || 0,
+      xp: data.xp || 0,
+      };
+    })
+    // sort by level, then XP for ties
+    .sort((a, b) => {
+    if (b.stat === a.stat) {
+        return b.xp - a.xp; // higher XP wins when levels are equal
+      }
+        return b.stat - a.stat; // higher level first
+      });
     }
+
     const ferns = '<:Ferns:1395219665638391818>';
     const userEntry = entries.find(entry => entry.safeKey === displayKey);
     const userRank = userEntry ? entries.findIndex(entry => entry.safeKey === displayKey) + 1 : 'Unranked';
@@ -81,7 +89,7 @@ module.exports = {
     const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
       return type === 'balance'
     ? `${base} \n♢  ${ferns}${entry.stat.toLocaleString()}**`
-    : `${base} \n♢  ⬆️Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
+    : `${base} \n♢  🎉Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
       }).join('\n');
 
       return new EmbedBuilder()
