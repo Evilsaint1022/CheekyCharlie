@@ -8,10 +8,7 @@ module.exports = {
 
     const { guild, member, author } = message;
     const guildKey = `${guild.name}_${guild.id}`;
-
-    // Create a safe username (remove non-alphanumeric)
-    const safeUsername = author.username.replace(/\./g, '_');
-    const displayKey = `${safeUsername}_${message.author.id}`;
+    const userKey = `${author.username}_${author.id}`;
 
     // Check if levels feature is enabled for this guild
     const levelsSetting = await db.settings.get(guildKey);
@@ -21,7 +18,7 @@ module.exports = {
 
     // Load guild XP/level data
     let guildData = await db.levels.get(guildKey) || {};
-    let userData = guildData[displayKey] || { xp: 0, level: 1 };
+    let userData = guildData[userKey] || { xp: 0, level: 1 };
 
     // Load guild settings for LevelChannel
     const settings = await db.settings.get(guildKey);
@@ -55,8 +52,8 @@ module.exports = {
       }
     }
 
-    // Save updated user data using displayKey
-    guildData[displayKey] = userData;
+    // Save updated user data
+    guildData[userKey] = userData;
     await db.levels.set(guildKey, guildData);
 
     // Load level roles config
