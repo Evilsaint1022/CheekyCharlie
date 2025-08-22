@@ -8,7 +8,8 @@ module.exports = {
 
     const { guild, member, author } = message;
     const guildKey = `${guild.name}_${guild.id}`;
-    const userKey = `${author.username}_${author.id}`;
+    const safeUsername = author.username.replace(/\./g, '_');
+    const userKey = `${safeUsername}_${author.id}`;
 
     // Check if levels feature is enabled for this guild
     const levelsSetting = await db.settings.get(guildKey);
