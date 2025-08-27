@@ -116,7 +116,7 @@ module.exports = {
           lastUserId: message.author.id
         });
 
-        console.log(`[Counting] ${guildKey} (${username}): From ${userNumber - 1} to ${userNumber}. Expected: ${userNumber + 1}`)
+        console.log(`[Counting] ${guildKey} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1}`)
       }
 
     } finally {
