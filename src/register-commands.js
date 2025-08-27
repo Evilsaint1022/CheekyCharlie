@@ -214,6 +214,11 @@ const commands = [
             },
         ]
     },
+    {
+        name: 'counting',
+        description: 'Shows the current and next expected number for counting.',
+      
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
