@@ -99,6 +99,8 @@ https://github.com/NZ-Linix/dotdatabase
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/aishia` - Talk to Aishia using a prompt.
 
+## **Counting**
+- `/counting` — View the current and next expected number for the counting.
 
 ## **Other**
 - `/github` — Github link to CheeckyCharlies Repo.
