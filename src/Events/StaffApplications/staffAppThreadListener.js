@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder, ContainerBuilder, TextDisplayBuilder, MessageFlags } = require("discord.js");
+const { Events, ContainerBuilder, TextDisplayBuilder, MessageFlags, Message, Client } = require("discord.js");
 const db = require("../../Handlers/database");
 
 module.exports = {
@@ -15,14 +15,17 @@ async execute(message, client) {
 
     const threadId = message.channel.id;
     const guildId = message.guild.id;
-    const guildName = message.guild.name;
 
     const applications = await db.staff_app_applications.get('applications') || [];
     const application = applications.find(app => app.threadId === threadId && app.guildId === guildId);
 
     if (!application) return;
 
+    if (!(message.content.startsWith(">"))) return;
+
     try {
+
+        message.content = message.content.replace(">", "")
 
         const applicant = await client.users.fetch(application.userId);
 
@@ -32,8 +35,8 @@ async execute(message, client) {
         )
 
         await applicant.send({
-        components: [staffEmbed],
-        flags: [MessageFlags.IsComponentsV2]
+            components: [staffEmbed],
+            flags: [MessageFlags.IsComponentsV2]
         });
 
         await message.react('✅');
