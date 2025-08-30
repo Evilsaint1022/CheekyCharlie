@@ -31,7 +31,8 @@ const db = {
     cooldowns: new DotDB("./src/Utilities/Storage/Settings/Cooldowns/cooldowns.json"),
     lastban: new DotDB("./src/Utilities/Storage/Settings/BanCount/lastban.json"),
     onewordstory: new DotDB("./src/Utilities/Storage/Settings/OneWordStory/onewordstory.json"),
-    
+    staff_app_questions: new DotDB("./src/Utilities/Storage/Staff/questions.json"),
+    staff_app_applications: new DotDB("./src/Utilities/Storage/Staff/applications.json"),
 }
 
 module.exports = db;

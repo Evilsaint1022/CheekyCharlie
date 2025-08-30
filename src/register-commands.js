@@ -219,6 +219,10 @@ const commands = [
         description: 'Shows the current and next expected number for counting.',
       
     },
+    {
+        name: 'staff-apply',
+        description: 'Apply to become a staff member.',
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
@@ -682,7 +686,44 @@ const commands = [
     {
         name: 'remove-boosters-role',
         description: 'Remove the server boosters role.',
-    }
+    },
+    {
+        name: 'set-staff-app-channel',
+        description: 'Set the channel where staff applications will be posted.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel for staff applications',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-staff-app-channel',
+        description: 'Remove the staff application channel.',
+    },
+    {
+        name: 'accept-application',
+        description: 'Accept a staff application (use in application thread).',
+    },
+    {
+        name: 'decline-application',
+        description: 'Decline a staff application (use in application thread).',
+        options: [
+            {
+                name: 'reason',
+                description: 'Reason for declining the application',
+                type: 3,
+                required: false,
+            },
+        ],
+    },
+    {
+        name: 'manage-staff-apps-questions',
+        description: 'Manage staff application questions with an interactive GUI.',
+    },
+
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
