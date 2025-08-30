@@ -49,6 +49,10 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Counting (includes custom emojis)
     ╰─> Ban-Count (^banned)
     ╰─> One-Word-Story
+-> Staff Applications
+    ╰─> Customizable Questions
+    ╰─> Organized in threads
+    ╰─> Echo messages between staff and user
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -106,6 +110,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
+
+## **Staff Applications**
+- `/staff-apply` — Start a new staff application.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
@@ -202,6 +209,12 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
+## **Staff Applications**
+- `/accept-application` — Accept an application.
+- `/decline-application` — Decline an application.
+- `/manage-staff-apps-questions` — Add / Remove / Sort the questions.
+- `/set-staff-app-channel` — The channel where new applications will go.
+- `/remove-staff-app-channel` — Remove the channel. (Disables staff apps)
 
 ## **Echo Command**
 - `/echo` — Echo Messages

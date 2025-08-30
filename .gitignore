@@ -27,3 +27,5 @@ start.sh
 /src/Utilities/Storage/Settings/Cooldowns/cooldowns.json
 /src/Utilities/Storage/Settings/BanCount/lastban.json
 /src/Utilities/Storage/Settings/OneWordStory/onewordstory.json
+/src/Utilities/Storage/Staff/questions.json
+/src/Utilities/Storage/Staff/applications.json
