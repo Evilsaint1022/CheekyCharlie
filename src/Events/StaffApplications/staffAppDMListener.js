@@ -1,4 +1,4 @@
-const { Events, ChannelType, ContainerBuilder, TextDisplayBuilder, MessageFlags } = require("discord.js");
+const { Events, ChannelType, ContainerBuilder, TextDisplayBuilder, MessageFlags, SeparatorBuilder } = require("discord.js");
 const db = require("../../Handlers/database");
 
 module.exports = {
@@ -172,6 +172,11 @@ async function finalizeApplication(message, client, application, guildName, guil
             );
         });
 
+        summaryEmbed.addSeparatorComponents( new SeparatorBuilder() )
+        summaryEmbed.addTextDisplayComponents(
+            new TextDisplayBuilder().setContent("-# To forward messages to the applicant, use `>`.")
+        )
+        
         await thread.send({ components: [summaryEmbed], flags: [MessageFlags.IsComponentsV2] });
 
         application.status = 'pending';
