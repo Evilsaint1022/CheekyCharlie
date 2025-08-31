@@ -19,6 +19,13 @@ module.exports = {
 
     // === Handle incoming DM from user ===
     if (message.channel.isDMBased()) {
+      try {
+        const applications = (await db.staff_app_applications.get('applications')) || [];
+        const hasActiveApplication = applications.some(app => app.userId === message.author.id && (app.status === 'in_progress' || app.status === 'pending'));
+        if (hasActiveApplication) return;
+      } catch (e) {
+        console.error('Error checking staff applications for modmail gating:', e);
+      }
       // Try to find existing thread that is not locked
       let thread = modMailChannel.threads.cache.find(
         (t) => t.name.includes(message.author.id) && !t.locked
