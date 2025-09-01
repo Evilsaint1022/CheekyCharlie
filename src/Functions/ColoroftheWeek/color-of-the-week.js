@@ -77,9 +77,33 @@ async function changeCotwColors(client) {
 }
 
 module.exports = async function (client) {
-  // Initial run
-  await changeCotwColors(client);
+  async function scheduleNextRun() {
+    const now = Date.now();
 
-  // Repeat every week
-  setInterval(() => changeCotwColors(client), CHANGE_INTERVAL);
+    // Find the shortest wait time among all guilds
+    let nextRunDelay = CHANGE_INTERVAL; // Default full interval
+
+    for (const [guildId, guild] of client.guilds.cache) {
+      const guildKey = `${guild.name}_${guildId}`;
+      const colorData = await db.coloroftheweek.get(guildKey);
+      if (!colorData || !colorData.lastChangeTime) {
+        nextRunDelay = 0; // Run immediately if never set
+        break;
+      }
+      const elapsed = now - colorData.lastChangeTime;
+      const remaining = Math.max(0, CHANGE_INTERVAL - elapsed);
+      if (remaining < nextRunDelay) {
+        nextRunDelay = remaining;
+      }
+    }
+
+    // Schedule the run
+    setTimeout(async () => {
+      await changeCotwColors(client);
+      scheduleNextRun(); // Reschedule for the following week
+    }, nextRunDelay);
+  }
+
+  // Run scheduler
+  scheduleNextRun();
 };
