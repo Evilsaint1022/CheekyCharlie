@@ -96,6 +96,14 @@ https://github.com/NZ-Linix/dotdatabase
 - `/view-one-word-story` - view the current story in the server
 
 
+## **Counting**
+- `/counting` — View the current and next expected number for the counting.
+
+
+## **Staff Applications**
+- `/staff-apply` — Start a new staff application.
+
+
 ## **Fun**
 - `/avatar` — View your's or someone elses avatar.
 - `/cat` — Generates a random picture of a cat.
@@ -103,16 +111,12 @@ https://github.com/NZ-Linix/dotdatabase
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/aishia` - Talk to Aishia using a prompt.
 
-## **Counting**
-- `/counting` — View the current and next expected number for the counting.
 
 ## **Other**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
 
-## **Staff Applications**
-- `/staff-apply` — Start a new staff application.
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
@@ -123,6 +127,9 @@ https://github.com/NZ-Linix/dotdatabase
 ## **Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
+
+## **Echo Command**
+- `/echo` — Echo Messages
 
 
 ## **Counting Setup**
@@ -209,15 +216,13 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
+
 ## **Staff Applications**
 - `/accept-application` — Accept an application.
 - `/decline-application` — Decline an application.
 - `/manage-staff-apps-questions` — Add / Remove / Sort the questions.
 - `/set-staff-app-channel` — The channel where new applications will go.
 - `/remove-staff-app-channel` — Remove the channel. (Disables staff apps)
-
-## **Echo Command**
-- `/echo` — Echo Messages
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
