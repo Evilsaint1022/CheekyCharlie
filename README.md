@@ -237,7 +237,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 # **🌐 - CheekyCharlie Support Server**
 
-[Join our Support Server here!](https://discord.gg/W3ZRZukZmS)
+[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
