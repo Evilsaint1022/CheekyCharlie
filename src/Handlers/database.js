@@ -33,6 +33,7 @@ const db = {
     onewordstory: new DotDB("./src/Utilities/Storage/Settings/OneWordStory/onewordstory.json"),
     staff_app_questions: new DotDB("./src/Utilities/Storage/Staff/questions.json"),
     staff_app_applications: new DotDB("./src/Utilities/Storage/Staff/applications.json"),
+    ai_deadchat: new DotDB("./src/Utilities/Storage/AI-Deadchat/ai-deadchat.json")
 }
 
 module.exports = db;
