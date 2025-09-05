@@ -723,6 +723,46 @@ const commands = [
         name: 'manage-staff-apps-questions',
         description: 'Manage staff application questions with an interactive GUI.',
     },
+    {
+        name: 'set-deadchat-channel',
+        description: 'Set the channel where deadchat messages will be sent',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to send deadchat messages',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'set-deadchat-duration',
+        description: 'Set the duration for Deadchat messages to be sent.',
+        options: [
+            {
+                name: 'duration',
+                description: 'The duration in seconds',
+                type: 4,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'set-deadchat-role',
+        description: 'Set the role to to mention in deadchat messages.',
+        options: [
+            {
+                name: 'role',
+                description: 'The role to mention.',
+                type: 8,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'toggle-deadchat',
+        description: 'Toggle the AI Deadchat messages for the server.',
+    },
 
 ];
 
