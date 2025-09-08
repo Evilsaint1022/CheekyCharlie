@@ -162,10 +162,16 @@ async function checkAIDeadchat(client) {
 
 function messageHandler(message) {
 
-    const guildId = message.guild.id;
-    if (GuildTimeoutMap.has(guildId)) {
-        clearTimeout(GuildTimeoutMap.get(guildId));
-        GuildTimeoutMap.delete(guildId);
+    try {
+        if ( !message || !message.guild || !message.guild.id ) return;
+
+        const guildId = message?.guild?.id;
+        if (GuildTimeoutMap.has(guildId)) {
+            clearTimeout(GuildTimeoutMap.get(guildId));
+            GuildTimeoutMap.delete(guildId);
+        }
+    } catch (e) {
+        return;
     }
     
 }
