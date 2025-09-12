@@ -225,7 +225,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/manage-staff-apps-questions` — Add / Remove / Sort the questions.
 - `/set-staff-app-channel` — The channel where new applications will go.
 - `/remove-staff-app-channel` — Remove the channel. (Disables staff apps)
-- 
+
 ## **AI Deadchat**
 - `/set-deadchat-channel` — Set the AI Deadchat channel to send messages in.
 - `/set-deadchat-role` — The role to mention in the messages.
