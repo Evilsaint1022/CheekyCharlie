@@ -10,7 +10,9 @@ module.exports = {
         .setDescription('Which leaderboard would you like to see?')
         .setRequired(true)
         .addChoices(
-          { name: 'Balance', value: 'balance' },
+          { name: "Wallet", value: "wallet"},
+          { name: 'Bank', value: 'bank' },
+          { name: 'Money', value: 'money' },
           { name: 'Level', value: 'level' }
         )
     ),
@@ -32,7 +34,7 @@ module.exports = {
 
     let entries = [];
 
-    if (type === 'balance') {
+    if (type === 'wallet') {
       const allKeys = await db.balance.keys();
       entries = (await Promise.all(
         allKeys
@@ -48,6 +50,25 @@ module.exports = {
               username: safeUsername.replace(/_/g, '.'),
               safeKey: `${safeUsername}_${userId}`,
               stat: balance,
+            };
+          })
+      )).sort((a, b) => b.stat - a.stat);
+    } else if ( type === "bank") {
+      const allKeys = await db.bank.keys();
+      entries = (await Promise.all(
+        allKeys
+          .filter(key => key.endsWith('.bank'))
+          .map(async key => {
+            const rawKey = key.slice(0, -('.bank'.length));
+            const lastUnderscoreIndex = rawKey.lastIndexOf('_');
+            const safeUsername = rawKey.slice(0, lastUnderscoreIndex);
+            const userId = rawKey.slice(lastUnderscoreIndex + 1);
+            const bankBalance = await db.bank.get(key) || 0;
+            return {
+              userId,
+              username: safeUsername.replace(/_/g, '.'),
+              safeKey: `${safeUsername}_${userId}`,
+              stat: bankBalance,
             };
           })
       )).sort((a, b) => b.stat - a.stat);
@@ -72,6 +93,26 @@ module.exports = {
       }
         return b.stat - a.stat; // higher level first
       });
+    } else if (type === 'money') {
+      const balanceKeys = await db.balance.keys();
+      const bankKeys = await db.bank.keys();
+      const allKeys = new Set([...balanceKeys.filter(k => k.endsWith('.balance')).map(k => k.slice(0, -8)), ...bankKeys.filter(k => k.endsWith('.bank')).map(k => k.slice(0, -5))]);
+      entries = [];
+      for (const key of allKeys) {
+        const balance = await db.balance.get(`${key}.balance`) || 0;
+        const bank = await db.bank.get(`${key}.bank`) || 0;
+        const total = balance + bank;
+        const lastUnderscoreIndex = key.lastIndexOf('_');
+        const safeUsername = key.slice(0, lastUnderscoreIndex);
+        const userId = key.slice(lastUnderscoreIndex + 1);
+        entries.push({
+          userId,
+          username: safeUsername.replace(/_/g, '.'),
+          safeKey: key,
+          stat: total,
+        });
+      }
+      entries.sort((a, b) => b.stat - a.stat);
     }
 
     const ferns = '<:Ferns:1395219665638391818>';
@@ -87,18 +128,42 @@ module.exports = {
     const leaderboard = entries.slice(start, start + itemsPerPage)
         .map((entry, index) => {
     const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
-      return type === 'balance'
-    ? `${base} \n♢  ${ferns}${entry.stat.toLocaleString()}**`
-    : `${base} \n♢  🎉Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
+      if (type === 'wallet' || type === 'bank' || type === 'money') {
+        return `${base} \n♢  ${ferns}${entry.stat.toLocaleString()}**`;
+      } else {
+        return `${base} \n♢  🎉Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
+      }
       }).join('\n');
 
-      return new EmbedBuilder()
-        .setTitle(`**╭─── ${type === 'balance' ? 'Balance' : 'Level'} Leaderboard ───╮**`)
-        .setDescription((leaderboard || "No users found.") + `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`)
-        .setColor(0xFFFFFF)
-        .setThumbnail(interaction.guild.iconURL())
-        .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
-        .setTimestamp();
+    let leaderboardType, statLabel, statIcon;
+    if (type === 'wallet') {
+      leaderboardType = 'Wallet';
+      statLabel = `${ferns}`;
+      statIcon = '';
+    } else if (type === 'bank') {
+      leaderboardType = 'Bank';
+      statLabel = `${ferns}`;
+      statIcon = '';
+    } else if (type === 'money') {
+      leaderboardType = 'Money';
+      statLabel = `${ferns}`;
+      statIcon = '';
+    } else {
+      leaderboardType = 'Level';
+      statLabel = '🎉Level';
+      statIcon = '';
+    }
+
+    return new EmbedBuilder()
+      .setTitle(`**╭─── ${leaderboardType} Leaderboard ───╮**`)
+      .setDescription(
+        (leaderboard || "No users found.") +
+        `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`
+      )
+      .setColor(0xFFFFFF)
+      .setThumbnail(interaction.guild.iconURL())
+      .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
+      .setTimestamp();
     };
 
     const row = () => new ActionRowBuilder()

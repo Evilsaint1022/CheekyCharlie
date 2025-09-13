@@ -90,8 +90,10 @@ const commands = [
                 type: 3,
                 required: true,
                 choices: [
-                    { name: 'Balance', value: 'balance' },
-                    { name: 'Level', value: 'level' },
+                    { name: "Wallet", value: "wallet"},
+                    { name: 'Bank', value: 'bank' },
+                    { name: "Money", value: "money"},
+                    { name: 'Level', value: 'level' }
                 ],
             },
         ]
