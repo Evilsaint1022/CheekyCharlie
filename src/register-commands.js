@@ -124,6 +124,12 @@ const commands = [
                 type: 4,
                 required: true,
             },
+            {
+                name: 'opponent',
+                description: 'The member you want to challenge',
+                type: 6,
+                required: true,
+            },
         ]
     },
     {
