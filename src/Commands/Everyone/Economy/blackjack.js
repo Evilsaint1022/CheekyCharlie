@@ -28,9 +28,8 @@ module.exports = {
         const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
         const now = Date.now();
 
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
-
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
+            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
             return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
         }
@@ -40,6 +39,7 @@ module.exports = {
 
         console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
         console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+
 
         let balance = await db.balance.get(balanceKey);
         if (balance === undefined || isNaN(parseInt(balance))) {
@@ -108,10 +108,12 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} Won a Bet of ${bet.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
                     balance -= bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} Lost a Bet of ${bet.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
+                } else {
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
                 }
 
                 await db.balance.set(balanceKey, balance);
