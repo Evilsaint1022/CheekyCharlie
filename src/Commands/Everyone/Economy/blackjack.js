@@ -7,7 +7,12 @@ const GLOBAL_COOLDOWN_KEY = `blackjack_global`;
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('blackjack')
-        .setDescription('Play a game of blackjack and bet your balance!')
+        .setDescription('Challenge another member to a blackjack game and bet your balance!')
+        .addUserOption(option =>
+            option.setName('opponent')
+                .setDescription('The member you want to challenge')
+                .setRequired(true)
+        )
         .addIntegerOption(option =>
             option.setName('bet')
                 .setDescription('The amount to bet')
@@ -16,11 +21,14 @@ module.exports = {
 
     async execute(interaction) {
         const { guild, user } = interaction;
+        const opponent = interaction.options.getUser('opponent');
         const bet = interaction.options.getInteger('bet');
 
-        // ✅ Sanitize username for DB keys
-        const safeUsername = user.username.replace(/\./g, '_');
-        const balanceKey = `${safeUsername}_${user.id}.balance`;
+        // ✅ Sanitize usernames
+        const safeChallenger = user.username.replace(/\./g, '_');
+        const safeOpponent = opponent.username.replace(/\./g, '_');
+        const balanceKeyChallenger = `${safeChallenger}_${user.id}.balance`;
+        const balanceKeyOpponent = `${safeOpponent}_${opponent.id}.balance`;
 
         const ferns = '<:Ferns:1395219665638391818>';
 
@@ -29,7 +37,7 @@ module.exports = {
         const now = Date.now();
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
-            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
+            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeChallenger} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
             return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
         }
@@ -37,123 +45,173 @@ module.exports = {
         // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
-
-
-        let balance = await db.balance.get(balanceKey);
-        if (balance === undefined || isNaN(parseInt(balance))) {
-            return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
+        if (opponent.bot || opponent.id === user.id) {
+            return interaction.reply({ content: `❌ You must challenge a real, different member.`, flags: 64 });
         }
 
-        balance = parseInt(balance);
-        if (bet > balance) {
-            return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
-        } else if (bet <= 0) {
-            return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
+        // ✅ Load balances
+        let challengerBalance = parseInt(await db.balance.get(balanceKeyChallenger) ?? 0);
+        let opponentBalance = parseInt(await db.balance.get(balanceKeyOpponent) ?? 0);
+
+        if (challengerBalance < bet) {
+            return interaction.reply({ content: `❌ You don’t have enough balance to bet ${ferns}${bet}.`, flags: 64 });
+        }
+        if (opponentBalance < bet) {
+            return interaction.reply({ content: `❌ ${opponent.username} doesn’t have enough balance to match this bet.`, flags: 64 });
+        }
+        if (bet <= 0) {
+            return interaction.reply({ content: `❌ Bet amount must be greater than zero.`, flags: 64 });
         }
 
-        // 🎴 Blackjack logic
-        const drawCard = () => Math.floor(Math.random() * 10) + 1;
-        let playerCards = [drawCard(), drawCard()];
-        let dealerCards = [drawCard(), drawCard()];
-        let playerTotal = playerCards.reduce((a, b) => a + b, 0);
-        let dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
+        // Ask opponent to accept
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} challenged ${opponent.username} to Blackjack for ${bet}.`);
 
-        const checkGameResult = () => {
-            if (playerTotal > 21) return 'lose';
-            if (dealerTotal > 21) return 'win';
-            if (dealerTotal >= 17 && playerTotal > dealerTotal) return 'win';
-            if (dealerTotal >= 17 && playerTotal < dealerTotal) return 'lose';
-            if (dealerTotal >= 17 && playerTotal === dealerTotal) return 'tie';
-            return null;
-        };
+        const inviteRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId('decline').setLabel('Decline').setStyle(ButtonStyle.Danger)
+        );
 
-        const buttons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder().setCustomId('hit').setLabel('Hit').setStyle(ButtonStyle.Primary),
-                new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
-            );
+        await interaction.reply({ 
+            content: `${opponent}, you’ve been challenged to a blackjack game by ${user} for ${ferns}${bet.toLocaleString()}! Do you accept?`, 
+            components: [inviteRow] 
+        });
 
-        const embed = {
-            color: 0xFFFFFF,
-            title: `**__♦️ Blackjack ♦️__**`,
-            description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
-            thumbnail: { url: user.displayAvatarURL() },
-            fields: [
-                { name: 'Your Cards', value: playerCards.join(', '), inline: true },
-                { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
-            ]
-        };
+        const inviteMsg = await interaction.fetchReply();
 
-        await interaction.reply({ embeds: [embed], components: [buttons] });
-        const message = await interaction.fetchReply();
+        const filter = i => i.user.id === opponent.id;
+        const inviteCollector = inviteMsg.createMessageComponentCollector({ filter, time: 30000 });
 
-        const filter = i => i.user.id === user.id;
-        const collector = message.createMessageComponentCollector({ filter, time: 60000 });
-
-        collector.on('collect', async (buttonInteraction) => {
-            if (buttonInteraction.customId === 'hit') {
-                playerCards.push(drawCard());
-                playerTotal = playerCards.reduce((a, b) => a + b, 0);
-            } else if (buttonInteraction.customId === 'stand') {
-                while (dealerTotal < 17) {
-                    dealerCards.push(drawCard());
-                    dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
-                }
+        inviteCollector.on('collect', async (btn) => {
+            if (btn.customId === 'decline') {
+                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${opponent.username} ❌ declined the challenge.`);
+                await btn.update({ content: `${opponent.username} declined the blackjack challenge.`, components: [] });
+                inviteCollector.stop();
+                return;
             }
 
-            const result = checkGameResult();
-            if (result) {
-                if (result === 'win') {
-                    balance += bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
-                } else if (result === 'lose') {
-                    balance -= bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
-                } else {
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
-                }
+            if (btn.customId === 'accept') {
+                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${opponent.username} accepted the challenge.`);
+                await btn.update({ content: `✅ Challenge accepted! Starting blackjack...`, components: [] });
+                inviteCollector.stop();
 
-                await db.balance.set(balanceKey, balance);
+                // 🎴 Blackjack vs Player
+                const drawCard = () => Math.floor(Math.random() * 10) + 1;
 
-                const resultEmbed = {
-                    color: result === 'win' ? 0x00FF00 : result === 'lose' ? 0xFF0000 : 0xFFFF00,
-                    title: `**__♠️ Blackjack Results ♠️__**`,
-                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${ferns}${bet.toLocaleString()}`,
-                    thumbnail: { url: user.displayAvatarURL() },
-                    fields: [
-                        { name: 'Your Cards', value: playerCards.join(', '), inline: true },
-                        { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                        { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
-                        { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-                        { name: '**__ _New Balance_ __**', value: `${ferns}${balance.toLocaleString()}`, inline: false }
-                    ]
-                };
+                let challengerCards = [drawCard(), drawCard()];
+                let opponentCards = [drawCard(), drawCard()];
 
-                await buttonInteraction.update({ embeds: [resultEmbed], components: [] });
-                collector.stop();
-            } else {
-                const updatedEmbed = {
+                const calcTotal = (cards) => cards.reduce((a, b) => a + b, 0);
+
+                let challengerTotal = calcTotal(challengerCards);
+                let opponentTotal = calcTotal(opponentCards);
+
+                const buttons = new ActionRowBuilder().addComponents(
+                    new ButtonBuilder().setCustomId('hit').setLabel('Hit').setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
+                );
+
+                let turn = user.id; // challenger starts
+                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Game of Blackjack has started! First turn: ${user.username}.`);
+
+                const makeEmbed = () => ({
                     color: 0xFFFFFF,
-                    title: `**__♣️ Blackjack ♣️__**`,
-                    description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
-                    thumbnail: { url: user.displayAvatarURL() },
+                    title: `**__♦️ Blackjack Duel ♦️__**`,
+                    description: `${user.username} vs ${opponent.username}\n\nBet: ${ferns}${bet.toLocaleString()}`,
                     fields: [
-                        { name: 'Your Cards', value: playerCards.join(', '), inline: true },
-                        { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                        { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+                        { name: `${user.username}'s Cards`, value: challengerCards.join(', '), inline: false },
+                        { name: `${user.username}'s Total`, value: challengerTotal.toString(), inline: false },
+                        { name: `${opponent.username}'s Cards`, value: opponentCards.join(', '), inline: false },
+                        { name: `${opponent.username}'s Total`, value: opponentTotal.toString(), inline: false },
+                        { name: `Turn`, value: `<@${turn}>`, inline: false }
                     ]
-                };
+                });
 
-                await buttonInteraction.update({ embeds: [updatedEmbed], components: [buttons] });
+                const gameMsg = await interaction.followUp({ embeds: [makeEmbed()], components: [buttons] });
+
+                const collector = gameMsg.createMessageComponentCollector({ time: 60000 });
+
+                collector.on('collect', async (btn) => {
+                    if (btn.user.id !== turn) {
+                        return btn.reply({ content: `❌ It’s not your turn!`, ephemeral: true });
+                    }
+
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} chose ${btn.customId.toUpperCase()}.`);
+
+                    let currentCards = turn === user.id ? challengerCards : opponentCards;
+                    let currentTotal = calcTotal(currentCards);
+
+                    if (btn.customId === 'hit') {
+                        currentCards.push(drawCard());
+                        currentTotal = calcTotal(currentCards);
+                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} drew a card. New total: ${currentTotal}`);
+                    } else if (btn.customId === 'stand') {
+                        turn = turn === user.id ? opponent.id : user.id;
+                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} stood. Next turn: ${turn === user.id ? user.username : opponent.username}`);
+                    }
+
+                    challengerTotal = calcTotal(challengerCards);
+                    opponentTotal = calcTotal(opponentCards);
+
+                    // Bust check
+                    let winner = null;
+                    if (challengerTotal > 21) winner = opponent.id;
+                    if (opponentTotal > 21) winner = user.id;
+
+                    if (winner) {
+                        let winUser = winner === user.id ? user : opponent;
+                        let loseUser = winner === user.id ? opponent : user;
+
+                        if (winner === user.id) {
+                            challengerBalance += bet;
+                            opponentBalance -= bet;
+                        } else {
+                            challengerBalance -= bet;
+                            opponentBalance += bet;
+                        }
+
+                        await db.balance.set(balanceKeyChallenger, challengerBalance);
+                        await db.balance.set(balanceKeyOpponent, opponentBalance);
+
+                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
+                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Balances → ${user.username}: ${challengerBalance}, ${opponent.username}: ${opponentBalance}`);
+
+                        const resultEmbed = {
+                            color: winner === user.id ? 0x00FF00 : 0xFF0000,
+                            title: `**__♠️ Blackjack Results ♠️__**`,
+                            description: `${winUser.username} wins ${ferns}${bet.toLocaleString()}!`,
+                            fields: [
+                                { name: `${user.username}'s Final`, value: `${challengerCards.join(', ')} (Total: ${challengerTotal})`, inline: false },
+                                { name: `${opponent.username}'s Final`, value: `${opponentCards.join(', ')} (Total: ${opponentTotal})`, inline: false },
+                                { name: `${user.username}'s Balance`, value: `${ferns}${challengerBalance.toLocaleString()}`, inline: false },
+                                { name: `${opponent.username}'s Balance`, value: `${ferns}${opponentBalance.toLocaleString()}`, inline: false },
+                            ]
+                        };
+
+                        await btn.update({ embeds: [resultEmbed], components: [] });
+                        collector.stop();
+                        return;
+                    }
+
+                    // Switch turn after a successful move
+                    if (btn.customId === 'hit') {
+                        turn = turn === user.id ? opponent.id : user.id;
+                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Turn passed to ${turn === user.id ? user.username : opponent.username}.`);
+                    }
+
+                    await btn.update({ embeds: [makeEmbed()], components: [buttons] });
+                });
+
+                collector.on('end', () => {
+                    if (!gameMsg.editable) return;
+                    gameMsg.edit({ components: [] });
+                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ⌛ Game ended due to timeout or completion.`);
+                });
             }
         });
 
-        collector.on('end', () => {
-            if (!message.editable) return;
-            message.edit({ components: [] });
+        inviteCollector.on('end', () => {
+            if (!inviteMsg.editable) return;
+            inviteMsg.edit({ components: [] });
         });
     }
 };
