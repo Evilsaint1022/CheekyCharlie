@@ -46,7 +46,7 @@ module.exports = {
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
         if (opponent.bot || opponent.id === user.id) {
-            return interaction.reply({ content: `❌ You must challenge a real, different member.`, flags: 64 });
+            return interaction.reply({ content: `❌ You Cant Challenge Bots or Yourself`, flags: 64 });
         }
 
         // ✅ Load balances
@@ -64,7 +64,7 @@ module.exports = {
         }
 
         // Ask opponent to accept
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} challenged ${opponent.username} to Blackjack for ${bet}.`);
+        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} challenged ${opponent.username} to Blackjack for ${bet} ferns.`);
 
         const inviteRow = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
@@ -83,14 +83,13 @@ module.exports = {
 
         inviteCollector.on('collect', async (btn) => {
             if (btn.customId === 'decline') {
-                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${opponent.username} ❌ declined the challenge.`);
                 await btn.update({ content: `${opponent.username} declined the blackjack challenge.`, components: [] });
+                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} declined ${opponent.username}'s blackjack challenge.`);
                 inviteCollector.stop();
                 return;
             }
 
             if (btn.customId === 'accept') {
-                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${opponent.username} accepted the challenge.`);
                 await btn.update({ content: `✅ Challenge accepted! Starting blackjack...`, components: [] });
                 inviteCollector.stop();
 
@@ -111,7 +110,6 @@ module.exports = {
                 );
 
                 let turn = user.id; // challenger starts
-                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Game of Blackjack has started! First turn: ${user.username}.`);
 
                 const makeEmbed = () => ({
                     color: 0xFFFFFF,
@@ -132,10 +130,8 @@ module.exports = {
 
                 collector.on('collect', async (btn) => {
                     if (btn.user.id !== turn) {
-                        return btn.reply({ content: `❌ It’s not your turn!`, ephemeral: true });
+                        return btn.reply({ content: `❌ It’s not your turn!`, flags: 64 });
                     }
-
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} chose ${btn.customId.toUpperCase()}.`);
 
                     let currentCards = turn === user.id ? challengerCards : opponentCards;
                     let currentTotal = calcTotal(currentCards);
@@ -143,10 +139,8 @@ module.exports = {
                     if (btn.customId === 'hit') {
                         currentCards.push(drawCard());
                         currentTotal = calcTotal(currentCards);
-                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} drew a card. New total: ${currentTotal}`);
                     } else if (btn.customId === 'stand') {
                         turn = turn === user.id ? opponent.id : user.id;
-                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${btn.user.username} stood. Next turn: ${turn === user.id ? user.username : opponent.username}`);
                     }
 
                     challengerTotal = calcTotal(challengerCards);
@@ -173,7 +167,6 @@ module.exports = {
                         await db.balance.set(balanceKeyOpponent, opponentBalance);
 
                         console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
-                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Balances → ${user.username}: ${challengerBalance}, ${opponent.username}: ${opponentBalance}`);
 
                         const resultEmbed = {
                             color: winner === user.id ? 0x00FF00 : 0xFF0000,
@@ -195,7 +188,6 @@ module.exports = {
                     // Switch turn after a successful move
                     if (btn.customId === 'hit') {
                         turn = turn === user.id ? opponent.id : user.id;
-                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} Turn passed to ${turn === user.id ? user.username : opponent.username}.`);
                     }
 
                     await btn.update({ embeds: [makeEmbed()], components: [buttons] });
@@ -204,14 +196,17 @@ module.exports = {
                 collector.on('end', () => {
                     if (!gameMsg.editable) return;
                     gameMsg.edit({ components: [] });
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ⌛ Game ended due to timeout or completion.`);
                 });
             }
         });
 
-        inviteCollector.on('end', () => {
+        inviteCollector.on('end', async (collected) => {
             if (!inviteMsg.editable) return;
-            inviteMsg.edit({ components: [] });
+            if (collected.size === 0) {
+                await inviteMsg.edit({ content: `⌛ ${opponent.username} did not respond in time. Challenge expired.`, components: [] });
+            } else {
+                await inviteMsg.edit({ components: [] });
+            }
         });
     }
 };
