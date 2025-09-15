@@ -39,7 +39,7 @@ module.exports = {
     console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
     console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
-    let balance = await db.balance.get(balanceKey);
+    let balance = await db.wallet.get(balanceKey);
 
     if (balance === undefined || isNaN(parseInt(balance))) {
       return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
@@ -55,7 +55,7 @@ module.exports = {
 
     // Deduct bet upfront
     balance -= bet;
-    await db.balance.set(balanceKey, balance);
+    await db.wallet.set(balanceKey, balance);
 
     const symbols = ['🍒', '🍋', '🍉', '💎', '7️⃣'];
     const spin = () => [
@@ -103,12 +103,12 @@ module.exports = {
         if (win) {
           const winnings = bet * 2;
           balance += winnings;
-          await db.balance.set(balanceKey, balance);
+          await db.wallet.set(balanceKey, balance);
           resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
           resultColor = 0x00FF00;
           console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
         } else {
-          await db.balance.set(balanceKey, balance);
+          await db.wallet.set(balanceKey, balance);
           resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
           resultColor = 0xFF0000;
           console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);

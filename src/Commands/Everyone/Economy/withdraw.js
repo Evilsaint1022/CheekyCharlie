@@ -31,7 +31,7 @@ module.exports = {
 
         // Get current balances
         let bankBalance = await db.bank.get(bankKey) || 0;
-        let walletBalance = await db.balance.get(balanceKey) || 0;
+        let walletBalance = await db.wallet.get(balanceKey) || 0;
 
         // Use full bank balance if input is 0
         let withdrawAmount = withdrawAmountInput === 0 ? bankBalance : withdrawAmountInput;
@@ -48,7 +48,7 @@ module.exports = {
         walletBalance += withdrawAmount;
 
         await db.bank.set(bankKey, bankBalance);
-        await db.balance.set(balanceKey, walletBalance);
+        await db.wallet.set(balanceKey, walletBalance);
 
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)

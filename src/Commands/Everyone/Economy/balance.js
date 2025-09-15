@@ -28,7 +28,7 @@ module.exports = {
         const dbKeyPrefix = `${safeUsername}_${targetUser.id}`;
 
         // Load values from DB using the safe key
-        const balance = await db.balance.get(`${dbKeyPrefix}.balance`) || 0;
+        const balance = await db.wallet.get(`${dbKeyPrefix}.balance`) || 0;
         const bank = await db.bank.get(`${dbKeyPrefix}.bank`) || 0;
 
         const embed = new EmbedBuilder()

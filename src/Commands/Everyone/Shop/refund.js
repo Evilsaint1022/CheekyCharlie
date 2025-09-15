@@ -79,9 +79,9 @@ module.exports = {
       await db.inventory.set(`${guildKey}.${userKey}.inventory`, inventory);
 
       // Update balance
-      const balanceData = await db.balance.get(userKey) || { balance: 0 };
+      const balanceData = await db.wallet.get(userKey) || { balance: 0 };
       balanceData.balance += refundAmount;
-      await db.balance.set(userKey, balanceData);
+      await db.wallet.set(userKey, balanceData);
 
       return selectInteraction.update({
         content: `You refunded **${selectedItem.title}** for **${refundAmount.toLocaleString()}${ferns}!**`,
