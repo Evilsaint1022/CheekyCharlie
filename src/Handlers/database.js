@@ -9,7 +9,7 @@ const db = {
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     vcmembers: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
-    balance: new DotDB("./src/Utilities/Storage/Economy/Balance/balance.json"),
+    wallet: new DotDB("./src/Utilities/Storage/Economy/Balance/balance.json"),
     bank: new DotDB("./src/Utilities/Storage/Economy/Bank/bank.json"),
     levels: new DotDB("./src/Utilities/Storage/Economy/Levels/levels.json"),
     levelroles: new DotDB("./src/Utilities/Storage/Settings/LevelRoles/levelroles.json"),

@@ -35,7 +35,7 @@ module.exports = {
     let entries = [];
 
     if (type === 'wallet') {
-      const allKeys = await db.balance.keys();
+      const allKeys = await db.wallet.keys();
       entries = (await Promise.all(
         allKeys
           .filter(key => key.endsWith('.balance'))
@@ -44,7 +44,7 @@ module.exports = {
             const lastUnderscoreIndex = rawKey.lastIndexOf('_');
             const safeUsername = rawKey.slice(0, lastUnderscoreIndex);
             const userId = rawKey.slice(lastUnderscoreIndex + 1);
-            const balance = await db.balance.get(key) || 0;
+            const balance = await db.wallet.get(key) || 0;
             return {
               userId,
               username: safeUsername.replace(/_/g, '.'),
@@ -94,12 +94,12 @@ module.exports = {
         return b.stat - a.stat; // higher level first
       });
     } else if (type === 'money') {
-      const balanceKeys = await db.balance.keys();
+      const balanceKeys = await db.wallet.keys();
       const bankKeys = await db.bank.keys();
       const allKeys = new Set([...balanceKeys.filter(k => k.endsWith('.balance')).map(k => k.slice(0, -8)), ...bankKeys.filter(k => k.endsWith('.bank')).map(k => k.slice(0, -5))]);
       entries = [];
       for (const key of allKeys) {
-        const balance = await db.balance.get(`${key}.balance`) || 0;
+        const balance = await db.wallet.get(`${key}.balance`) || 0;
         const bank = await db.bank.get(`${key}.bank`) || 0;
         const total = balance + bank;
         const lastUnderscoreIndex = key.lastIndexOf('_');

@@ -52,11 +52,11 @@ module.exports = {
         }
 
         // Get current balance
-        let balance = await db.balance.get(`${keyBase}.balance`) || 0;
+        let balance = await db.wallet.get(`${keyBase}.balance`) || 0;
         balance += rewardAmount;
 
         // Save updated values
-        await db.balance.set(`${keyBase}.balance`, balance);
+        await db.wallet.set(`${keyBase}.balance`, balance);
         await db.lastclaim.set(`${keyBase}.lastClaim`, currentTime);
 
         // Build embed

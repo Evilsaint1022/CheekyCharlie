@@ -53,8 +53,8 @@ module.exports = {
       const senderKey = `${escapeUsername(sender.username)}_${sender.id}`;
       const userKey = `${escapeUsername(user.username)}_${user.id}`;
 
-      const senderData = await db.balance.get(senderKey) ?? { balance: 0 };
-      const userData = await db.balance.get(userKey) ?? { balance: 0 };
+      const senderData = await db.wallet.get(senderKey) ?? { balance: 0 };
+      const userData = await db.wallet.get(userKey) ?? { balance: 0 };
 
       const senderBalance = senderData.balance || 0;
       const userBalance = userData.balance || 0;
@@ -63,8 +63,8 @@ module.exports = {
         return interaction.reply({ content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`, flags: 64 });
       }
 
-      await db.balance.set(senderKey, { balance: senderBalance - amount });
-      await db.balance.set(userKey, { balance: userBalance + amount });
+      await db.wallet.set(senderKey, { balance: senderBalance - amount });
+      await db.wallet.set(userKey, { balance: userBalance + amount });
 
       await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`);
 

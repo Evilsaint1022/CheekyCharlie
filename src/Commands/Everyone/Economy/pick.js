@@ -50,7 +50,7 @@ module.exports = {
             // Fetch the user's current balance from the database
             let balance = 0;
         try {
-            const userData = await db.balance.get(dbKey);
+            const userData = await db.wallet.get(dbKey);
             balance = userData?.balance || 0;
         }   catch (error) {
             console.error('Error fetching user balance from database:', error);
@@ -73,7 +73,7 @@ module.exports = {
             console.log(`[🌿] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
 
             try {
-                await db.balance.set(dbKey, { balance });
+                await db.wallet.set(dbKey, { balance });
             } catch (error) {
                 console.error('Error saving user balance to database:', error);
             }

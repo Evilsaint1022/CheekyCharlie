@@ -82,7 +82,7 @@ module.exports = {
       // Check user balance
       let balance = 0;
       try {
-        const bal = await db.balance.get(dbKeyPrefix);
+        const bal = await db.wallet.get(dbKeyPrefix);
         balance = typeof bal === 'object' && bal !== null && 'balance' in bal
           ? parseInt(bal.balance) || 0
           : parseInt(bal) || 0;
@@ -147,7 +147,7 @@ module.exports = {
           ...fullInventory,
           [dbKeyPrefix]: { inventory }
         });
-        await db.balance.set(dbKeyPrefix, { balance: newBalance });
+        await db.wallet.set(dbKeyPrefix, { balance: newBalance });
       } catch (err) {
         console.error('Error saving data:', err);
         return select.update({

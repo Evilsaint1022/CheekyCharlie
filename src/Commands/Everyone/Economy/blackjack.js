@@ -50,8 +50,8 @@ module.exports = {
         }
 
         // ✅ Load balances
-        let challengerBalance = parseInt(await db.balance.get(balanceKeyChallenger) ?? 0);
-        let opponentBalance = parseInt(await db.balance.get(balanceKeyOpponent) ?? 0);
+        let challengerBalance = parseInt(await db.wallet.get(balanceKeyChallenger) ?? 0);
+        let opponentBalance = parseInt(await db.wallet.get(balanceKeyOpponent) ?? 0);
 
         if (challengerBalance < bet) {
             return interaction.reply({ content: `❌ You don’t have enough balance to bet ${ferns}${bet}.`, flags: 64 });
@@ -163,8 +163,8 @@ module.exports = {
                             opponentBalance += bet;
                         }
 
-                        await db.balance.set(balanceKeyChallenger, challengerBalance);
-                        await db.balance.set(balanceKeyOpponent, opponentBalance);
+                        await db.wallet.set(balanceKeyChallenger, challengerBalance);
+                        await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
                         console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
 
