@@ -114,23 +114,35 @@ const commands = [
         name: 'pick',
         description: 'Pick up the dropped ferns for points!',
     },
-    {  
-        name: 'blackjack',
-        description: 'Play a game of Blackjack!',
+    {
+        name: 'blackjack-singleplayer',
+        description: 'Play a game of blackjack and bet your balance!',
         options: [
             {
                 name: 'bet',
-                description: 'The amount of points to bet.',
+                description: 'The amount to bet',
                 type: 4,
                 required: true,
             },
+        ],
+    },
+    {
+        name: 'blackjack-duels',
+        description: 'Challenge another member to a blackjack game and bet your balance!',
+        options: [
             {
                 name: 'opponent',
                 description: 'The member you want to challenge',
                 type: 6,
                 required: true,
             },
-        ]
+            {
+                name: 'bet',
+                description: 'The amount to bet',
+                type: 4,
+                required: true,
+            },
+        ],
     },
     {
         name: 'pay',

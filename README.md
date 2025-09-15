@@ -27,7 +27,7 @@ https://github.com/NZ-Linix/dotdatabase
     ╰─> Inventory
     ╰─> Shop
 -> Economy Games 
-    ╰─> Blackjack
+    ╰─> Blackjack (Signle- and Multiplayer)
     ╰─> Slots
 -> Level System
     ╰─> Level Roles (stickyRoles)

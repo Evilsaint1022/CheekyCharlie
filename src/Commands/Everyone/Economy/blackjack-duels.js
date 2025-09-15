@@ -2,11 +2,11 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
-const GLOBAL_COOLDOWN_KEY = `blackjack_global`;
+const GLOBAL_COOLDOWN_KEY = `blackjack_duels`;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('blackjack')
+        .setName('blackjack-duels')
         .setDescription('Challenge another member to a blackjack game and bet your balance!')
         .addUserOption(option =>
             option.setName('opponent')
