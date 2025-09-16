@@ -243,6 +243,18 @@ const commands = [
         name: 'staff-apply',
         description: 'Apply to become a staff member.',
     },
+    {
+        name: 'confess',
+        description: 'Confess something to the vent channel.',
+        options: [
+            {
+                name: 'confession',
+                description: 'What do you want to confess?',
+                type: 3,
+                required: true,
+            },
+        ],
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
@@ -782,6 +794,22 @@ const commands = [
     {
         name: 'toggle-deadchat',
         description: 'Toggle the AI Deadchat messages for the server.',
+    },
+    {
+        name: 'set-vent-channel',
+        description: 'Set the channel where vent confessions will be sent',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for vent confessions',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-vent-channel',
+        description: 'Remove the current vent channel',
     },
 
 ];

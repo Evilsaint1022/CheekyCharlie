@@ -56,6 +56,8 @@ https://github.com/NZ-Linix/dotdatabase
 -> AI Deadchat
     ╰─> Generates funny, relaxing (...) question
     ╰─> Ability to set duration, channel and role
+-> Venting
+    ╰─> Make an anonymous confession to the vent channel
 ```
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -119,6 +121,9 @@ https://github.com/NZ-Linix/dotdatabase
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
+
+## **Venting**
+- `/confess` — Confess anonymously to the vent channel.
 
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -231,6 +236,10 @@ https://github.com/NZ-Linix/dotdatabase
 - `/set-deadchat-role` — The role to mention in the messages.
 - `/set-deadchat-duration` — The time after the chat goes dead to the message being sent.
 - `/toggle-deadchat` — Toggle the AI deadchat on or off.
+
+## **Venting**
+- `/set-vent-channel` — Set the vent channel where confessions will go.
+- `/remove-vent-channel` — Remove the vent channel (Disables confessions).
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
