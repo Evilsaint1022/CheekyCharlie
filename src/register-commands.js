@@ -811,6 +811,10 @@ const commands = [
         name: 'remove-vent-channel',
         description: 'Remove the current vent channel',
     },
+    {
+        name: 'stop',
+        description: 'Staff command to calm down the server.',
+    }
 
 ];
 
