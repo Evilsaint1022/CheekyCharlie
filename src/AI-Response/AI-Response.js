@@ -2,7 +2,6 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const Groq = require("groq-sdk");
-const punycode = require('punycode/');
 const db = require('../Handlers/database');
 const { Client, Message } = require('discord.js');
 
