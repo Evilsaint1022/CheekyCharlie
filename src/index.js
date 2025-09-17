@@ -37,7 +37,7 @@ client.events = new Collection();
 client.commands = new Collection();
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
-client.once("ready", async () => {
+client.once("clientready", async () => {
     console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
 
     // Registers Application Commands
