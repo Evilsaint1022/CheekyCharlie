@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
-const Groq = require("groq-sdk");
+const OpenAI = require("openai");
 
 const time = "* * * * * *";
 
@@ -11,7 +11,7 @@ let scheduledTask = null;
 
 const GuildTimeoutMap = new Map();
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
 
 /**
  * @param {Client} client
@@ -129,7 +129,7 @@ async function checkAIDeadchat(client) {
 
                 const finalPrompt = randomPrompt + " Reply ONLY with the question / topic etc."
                 
-                const response = await groq.chat.completions.create({
+                const response = await openai.chat.completions.create({
                     messages: [
                         { role: 'system', content: finalPrompt },
                     ],
