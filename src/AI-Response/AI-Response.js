@@ -1,14 +1,14 @@
 // handlers/AI/AI-Response.js
 const fs = require('fs');
 const crypto = require('crypto');
-const Groq = require("groq-sdk");
+const OpenAI = require("openai");
 const db = require('../Handlers/database');
 const { Client, Message } = require('discord.js');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
 const IV = Buffer.alloc(16, 0);
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
 
 function encrypt(text) {
   const cipher = crypto.createCipheriv('aes-256-cbc', ENCRYPTION_KEY, IV);
@@ -56,8 +56,8 @@ async function handleAIMessage(client, message) {
 
     const systemPrompt = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
 
-    console.log('🧠 Sending message to OpenAI...');
-    const response = await groq.chat.completions.create({
+    console.log('🧠 Sending message to Groq...');
+    const response = await openai.chat.completions.create({
 
       messages: [
         ...memory,
@@ -68,14 +68,14 @@ async function handleAIMessage(client, message) {
     });
 
     const reply = response.choices[0].message.content;
-    console.log(`🤖 OpenAI Reply: ${reply}`);
+    console.log(`🤖 Groq Reply: ${reply}`);
     message.reply(reply);
 
     memory.push({ role: 'assistant', content: reply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
     console.log('📁 Chat logged!');
   } catch (err) {
-    console.error('❌ Error talking to OpenAI:', err);
+    console.error('❌ Error talking to Groq:', err);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
   }
 }

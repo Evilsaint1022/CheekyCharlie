@@ -33,7 +33,6 @@
     "dotenv": "^17.2.2",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.2",
-    "groq-sdk": "^0.32.0",
     "node": "^24.8.0",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
