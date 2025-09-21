@@ -84,7 +84,7 @@ module.exports = {
       await db.wallet.set(userKey, balanceData);
 
       return selectInteraction.update({
-        content: `You refunded **${selectedItem.title}** for **${refundAmount.toLocaleString()}${ferns}!**`,
+        content: `You refunded **${selectedItem.title}** for **${ferns}${refundAmount.toLocaleString()}!**`,
         components: []
       });
     });
