@@ -255,6 +255,24 @@ const commands = [
             },
         ],
     },
+    {
+        name: 'russian_roulette',
+        description: 'Challenge another member to Russian Roulette. Winner takes the pot.',
+        options: [
+            {
+                name: 'target',
+                description: 'Member to challenge',
+                type: 6,
+                required: true,
+            },
+            {
+                name: 'bet',
+                description: 'Amount to bet',
+                type: 4,
+                required: true,
+            },
+        ],
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
