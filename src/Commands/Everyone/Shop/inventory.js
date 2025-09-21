@@ -58,7 +58,7 @@ module.exports = {
       .setTimestamp();
 
     const inventoryText = userData.inventory.map((item, index) => {
-      return `**${index + 1}.** **__${item.title}__** - [ **${item.price.toLocaleString()}${ferns}** ]`;
+      return `**${index + 1}.** **__${item.title}__** - **${ferns}${item.price.toLocaleString()}**`;
     }).join('\n');
 
     embed.setDescription(inventoryText);
