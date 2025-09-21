@@ -35,8 +35,36 @@ module.exports = {
 
       let userNumber = parseInt(message.content.trim());
       let userMessage = message.content.trim()
-      const userMsg_not_IsNumber = isNaN(userMessage)
+
+      const jsKeywords = [
+          "break", "case", "catch", "class", "const", "continue", "debugger", "default",
+          "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for",
+          "function", "if", "import", "in", "instanceof", "new", "null", "return", "super",
+          "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with",
+          "yield", "let", "await", "implements", "interface", "package", "private", "protected",
+          "public", "static"
+      ];
+
+      if (jsKeywords.some(keyword => userMessage.includes(keyword))) {
+        return;
+      }
+
+      userMessage = userMessage.replaceAll("^", "**")
+
+      let wasFactorialReplaced = false;
       let wasCalculated = false;
+      
+      userMessage = userMessage.replace(/(\d+)!/g, (match, n) => {
+        n = Number(n);
+        if (!Number.isInteger(n) || n < 0) return match;
+        let fact = 1;
+        for (let i = 1; i <= n; i++) fact *= i;
+        wasFactorialReplaced = true;
+        wasCalculated = true;
+        return fact.toString();
+      });
+
+      const userMsg_not_IsNumber = isNaN(userMessage)
 
       if (userMsg_not_IsNumber) {
         
@@ -45,9 +73,11 @@ module.exports = {
           userNumber = mathResult;
           wasCalculated = true;
         } catch (e) {}
+      } else {
+        userNumber = Number(userMessage);
       }
 
-      if (isNaN(userNumber) || (!wasCalculated && message.content.trim() !== userNumber.toString())) return;
+      if (isNaN(userNumber) || (!wasCalculated && !wasFactorialReplaced && message.content.trim() !== userNumber.toString())) return;
 
       // ❌ Same user sent a message twice — reset the count!
       if (message.author.id === countData.lastUserId) {
@@ -108,6 +138,11 @@ module.exports = {
 
           }
 
+        }
+
+        if ( userNumber == 100 ) {
+          message.react("💯");
+          message.react("🎉");
         }
 
         await db.counting.set(guildKey, {
