@@ -36,8 +36,8 @@ module.exports = {
     // Set the cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
+    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.wallet.get(balanceKey);
 
@@ -91,26 +91,38 @@ module.exports = {
       if (spins >= maxSpins) {
   clearInterval(interval);
 
-  const final = spin();
+  // 🎲 Decide win or lose (50/50)
+  const win = Math.random() < 0.5;
+  let final;
+
+  if (win) {
+    // Force a win: pick one symbol and repeat it
+    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+    final = [symbol, symbol, symbol];
+  } else {
+    // Force a loss: ensure not all 3 match
+    do {
+      final = spin();
+    } while (final[0] === final[1] && final[1] === final[2]);
+  }
+
   const finalResult = final.join(' | ');
 
   let resultText;
   let resultColor;
 
-  // ✅ Win condition: all three symbols match
-  if (final[0] === final[1] && final[1] === final[2]) {
+  if (win) {
     const winnings = bet * 2;
     balance += winnings;
     await db.wallet.set(balanceKey, balance);
     resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
     resultColor = 0x00FF00;
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
   } else {
-    // Already deducted bet upfront
     await db.wallet.set(balanceKey, balance);
     resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
     resultColor = 0xFF0000;
-    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
   }
 
   const resultEmbed = new EmbedBuilder()
