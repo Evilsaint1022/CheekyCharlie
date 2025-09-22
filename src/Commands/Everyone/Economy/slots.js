@@ -36,8 +36,8 @@ module.exports = {
     // Set the cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
-    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[SLOTS] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
+    console.log(`[SLOTS] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.wallet.get(balanceKey);
 
@@ -117,12 +117,12 @@ module.exports = {
     await db.wallet.set(balanceKey, balance);
     resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
     resultColor = 0x00FF00;
-    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[SLOTS] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
   } else {
     await db.wallet.set(balanceKey, balance);
     resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
     resultColor = 0xFF0000;
-    console.log(`[BLACKJACK] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[SLOTS] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
   }
 
   const resultEmbed = new EmbedBuilder()
