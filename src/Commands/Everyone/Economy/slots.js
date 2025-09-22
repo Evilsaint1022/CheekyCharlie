@@ -89,42 +89,41 @@ module.exports = {
       spins++;
 
       if (spins >= maxSpins) {
-        clearInterval(interval);
+  clearInterval(interval);
 
-        // 🎲 50/50 chance to win or lose
-        const win = Math.random() < 0.5;
+  const final = spin();
+  const finalResult = final.join(' | ');
 
-        const final = spin();
-        const finalResult = final.join(' | ');
+  let resultText;
+  let resultColor;
 
-        let resultText;
-        let resultColor;
+  // ✅ Win condition: all three symbols match
+  if (final[0] === final[1] && final[1] === final[2]) {
+    const winnings = bet * 2;
+    balance += winnings;
+    await db.wallet.set(balanceKey, balance);
+    resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
+    resultColor = 0x00FF00;
+    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
+  } else {
+    // Already deducted bet upfront
+    await db.wallet.set(balanceKey, balance);
+    resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
+    resultColor = 0xFF0000;
+    console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+  }
 
-        if (win) {
-          const winnings = bet * 2;
-          balance += winnings;
-          await db.wallet.set(balanceKey, balance);
-          resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
-          resultColor = 0x00FF00;
-          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
-        } else {
-          await db.wallet.set(balanceKey, balance);
-          resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
-          resultColor = 0xFF0000;
-          console.log(`[🎰] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
-        }
+  const resultEmbed = new EmbedBuilder()
+    .setTitle(`🎰 **__Slots Result__**`)
+    .setColor(resultColor)
+    .setThumbnail(user.displayAvatarURL())
+    .setDescription(resultText)
+    .addFields(
+      { name: 'Final Slots', value: finalResult, inline: false },
+      { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}`, inline: false }
+    );
 
-        const resultEmbed = new EmbedBuilder()
-          .setTitle(`🎰 **__Slots Result__**`)
-          .setColor(resultColor)
-          .setThumbnail(user.displayAvatarURL())
-          .setDescription(resultText)
-          .addFields(
-            { name: 'Final Slots', value: finalResult, inline: false },
-            { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}`, inline: false }
-          );
-
-        await message.edit({ embeds: [resultEmbed] });
+  await message.edit({ embeds: [resultEmbed] });
       }
     }, 700);
   }
