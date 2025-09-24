@@ -32,8 +32,12 @@ const animalEmojiMap = {
     whale: '🐳',
     shark: '🦈',
     octopus: '🐙',
-    crab: '🦀'
+    crab: '🦀',
+    spider: '🕷️'
 };
+
+// Max reactions per message
+const MAX_REACTIONS = 20;
 
 module.exports = {
     name: Events.MessageCreate,
@@ -42,12 +46,15 @@ module.exports = {
         if (message.author.bot) return;
 
         const lowerContent = message.content.toLowerCase();
+        let reactionCount = 0;
 
         // Check each animal name in the map
         for (const [animal, emoji] of Object.entries(animalEmojiMap)) {
+            if (reactionCount >= MAX_REACTIONS) break; // Stop if limit reached
             if (lowerContent.includes(animal)) {
                 try {
                     await message.react(emoji);
+                    reactionCount++;
                 } catch (err) {
                     console.error(`Failed to react with ${emoji} to message:`, err);
                 }
