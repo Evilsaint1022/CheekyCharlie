@@ -37,7 +37,7 @@ module.exports = {
         const now = Date.now();
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
-            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeChallenger} tried to use the BlackJack command too quickly.`);
+            console.log(`[♦️BLACKJACK_DUELS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeChallenger} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
             return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
         }
@@ -64,7 +64,7 @@ module.exports = {
         }
 
         // Ask opponent to accept
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} challenged ${opponent.username} to Blackjack for ${bet} ferns.`);
+        console.log(`[♦️BLACKJACK_DUELS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} challenged ${opponent.username} to Blackjack for ${bet} ferns.`);
 
         const inviteRow = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
@@ -84,7 +84,7 @@ module.exports = {
         inviteCollector.on('collect', async (btn) => {
             if (btn.customId === 'decline') {
                 await btn.update({ content: `${opponent.username} declined the blackjack challenge.`, components: [] });
-                console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} declined ${opponent.username}'s blackjack challenge.`);
+                console.log(`[♦️BLACKJACK_DUELS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} declined ${opponent.username}'s blackjack challenge.`);
                 inviteCollector.stop();
                 return;
             }
@@ -166,7 +166,7 @@ module.exports = {
                         await db.wallet.set(balanceKeyChallenger, challengerBalance);
                         await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-                        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
+                        console.log(`[♦️BLACKJACK_DUELS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
 
                         const resultEmbed = {
                             color: winner === user.id ? 0x00FF00 : 0xFF0000,

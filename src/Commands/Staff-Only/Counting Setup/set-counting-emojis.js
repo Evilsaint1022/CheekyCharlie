@@ -55,6 +55,6 @@ module.exports = {
     });
 
     //console logs
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-emojis command.`);
+    console.log(`[SET-COUNTING-EMOJIS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-emojis command.`);
   }
 };

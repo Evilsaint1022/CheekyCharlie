@@ -37,7 +37,7 @@ module.exports = {
     }
 
     const guildKey = `${guild.name}_${guild.id}_verifiedRoleId`;
-
+    console.log(`[REMOVED-VERIFIED-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} removed verified role`);
     try {
       db.settings.delete(guildKey);
       await interaction.reply({ content: '✅ Verified role setting has been removed.', flags: 64 });

@@ -31,6 +31,8 @@ module.exports = {
       }
     }
 
+    console.log(`[TOGGLE-LEVELS] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} used the toggle levels command.`);
+
     // Get current levels state (default false)
     const currentState = await db.settings.get(`${guildName}_${guildId}.levels`) || false;
 

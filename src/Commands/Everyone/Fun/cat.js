@@ -32,7 +32,7 @@ module.exports = {
     await interaction.reply({ content: messageContent });
 
       // Console Logs
-  console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the cat command.`)
+  console.log(`[CAT] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the cat command.`)
   },
 };
 

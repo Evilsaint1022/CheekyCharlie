@@ -95,6 +95,6 @@ module.exports = {
 
         }
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} started staff application`);
+        console.log(`[STAFF-APPLY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} started staff application`);
     },
 };

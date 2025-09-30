@@ -63,7 +63,7 @@ module.exports = {
 
     embed.setDescription(inventoryText);
 
-    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
+    console.log(`[INVENTORY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
     return interaction.reply({ embeds: [embed] });
   }
 };

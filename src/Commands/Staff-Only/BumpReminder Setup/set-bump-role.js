@@ -47,6 +47,7 @@ module.exports = {
       existing.roleId = role.id;
 
       await db.bump.set(key, existing);
+      console.log(`[SET-BUMP-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-bump-role command.`);
 
       await interaction.reply({
         content: `✅ Bump role set to <@&${role.id}>`,

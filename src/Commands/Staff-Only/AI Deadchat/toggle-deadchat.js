@@ -31,7 +31,7 @@ module.exports = {
                 });
             }
         }
-
+        console.log(`[TOGGLE-DEADCHAT] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the toggle deadchat command.`);
         const currentState = await db.settings.get(`${guildName}_${guildId}.deadchatState`);
 
         if (currentState) {

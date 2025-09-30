@@ -15,6 +15,8 @@ module.exports = {
 
   async execute(interaction) {
 
+console.log (`[AISHIA] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the /aishia command.`);
+
 const prompt = interaction.options.getString('prompt');
 await interaction.deferReply();
 

@@ -37,8 +37,8 @@ module.exports = {
         // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+        console.log(`[♦️BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
+        console.log(`[♦️BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
 
         let balance = await db.wallet.get(balanceKey);
@@ -108,12 +108,12 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
                     balance -= bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else {
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
                 }
 
                 await db.wallet.set(balanceKey, balance);
