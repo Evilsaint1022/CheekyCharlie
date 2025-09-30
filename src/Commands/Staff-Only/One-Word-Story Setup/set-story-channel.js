@@ -60,6 +60,6 @@ module.exports = {
       flags: 64
     });
     //console logs
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-channel command.`);
+    console.log(`[SET-STORY-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-channel command.`);
   }
 };

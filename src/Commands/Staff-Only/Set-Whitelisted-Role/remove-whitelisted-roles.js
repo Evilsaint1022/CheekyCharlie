@@ -44,6 +44,6 @@ module.exports = {
         await interaction.reply({ content: `The role <@&${role.id}> has been removed from the whitelist.`, flags: 64 });
 
         // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
+        console.log(`[REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
     }
 };

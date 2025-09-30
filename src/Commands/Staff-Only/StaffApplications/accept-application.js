@@ -74,7 +74,7 @@ module.exports = {
             flags: [MessageFlags.IsComponentsV2]
         })
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} accepted staff application for user ${application.userId}`);
+        console.log(`[ACCEPT-APPLICATION] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} accepted staff application for user ${application.userId}`);
 
         await interaction.reply({
             content: '✅ Application accepted successfully!',

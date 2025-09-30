@@ -22,7 +22,7 @@ module.exports = {
     const guildKey = `${guild.name}_${guild.id}`;
 
     //console log
-    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the refund command.`);
+    console.log(`[REFUND] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the refund command.`);
 
     // Get inventory
     const userInventoryData = await db.inventory.get(`${guildKey}.${userKey}`) || {};

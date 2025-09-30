@@ -43,7 +43,7 @@ module.exports = {
 
             // Logging the action
             const timestamp = new Date().toLocaleTimeString();
-            console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} used the set-modmail-channel command to set the channel ID "${channel.id}"`);
+            console.log(`[SET-MODMAIL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.tag} used the set-modmail-channel command to set the channel ID "${channel.id}"`);
 
             return interaction.reply({ content: `Modmail will now be sent in <#${channel.id}>.`, flags: 64 });
         }

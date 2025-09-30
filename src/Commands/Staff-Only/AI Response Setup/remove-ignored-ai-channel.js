@@ -25,6 +25,7 @@ module.exports = {
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
         const userId = interaction.user.id;
+        const username = interaction.user.username;
         
         const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
@@ -53,13 +54,13 @@ module.exports = {
         if (index > -1) {
             ignoredChannels.splice(index, 1);
         }
-
+        
         await db.settings.set(`${guildName}_${guildId}.ignoredAIChannels`, ignoredChannels);
+        console.log(`[REMOVE-IGNORE-AI-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${username} Removed channel / category <#${channel.id}> from the ignored AI channels list.`);
 
         return interaction.reply({
             content: `Channel / Category <#${channel.id}> has been removed from the ignored AI channels list.`,
             flags: 64
         });
-        
     },
 };

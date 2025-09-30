@@ -41,6 +41,6 @@ module.exports = {
         await interaction.reply({ embeds: [avatarEmbed] });
 
         // Console Logs
-        console.log(`[${timestamp}] ${guildName} ${guildId} ${interaction.user.username} used the avatar command for ${user.username}'s avatar.`);
+        console.log(`[AVATAR] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the avatar command for ${user.username}'s avatar.`);
     }
 };

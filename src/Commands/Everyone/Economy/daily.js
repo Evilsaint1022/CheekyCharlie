@@ -63,14 +63,14 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
             .setTitle(`${username}'s Daily ${ferns}'s`)
-            .setDescription(`You have claimed your daily reward of **${rewardAmount.toLocaleString()} ${ferns}**!`)
-            .addFields({ name: 'Total Balance', value: `${balance.toLocaleString()} ${ferns}`, inline: true })
+            .setDescription(`You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`)
+            .addFields({ name: 'Total Balance', value: `${ferns}${balance.toLocaleString()}`, inline: true })
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: 'Come back tomorrow for more!' })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`);
+        console.log(`[DAILY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`);
     }
 };

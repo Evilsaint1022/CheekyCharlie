@@ -37,7 +37,7 @@ module.exports = {
 
         await db.staff_app_questions.delete(channelKey);
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} removed staff application channel`);
+        console.log(`[REMOVE-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} removed staff application channel`);
 
         await interaction.reply({
             content: '✅ Staff application channel removed successfully.',

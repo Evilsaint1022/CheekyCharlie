@@ -28,7 +28,7 @@ module.exports = {
         const safeUsername = targetUser.username.replace(/\./g, '_');
         const userKey = `${safeUsername}_${targetUser.id}`;
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interactionUser.username} used the level command to get ${targetUser.username}'s level.`);
+        console.log(`[LEVEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interactionUser.username} used the level command to get ${targetUser.username}'s level.`);
 
         try {
             const levelsData = await db.levels.get(guildKey);

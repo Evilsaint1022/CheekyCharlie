@@ -70,7 +70,7 @@ module.exports = {
             balance += coinsEarned;
 
 
-            console.log(`[🌿] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
+            console.log(`[PICK] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
 
             try {
                 await db.wallet.set(dbKey, { balance });

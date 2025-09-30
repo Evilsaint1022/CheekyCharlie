@@ -54,6 +54,6 @@ module.exports = {
     });
 
     // Console log
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the reset-one-word-story command.`);
+    console.log(`[RESET-ONE-WORD-STORY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the reset-one-word-story command.`);
   }
 };

@@ -37,7 +37,7 @@ module.exports = {
         await interaction.editReply({ embeds: [pingEmbed] });
 
         // Console Logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the ping command.`);
+        console.log(`[PING] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the ping command.`);
 
     },
 };

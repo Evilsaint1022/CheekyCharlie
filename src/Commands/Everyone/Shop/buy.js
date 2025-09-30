@@ -173,6 +173,6 @@ module.exports = {
         }).catch(() => {});
       }
     });
-    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
+    console.log(`[BUY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
   }
 };

@@ -60,6 +60,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
-    console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the set-color-of-the-week command.`);
+    console.log(`[SET-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the set-color-of-the-week command.`);
   }
 };

@@ -53,7 +53,7 @@ module.exports = {
         // Logging the action
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
-        console.log(`[${timestamp}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
+        console.log(`[SET-LEVEL-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
 
         return interaction.reply({ content: `✅ Level-up messages will now be sent in <#${channel.id}>.`, flags: 64 });
     },
