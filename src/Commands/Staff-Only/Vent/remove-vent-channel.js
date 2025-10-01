@@ -45,7 +45,7 @@ module.exports = {
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
         const timestamp = new Date().toISOString();
-        console.log(`[REMOVE-VENT-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-vent-channel command to remove the vent channel.`);
+        console.log(`[⭐] [REMOVE-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-vent-channel command to remove the vent channel.`);
 
         return interaction.reply({ content: '✅ The vent channel has been removed.', flags: 64 });
     },

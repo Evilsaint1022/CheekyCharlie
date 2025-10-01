@@ -52,6 +52,6 @@ module.exports = {
     });
 
     //console logs
-    console.log(`[REMOVE-COUNTING-EMOJI] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-emojis command.`);
+    console.log(`[⭐] [REMOVE-COUNTING-EMOJI] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-emojis command.`);
   }
 };

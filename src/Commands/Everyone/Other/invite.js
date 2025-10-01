@@ -27,7 +27,7 @@ module.exports = {
             await interaction.reply({ content: `Here is your temporary invite link: ${invite.url}` });
 
             // Console Log
-            console.log(`[INVITE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the invite command.`);
+            console.log(`[🌿] [INVITE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the invite command.`);
 
         } catch (error) {
             console.error('Error creating invite link:', error);
