@@ -58,6 +58,6 @@ module.exports = {
     });
     
     //console logs
-    console.log(`[REMOVE-COUNTING-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-channel command.`);
+    console.log(`[⭐] [REMOVE-COUNTING-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-channel command.`);
   }
 };

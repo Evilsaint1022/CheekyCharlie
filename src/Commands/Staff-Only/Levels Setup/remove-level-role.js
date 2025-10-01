@@ -52,7 +52,7 @@ module.exports = {
       // Delete and update
       delete roleMap[level];
       await db.levelroles.set(guildKey, roleMap);
-      console.log(`[REMOVE-LEVEL-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${interaction.user.tag} removed role <@&${removedRoleId}> from level ${level}.`);
+      console.log(`[⭐] [REMOVE-LEVEL-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${interaction.user.tag} removed role <@&${removedRoleId}> from level ${level}.`);
 
       return interaction.reply({
         content: `✅ Removed role <@&${removedRoleId}> from level ${level}.`,

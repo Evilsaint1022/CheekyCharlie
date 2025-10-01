@@ -54,7 +54,7 @@ module.exports = {
 
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
-        console.log(`[SET-VENT-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-vent-channel command to set the channel ID "${channel.id}"`);
+        console.log(`[⭐] [SET-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-vent-channel command to set the channel ID "${channel.id}"`);
 
         await interaction.reply({ content: `✅ Vent channel set to ${channel.url}.`, flags: 64 });
     },

@@ -117,7 +117,7 @@ module.exports = {
     }
 
     //console logs
-    console.log(`[EDIT-SHOP-ITEM] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the edit-shop-item command.`);
+    console.log(`[⭐] [EDIT-SHOP-ITEM] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the edit-shop-item command.`);
 
     return interaction.reply({
       content: `Successfully updated the item "${currentTitle}".`,

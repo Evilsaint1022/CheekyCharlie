@@ -50,7 +50,7 @@ module.exports = {
 
       // Save updated settings
       await db.settings.set(guildKey, updatedSettings);
-      console.log(`[SET-BAN-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} set the ban channel to ${channel}`);
+      console.log(`[⭐] [SET-BAN-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} set the ban channel to ${channel}`);
 
       await interaction.reply({
         content: `✅ Ban channel successfully set to ${channel}`,

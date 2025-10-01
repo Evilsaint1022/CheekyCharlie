@@ -42,6 +42,6 @@ module.exports = {
         await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, flags: 64 });
 
         // Console Logs
-        console.log(`[SET-WHITELISTED-ROLES] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
+        console.log(`[⭐] [SET-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName}_${guildId} ${interaction.user.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
     }
 };

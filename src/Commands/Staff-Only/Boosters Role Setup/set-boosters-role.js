@@ -52,7 +52,7 @@ module.exports = {
       await db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
      // Console Log
-      console.log(`[SET-BOOSTERS-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildKey} ${username} set the Boosters role to <@&${role.id}>`);
+      console.log(`[⭐] [SET-BOOSTERS-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildKey} ${username} set the Boosters role to <@&${role.id}>`);
 
       await interaction.reply({
         content: `✅ Boosters role set to <@&${role.id}>`,

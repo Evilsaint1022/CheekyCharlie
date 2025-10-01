@@ -8,7 +8,7 @@ module.exports = {
 
   async execute(interaction) {
 
-    console.log(`[VIEW-ONE-WORD-STORY] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the view-one-word-story command.`);
+    console.log(`[🌿] [VIEW-ONE-WORD-STORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the view-one-word-story command.`);
 
     // Prevent command usage in DMs
         if (interaction.channel.isDMBased()) {
