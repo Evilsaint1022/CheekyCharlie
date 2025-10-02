@@ -53,7 +53,7 @@ module.exports = {
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[⭐] [REMOVE-DROPPARTY-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} removed the drop party channel.`);
+        console.log(`[⭐] [REMOVE-DROPPARTY-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.tag} removed the drop party channel.`);
 
         return interaction.reply({
             content: 'The party drops channel has been removed.',

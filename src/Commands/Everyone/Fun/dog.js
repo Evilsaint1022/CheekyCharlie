@@ -33,7 +33,7 @@ module.exports = {
       await interaction.reply({ content: messageContent });
 
       // Console Logs
-      console.log(`[🌿] [DOG] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the dog command.`);
+      console.log(`[🌿] [DOG] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} used the dog command.`);
     } catch (error) {
       console.error(error);
     }

@@ -85,7 +85,7 @@ module.exports = {
       await db.shop.set(guildKey, shopItems);
 
       //console logs
-      console.log(`[⭐] [ADD-SHOP-ITEM] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the add-shop-item command.`);
+      console.log(`[⭐] [ADD-SHOP-ITEM] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the add-shop-item command.`);
       
       //reply interaction
       return interaction.reply({

@@ -56,7 +56,7 @@ module.exports = {
         currentSettings.deadchatDuration = durationInMS;
 
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
-        console.log(`[⭐] [SET-DEADCHAT-DURATION] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} Updated deadchatDuration to ${durationInSeconds} seconds`);
+        console.log(`[⭐] [SET-DEADCHAT-DURATION] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} Updated deadchatDuration to ${durationInSeconds} seconds`);
         return interaction.reply({
             content: "✅ Updated duration for Deadchat messages.\n-# Make sure the deadchat channel and deadchat role are set too.",
             flags: 64

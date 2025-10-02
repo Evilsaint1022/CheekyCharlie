@@ -41,7 +41,7 @@ module.exports = {
             });
 
             // Console Logs
-            console.log(`[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the unlock-vc command.`);
+            console.log(`[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} used the unlock-vc command.`);
 
             return interaction.reply({ content: '🔓 Voice channel unlocked — @everyone can now join.', flags: 64 });
         } catch (err) {

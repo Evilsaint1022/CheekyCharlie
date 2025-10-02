@@ -65,6 +65,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount.toLocaleString()} Ferns.`);
+        console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount.toLocaleString()} Ferns.`);
     }
 };

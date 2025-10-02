@@ -41,7 +41,7 @@ module.exports = {
         const channelKey = `${guildName}_${guildId}.channel`;
         await db.staff_app_questions.set(channelKey, channel.id);
 
-        console.log(`[⭐] [SET-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} set staff application channel to #${channel.name}`);
+        console.log(`[⭐] [SET-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} set staff application channel to #${channel.name}`);
 
         await interaction.reply({
             content: `✅ Staff application channel set to <#${channel.id}>`,
