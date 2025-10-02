@@ -71,6 +71,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [embed] });
 
-        console.log(`[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`);
+        console.log(`[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`);
     }
 };

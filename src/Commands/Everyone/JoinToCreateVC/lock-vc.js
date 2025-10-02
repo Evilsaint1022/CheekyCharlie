@@ -42,7 +42,7 @@ module.exports = {
             });
             
             // Console Logs
-            console.log(`[🌿] [LOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} used the lock-vc command.`);
+            console.log(`[🌿] [LOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the lock-vc command.`);
 
             return interaction.reply({ content: '🔒 Voice channel locked — @everyone is denied Connect.', flags: 64 });
         } catch (err) {

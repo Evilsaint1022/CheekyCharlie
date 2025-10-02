@@ -23,7 +23,7 @@ module.exports = {
     ),
     
   async execute(interaction) {
-    console.log(`[🌿] [AI-SEARCH] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the ai-search command.`);
+    console.log(`[🌿] [AI-SEARCH] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the ai-search command.`);
     const query = interaction.options.getString('query');
 
     // 🌐 GLOBAL COOLDOWN CHECK

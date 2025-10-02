@@ -37,7 +37,7 @@ module.exports = {
 
         await db.staff_app_questions.delete(channelKey);
 
-        console.log(`[⭐] [REMOVE-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} removed staff application channel`);
+        console.log(`[⭐] [REMOVE-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} removed staff application channel`);
 
         await interaction.reply({
             content: '✅ Staff application channel removed successfully.',

@@ -29,7 +29,7 @@ module.exports = {
     const userKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
 
     // console logs
-    console.log(`[🌿] [USE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
+    console.log(`[🌿] [USE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
 
     // Load inventory
     let fullInventory = {};

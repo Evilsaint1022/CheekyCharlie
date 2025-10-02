@@ -63,7 +63,7 @@ module.exports = {
 
     embed.setDescription(inventoryText);
 
-    console.log(`[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
+    console.log(`[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
     return interaction.reply({ embeds: [embed] });
   }
 };
