@@ -37,7 +37,7 @@ module.exports = {
         await interaction.editReply({ embeds: [pingEmbed] });
 
         // Console Logs
-        console.log(`[🌿] [PING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} used the ping command.`);
+        console.log(`[🌿] [PING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the ping command.`);
 
     },
 };

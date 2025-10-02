@@ -15,7 +15,7 @@ module.exports = {
 
   async execute(interaction) {
 
-console.log (`[🌿] [AISHIA] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the /aishia command.`);
+console.log (`[🌿] [AISHIA] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the /aishia command.`);
 
 const prompt = interaction.options.getString('prompt');
 await interaction.deferReply();

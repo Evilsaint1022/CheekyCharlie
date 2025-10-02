@@ -52,7 +52,7 @@ module.exports = {
         await interaction.channel.send(messageContent);
 
         // Console Logs
-        console.log(`[⭐] [ECHO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.tag} used the echo command. Message: ${messageContent}`);
+        console.log(`[⭐] [ECHO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the echo command. Message: ${messageContent}`);
         
         // Reply to the user with an ephemeral message confirming the message was sent
         await interaction.reply({ content: 'Your message has been sent!', flags: 64 });

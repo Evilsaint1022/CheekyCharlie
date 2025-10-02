@@ -60,6 +60,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
-    console.log(`[⭐] [SET-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${user.username} used the set-color-of-the-week command.`);
+    console.log(`[⭐] [SET-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the set-color-of-the-week command.`);
   }
 };
