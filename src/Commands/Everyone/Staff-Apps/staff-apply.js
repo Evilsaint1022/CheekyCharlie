@@ -95,6 +95,6 @@ module.exports = {
 
         }
 
-        console.log(`[🌿] [STAFF-APPLY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} started staff application`);
+        console.log(`[🌿] [STAFF-APPLY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.username} started staff application`);
     },
 };

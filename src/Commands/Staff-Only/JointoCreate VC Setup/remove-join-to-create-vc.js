@@ -49,7 +49,7 @@ module.exports = {
 
         // Logging the action
         const timestamp = new Date().toLocaleTimeString();
-        console.log(`[⭐] [REMOVE-JOIN-TO-CREATE-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.tag} removed the Join To Create channel.`);
+        console.log(`[⭐] [REMOVE-JOIN-TO-CREATE-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} ${interaction.user.tag} removed the Join To Create channel.`);
 
         return interaction.reply({ content: '✅ The Join To Create channel has been removed.', flags: 64 });
     },

@@ -173,6 +173,6 @@ module.exports = {
         }).catch(() => {});
       }
     });
-    console.log(`[🌿] [BUY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
+    console.log(`[🌿] [BUY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ")}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
   }
 };

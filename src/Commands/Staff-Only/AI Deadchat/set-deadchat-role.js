@@ -53,7 +53,7 @@ module.exports = {
 
       // Save updated settings
       db.settings.set(guildKey, currentSettings);
-      console.log(`[⭐] [SET-DEADCHAT-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} Deadchat role has been set to ${targetRole.name}.`);
+      console.log(`[⭐] [SET-DEADCHAT-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ")}] ${guildName} ${guildId} Deadchat role has been set to ${targetRole.name}.`);
 
       await interaction.reply({ content: `✅ Deadchat role has been set to **${targetRole.name}**.\n-# Make sure the deadchat channel and deadchat duration are set too and the AI deadchat is activated.`, flags: 64 });
     } catch (error) {
