@@ -140,7 +140,7 @@ https://github.com/NZ-Linix/dotdatabase
 - `/echo` — Echo Messages
 
 ## **Stop Command**
-= `/stop` - Staff Command to Cooldown Chat During Heated Moments.
+- `/stop` - Staff Command to Cooldown Chat During Heated Moments.
 
 ## **Counting Setup**
 - `/set-counting-channel` - Sets the counting entertainment channel.
