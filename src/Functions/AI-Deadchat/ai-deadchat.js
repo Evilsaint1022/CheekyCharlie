@@ -1,79 +1,48 @@
-const cron = require('node-cron');
 const db = require("../../Handlers/database");
-const { Client, MessageFlags } = require("discord.js");
+const { Client } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "* * * * * *";
-
-let isRunning = false;
-let isScheduled = false;
-let scheduledTask = null;
-
 const GuildTimeoutMap = new Map();
+let isInitialized = false;
 
 const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
 
 /**
  * @param {Client} client
+ * @param {string} guildId
+ * @param {string} guildName
  */
-
-async function checkAIDeadchat(client) {
-
-    if (client.shard && client.shard.id !== 0) {
-        return;
-    }
-
-    if (isRunning) {
-        return;
-    }
-
-    isRunning = true;
-
+async function startDeadchatTimer(client, guildId, guildName) {
     try {
-        const clientGuilds = await client.guilds.cache.map(guild => (guild));
 
-        for (const guild of clientGuilds) {
+        if (GuildTimeoutMap.has(guildId)) {
+            clearTimeout(GuildTimeoutMap.get(guildId));
+            GuildTimeoutMap.delete(guildId);
+        }
 
-            const guildName = guild.name;
-            const guildId = guild.id;
+        const deadchatSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
 
-            const deadchatSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const durationMs = Number(deadchatSettings.deadchatDuration);
+        const roleId = deadchatSettings.deadchatRoleId;
+        const channelId = deadchatSettings.deadchatChannelId;
+        const deadchatState = deadchatSettings.deadchatState || false;
 
-            const durationMs = Number(deadchatSettings.deadchatDuration);
-            const roleId = deadchatSettings.deadchatRoleId;
-            const channelId = deadchatSettings.deadchatChannelId;
-            const deadchatState = deadchatSettings.deadchatState || false;
+        if (!durationMs || !roleId || !channelId || !deadchatState) {
+            return;
+        }
 
-            if ( !durationMs || !roleId || !channelId ) continue;
+        const guild = client.guilds.cache.get(guildId);
+        if (!guild) return;
 
-            const role = await guild.roles.fetch(roleId);
+        const role = await guild.roles.fetch(roleId).catch(() => null);
+        if (!role) return;
 
-            if ( !role ) continue;
+        const channel = await client.channels.fetch(channelId).catch(() => null);
+        if (!channel) return;
 
-            const lastDeadchatId = await db.ai_deadchat.get(`${guildName}_${guildId}.lastDeadchatMessage`) || "";
-            const channel = await client.channels.fetch(channelId);
-
-            if ( !channel ) continue;
-
-            if ( !deadchatState ) continue;
-
-            const messages = await channel.messages.fetch({ limit: 2 });
-            const sortedMessages = Array.from(messages.values()).sort((a, b) => b.createdTimestamp - a.createdTimestamp);
-
-            if ( !sortedMessages || !sortedMessages[0] ) continue;
-
-            const lastMessageId = sortedMessages[0].id;
-
-            if ( lastDeadchatId == lastMessageId ) { continue; }
-
-            if (sortedMessages[0].author.id === client.user.id) continue;
-
-            if (GuildTimeoutMap.has(guildId)) continue;
-
-            const timeout = setTimeout(async () => {
-
+        const timeout = setTimeout(async () => {
+            try {
                 const prompts = [
-                    
                     "You are a quirky AI. The chat has been dead. Revive it with a ridiculous, funny question that makes no sense but gets people talking.",
                     "You are a chaotic AI. The chat is quiet. Bring it back with a completely random 'what if' style question.",
                     "You are a mischievous AI. Chat is dead. Revive it with a weird debate question that has no correct answer.",
@@ -124,11 +93,10 @@ async function checkAIDeadchat(client) {
                     "You are a rugby AI. The chat is quiet. Revive it with a funny, over-the-top rugby or sports-related question.",
                     "You are a Kiwi foodie AI. The chat is dead. Revive it with a silly debate about pies, pavlova, or fish and chips."
                 ];
-                
-                const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
 
-                const finalPrompt = randomPrompt + " Reply ONLY with the question / topic etc."
-                
+                const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+                const finalPrompt = randomPrompt + " Reply ONLY with the question / topic etc.";
+
                 const response = await openai.chat.completions.create({
                     messages: [
                         { role: 'system', content: finalPrompt },
@@ -139,7 +107,7 @@ async function checkAIDeadchat(client) {
 
                 const reply = response.choices[0].message.content;
 
-                const deadchatMessage = await channel.send({ 
+                const deadchatMessage = await channel.send({
                     content: `**The chat is dead!** — <@&${role.id}>\n` + reply.trim(),
                     allowedMentions: { roles: [role.id] }
                 });
@@ -147,51 +115,87 @@ async function checkAIDeadchat(client) {
                 await db.ai_deadchat.set(`${guildName}_${guildId}.lastDeadchatMessage`, deadchatMessage.id);
 
                 GuildTimeoutMap.delete(guildId);
-                
-            }, durationMs);
+            } catch (error) {
+                console.error(`[💭] [AI Deadchat] Error sending deadchat message for guild ${guildId}:`, error);
+                GuildTimeoutMap.delete(guildId);
+            }
+        }, durationMs);
 
-            GuildTimeoutMap.set(guildId, timeout);
-
-        }
-
-    } finally {
-        isRunning = false;
+        GuildTimeoutMap.set(guildId, timeout);
+    } catch (error) {
+        console.error(`[💭] [AI Deadchat] Error starting timer for guild ${guildId}:`, error);
     }
-
 }
 
-function messageHandler(message) {
+/**
+ * @param {Client} client
+ * @param {Message} message
+ */
+async function messageHandler(client, message) {
 
     try {
-        if ( !message || !message.guild || !message.guild.id ) return;
+        if (!message || !message.guild || !message.guild.id) return;
+        if (message.author.bot) return;
 
-        const guildId = message?.guild?.id;
-        if (GuildTimeoutMap.has(guildId)) {
-            clearTimeout(GuildTimeoutMap.get(guildId));
-            GuildTimeoutMap.delete(guildId);
-        }
-    } catch (e) {
-        return;
+        const guildId = message.guild.id;
+        const guildName = message.guild.name;
+
+        const deadchatSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const channelId = deadchatSettings.deadchatChannelId;
+
+        if (!channelId || message.channel.id !== channelId) return;
+
+        await startDeadchatTimer(client, guildId, guildName);
+    } catch (error) {
+        console.error('[💭] [AI Deadchat] Error in message handler:', error);
     }
-    
+
 }
 
+/**
+ * @param {Client} client
+ */
+async function initializeDeadchatTimers(client) {
+
+    try {
+        console.log("[💭] [AI Deadchat] Initializing deadchat timers for all guilds...");
+
+        const clientGuilds = client.guilds.cache.map(guild => guild);
+
+        for (const guild of clientGuilds) {
+            await startDeadchatTimer(client, guild.id, guild.name);
+        }
+
+        console.log(`[💭] [AI Deadchat] Initialized timers for ${clientGuilds.length} guilds.`);
+    } catch (error) {
+        console.error('[💭] [AI Deadchat] Error initializing timers:', error);
+    }
+
+}
+
+/**
+ * @param {Client} client
+ */
 function startDeadchat(client) {
+
     console.log("[💭] [AI Deadchat] Starting AI Deadchat...");
 
-    if (isScheduled) {
-        console.log('[💭] [AI Deadchat] Already scheduled, skipping start.');
+    if (isInitialized) {
+        console.log('[💭] [AI Deadchat] Already initialized, skipping start.');
         return;
     }
 
-    client.on('messageCreate', messageHandler);
 
-    scheduledTask = cron.schedule(time, () => checkAIDeadchat(client), {
-        scheduled: true,
-        timezone: 'UTC'
-    });
+    client.on('messageCreate', (message) => messageHandler(client, message));
 
-    isScheduled = true;
+    if (client.isReady()) {
+        initializeDeadchatTimers(client);
+    } else {
+        client.once('ready', () => initializeDeadchatTimers(client));
+    }
+
+    isInitialized = true;
+    
 }
 
 module.exports = startDeadchat;
