@@ -57,6 +57,6 @@ module.exports = {
         });
 
         // Console logs
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-story-channel command.`);
+        console.log(`[⭐] [RMOVE-STORY-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-story-channel command.`);
     }
 };

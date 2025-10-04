@@ -23,7 +23,7 @@ module.exports = {
     await interaction.reply({ content: messageContent });
 
     // Console Logs
-    console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the github command.`);
+    console.log(`[🌿] [GITHUB] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the github command.`);
   },
 };
 

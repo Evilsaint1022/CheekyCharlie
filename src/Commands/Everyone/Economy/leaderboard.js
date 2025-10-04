@@ -30,7 +30,7 @@ module.exports = {
     const safeUsername = interaction.user.username.replace(/\./g, '_');
     const displayKey = `${safeUsername}_${interaction.user.id}`;
 
-    console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the leaderboard command for '${type}'.`);
+    console.log(`[🌿] [LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the leaderboard command for '${type}'.`);
 
     let entries = [];
 

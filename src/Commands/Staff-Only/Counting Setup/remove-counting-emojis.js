@@ -9,7 +9,6 @@ module.exports = {
   async execute(interaction) {
 
     if (interaction.channel.isDMBased()) {
-      console.log('Command used in DM, aborting.');
       return interaction.reply({
         content: "❌ This command cannot be used in DMs.",
         flags: 64 // ephemeral
@@ -53,6 +52,6 @@ module.exports = {
     });
 
     //console logs
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-emojis command.`);
+    console.log(`[⭐] [REMOVE-COUNTING-EMOJI] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-emojis command.`);
   }
 };

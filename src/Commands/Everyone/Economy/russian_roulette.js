@@ -27,7 +27,7 @@ module.exports = {
     const now = Date.now();
     if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
       const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-      console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} Command blocked for ${interaction.user.username}, ${remaining}s remaining`);
+      console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Command blocked for ${interaction.user.username}, ${remaining}s remaining`);
       return interaction.reply({
         content: `⏳ The /russian_roulette command is on global cooldown. Please wait ${remaining} more seconds.`,
         flags: 64,
@@ -39,14 +39,14 @@ module.exports = {
     const opponent = interaction.options.getUser('target');
     const bet = interaction.options.getInteger('bet');
 
-    console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${user.username} challenged ${opponent.username} with bet ${bet}`);
+    console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} challenged ${opponent.username} with bet ${bet}`);
 
     if (opponent.bot || opponent.id === user.id) {
-      console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${user.username} tried to challenge invalid target`);
+      console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} tried to challenge invalid target`);
       return interaction.reply({ content: `❌ You can't challenge bots or yourself.`, flags: 64 });
     }
     if (bet <= 0) {
-      console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${user.username} tried to bet ${bet}`);
+      console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} tried to bet ${bet}`);
       return interaction.reply({ content: `❌ Bet must be greater than 0.`, flags: 64 });
     }
 
@@ -62,7 +62,7 @@ module.exports = {
       // Fetch balances
       const challengerBal = Number((await db.wallet.get(balanceKeyChallenger)) ?? 0);
       const opponentBal = Number((await db.wallet.get(balanceKeyOpponent)) ?? 0);
-      console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${user.username}: ${challengerBal}, ${opponent.username}: ${opponentBal}`);
+      console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username}: ${challengerBal}, ${opponent.username}: ${opponentBal}`);
 
       if (challengerBal < bet)
         return interaction.editReply(`❌ ${user.username} doesn’t have enough balance.`);
@@ -72,7 +72,7 @@ module.exports = {
       // Deduct bets up front
       await db.wallet.set(balanceKeyChallenger, challengerBal - bet);
       await db.wallet.set(balanceKeyOpponent, opponentBal - bet);
-      console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${user.username} and ${opponent.username} both put in ${bet}`);
+      console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} and ${opponent.username} both put in ${bet}`);
 
       const pot = bet * 2;
 
@@ -113,14 +113,14 @@ module.exports = {
 
       collector.on('collect', async btnInt => {
         if (btnInt.user.id !== currentShooter.user.id) {
-          console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${btnInt.user.username} tried to shoot on ${currentShooter.user.username}'s turn`);
+          console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${btnInt.user.username} tried to shoot on ${currentShooter.user.username}'s turn`);
           return btnInt.reply({ content: `❌ It’s not your turn!`, flags: 64 });
         }
 
         await btnInt.deferUpdate();
 
         const roll = Math.floor(Math.random() * CHAMBER_SIZE) + 1;
-        console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} [Round ${round}] ${currentShooter.user.username} pulled the trigger (roll: ${roll})`);
+        console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} [Round ${round}] ${currentShooter.user.username} pulled the trigger (roll: ${roll})`);
 
         if (roll === 1) {
           killed = currentShooter;
@@ -134,7 +134,7 @@ module.exports = {
           const winnerBal = Number((await db.wallet.get(winnerKey)) ?? 0);
           await db.wallet.set(winnerKey, winnerBal + pot);
 
-          console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${loser.username} died. ${winner.username} won ${pot}`);
+          console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${loser.username} died. ${winner.username} won ${pot}`);
 
           const resultEmbed = new EmbedBuilder()
             .setTitle('💥 Russian Roulette — Result')
@@ -146,7 +146,7 @@ module.exports = {
           await gameMsg.edit({ embeds: [startEmbed, resultEmbed], components: [] });
           collector.stop();
         } else {
-          console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${currentShooter.user.username} survived round ${round}`);
+          console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${currentShooter.user.username} survived round ${round}`);
 
           round++;
           const surviveEmbed = new EmbedBuilder()
@@ -173,7 +173,7 @@ module.exports = {
 
       collector.on('end', async (_c, reason) => {
         if (!killed && reason !== 'messageDelete') {
-          console.log(`[Russian Roulette] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} Duel expired due to inactivity`);
+          console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Duel expired due to inactivity`);
           await gameMsg.edit({
             content: '⌛ Game ended due to inactivity.',
             components: [],

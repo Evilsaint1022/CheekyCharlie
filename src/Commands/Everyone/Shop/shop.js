@@ -67,7 +67,7 @@ module.exports = {
         { name: '\n', value: `*🌿Thanks for using The ${interaction.guild.name} Shop!*` },
         { name: '\n', value: '**╰────────────────────────────╯**' }
       );
-      console.log(`[${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${interaction.user.username} used the shop command.`);
+      console.log(`[🌿] [SHOP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the shop command.`);
       return embed;
     };
 

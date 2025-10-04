@@ -81,7 +81,7 @@ module.exports = {
     }
 
     //console logs
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} used the remove-shop-item command.`);
+    console.log(`[⭐] [REMOVE-SHOP-ITEM] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-shop-item command.`);
 
     return interaction.reply({ content: `Removed "${titleToRemove}" from the shop.`, flags: 64 });
   },

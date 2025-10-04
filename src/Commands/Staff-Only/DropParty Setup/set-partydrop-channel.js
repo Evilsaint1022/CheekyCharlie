@@ -53,7 +53,7 @@ module.exports = {
 
         // Logging the action
         const timestamp = new Date().toLocaleTimeString();
-        console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} set the drop party channel to "${channel.id}"`);
+        console.log(`[⭐] [SET-PARTYDROP-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} set the drop party channel to "${channel.id}"`);
 
         return interaction.reply({
             content: `✅ Drops will now appear in <#${channel.id}>.`,

@@ -50,7 +50,7 @@ module.exports = {
 
         // Logging the action
         const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${guildName}_${guildId} ${interaction.user.tag} used the remove-level-channel command to remove the level-up channel.`);
+        console.log(`[⭐] [REMOVE-LEVEL-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-level-channel command to remove the level-up channel.`);
 
         return interaction.reply({ content: '✅ The level-up channel has been removed.', flags: 64 });
     }
