@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('unlock-vc')
-        .setDescription('Unlock your voice channel by allowing @everyone to Connect again.'),
+        .setName('lock-vc')
+        .setDescription('Lock your voice channel by denying @everyone the Connect permission.'),
     async execute(interaction) {
         const member = interaction.member;
         const userId = member.id;
@@ -20,6 +20,7 @@ module.exports = {
         const vcId = voiceChannel.id;
         const dbKey = `${guildName}_${guildId}_members`;
 
+        // Load full voice member map
         const vcData = await db.vcmembers.get(dbKey);
         if (!vcData || !vcData[vcId]) {
             return interaction.reply({ content: '❌ This voice channel is not tracked or was not created by the bot.', flags: 64 });
@@ -32,21 +33,21 @@ module.exports = {
 
         const creatorId = userList[0];
         if (userId !== creatorId) {
-            return interaction.reply({ content: '❌ Only the VC creator can unlock the channel.', flags: 64 });
+            return interaction.reply({ content: '❌ Only the VC creator can lock the channel.', flags: 64 });
         }
 
         try {
             await voiceChannel.permissionOverwrites.edit(voiceChannel.guild.roles.everyone, {
-                Connect: null // Reset Connect permission (removes red X)
+                Connect: false // Deny Connect (🔴 red tick)
             });
-
+            
             // Console Logs
-            console.log(`[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the unlock-vc command.`);
+            console.log(`[🌿] [LOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the lock-vc command.`);
 
-            return interaction.reply({ content: '🔓 Voice channel unlocked — @everyone can now join.', flags: 64 });
+            return interaction.reply({ content: '🔒 Voice channel locked — @everyone is denied Connect.', flags: 64 });
         } catch (err) {
-            console.error('Failed to unlock VC:', err);
-            return interaction.reply({ content: '❌ Failed to unlock the voice channel.', flags: 64 });
+            console.error('Failed to lock VC:', err);
+            return interaction.reply({ content: '❌ Failed to lock the voice channel.', flags: 64 });
         }
     }
 };

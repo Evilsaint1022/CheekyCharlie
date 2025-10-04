@@ -17,7 +17,7 @@ module.exports = {
         }
 
     //console logs 
-    console.log(`[${new Date().toLocaleTimeString()}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the counting command.`);
+    console.log(`[🌿] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${interaction.user.username} used the counting command.`);
         
     const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
     const guildname = interaction.guild.name;

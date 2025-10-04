@@ -335,7 +335,7 @@ async function handleAddFlow(interaction, questionsKey, response) {
     const guildName = interaction.guild.name;
     const guildId = interaction.guild.id;
 
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} added staff application question: ${questionText}`);
+    console.log(`[⭐] [MANAGE-STAFF-APPS-QUESTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} added staff application question: ${questionText}`);
 
     await safeDefer(interaction);
     await refreshInterface(interaction, questionsKey, response);
@@ -423,7 +423,7 @@ async function handleMoveFlow(interaction, questionsKey, response) {
         const guildName = interaction.guild.name;
         const guildId = interaction.guild.id;
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} moved question ${questionNumber} ${direction}`);
+        console.log(`[⭐] [MANAGE-STAFF-APPS-QUESTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} moved question ${questionNumber} ${direction}`);
 
     await safeDefer(interaction);
     await refreshInterface(interaction, questionsKey, response);
@@ -446,7 +446,7 @@ async function handleRemoveSelect(interaction, questionsKey, response) {
     const guildName = interaction.guild.name;
     const guildId = interaction.guild.id;
 
-    console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} removed staff application question: ${removedQuestion.question}`);
+    console.log(`[⭐] [MANAGE-STAFF-APPS-QUESTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${interaction.user.username} removed staff application question: ${removedQuestion.question}`);
 
     await safeDefer(interaction);
     await refreshInterface(interaction, questionsKey, response);

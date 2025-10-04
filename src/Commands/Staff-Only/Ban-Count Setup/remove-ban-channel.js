@@ -10,6 +10,7 @@ module.exports = {
   async execute(interaction) {
     const guild = interaction.guild;
     const guildKey = `${guild.name}_${guild.id}`;
+    const username = interaction.user.username;
 
     if (interaction.channel.isDMBased()) {
           return interaction.reply({
@@ -46,6 +47,7 @@ module.exports = {
 
       // Save updated settings
       await db.settings.set(guildKey, currentSettings);
+      console.log(`[⭐] [REMOVE-BAN-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${username} removed ${currentSettings.ban_channel} from the ban channel.`);
 
       await interaction.reply({
         content: `✅ Ban channel has been removed.`,

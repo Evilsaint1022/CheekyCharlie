@@ -42,6 +42,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [stopEmbed] });
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${username} used the stop command.`);
+        console.log(`[⭐] [STOP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${username} used the stop command.`);
     },
 };

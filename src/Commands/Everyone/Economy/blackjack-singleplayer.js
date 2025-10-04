@@ -29,7 +29,7 @@ module.exports = {
         const now = Date.now();
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
-            console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
+            console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
             return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
         }
@@ -37,8 +37,8 @@ module.exports = {
         // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
-        console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+        console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
+        console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
 
         let balance = await db.wallet.get(balanceKey);
@@ -108,12 +108,12 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
                     balance -= bet;
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else {
-                    console.log(`[♦️] [${new Date().toLocaleTimeString()}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
+                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
                 }
 
                 await db.wallet.set(balanceKey, balance);

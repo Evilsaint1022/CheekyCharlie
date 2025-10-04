@@ -69,6 +69,6 @@ module.exports = {
         await interaction.reply({ embeds: [embed] });
 
         // Console log
-        console.log(`[${timestamp}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount.toLocaleString()} Ferns`);
+        console.log(`[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount.toLocaleString()} Ferns`);
     },
 };

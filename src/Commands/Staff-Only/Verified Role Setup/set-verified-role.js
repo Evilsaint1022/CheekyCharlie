@@ -53,6 +53,7 @@ module.exports = {
 
       // Save updated settings
       db.settings.set(guildKey, currentSettings);
+      console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Set the Verified Role to ${targetRole.name}`);
 
       await interaction.reply({ content: `✅ Verified role has been set to **${targetRole.name}**.`, flags: 64 });
     } catch (error) {

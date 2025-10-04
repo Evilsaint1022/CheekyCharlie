@@ -52,6 +52,7 @@ module.exports = {
         ignoredChannels.push(channel.id);
 
         await db.settings.set(`${guildName}_${guildId}.ignoredAIChannels`, ignoredChannels);
+        console.log(`[⭐] [SET-IGNORE-AI-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} Added channel / category <#${channel.id}> to the ignored AI channels list.`);
 
         return interaction.reply({
             content: `Channel / Category <#${channel.id}> has been added to the ignored AI channels list.`,

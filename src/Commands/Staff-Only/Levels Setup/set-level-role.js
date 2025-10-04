@@ -67,6 +67,7 @@ module.exports = {
 
       roleMap[level] = newRoleObject;
       await db.levelroles.set(guildKey, roleMap);
+      console.log(`[⭐] [SET-LEVEL-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.tag} Set level ${level} role to ${role.id}`);
 
       const msg = existing
         ? `✅ Updated level ${level} role to **${role.name}** (sticky: \`${sticky}\`).`
