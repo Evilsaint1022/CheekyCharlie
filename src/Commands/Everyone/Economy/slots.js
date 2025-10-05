@@ -17,36 +17,32 @@ module.exports = {
   async execute(interaction) {
     const { guild, user } = interaction;
     const bet = interaction.options.getInteger('bet');
-
-    // ✅ Sanitize username for DB keys
+    const ferns = '<:Ferns:1395219665638391818>';
     const safeUsername = user.username.replace(/\./g, '_');
     const balanceKey = `${safeUsername}_${user.id}.balance`;
 
-    const ferns = '<:Ferns:1395219665638391818>';
-
-    // 🌐 Global cooldown check
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
     const now = Date.now();
 
     if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
       const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-      return interaction.reply({ content: `⏳ The /slots command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+      return interaction.reply({
+        content: `⏳ The /slots command is on global cooldown. Please wait ${remaining} more seconds.`,
+        flags: 64
+      });
     }
 
-    // Set the cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
     console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
     console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.wallet.get(balanceKey);
-
     if (balance === undefined || isNaN(parseInt(balance))) {
       return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
     }
 
     balance = parseInt(balance);
-
     if (bet > balance) {
       return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
     } else if (bet <= 0) {
@@ -67,6 +63,7 @@ module.exports = {
     await interaction.deferReply();
     let spins = 0;
     const maxSpins = 5;
+    let finished = false; // ✅ prevents multiple results
 
     const embed = new EmbedBuilder()
       .setTitle(`🎰 **__Spinning the Slots__**`)
@@ -78,6 +75,8 @@ module.exports = {
     const message = await interaction.editReply({ embeds: [embed] });
 
     const interval = setInterval(async () => {
+      if (finished) return; // ✅ safeguard
+
       const current = spin();
       embed.spliceFields(0, 1, {
         name: 'Slots',
@@ -88,54 +87,52 @@ module.exports = {
 
       spins++;
 
-      if (spins >= maxSpins) {
-  clearInterval(interval);
+      if (spins >= maxSpins && !finished) {
+        finished = true; // ✅ lock execution
+        clearInterval(interval); // stop immediately
 
-  // 🎲 Decide win or lose (50/50)
-  const win = Math.random() < 0.5;
-  let final;
+        // 🎲 Decide win or lose (50/50)
+        const win = Math.random() < 0.5;
+        let final;
 
-  if (win) {
-    // Force a win: pick one symbol and repeat it
-    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-    final = [symbol, symbol, symbol];
-  } else {
-    // Force a loss: ensure not all 3 match
-    do {
-      final = spin();
-    } while (final[0] === final[1] && final[1] === final[2]);
-  }
+        if (win) {
+          const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+          final = [symbol, symbol, symbol];
+        } else {
+          do {
+            final = spin();
+          } while (final[0] === final[1] && final[1] === final[2]);
+        }
 
-  const finalResult = final.join(' | ');
+        const finalResult = final.join(' | ');
+        let resultText;
+        let resultColor;
 
-  let resultText;
-  let resultColor;
+        if (win) {
+          const winnings = bet * 2;
+          balance += winnings;
+          await db.wallet.set(balanceKey, balance);
+          resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
+          resultColor = 0x00FF00;
+          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
+        } else {
+          await db.wallet.set(balanceKey, balance);
+          resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
+          resultColor = 0xFF0000;
+          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+        }
 
-  if (win) {
-    const winnings = bet * 2;
-    balance += winnings;
-    await db.wallet.set(balanceKey, balance);
-    resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
-    resultColor = 0x00FF00;
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
-  } else {
-    await db.wallet.set(balanceKey, balance);
-    resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
-    resultColor = 0xFF0000;
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
-  }
+        const resultEmbed = new EmbedBuilder()
+          .setTitle(`🎰 **__Slots Result__**`)
+          .setColor(resultColor)
+          .setThumbnail(user.displayAvatarURL())
+          .setDescription(resultText)
+          .addFields(
+            { name: 'Final Slots', value: finalResult, inline: false },
+            { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}`, inline: false }
+          );
 
-  const resultEmbed = new EmbedBuilder()
-    .setTitle(`🎰 **__Slots Result__**`)
-    .setColor(resultColor)
-    .setThumbnail(user.displayAvatarURL())
-    .setDescription(resultText)
-    .addFields(
-      { name: 'Final Slots', value: finalResult, inline: false },
-      { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}`, inline: false }
-    );
-
-  await message.edit({ embeds: [resultEmbed] });
+        await message.edit({ embeds: [resultEmbed] });
       }
     }, 700);
   }
