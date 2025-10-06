@@ -16,7 +16,7 @@ module.exports = {
             for (const [dbName, database] of Object.entries(db)) {
                 try {
                     const allEntries = Object.entries(await database.all());
-                    let foundAny = true;
+                    let foundAny = false;
 
                     for (const [key, value] of allEntries) {
                         let newKey = null;

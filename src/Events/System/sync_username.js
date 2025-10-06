@@ -14,8 +14,17 @@ module.exports = {
     const oldKeyBase = `${oldUsername}_${oldUser.id}`;
     const newKeyBase = `${newUsername}_${newUser.id}`;
 
+    // Skip databases that shouldnt sync usernames
+    const excludedDatabases = ['starboard', 'starboardids', 'staff_app_questions', 'staff_app_applications'];
+
     for (const [dbName, database] of Object.entries(db)) {
+      if (excludedDatabases.includes(dbName)) {
+        console.log(`[UserUpdate] [${dbName}] Skipping (excluded from username sync)`);
+        continue;
+      }
+
       try {
+        
         const allData = await database.all();
 
         for (const [guildKey, guildData] of Object.entries(allData)) {
