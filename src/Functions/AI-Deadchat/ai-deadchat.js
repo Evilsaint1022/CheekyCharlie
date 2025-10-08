@@ -134,7 +134,6 @@ function messageHandler(message) {
 }
 
 function startDeadchat(client) {
-    console.log("[💭] [AI Deadchat] Starting AI Deadchat...");
 
     if (isScheduled) {
         console.log('[💭] [AI Deadchat] Already scheduled, skipping start.');

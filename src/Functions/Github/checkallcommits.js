@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const fetch = require('node-fetch');
 const db = require('../../Handlers/database');
 
