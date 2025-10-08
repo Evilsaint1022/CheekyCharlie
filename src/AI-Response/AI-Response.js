@@ -25,6 +25,10 @@ function encrypt(text) {
  */
 
 async function handleAIMessage(client, message) {
+
+const DiscordPings = message.content.match(/<@&\d+>|<@!?\d+>|@(everyone|here)/g) || [];
+
+  if (DiscordPings.length > 0) return;
   if (message.author.bot) return;
   if (!message.mentions.has(client.user)) return;
 
