@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const fetch = require('node-fetch');
 const db = require('../../Handlers/database');
 const { EmbedBuilder } = require('discord.js');
@@ -19,7 +19,6 @@ async function sendCommitNotification(client, commit) {
       'Unknown';
 
     if (!sha || !message || !htmlUrl) {
-      console.warn('[Github] Commit object missing essential properties. Skipping notification.');
       return;
     }
 

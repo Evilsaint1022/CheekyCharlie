@@ -1,6 +1,6 @@
 // /Commands/AI/aishia.js
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const fetch = require('node-fetch');
 
 module.exports = {

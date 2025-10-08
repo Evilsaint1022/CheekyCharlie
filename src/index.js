@@ -6,7 +6,7 @@
 //
 // ------------------------------------------------- @Index.js ----------------------------------------------------------------------
 
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const { loadEvents } = require('../src/Handlers/eventHandler');
 const { registerCommands } = require('./register-commands');
 const { loadFunctions }  = require('./Handlers/functionHandler');

@@ -1,6 +1,6 @@
 // ai-search.js
 const { SlashCommandBuilder } = require('discord.js');
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const OpenAI = require('openai');
 const db = require('../../../Handlers/database'); // make sure this is correct path
 
