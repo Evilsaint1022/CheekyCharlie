@@ -57,13 +57,21 @@ client.once("clientReady", async () => {
 
     // Status Groups
     const normalstatus = [
-    "Shopping at PaknSave",
+    "Shopping at the Four-Square",
     "✌🏻Nek Minnit",
     "Awww Gummon",
     "🗿Built Like a Mitre 10",
     "Made in New Zealand",
-    "@ping me for help",
-    "Dm if you have any issues."
+    "Dm if you have any issues.",
+    "Need some tissues for those issues?",
+    "Chur Broo",
+    "Yeah nah?",
+    "Nah Yeah?",
+    "Packing Shelves...",
+    "Manager is givivng me grief",
+    "Drifiting Jacinda",
+    "Why are we here just to suffer?",
+    "5 Big Booms for you!"
 ];
 
 const downstatus = [
