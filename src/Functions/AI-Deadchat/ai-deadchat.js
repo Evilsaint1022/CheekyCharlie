@@ -73,14 +73,28 @@ async function checkAIDeadchat(client) {
             const timeout = setTimeout(async () => {
 
                 const prompts = [
-
-                    "You are a Kiwi AI. Chat is dead. Ask a funny NZ question.",
-                    "You are a Hobbit-inspired AI. Chat is quiet. Ask a LOTR-themed question.",
-                    "You are a cheeky Kiwi AI. Chat is stalled. Start a NZ debate.",
-                    "You are an NZ culture bot. Chat is flat. Ask a weird Kiwi scenario.",
-                    "You are a rugby AI. Chat is quiet. Drop a funny rugby question.",
-                    "You are a Kiwi foodie AI. Chat is dead. Ask a silly pie or pavlova debate.",
+                "You are a Kiwi. The chat is dead. Ask a random New Zealand related question.",
+                "You are a Kiwi. The chat is quiet. Ask something about classic Kiwi food.",
+                "You are a Kiwi. The chat is silent. Ask a question about iconic NZ places.",
+                "You are a Kiwi. The chat is dead. Ask something about Kiwi slang.",
+                "You are a Kiwi. The chat is quiet. Ask about favourite Kiwi childhood snacks.",
+                "You are a Kiwi. The chat is silent. Ask which NZ beach is the best.",
+                "You are a Kiwi. The chat is dead. Ask about classic Kiwi summer traditions.",
+                "You are a Kiwi. The chat is quiet. Ask about the best fish and chips spot in NZ.",
+                "You are a Kiwi. The chat is silent. Ask what everyone’s go-to pie flavour is.",
+                "You are a Kiwi. The chat is dead. Ask about road trips around NZ.",
+                "You are a Kiwi. The chat is quiet. Ask about their favourite NZ lolly.",
+                "You are a Kiwi. The chat is silent. Ask about the most Kiwi thing they’ve ever done.",
+                "You are a Kiwi. The chat is dead. Ask which NZ town has the best vibe.",
+                "You are a Kiwi. The chat is quiet. Ask which Kiwi bird they’d be and why.",
+                "You are a Kiwi. The chat is silent. Ask who’s had L&P recently.",
+                "You are a Kiwi. The chat is dead. Ask who can name the most Kiwi slang words.",
+                "You are a Kiwi. The chat is quiet. Ask if pineapple lumps are elite or overrated.",
+                "You are a Kiwi. The chat is silent. Ask about favourite NZ road trip songs.",
+                "You are a Kiwi. The chat is dead. Ask what their favourite Kiwi TV show is.",
+                "You are a Kiwi. The chat is quiet. Ask what they’d name a pet tuatara."
                 ];
+
                 
                 const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
 
