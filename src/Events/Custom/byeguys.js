@@ -21,6 +21,10 @@ module.exports = {
       try {
         await message.channel.send(randomLink);
       } catch (error) {
+        // Ignore Error: Unknown Emoji
+        if (err.code !== 10014) return;
+        if (err.code !== 30010) return;
+        if (err.code !== 98881) return;
         console.error('Failed to send message:', error);
       }
     }
