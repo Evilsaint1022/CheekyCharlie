@@ -79,7 +79,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/pay` - Pay other members Ferns.
 - `/blackjack-duels` - Play Blackjack with other users.
 - `/blackjack-singleplayer` - Starts a game of blackjack.
-- `/russian-roulette` - Starts a game of russian roulette.
+- `/russian-roulette` - Play a game of russian roulette with other users.
 - `/slots` - Starts a game of slots.
 
 
