@@ -8,7 +8,7 @@ const GLOBAL_COOLDOWN_KEY = `russian_roulette`;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('russian_roulette')
+    .setName('russian-roulette')
     .setDescription('Challenge another member to Russian Roulette. Winner takes the pot.')
     .addUserOption(opt =>
       opt.setName('target').setDescription('Member to challenge').setRequired(true)
