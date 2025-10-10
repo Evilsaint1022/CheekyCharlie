@@ -832,6 +832,103 @@ const commands = [
     {
         name: 'stop',
         description: 'Staff command to calm down the server.',
+    },
+    {
+        name: 'giveaway',
+        description: 'Create a giveaway',
+        options: [
+            {
+                name: 'prize',
+                description: 'The prize for the giveaway',
+                type: 3,
+                required: true,
+            },
+            {
+                name: 'duration',
+                description: 'Duration in minutes',
+                type: 4,
+                required: true,
+            },
+            {
+                name: 'winners',
+                description: 'Number of winners (default: 1)',
+                type: 4,
+                required: false,
+            },
+        ],
+    },
+    {
+        name: 'giveaway-setup',
+        description: 'Configure giveaway participation whitelist and blacklist settings',
+        options: [
+            {
+                name: 'whitelist',
+                description: 'Toggle whitelist - only whitelisted roles can join giveaways',
+                type: 1,
+            },
+            {
+                name: 'whitelist-add-role',
+                description: 'Add a role that can join giveaways',
+                type: 1,
+                options: [
+                    {
+                        name: 'role',
+                        description: 'The role to allow joining giveaways',
+                        type: 8,
+                        required: true,
+                    },
+                ],
+            },
+            {
+                name: 'whitelist-remove-role',
+                description: 'Remove a role from the giveaway participation whitelist',
+                type: 1,
+                options: [
+                    {
+                        name: 'role',
+                        description: 'The role to remove',
+                        type: 8,
+                        required: true,
+                    },
+                ],
+            },
+            {
+                name: 'blacklist',
+                description: 'Toggle blacklist - blacklisted roles cannot join giveaways',
+                type: 1,
+            },
+            {
+                name: 'blacklist-add-role',
+                description: 'Add a role that cannot join giveaways',
+                type: 1,
+                options: [
+                    {
+                        name: 'role',
+                        description: 'The role to prevent from joining giveaways',
+                        type: 8,
+                        required: true,
+                    },
+                ],
+            },
+            {
+                name: 'blacklist-remove-role',
+                description: 'Remove a role from the giveaway participation blacklist',
+                type: 1,
+                options: [
+                    {
+                        name: 'role',
+                        description: 'The role to remove',
+                        type: 8,
+                        required: true,
+                    },
+                ],
+            },
+            {
+                name: 'view',
+                description: 'View current giveaway settings',
+                type: 1,
+            },
+        ],
     }
 
 ];

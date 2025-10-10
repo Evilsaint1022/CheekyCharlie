@@ -55,6 +55,12 @@ If you need help with the bot or the code or want to report a bug, feel free to 
     ╰─> Counting (includes custom emojis)
     ╰─> Ban-Count (^banned)
     ╰─> One-Word-Story
+-> Giveaway System
+    ╰─> Create timed giveaways with multiple winners
+    ╰─> Join/Leave buttons for participation
+    ╰─> Automatic winner selection
+    ╰─> Reroll functionality
+    ╰─> Role-based whitelist/blacklist system
 -> Staff Applications
     ╰─> Customizable Questions
     ╰─> Organized in threads
@@ -234,3 +240,15 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 ### **▸ Venting Setup**
 - `/set-vent-channel` — Set the vent channel where confessions will go.
 - `/remove-vent-channel` — Remove the vent channel (Disables confessions).
+
+### **▸ Giveaway**
+- `/giveaway` — Create a giveaway with a prize, duration, and number of winners.
+
+### **▸ Giveaway Setup**
+- `/giveaway-setup whitelist` — Toggle whitelist mode (only whitelisted roles can join).
+- `/giveaway-setup whitelist-add-role` — Add a role to the giveaway participation whitelist.
+- `/giveaway-setup whitelist-remove-role` — Remove a role from the giveaway participation whitelist.
+- `/giveaway-setup blacklist` — Toggle blacklist mode (blacklisted roles cannot join).
+- `/giveaway-setup blacklist-add-role` — Add a role to the giveaway participation blacklist.
+- `/giveaway-setup blacklist-remove-role` — Remove a role from the giveaway participation blacklist.
+- `/giveaway-setup view` — View current giveaway settings.

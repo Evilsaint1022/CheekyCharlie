@@ -30,3 +30,6 @@ start.sh
 /src/Utilities/Storage/Staff/questions.json
 /src/Utilities/Storage/Staff/applications.json
 /src/Utilities/Storage/AI-Deadchat/ai-deadchat.json
+/src/Utilities/Storage/Giveaways/giveaways.json
+/src/Utilities/Storage/Giveaways/participants.json
+/src/Utilities/Storage/Giveaways/settings.json
