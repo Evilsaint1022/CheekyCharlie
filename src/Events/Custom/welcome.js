@@ -14,20 +14,22 @@ module.exports = {
         // Check if the message contains the word "welcome" (case-insensitive)
         if (message.content.toLowerCase().includes('welcome')) {
 
-            // Check if the message has already reached the maximum number of reactions
-            if (reactionCount >= MAX_REACTIONS) {
-                return;
-            }
+        // Check if the message has already reached the maximum number of reactions
+        if (reactionCount >= MAX_REACTIONS) return; // Stop if limit reached
 
-            try {
-                // Wait 3 seconds before reacting
-                await new Promise(resolve => setTimeout(resolve, 3000));
+        try {
+            // Wait 3 seconds before reacting
+            await new Promise(resolve => setTimeout(resolve, 3000));
 
-                // React with the custom emoji
-                await message.react('❤️');
-                reactionCount++;
+            // React with the custom emoji
+            await message.react('❤️');
+            reactionCount++;
             } catch (error) {
-                console.error('Failed to add reaction:', error);
+            // Ignore Error: Unknown Emoji
+            if (err.code !== 10014) return;
+            if (err.code !== 30010) return;
+            if (err.code !== 98881) return;
+            console.error('Failed to add reaction:', error);
             }
         }
     },
