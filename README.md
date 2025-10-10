@@ -7,18 +7,23 @@
 Welcome to **CheekyCharlie** — a modular Discord bot built as a fun hobby project!  
 This bot is completely open-source to promote transparency and inspire others to create their own bots.
 
-**Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Developer)**  
-  
 (This project uses dotdatabase made by NZ-Linix)  
 https://github.com/NZ-Linix/dotdatabase
 
-
 - **This code is free to use.**  
 - **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
+- **Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Developer)**  
+
+# **🌿CheekyCharlie Support Server🌿**
+
+[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
+
+If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
+`@evilsaint1022` `@linix_red`
 
 
 
-# ✨ - Features
+# **🌿Features🌿**
 ```
 -> Full Economy System  
     ╰─> Bank and Wallet  
@@ -232,18 +237,3 @@ https://github.com/NZ-Linix/dotdatabase
 ### **Venting**
 - `/set-vent-channel` — Set the vent channel where confessions will go.
 - `/remove-vent-channel` — Remove the vent channel (Disables confessions).
-
-
-
-# **🌐 - CheekyCharlie Support Server**
-
-[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
-
-
-
-# **🐞 - Bugs**
-
-- --> [Check the Bugs Forums](https://discord.com/channels/1346955021614317619/1390129457070866593) <---
-
-If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
-`@evilsaint1022` `@linix_red`
