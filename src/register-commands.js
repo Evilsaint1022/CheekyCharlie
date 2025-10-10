@@ -256,7 +256,7 @@ const commands = [
         ],
     },
     {
-        name: 'russian_roulette',
+        name: 'russian-roulette',
         description: 'Challenge another member to Russian Roulette. Winner takes the pot.',
         options: [
             {
