@@ -33,7 +33,10 @@ const db = {
     onewordstory: new DotDB("./src/Utilities/Storage/Settings/OneWordStory/onewordstory.json"),
     staff_app_questions: new DotDB("./src/Utilities/Storage/Staff/questions.json"),
     staff_app_applications: new DotDB("./src/Utilities/Storage/Staff/applications.json"),
-    ai_deadchat: new DotDB("./src/Utilities/Storage/AI-Deadchat/ai-deadchat.json")
+    ai_deadchat: new DotDB("./src/Utilities/Storage/AI-Deadchat/ai-deadchat.json"),
+    giveaways: new DotDB("./src/Utilities/Storage/Giveaways/giveaways.json"),
+    giveaway_participants: new DotDB("./src/Utilities/Storage/Giveaways/participants.json"),
+    giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json")
 }
 
 module.exports = db;
