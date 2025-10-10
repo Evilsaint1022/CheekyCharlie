@@ -31,7 +31,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
     ╰─> Inventory
     ╰─> Shop
 -> Economy Games 
-    ╰─> Blackjack (Signle- and Multiplayer)
+    ╰─> Blackjack-singleplayer
+    ╰─> Blackjack-Duels
+    ╰─> Russian-Roulette
     ╰─> Slots
 -> Level System
     ╰─> Level Roles (stickyRoles)
