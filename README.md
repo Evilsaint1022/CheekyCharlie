@@ -221,19 +221,19 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
-### **Staff Applications**
+### **Staff Applications Setup**
 - `/accept-application` — Accept an application.
 - `/decline-application` — Decline an application.
 - `/manage-staff-apps-questions` — Add / Remove / Sort the questions.
 - `/set-staff-app-channel` — The channel where new applications will go.
 - `/remove-staff-app-channel` — Remove the channel. (Disables staff apps)
 
-### **AI Deadchat**
+### **AI Deadchat Setup**
 - `/set-deadchat-channel` — Set the AI Deadchat channel to send messages in.
 - `/set-deadchat-role` — The role to mention in the messages.
 - `/set-deadchat-duration` — The time after the chat goes dead to the message being sent.
 - `/toggle-deadchat` — Toggle the AI deadchat on or off.
 
-### **Venting**
+### **Venting Setup**
 - `/set-vent-channel` — Set the vent channel where confessions will go.
 - `/remove-vent-channel` — Remove the vent channel (Disables confessions).
