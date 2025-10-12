@@ -10,6 +10,8 @@ const IV = Buffer.alloc(16, 0);
 
 const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
 
+const cheekycharlie = `<:CheekyCharlie:1426934124060610713>`;
+
 function encrypt(text) {
   const cipher = crypto.createCipheriv('aes-256-cbc', ENCRYPTION_KEY, IV);
   let encrypted = cipher.update(text, 'utf8', 'hex');
@@ -73,7 +75,7 @@ const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
     const reply = response.choices[0].message.content;
     console.log(`🤖 Groq Reply: ${reply}`);
-    message.reply(reply);
+    message.reply(cheekycharlie + reply);
 
     memory.push({ role: 'assistant', content: reply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
