@@ -61,7 +61,7 @@ async function changeCotwColors(client) {
     } while (colors.length > 1 && newColor === previousColor);
 
     try {
-      await role.setColor(newColor);
+      await role.edit({ newColor });
       console.log(`[COTW] Updated color for role '${role.name}' in guild '${guild.name}'`);
 
       // Save the colors and update lastChangeTime
