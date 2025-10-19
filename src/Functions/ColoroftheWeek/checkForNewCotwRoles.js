@@ -48,7 +48,7 @@ async function checkForNewCotwRoles(client) {
     const newColor = colors[Math.floor(Math.random() * colors.length)];
 
     try {
-      await role.setColor(newColor);
+      await role.edit({ newColor });
       console.log(`[COTW] Assigned initial color to '${role.name}' in '${guild.name}'`);
 
       await db.coloroftheweek.set(guildKey, {
