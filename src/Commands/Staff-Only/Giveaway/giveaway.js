@@ -58,23 +58,19 @@ module.exports = {
         const endTime = Date.now() + (duration * 60 * 1000);
         const endTimestamp = Math.floor(endTime / 1000);
 
+        const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
+        const bottomRowFormat = "\n╰────────────────────────────────╯"
+
         const giveawayEmbed = new EmbedBuilder()
-            .setTitle(prize)
-            .setDescription(`**Winners:** ${winners}\n**Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n**Host:** ${interaction.user}`)
+            .setDescription(`${topRowFromat} **Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winners:** ${winners}${bottomRowFormat}`)
             .setColor('#4e5180')
-            .setFooter({ text: `0 participants` })
-            .setTimestamp(endTime);
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('giveaway_join')
-                    .setLabel('🎉 Join Giveaway')
+                    .setCustomId('giveaway_toggle')
+                    .setLabel('🎉 Enter Giveaway')
                     .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId('giveaway_leave')
-                    .setLabel('📤 Leave Giveaway')
-                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId('giveaway_view-participants')
                     .setLabel('👤 View participants')
