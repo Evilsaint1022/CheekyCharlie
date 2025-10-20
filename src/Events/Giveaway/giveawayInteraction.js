@@ -24,9 +24,8 @@ module.exports = {
             });
         }
 
-        // Handle reroll button
         if (customId === 'giveaway_reroll') {
-            // Check if user has permission (admin or whitelisted role)
+            
             const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
             const member = guild.members.cache.get(user.id);
             const hasAdminPermission = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
@@ -46,7 +45,6 @@ module.exports = {
                 });
             }
 
-            // Get participants
             const participants = await db.giveaway_participants.get(giveawayId) || [];
 
             if (participants.length <= 1) {
@@ -56,7 +54,6 @@ module.exports = {
                 });
             }
 
-            // Pick new random winners
             const winners = [];
             const participantsCopy = [...participants];
             const numWinners = Math.min(giveawayData.winners, participants.length);
@@ -87,6 +84,32 @@ module.exports = {
                 content: '✅ Giveaway rerolled successfully!',
                 flags: 64
             });
+        }
+
+        if (customId === "giveaway_view-participants") {
+
+            const participantsMap = await db.giveaway_participants.get(giveawayId + "_map") || {};
+            const messageLink = message.url;
+
+            const participants = Object.values(participantsMap);
+
+            if ( participants.length <= 0 ) {
+                const participantsEmbed = new EmbedBuilder()
+                    .setTitle("Participants for " + messageLink)
+                    .setDescription(`There are no participants in this giveaway.`)  
+                    
+                await interaction.reply({ embeds: [participantsEmbed], flags: 64 });
+                return;
+            }
+
+            const participantsEmbed = new EmbedBuilder()
+                .setTitle("Participants for " + messageLink)
+                .setDescription(`${participants.join("\n")}`)
+                .setFooter({ text: `${participants.length} participant${participants.length !== 1 ? 's' : ''}` });
+
+            await interaction.reply({ embeds: [participantsEmbed], flags: 64 });
+            return;
+
         }
 
         if (giveawayData.ended) {
@@ -133,6 +156,10 @@ module.exports = {
             participants.push(user.id);
             await db.giveaway_participants.set(giveawayId, participants);
 
+            const participantsMap = await db.giveaway_participants.get(giveawayId + "_map") || {};
+            participantsMap[user.id] = user.username
+            await db.giveaway_participants.set(giveawayId + "_map", participantsMap);
+ 
             const embed = message.embeds[0];
             const newEmbed = EmbedBuilder.from(embed)
                 .setFooter({ text: `${participants.length} participant${participants.length !== 1 ? 's' : ''}` });
@@ -157,6 +184,10 @@ module.exports = {
 
             participants = participants.filter(id => id !== user.id);
             await db.giveaway_participants.set(giveawayId, participants);
+
+            const participantsMap = await db.giveaway_participants.get(giveawayId + "_map") || {};
+            delete participantsMap[user.id];
+            await db.giveaway_participants.set(giveawayId + "_map", participantsMap);
 
             const embed = message.embeds[0];
             const newEmbed = EmbedBuilder.from(embed)

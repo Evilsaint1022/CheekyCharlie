@@ -73,8 +73,12 @@ module.exports = {
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId('giveaway_leave')
-                    .setLabel('❌ Leave Giveaway')
-                    .setStyle(ButtonStyle.Danger)
+                    .setLabel('📤 Leave Giveaway')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId('giveaway_view-participants')
+                    .setLabel('👤 View participants')
+                    .setStyle(ButtonStyle.Primary)
             );
 
         const giveawayMessage = await interaction.channel.send({
