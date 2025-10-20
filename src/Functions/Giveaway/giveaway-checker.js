@@ -50,6 +50,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         let winnerMentions = '';
         let replyContent = '';
+        let winners = [];
 
         if (participants.length === 0) {
             
@@ -57,13 +58,12 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         } else if (participants.length <= giveawayData.winners) {
             
-            const winners = participants;
+            winners = participants;
             winnerMentions = winners.map(id => `<@${id}>`).join(', ');
             replyContent = `🎉 ${winnerMentions} won **${giveawayData.prize}**!`;
 
         } else {
             
-            const winners = [];
             const participantsCopy = [...participants];
 
             for (let i = 0; i < giveawayData.winners; i++) {
@@ -77,12 +77,14 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         }
 
+        const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
+        const bottomRowFormat = "\n╰────────────────────────────────╯"
+
+        const endedEmbed = new EmbedBuilder()
+            .setDescription(`${topRowFromat} **Prize:** ${giveawayData.prize}\n **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winner(s):** ${winnerMentions}${bottomRowFormat}`)
+            .setColor('#4e5180')
+
         const originalEmbed = message.embeds[0];
-        const endedEmbed = EmbedBuilder.from(originalEmbed)
-            .setTitle(giveawayData.prize)
-            .setColor('#808080')
-            .setDescription(`**Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n**Host:** <@${giveawayData.hostId}>${winnerMentions ? `\n\n**Winner(s):** ${winnerMentions}` : ''}`)
-            .setFooter({ text: `${participants.length} participant${participants.length !== 1 ? 's' : ''}` });
 
         const components = [];
         if (participants.length > 1 && giveawayData.winners < participants.length) {
@@ -90,7 +92,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
                 .addComponents(
                     new ButtonBuilder()
                         .setCustomId('giveaway_reroll')
-                        .setLabel('🔄 Reroll')
+                        .setLabel('🔄')
                         .setStyle(ButtonStyle.Primary)
                 );
             components.push(rerollButton);
@@ -106,6 +108,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
         });
 
         giveawayData.ended = true;
+        giveawayData.winnerIds = winners;
         await db.giveaways.set(giveawayId, giveawayData);
 
         console.log(`[🎉] [GIVEAWAY] Successfully ended giveaway ${giveawayId} with ${participants.length} participants`);
