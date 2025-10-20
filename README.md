@@ -20,7 +20,7 @@ https://github.com/NZ-Linix/dotdatabase
 [Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
-`@evilsaint1022` `@linix_red`
+`@evilsaint1022` `nz_linix`
 
 
 
