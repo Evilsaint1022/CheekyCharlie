@@ -13,7 +13,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 - **This code is free to use.**  
 - **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
-- **Created by Evilsaint1022 (Owner, Developer) and NZ-Linix (Owner, Developer)**  
+- **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
 # **🌿CheekyCharlie Support Server🌿**
 
