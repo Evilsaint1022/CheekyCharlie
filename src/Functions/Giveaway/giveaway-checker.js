@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../../Handlers/database");
 
-const CHECK_INTERVAL = 1000;
+const CHECK_INTERVAL = 5000;
 
 async function checkGiveaways(client) {
 
@@ -53,7 +53,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         if (participants.length === 0) {
             
-            replyContent = `The giveaway for **${giveawayData.prize}** has ended, but there were no participants! 😢`;
+            replyContent = `The giveaway for **${giveawayData.prize}** has ended, but there were no participants!`;
 
         } else if (participants.length <= giveawayData.winners) {
             

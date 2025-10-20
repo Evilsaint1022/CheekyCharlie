@@ -242,10 +242,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-vent-channel` — Set the vent channel where confessions will go.
 - `/remove-vent-channel` — Remove the vent channel (Disables confessions).
 
-### **▸ Giveaway**
-- `/giveaway` — Create a giveaway with a prize, duration, and number of winners.
-
 ### **▸ Giveaway Setup**
+- `/giveaway` — Create a giveaway with a prize, duration, and number of winners.
 - `/giveaway-setup whitelist` — Toggle whitelist mode (only whitelisted roles can join).
 - `/giveaway-setup whitelist-add-role` — Add a role to the giveaway participation whitelist.
 - `/giveaway-setup whitelist-remove-role` — Remove a role from the giveaway participation whitelist.
