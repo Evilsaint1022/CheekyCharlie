@@ -77,7 +77,7 @@ module.exports = async function updateStarboard(reaction) {
     }
 
     const lines = [
-      `${reaction.emoji.toString()} | **${currentCount}** | ${message.url}`,
+      `${starboardEmoji} | **${currentCount}** | ${message.url}`,
       `**Author:** ${authorName}`,
       `**Content:** ${messageContent}`,
     ];
