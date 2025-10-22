@@ -1,4 +1,4 @@
-# 🌿 <ins>The CheekyCharlie Discord Bot</ins> 🌿
+# 🌿 The CheekyCharlie Discord Bot 🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -15,16 +15,16 @@ https://github.com/NZ-Linix/dotdatabase
 - **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-# **🌿<ins>CheekyCharlie Support Server</ins>🌿**
+# **🌿CheekyCharlie Support Server🌿**
 
-🌿▸[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
+[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
 
 
 
-# **🌿<ins>Features</ins>🌿**
+# **🌿Features🌿**
 
 - 🌿Full Economy System
 - 🌿Economy Games
@@ -43,9 +43,12 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿AI Deadchat
 - 🌿Venting
 
-# 🌿・**<ins>Available for Everyone</ins>**・🌿
 
-### **🌿▸ <ins>Economy</ins>**
+
+
+# 🌿・**_Available for Everyone:_**・🌿
+
+### **🌿▸ Economy**
 - `/leaderboard` — Balance/Level Leaderboard.
 - `/balance` — Check your Ferns balance.
 - `/deposit` — Deposit Ferns into your Bank.
@@ -60,92 +63,92 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/slots` - Starts a game of slots.
 
 
-### **🌿▸ <ins>Shop</ins>**
+### **🌿▸ Shop**
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.
 - `/use` - uses the item bought from from the shop.
 - `/refund` - refunds the item from the shop.
 - `/inventory` - checks the items in the users inventory.
 
-### **🌿▸ <ins>Join-to-Create VC</ins>**
+### **🌿▸ Join-to-Create VC**
 - `/lock-vc` - locks the join-to-create vc channel.
 - `/unlock-vc` - unlocks the join-to-create vc channel.
 
-### **🌿▸ <ins>One-Word-Story</ins>**
+### **🌿▸ One-Word-Story**
 - `/view-one-word-story` - view the current story in the server
 
-### **🌿▸ <ins>Counting</ins>**
+### **🌿▸ Counting**
 - `/counting` — View the current and next expected number for the counting.
 
-### **🌿▸ <ins>Staff Applications</ins>**
+### **🌿▸ Staff Applications**
 - `/staff-apply` — Start a new staff application.
 
-### **🌿▸ <ins>Venting</ins>**
+### **🌿▸ Venting**
 - `/confess` — Confess anonymously to the vent channel.
 
-### **🌿▸ <ins>Fun</ins>**
+### **🌿▸ Fun**
 - `/avatar` — View your's or someone elses avatar.
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/aishia` - Talk to Aishia using a prompt.
 
-### **🌿▸ <ins>Other</ins>**
+### **🌿▸ Other**
 - `/github` — Github link to CheeckyCharlies Repo.
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
 
 
 
-# 🌿・**<ins>Staff-Only Commands</ins>**・🌿
+# 🌿・**_Staff-Only Commands:_**・🌿
 
-### **🌿▸ <ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
+### **🌿▸ Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
-### **🌿▸ <ins>Echo Command</ins>**
+### **🌿▸ Echo Command**
 - `/echo` — Echo Messages
 
-### **🌿▸ <ins>Stop Command</ins>**
+### **🌿▸ Stop Command**
 - `/stop` - Staff Command to Cooldown Chat During Heated Moments.
 
-### **🌿▸ <ins>Counting Setup</ins>**
+### **🌿▸ Counting Setup**
 - `/set-counting-channel` - Sets the counting entertainment channel.
 - `/set-counting-emojis` - Sets custom emojis for reactions.
 - `/remove-counting-channel` - Removes the set counting channel.
 - `/remove-counting-emojis` - Removes custom emoji reactions for counting.
 
 
-### **🌿▸ <ins>RSS Feed Setup</ins>**
+### **🌿▸ RSS Feed Setup**
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
 - `/set-rss-topics` - Choose which topics you'd like to receive in your channel.
 - `/remove-rss-channel` - Removes the RSS feed news channel.
 
 
-### **🌿▸ <ins>Shop Setup</ins>**
+### **🌿▸ Shop Setup**
 - `/add-shop-item` - Adds items to the servers shop.
 - `/remove-shop-item` - Removes Shop items by name.
 - `/edit-shop-item` - Edits Items in the server shop.
 
 
-### **🌿▸ <ins>One-Word-Story Setup</ins>**
+### **🌿▸ One-Word-Story Setup**
 - `/set-story-channel` - Sets the channel for the one-word story game.
 - `/remove-story-channel` - Removes the currently set one-word story channel.
 - `/reset-one-word-story` - Resets the current one-word story in the server.
 
 
-### **🌿▸ <ins>NSFW Filter Setup</ins>**
+### **🌿▸ NSFW Filter Setup**
 - `/toggle-nsfw-filter` - toggles the AI nsfw filter.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
 
-### **🌿▸ <ins>AI Response Setup</ins>**
+### **🌿▸ AI Response Setup**
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
 
-### **🌿▸ <ins>Levels Setup</ins>**
+### **🌿▸ Levels Setup**
 - `/toggle-levels` - Toggles Levels On & Off
 - `/set-level-channel` — Set Level Notification Channel.
 - `/remove-level-channel` — Remove Level Notifcation Channel.
@@ -153,64 +156,64 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/remove-level-role` - Removes a level from the level system.
 
 
-### **🌿▸ <ins>Starboard Setup</ins>**
+### **🌿▸ Starboard Setup**
 - `/set-starboard-channel` - Sets Starboard Channel.
 - `/set-starboard-count` - Sets Amount of emojis needed for Starboard.
 - `/set-starboard-emoji` - Sets sets Starboard Emoji.
 
 
-### **🌿▸ <ins>Join to Create VC Setup</ins>**
+### **🌿▸ Join to Create VC Setup**
 - `/set-join-to-create-vc` - Sets the Join to Create VC channel.
 - `/remove-join-to-crate-vc` - Removes the Join to Create VC channel.
 
 
-### **🌿▸ <ins>Boosters Role Setup</ins>**
+### **🌿▸ Boosters Role Setup**
 - `/set-boosters-role` - Sets the servers boosters role Id.
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
 
-### **🌿▸ <ins>Verified Role Setup</ins>**
+### **🌿▸ Verified Role Setup**
 - `/set-verified-role` - Sets a verified role for the auto_kick event.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
 
-### **🌿▸ <ins>Drop Party Setup</ins>**
+### **🌿▸ Drop Party Setup**
 - `/set-drop-party-channel` — Set Drop Party Channel.
 - `/remove-drop-party-channel` — Remove Drop Party Channel.
 
 
-### **🌿▸ <ins>Color of the Week Setup</ins>**
+### **🌿▸ Color of the Week Setup**
 - `/set-color-of-the-week` - Sets a role for color of the week
 - `/remove-color-of-the-week` - Removes role set for color of the week
 
 
-### **🌿▸ <ins>BumpReminder Setup</ins>**
+### **🌿▸ BumpReminder Setup**
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 
 
-### **🌿▸ <ins>Ban-Count Setup</ins>**
+### **🌿▸ Ban-Count Setup**
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
-### **🌿▸ <ins>Staff Applications Setup</ins>**
+### **🌿▸ Staff Applications Setup**
 - `/accept-application` — Accept an application.
 - `/decline-application` — Decline an application.
 - `/manage-staff-apps-questions` — Add / Remove / Sort the questions.
 - `/set-staff-app-channel` — The channel where new applications will go.
 - `/remove-staff-app-channel` — Remove the channel. (Disables staff apps)
 
-### **🌿▸ <ins>AI Deadchat Setup</ins>**
+### **🌿▸ AI Deadchat Setup**
 - `/set-deadchat-channel` — Set the AI Deadchat channel to send messages in.
 - `/set-deadchat-role` — The role to mention in the messages.
 - `/set-deadchat-duration` — The time after the chat goes dead to the message being sent.
 - `/toggle-deadchat` — Toggle the AI deadchat on or off.
 
-### **🌿▸ <ins>Venting Setup</ins>**
+### **🌿▸ Venting Setup**
 - `/set-vent-channel` — Set the vent channel where confessions will go.
 - `/remove-vent-channel` — Remove the vent channel (Disables confessions).
 
-### **🌿▸ <ins>Giveaway Setup</ins>**
+### **🌿▸ Giveaway Setup**
 - `/giveaway` — Create a giveaway with a prize, duration, and number of winners.
 - `/giveaway-setup whitelist` — Toggle whitelist mode (only whitelisted roles can join).
 - `/giveaway-setup whitelist-add-role` — Add a role to the giveaway participation whitelist.
