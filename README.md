@@ -25,53 +25,24 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 
 # **🌿Features🌿**
-```
--> Full Economy System  
-    ╰─> Bank and Wallet  
-    ╰─> Daily Commands and Drop Events
-    ╰─> Inventory
-    ╰─> Shop
--> Economy Games 
-    ╰─> Blackjack-singleplayer
-    ╰─> Blackjack-Duels
-    ╰─> Russian-Roulette
-    ╰─> Slots
--> Level System
-    ╰─> Level Roles (stickyRoles)
--> Leaderboards
-    ╰─> Balance
-    ╰─> Levels
--> Voice Channels
-    ╰─>Join-to-create
--> Custom Starboard
--> Bump Reminder  
--> Custom AI Chat
-    ╰─> Ability to Deactivate the AI in specific channels
--> AI NSFW Content Filtering
-    ╰─> Ability to train the AI
--> RSS Feed news
-    ╰─> Choose from our library, or add own ones (self-host)
--> Color-of-the-Week ( updates every week )
--> Entertainment
-    ╰─> Counting (includes custom emojis)
-    ╰─> Ban-Count (^banned)
-    ╰─> One-Word-Story
--> Giveaway System
-    ╰─> Create timed giveaways with multiple winners
-    ╰─> Join/Leave buttons for participation
-    ╰─> Automatic winner selection
-    ╰─> Reroll functionality
-    ╰─> Role-based whitelist/blacklist system
--> Staff Applications
-    ╰─> Customizable Questions
-    ╰─> Organized in threads
-    ╰─> Echo messages between staff and user
--> AI Deadchat
-    ╰─> Generates funny, relaxing (...) question
-    ╰─> Ability to set duration, channel and role
--> Venting
-    ╰─> Make an anonymous confession to the vent channel
-```
+
+- 🌿Full Economy System
+- 🌿Economy Games
+- 🌿Level System
+- 🌿Leaderboards
+- 🌿Voice Channels
+- 🌿Custom Starboard
+- 🌿Bump Reminder
+- 🌿Custom AI Chat
+- 🌿AI NSFW Content Filtering
+- 🌿RSS Feed news
+- 🌿Color-of-the-Week ( updates every week )
+- 🌿Entertainment
+- 🌿Giveaway System
+- 🌿Staff Applications
+- 🌿AI Deadchat
+- 🌿Venting
+
 
 
 
