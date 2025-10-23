@@ -46,7 +46,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 
 
-# 🌿・**_Available for Everyone:_**・🌿
+# 🌿・**_Available for Everyone_**・🌿
 
 ### **🌿▸ Economy**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -100,7 +100,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 
 
-# 🌿・**_Staff-Only Commands:_**・🌿
+# 🌿・**_Staff-Only Commands_**・🌿
 
 ### **🌿▸ Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
