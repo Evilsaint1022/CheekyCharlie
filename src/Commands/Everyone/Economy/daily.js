@@ -62,6 +62,7 @@ module.exports = {
         }
 
         // Get current balance
+        let bank = await db.bank.get(`${keyBase}.bank`) || 0;
         let balance = await db.wallet.get(`${keyBase}.balance`) || 0;
         balance += rewardAmount;
 
@@ -77,6 +78,7 @@ module.exports = {
                        { name: ``, value: `You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`, inline: false},
                        { name: '', value: padText(`${middle}`), inline: false },
                        { name: padText('💰 Wallet'), value: padText(`${ferns}${balance.toLocaleString()}`), inline: true },
+                       { name: padText('🏦 Bank'), value: padText(`${ferns}${bank.toLocaleString()}`), inline: true },
                        { name: '', value: padText(`${middle}`), inline: false },
                        { name: ``, value: `${bottom}`, inline: false},
 
