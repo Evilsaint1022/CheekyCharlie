@@ -23,8 +23,6 @@ module.exports = {
         const ferns = "<:Ferns:1395219665638391818>"
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
-        const dateStamp = `${new Date().toLocaleDateString('en-GB')}`
-        const timeStamp = `${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}`
 
         const top =    `**╭─── 🌿${targetUser.username}'s Balance ───╮**`;
         const bottom = `**╰──────[ Use Your Ferns Wisely! ]──────╯**`;
@@ -42,8 +40,10 @@ module.exports = {
         .setTitle(`${top}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
         .addFields(
+            { name: ``, value: ``, inline: false},
             { name: '💰 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
             { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true },
+            { name: ``, value: ``, inline: false},
             { name: ``, value: `${bottom}`, inline: false},
         )
 
