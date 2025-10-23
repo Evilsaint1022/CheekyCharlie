@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
+const { timeStamp } = require('console');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,6 +23,11 @@ module.exports = {
         const ferns = "<:Ferns:1395219665638391818>"
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
+        const dateStamp = `${new Date().toLocaleDateString('en-GB')}`
+        const timeStamp = `${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}`
+
+        const top =    `**╭─── 🌿${targetUser.username}'s Balance ───╮**`;
+        const bottom = `**╰──────[ Use Your Ferns Wisely! ]──────╯**`;
 
         // Replace dots with underscores for the database key only
         const safeUsername = targetUser.username.replace(/\./g, '_');
@@ -33,14 +39,13 @@ module.exports = {
 
         const embed = new EmbedBuilder()
         .setColor(0xFFFFFF)
-        .setTitle(`**${targetUser.username}'s Balance**`)
+        .setTitle(`${top}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
         .addFields(
             { name: '💰 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
-            { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true }
+            { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true },
+            { name: ``, value: `${bottom}`, inline: false},
         )
-        .setFooter({ text: `Use Your Ferns Wisely!` })
-        .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 
