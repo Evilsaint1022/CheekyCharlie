@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
 const { timeStamp } = require('console');
+const { text } = require('stream/consumers');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,8 +25,14 @@ module.exports = {
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
 
+        const space = 'ㅤ'
+        
+        function padText(text, padLength = 3) {
+        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
+        }
+
         const top =    `**╭─── 🌿${targetUser.username}'s Balance ───╮**`;
-        const bottom = `**╰──────[ Use Your Ferns Wisely! ]──────╯**`;
+        const bottom = `**╰─────── Use Your Ferns Wisely! ───────╯**`;
 
         // Replace dots with underscores for the database key only
         const safeUsername = targetUser.username.replace(/\./g, '_');
@@ -40,10 +47,10 @@ module.exports = {
         .setTitle(`${top}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
         .addFields(
-            { name: ``, value: ``, inline: false},
-            { name: '💰 Wallet', value: `${ferns}${balance.toLocaleString()}`, inline: true },
+            { name: ``, value: padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`), inline: false},
+            { name: padText('💰 Wallet'), value: padText(`${ferns}${balance.toLocaleString()}`), inline: true },
             { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true },
-            { name: ``, value: ``, inline: false},
+            { name: ``, value: padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`), inline: false},
             { name: ``, value: `${bottom}`, inline: false},
         )
 

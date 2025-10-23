@@ -25,6 +25,16 @@ module.exports = {
         const keyBase = `${safeUsername}_${user.id}`;
         const timestamp = new Date().toLocaleTimeString();
 
+        const space = 'ㅤ'
+        
+        function padText(text, padLength = 3) {
+        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
+        }
+
+        const top = `╭────── 🌿${username}'s Daily ──────╮`;
+        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const bottom = `**╰───── Come back tomorrow for more! ─────╯**`;
+
         const lastClaim = await db.lastclaim.get(`${keyBase}.lastClaim`) || 0;
         const currentTime = Date.now();
 
@@ -62,12 +72,16 @@ module.exports = {
         // Build embed
         const embed = new EmbedBuilder()
             .setColor(0xFFFFFF)
-            .setTitle(`${username}'s Daily ${ferns}'s`)
-            .setDescription(`You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`)
-            .addFields({ name: 'Total Balance', value: `${ferns}${balance.toLocaleString()}`, inline: true })
+            .setTitle(`${top}`)
+            .addFields(
+                       { name: ``, value: `You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`, inline: false},
+                       { name: '', value: padText(`${middle}`), inline: false },
+                       { name: padText('💰 Wallet'), value: padText(`${ferns}${balance.toLocaleString()}`), inline: true },
+                       { name: '', value: padText(`${middle}`), inline: false },
+                       { name: ``, value: `${bottom}`, inline: false},
+
+            )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-            .setFooter({ text: 'Come back tomorrow for more!' })
-            .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
 
