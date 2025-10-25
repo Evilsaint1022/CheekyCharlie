@@ -8,6 +8,12 @@ const repo = 'CheekyCharlie';
 const discordChannelId = '1347795697369350244';
 const repoKey = `${owner}_${repo}`;
 
+function padText(text, padLength = 3) {
+        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
+        }
+
+        const space = 'ㅤ'
+
 async function sendCommitNotification(client, commit) {
   try {
     const sha = commit?.sha;
@@ -23,12 +29,7 @@ async function sendCommitNotification(client, commit) {
     const bottom = `╰─────────────────────────────────╯`;
 
     const centeredmessage = padText(`${message}`);
-
-    function padText(text, padLength = 3) {
-        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-        }
-
-        const space = 'ㅤ'
+    const centeredauthor = padText(`${authorName}`);
 
     if (!sha || !message || !htmlUrl) {
       return;
@@ -59,7 +60,7 @@ async function sendCommitNotification(client, commit) {
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
       .setTitle(`**${top}**`)
-      .setDescription(`\n\n${commitlink}\n\n${middle}\n\`${centeredmessage}\`\n${middle}\n\n**By ${authorName}**\n\n**${bottom}**`)
+      .setDescription(`\n\n${commitlink}\n\n${middle}\n\`${centeredmessage}\`\n${middle}\n\n**By ${centeredauthor}**\n\n**${bottom}**`)
       .setImage(repoImageUrl)
       .setColor(0xFFFFFF)
       .setTimestamp(new Date());
