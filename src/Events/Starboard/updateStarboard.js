@@ -14,6 +14,12 @@ module.exports = async function updateStarboard(reaction) {
   const messageId = message.id;
   const guildKey = `${guildName}_${guildId}`; // Guild key for storage
 
+  function padText(text, padLength = 3) {
+        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
+        }
+
+        const space = 'ㅤ'
+
   try {
     const config = await db.starboard.get(guildKey);
     if (!config || !config.starboardChannel || !config.starboardEmoji || !config.starboardCount) return;
@@ -77,9 +83,11 @@ module.exports = async function updateStarboard(reaction) {
     }
 
     const lines = [
-      `${starboardEmoji} | **${currentCount}** | ${message.url}`,
-      `**Author:** ${authorName}`,
-      `**Content:** ${messageContent}`,
+      `**╭──────────────────────── 🌿 STARBOARD ──────────────────────────╮**`,
+      padText(`${starboardEmoji} | **${currentCount}** | ${message.url}`),
+      padText(`**Author:** ${authorName}`),
+      padText(`**Content:** ${messageContent}`),
+      `**╰────────────────────────────────────────────────────────────────╯**`,
     ];
 
     if (message.attachments.size > 0) {
