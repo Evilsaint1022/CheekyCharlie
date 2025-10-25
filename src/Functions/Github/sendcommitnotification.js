@@ -24,12 +24,12 @@ async function sendCommitNotification(client, commit) {
       commit?.author?.login ||
       'Unknown';
 
-    const top = `╭─── 🌿 ${repo} - Updates ───╮`;
+    const top = `**╭─── 🌿 ${repo} - Updates ───╮**`;
     const middle = padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`);
-    const bottom = `╰─────────────────────────────────╯`;
+    const bottom = `**╰─────────────────────────────────╯**`;
 
-    const centeredmessage = padText(`${message}`);
-    const centeredauthor = padText(`${authorName}`);
+    const centeredmessage = padText(`**${message}**`);
+    const centeredauthor = padText(`**By ${authorName}**`);
 
     if (!sha || !message || !htmlUrl) {
       return;
@@ -59,8 +59,8 @@ async function sendCommitNotification(client, commit) {
     // Construct the embed
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
-      .setTitle(`**${top}**`)
-      .setDescription(`\n\n${commitlink}\n\n${middle}\n\`${centeredmessage}\`\n${middle}\n\n**By ${centeredauthor}**\n\n**${bottom}**`)
+      .setTitle(`${top}`)
+      .setDescription(`\n${space}\n${commitlink}\n\n${middle}\n${centeredmessage}\n${middle}\n\n${centeredauthor}\n\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xFFFFFF)
       .setTimestamp(new Date());
