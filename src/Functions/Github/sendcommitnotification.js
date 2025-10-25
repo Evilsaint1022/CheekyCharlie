@@ -26,7 +26,7 @@ async function sendCommitNotification(client, commit) {
       return;
     }
 
-    const commitlink = `[# _🔗COMMIT LINK HERE_](${htmlUrl})`
+    const commitlink = `[_🔗COMMIT LINK HERE_](${htmlUrl})`
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
