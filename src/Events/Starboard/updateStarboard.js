@@ -91,7 +91,7 @@ module.exports = async function updateStarboard(reaction) {
       padText(`${space}`),
       padText(`ㅤㅤㅤ${starboardEmoji} | **${currentCount}** | ${message.url}`),
       padText(`ㅤㅤㅤ**Author:** ${authorName}`),
-      padText(`ㅤㅤㅤ**Content:** ${messageContent}`),
+      `ㅤㅤㅤㅤㅤㅤ**Content:** ${messageContent}`,
       padText(`${space}`),
       padText(`${middle}`),
       padText(`${space}`),
