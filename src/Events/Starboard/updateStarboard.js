@@ -85,17 +85,17 @@ module.exports = async function updateStarboard(reaction) {
     const middle = padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`);
 
     const lines = [
-      padText(`**╭───────── 🌿 STARBOARD ──────────╮**`),
+      `**╭───────── 🌿 STARBOARD ──────────╮**`,
       padText(`${space}`),
-      padText(`${middle}`),
+      `${middle}`,
       padText(`${space}`),
-      padText(`ㅤㅤㅤ${starboardEmoji} | **${currentCount}** | ${message.url}`),
-      padText(`ㅤㅤㅤ**Author:** ${authorName}`),
-      `ㅤㅤㅤㅤㅤㅤ**Content:** ${messageContent}`,
+      padText(`${starboardEmoji} | **${currentCount}** | ${message.url}`),
+      padText(`**Author:** ${authorName}`),
+      `ㅤㅤㅤ**Content:** ${messageContent}`,
       padText(`${space}`),
-      padText(`${middle}`),
+      `${middle}`,
       padText(`${space}`),
-      padText(`**╰─────────────────────────────────╯**`),
+      `**╰─────────────────────────────────╯**`,
     ];
 
     if (message.attachments.size > 0) {
