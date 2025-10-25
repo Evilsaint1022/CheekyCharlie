@@ -28,7 +28,7 @@ async function sendCommitNotification(client, commit) {
     const middle = padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`);
     const bottom = `**╰─────────────────────────────────╯**`;
 
-    const centeredmessage = padText(`**${message}**`);
+    const centeredmessage = padText(`**\`${message}\`**`);
     const centeredauthor = padText(`**By ${authorName}**`);
 
     if (!sha || !message || !htmlUrl) {
