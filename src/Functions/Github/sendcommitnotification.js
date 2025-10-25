@@ -20,13 +20,13 @@ async function sendCommitNotification(client, commit) {
 
     const top = `╭─── 🌿 ${repo} - Updates ───╮`;
     const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
-    const bottom = `╰───────────────────────────────╯`;
+    const bottom = `╰─────────────────────────────────╯`;
 
     if (!sha || !message || !htmlUrl) {
       return;
     }
 
-    const commitlink = `[🔗 - Commit Link](${htmlUrl})`
+    const commitlink = `[# _🔗COMMIT LINK HERE_](${htmlUrl})`
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
@@ -51,7 +51,7 @@ async function sendCommitNotification(client, commit) {
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
       .setTitle(`**${top}**`)
-      .setDescription(`${commitlink}\n${middle}\n\`${message}\`\n${middle}\n**By ${authorName}**\n**${bottom}**`)
+      .setDescription(`${commitlink}\n\n${middle}\n\`${message}\`\n${middle}\n\n**By ${authorName}**\n\n**${bottom}**`)
       .setImage(repoImageUrl)
       .setColor(0xFFFFFF)
       .setTimestamp(new Date());
