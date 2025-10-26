@@ -77,12 +77,20 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         }
 
-        const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
-        const bottomRowFormat = "\n╰────────────────────────────────╯"
+        const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
+        const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+
+        const space = 'ㅤ'
+
+        const prize = `**Prize:** ${giveawayData.prize}`
+        const ended = ` **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>`
+        const winner = ` **Winner(s):** ${winnerMentions}`
 
         const endedEmbed = new EmbedBuilder()
-            .setDescription(`${topRowFromat} **Prize:** ${giveawayData.prize}\n **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winner(s):** ${winnerMentions}${bottomRowFormat}`)
-            .setColor('#4e5180')
+            .setTitle(`${topRowFromat}`)
+            .setDescription(`\n${space}\n${middle}\n${prize}\n${ended}\n${winner}\n${middle}\n${space}\n${bottomRowFormat}`)
+            .setColor('#FFFFFF')
 
         const originalEmbed = message.embeds[0];
 

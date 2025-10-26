@@ -121,12 +121,16 @@ module.exports = {
 
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
-            const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
-            const bottomRowFormat = "\n╰────────────────────────────────╯"
+            const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
+            const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+            const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+
+            const space = 'ㅤ'
 
             const endedEmbed_reroll = new EmbedBuilder()
-                .setDescription(`${topRowFromat} **Prize:** ${originalGiveawayData.prize}\n **Ended:** <t:${Math.floor(originalGiveawayData.endTime / 1000)}:F>\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}${bottomRowFormat}`)
-                .setColor('#4e5180')
+                .setTitle(`${topRowFromat}`)
+                .setDescription(`\n${space}\n${middle}\n**Prize:** ${originalGiveawayData.prize}\n **Ended:** <t:${Math.floor(originalGiveawayData.endTime / 1000)}:F>\n${middle}\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
+                .setColor('#FFFFFF')
 
             const channel = guild.channels.cache.get(originalGiveawayData.channelId);
             if (channel) {
@@ -219,12 +223,16 @@ module.exports = {
 
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
-            const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
-            const bottomRowFormat = "\n╰────────────────────────────────╯"
+            const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
+            const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+            const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+
+            const space = 'ㅤ'
 
             const endedEmbed_reroll = new EmbedBuilder()
-                .setDescription(`${topRowFromat} **Prize:** ${giveawayData.prize}\n **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}${bottomRowFormat}`)
-                .setColor('#4e5180')
+                .setTitle(`${topRowFromat}`)
+                .setDescription(`\n${space}\n${middle}\n**Prize:** ${giveawayData.prize}\n **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n${middle}\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
+                .setColor('#FFFFFF')
 
             await message.edit({ embeds: [endedEmbed_reroll] });
 

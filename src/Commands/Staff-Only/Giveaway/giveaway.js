@@ -58,12 +58,16 @@ module.exports = {
         const endTime = Date.now() + (duration * 60 * 1000);
         const endTimestamp = Math.floor(endTime / 1000);
 
-        const topRowFromat    = "╭────────── 🌿GIVEAWAY🌿 ─────────╮\n"
-        const bottomRowFormat = "\n╰────────────────────────────────╯"
+        const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
+        const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+
+        const space = 'ㅤ'
 
         const giveawayEmbed = new EmbedBuilder()
-            .setDescription(`${topRowFromat} **Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·\n **Winners:** ${winners}${bottomRowFormat}`)
-            .setColor('#4e5180')
+            .setTitle(`${topRowFromat}`)
+            .setDescription(`\n${space}\n${middle}\n**Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n**Winners:** ${winners}$\n${middle}\n${space}\n${bottomRowFormat}`)
+            .setColor('#FFFFFF')
 
         const row = new ActionRowBuilder()
             .addComponents(
