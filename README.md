@@ -222,3 +222,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/giveaway-setup blacklist-add-role` — Add a role to the giveaway participation blacklist.
 - `/giveaway-setup blacklist-remove-role` — Remove a role from the giveaway participation blacklist.
 - `/giveaway-setup view` — View current giveaway settings.
+
+### **🌿▸ Bank Channel Setup**
+- `/set-bank-channel` - Sets a channel where the bank interest messages will be sent.
+- `/remove-bank-channel` - Removes the Bank Channel that has been set.

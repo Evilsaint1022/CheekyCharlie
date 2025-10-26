@@ -929,6 +929,22 @@ const commands = [
                 type: 1,
             },
         ],
+    },
+    {
+        name: 'set-bank-channel',
+        description: 'Set the bank channel for this server.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for bank interest messages.',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'remove-bank-channel',
+        description: 'Removes the bank channel for this server.',
     }
 
 ];
