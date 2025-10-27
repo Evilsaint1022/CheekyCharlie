@@ -25,8 +25,10 @@ async function runDailyBankInterest(client) {
         return;
     }
 
+    const ferns = '<:Ferns:1395219665638391818>';
+
     const guildKey = `${guild.name}_${guild.id}`;
-    const Bankchannel = await db.settings.get(guildKey);
+    const Bankchannel = db.settings.get(`${guildKey}`) || {};
 
     for (const [key, entry] of Object.entries(bankEntries)) {
         if (!entry || typeof entry !== 'object' || entry.bank <= 0) continue;
@@ -54,11 +56,11 @@ async function runDailyBankInterest(client) {
         const interest = Math.round(calculatePercent(amount, 1));
         const newBalance = amount + interest;
 
-        const channel = Bankchannel?.bankchannel;
+        const channel = Bankchannel.bankchannel;
         if (channel) {
             const ch = guild.channels.cache.get(channel);
             if (ch) {
-                ch.send(`- 💰 **[Bank Interest]** ${safeKey}: **Old Wallet:** \`${amount}\`, **Interest:** \`${interest}\`, **New Wallet:** \`${newBalance}\``);
+                ch.send(`- 💰 **[Bank Interest]** ${safeKey}: **Old Wallet:** ${ferns} \`${amount}\`, **Interest:** ${ferns} \`${interest}\`, **New Wallet:** ${ferns} \`${newBalance}\``);
             } else {
                 console.warn(`[Bank Interest] Channel ID ${channel} not found in guild.`);
             }
