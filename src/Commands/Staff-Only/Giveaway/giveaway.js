@@ -66,7 +66,7 @@ module.exports = {
 
         const giveawayEmbed = new EmbedBuilder()
             .setTitle(`${topRowFromat}`)
-            .setDescription(`\n${space}\n${middle}\n**Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n**Winners:** ${winners}$\n${middle}\n${space}\n${bottomRowFormat}`)
+            .setDescription(`\n${space}\n${middle}\n**Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n**Winners:** ${winners}\n${middle}\n${space}\n${bottomRowFormat}`)
             .setColor('#FFFFFF')
 
         const row = new ActionRowBuilder()
