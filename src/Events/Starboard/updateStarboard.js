@@ -82,7 +82,7 @@ module.exports = async function updateStarboard(reaction) {
       messageContent = "[ Message contains stickers ]";
     }
 
-    const middle = padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`);
+    const middle = padText(`୨════════════|✦|══════════════୧`);
 
     const lines = [
       `${middle}`,
