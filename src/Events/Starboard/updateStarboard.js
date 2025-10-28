@@ -82,18 +82,18 @@ module.exports = async function updateStarboard(reaction) {
       messageContent = "[ Message contains stickers ]";
     }
 
-    const middle = padText(`୨════════════|✦|══════════════୧`);
+    const middle = `୨════════════|✦|══════════════୧`;
 
     const lines = [
       `${middle}`,
-      padText(`${starboardEmoji} | **${currentCount}** | ${message.url}`),
-      padText(`**Author:** ${authorName}`),
-      `ㅤㅤㅤ**Content:** ${messageContent}`,
+      `${starboardEmoji} | **${currentCount}** | ${message.url}`,
+      `**Author:** ${authorName}`,
+      `**Content:** ${messageContent}`,
     ];
 
     if (message.attachments.size > 0) {
       for (const attachment of message.attachments.values()) {
-        lines.push(`ㅤㅤㅤ**Attachments:** ${attachment.url}`);
+        lines.push(`**Attachments:** ${attachment.url}`);
       }
     }
 
