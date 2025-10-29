@@ -36,7 +36,8 @@ const db = {
     ai_deadchat: new DotDB("./src/Utilities/Storage/AI-Deadchat/ai-deadchat.json"),
     giveaways: new DotDB("./src/Utilities/Storage/Giveaways/giveaways.json"),
     giveaway_participants: new DotDB("./src/Utilities/Storage/Giveaways/participants.json"),
-    giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json")
+    giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json"),
+    specials: new DotDB("./src/Utilities/Storage/Settings/Specials/Specials.json")
 }
 
 module.exports = db;
