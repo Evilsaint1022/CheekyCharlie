@@ -77,7 +77,7 @@ module.exports = {
             .addFields(
                        { name: `You have claimed your daily reward of **${ferns}_${rewardAmount.toLocaleString()}_**!`, value: `ㅤㅤㅤ${middle}`, inline: false},
                        { name: `ㅤㅤ💰 Wallet` + `ㅤㅤㅤㅤ🏦 Bank`, value: '', inline: false },
-                       { name: `ㅤㅤ_${ferns}・${balance.toLocaleString()}_` + `ㅤㅤㅤㅤ_${ferns}・${bank.toLocaleString()}_`, value: `ㅤㅤㅤ${middle}`, inline: false },
+                       { name: `ㅤㅤ_${ferns}・${balance.toLocaleString()}_` + `ㅤㅤㅤ_${ferns}・${bank.toLocaleString()}_`, value: `ㅤㅤㅤ${middle}`, inline: false },
                        { name: `${bottom}`, value: '', inline: false},
 
             )
