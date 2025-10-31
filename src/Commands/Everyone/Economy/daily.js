@@ -75,10 +75,10 @@ module.exports = {
             .setColor(0xFFFFFF)
             .setTitle(`${top}`)
             .addFields(
-                       { name: `You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`, value: `ㅤㅤㅤ${middle}`, inline: false},
-                       { name: `ㅤㅤㅤ💰 Wallet` + `ㅤㅤㅤ🏦 Bank`, value: '', inline: false },
-                       { name: `ㅤㅤㅤ${ferns}${bank.toLocaleString()}` + `ㅤㅤㅤ${ferns}${bank.toLocaleString()}`, value: `ㅤㅤㅤ${middle}`, inline: false },
-                       { name: '', value: `${bottom}`, inline: false},
+                       { name: `You have claimed your daily reward of **${ferns}_${rewardAmount.toLocaleString()}_**!`, value: `ㅤㅤㅤ${middle}`, inline: false},
+                       { name: `ㅤㅤ💰 Wallet` + `ㅤㅤㅤㅤ🏦 Bank`, value: '', inline: false },
+                       { name: `ㅤㅤ_${ferns}・${balance.toLocaleString()}_` + `ㅤㅤㅤㅤ_${ferns}・${bank.toLocaleString()}_`, value: `ㅤㅤㅤ${middle}`, inline: false },
+                       { name: `${bottom}`, value: '', inline: false},
 
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
