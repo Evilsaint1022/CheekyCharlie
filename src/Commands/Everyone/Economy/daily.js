@@ -31,9 +31,9 @@ module.exports = {
         return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
         }
 
-        const top = `╭────── 🌿${username}'s Daily ──────╮`;
-        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
-        const bottom = `**╰───── Come back tomorrow for more! ─────╯**`;
+        const top = `**────── 🌿${username}'s Daily ──────**`;
+        const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`
+        const bottom = `**────── Come back tomorrow for more! ──────**`;
 
         const lastClaim = await db.lastclaim.get(`${keyBase}.lastClaim`) || 0;
         const currentTime = Date.now();
@@ -75,12 +75,10 @@ module.exports = {
             .setColor(0xFFFFFF)
             .setTitle(`${top}`)
             .addFields(
-                       { name: ``, value: `You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`, inline: false},
-                       { name: '', value: padText(`${middle}`), inline: false },
-                       { name: padText('💰 Wallet'), value: padText(`${ferns}${balance.toLocaleString()}`), inline: true },
-                       { name: padText('🏦 Bank'), value: padText(`${ferns}${bank.toLocaleString()}`), inline: true },
-                       { name: '', value: padText(`${middle}`), inline: false },
-                       { name: ``, value: `${bottom}`, inline: false},
+                       { name: `You have claimed your daily reward of **${ferns}${rewardAmount.toLocaleString()}**!`, value: `ㅤㅤㅤ${middle}`, inline: false},
+                       { name: `ㅤㅤㅤ💰 Wallet` + `ㅤㅤㅤ🏦 Bank`, value: '', inline: false },
+                       { name: `ㅤㅤㅤ${ferns}${bank.toLocaleString()}` + `ㅤㅤㅤ${ferns}${bank.toLocaleString()}`, value: `ㅤㅤㅤ${middle}`, inline: false },
+                       { name: '', value: `${bottom}`, inline: false},
 
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
