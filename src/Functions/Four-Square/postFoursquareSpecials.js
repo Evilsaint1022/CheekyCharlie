@@ -4,9 +4,14 @@ const { EmbedBuilder } = require("discord.js");
 const db = require("../../Handlers/database");
 
 module.exports = async (client) => {
-  const channelId = "1395774255928442880";
+  const channelId = "";
   const enableLoop = true;
   const interval = 5000; // 5 seconds
+
+  // If channel doesent exist
+    if (!channelId) {
+    return;
+    }
 
   // Load persistent data safely
   if (typeof db.specials.get("sent", {}) !== "object" || Array.isArray(db.specials.get("sent"))) {
