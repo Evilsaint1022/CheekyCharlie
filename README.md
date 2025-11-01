@@ -30,7 +30,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Voice Channels
 - 🌿Custom Starboard
 - 🌿Bump Reminder
-- 🌿Custom AI Chat
+- 🌿Custom AI Response
 - 🌿AI NSFW Content Filtering
 - 🌿RSS Feed news
 - 🌿Color-of-the-Week ( updates every week )
