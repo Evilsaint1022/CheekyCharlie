@@ -1,6 +1,7 @@
 /node_modules
 .env
 start.sh
+start.bat
 /src/Utilities/Storage/Settings/VoiceChannels/vc.json
 /src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json
 /src/Utilities/Storage/Settings/Whitelisted/whitelisted.json
@@ -33,3 +34,5 @@ start.sh
 /src/Utilities/Storage/Giveaways/giveaways.json
 /src/Utilities/Storage/Giveaways/participants.json
 /src/Utilities/Storage/Giveaways/settings.json
+/src/Utilities/Storage/Settings/Specials/Specials.json
+/src/Utilities/Storage/Settings/Qotd/lastqotd.json
