@@ -1,4 +1,4 @@
-# <img src="./src/Utilities/Emojis/CheekyCharlieHead.png" alt="Logo" width="50"> The CheekyCharlie Discord Bot
+# 🌿 **The CheekyCharlie Discord Bot** 🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
