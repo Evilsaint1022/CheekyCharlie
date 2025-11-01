@@ -1,7 +1,18 @@
 const db = require('../../Handlers/database'); // Adjust path as needed
 const { Colors } = require('discord.js');
 
-process.removeAllListeners('warning');
+let ignoreWarnings = true; // toggle this true/false
+
+if (ignoreWarnings === false) {
+  // Continue normally (show warnings)
+} else if (ignoreWarnings === true) {
+  // Suppress warnings for this file only
+  const originalEmit = process.emit;
+  process.emit = function (name, ...args) {
+    if (name === 'warning') return false; // ignore warnings
+    return originalEmit.call(this, name, ...args);
+  };
+}
 
 const colors = [
 0xe042f5, // Tūī Bloom
