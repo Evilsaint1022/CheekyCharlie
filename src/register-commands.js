@@ -945,8 +945,35 @@ const commands = [
     {
         name: 'remove-bank-channel',
         description: 'Removes the bank channel for this server.',
-    }
-
+    },
+    {
+        name: 'set-qotd-channel',
+        description: 'Set the channel where the Question of the Day will be sent.',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to set for QOTD messages.',
+                type: 7,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'set-qotd-role',
+        description: 'Set the role to mention for Question of the Day.',
+        options: [
+            {
+                name: 'role',
+                description: 'The role to mention for QOTD.',
+                type: 8,
+                required: true,
+            },
+        ],
+    },
+    {
+        name: 'toggle-qotd',
+        description: 'Enable or disable the Question of the Day feature.',
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -954,6 +981,7 @@ const commands = [
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 // Register Commands ------------------------------------------------------------------------------------------------------------------------------------
+
 // This function will register the commands either globally or for a specific guild based on the environment.
 const registerCommands = async (client) => {
     try {

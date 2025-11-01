@@ -39,6 +39,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Staff Applications
 - 🌿AI Deadchat
 - 🌿Venting
+- 🌿Question-Of-The-Day
 
 # 🌿**Available for Everyone**🌿
 
@@ -203,6 +204,11 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 ### **🌿Bank Channel Setup**
 - `/set-bank-channel` - Sets a channel where the bank interest messages will be sent.
 - `/remove-bank-channel` - Removes the Bank Channel that has been set.
+
+### **🌿Question-of-the-day Setup**
+- `/set-qotd-channel` - sets a question of the day channel.
+- `/set-qotd-role` - sets a question of the day ping role.
+- `/toggle-qotd` - toggles question of the day on or off.
 
 ══════════════════════════════════════════════════════════════
 
