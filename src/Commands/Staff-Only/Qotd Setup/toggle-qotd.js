@@ -36,19 +36,20 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-    const enabled = interaction.options.getBoolean('enabled');
     const guild = interaction.guild;
     const guildKey = `${guild.name}_${guild.id}`;
 
     let settings = await db.settings.get(guildKey) || {};
-    settings.qotdState = enabled;
+
+    // Flip the current state: if undefined or false → true, if true → false
+    settings.qotdState = !settings.qotdState;
 
     await db.settings.set(guildKey, settings);
 
     return interaction.reply({
-      content: enabled
-        ? '✅ Question of the Day is now **enabled**!'
-        : '❌ Question of the Day has been **disabled**.',
+      content: settings.qotdState
+        ? '✅ Question of the Day is now set to **true**.'
+        : '❌ Question of the Day is now set to **false**.',
       flags: 64
     });
   }
