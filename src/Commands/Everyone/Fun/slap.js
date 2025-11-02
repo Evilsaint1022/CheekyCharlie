@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const fetch = require('node-fetch'); // ✅ built-in in Node 18+, or `npm install node-fetch`
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,40 +12,11 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const middle = `· · - ┈┈━━ ˚ . 👋 SLAP! . ˚ ━━┈┈ - · ·`;
         const target = interaction.options.getUser('target');
         const sender = interaction.user;
         const senderName = sender.username;
-        const targetName = target.username; 
+        const targetName = target.username;
         const guild = interaction.guild;
-
-        // ✅ List of anime + cartoon slap GIFs
-        const gifs = [
-            // Anime slaps
-            'https://media.giphy.com/media/jLeyZWgtwgr2U/giphy.gif',
-            'https://media.giphy.com/media/mEtSQlxqBtWWA/giphy.gif',
-            'https://media.giphy.com/media/Zau0yrl17uzdK/giphy.gif',
-            'https://media.giphy.com/media/RXGNsyRb1hDJm/giphy.gif',
-            'https://media.giphy.com/media/3XlEk2RxPS1m8/giphy.gif',
-            'https://media.giphy.com/media/9U5J7JpaYBr68/giphy.gif',
-            'https://media.giphy.com/media/10Am8idu3qBYRy/giphy.gif',
-            'https://media.giphy.com/media/xUNd9HZq1itMkiK652/giphy.gif',
-            'https://media.giphy.com/media/fO6UtDy5pWYwM/giphy.gif',
-            'https://media.giphy.com/media/WLXO8OZmq0JK8/giphy.gif',
-
-            // Cartoon slaps
-            'https://media.tenor.com/3ZqYk7bq-2IAAAAC/tom-and-jerry-slap.gif',
-            'https://media.tenor.com/VZbPH6zRliYAAAAC/spongebob-patrick.gif',
-            'https://media.tenor.com/TKpmh8wAOjEAAAAC/slap-homer.gif',
-            'https://media.tenor.com/5aL2X2pDHkMAAAAd/slap-funny.gif',
-            'https://media.tenor.com/XiYuY3J4QqAAAAAC/slap-angry.gif',
-            'https://media.tenor.com/MeP0f5d5hCkAAAAC/slap-cartoon.gif',
-            'https://media.tenor.com/RVvnVPK-6dcAAAAC/anime-slap.gif',
-            'https://media.tenor.com/4kJp-PzWvBYAAAAC/anime-girl-slap.gif'
-        ];
-
-        // ✅ Pick a random GIF
-        const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
 
         // Prevent slapping yourself
         if (target.id === sender.id) {
@@ -54,16 +26,84 @@ module.exports = {
             });
         }
 
-        // ✅ Embed that mentions both users
+        // ✅ Fetch a random slap GIF from Tenor API
+        const tenorKey = process.env.TENORKEY; // Tenor’s public demo key (you can replace it with your own)
+        const response = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
+        const data = await response.json();
+
+        let randomGif = null;
+        if (data.results && data.results.length > 0) {
+            const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
+            randomGif = randomResult.media_formats.gif.url;
+        }
+
+        // ✅ Fallback if API fails
+        if (!randomGif) {
+            randomGif = 'https://media.tenor.com/6N2e6QKxI6sAAAAC/anime-slap.gif';
+        }
+
+        // ✅ Generate random slap count
+        const slapcount = Math.floor(Math.random() * 10) + 1;
+        const title = `<@${sender.id}> just slapped <@${target.id}>!`;
+
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF)
-            .setTitle(middle)
-            .setDescription(`<@${sender.id}> just slapped <@${target.id}>!`)
+            .setColor('Random')
+            .setDescription(`${title}\n\`${targetName} just received ${slapcount} slaps!\``)
             .setImage(randomGif)
             .setTimestamp();
 
-            console.log(`[👋] [SLAP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} slapped ${targetName}`);
+        // ✅ Create “Slap Back” button
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setCustomId('slap_back')
+                .setLabel('🔁 Slap Back!')
+                .setStyle(ButtonStyle.Primary)
+        );
 
-        await interaction.reply({ embeds: [embed] });
+        console.log(`[👋] [SLAP] ${senderName} slapped ${targetName} in ${guild.name}`);
+
+        const reply = await interaction.reply({ embeds: [embed], components: [row] });
+
+        // ✅ Set up button collector
+        const collector = reply.createMessageComponentCollector({ time: 30_000 });
+
+        collector.on('collect', async (btnInteraction) => {
+            if (btnInteraction.user.id !== target.id) {
+                return btnInteraction.reply({ content: "Only the target can slap back!", ephemeral: true });
+            }
+
+            // ✅ Get new slap GIF for slapback
+            const slapBackResponse = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
+            const slapBackData = await slapBackResponse.json();
+
+            let slapBackGif = null;
+            if (slapBackData.results && slapBackData.results.length > 0) {
+                const randomResult = slapBackData.results[Math.floor(Math.random() * slapBackData.results.length)];
+                slapBackGif = randomResult.media_formats.gif.url;
+            }
+
+            if (!slapBackGif) slapBackGif = 'https://media.tenor.com/6N2e6QKxI6sAAAAC/anime-slap.gif';
+
+            const slapBackCount = Math.floor(Math.random() * 10) + 1;
+            const slapBackEmbed = new EmbedBuilder()
+                .setColor('Random')
+                .setDescription(`<@${target.id}> slapped <@${sender.id}> back!\n\`${senderName} just received ${slapBackCount} slaps!\``)
+                .setImage(slapBackGif)
+                .setTimestamp();
+
+            await btnInteraction.reply({ embeds: [slapBackEmbed] });
+            collector.stop();
+        });
+
+        collector.on('end', async () => {
+            const disabledRow = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('slap_back_disabled')
+                    .setLabel('🔁 Slap Back!')
+                    .setStyle(ButtonStyle.Secondary)
+                    .setDisabled(true)
+            );
+            await reply.edit({ components: [disabledRow] }).catch(() => {});
+        });
     }
 };
