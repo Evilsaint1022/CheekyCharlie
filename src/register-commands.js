@@ -273,6 +273,19 @@ const commands = [
             },
         ],
     },
+    {
+        name: 'slap',
+        description: 'Slap another member with a random GIF!',
+        options: [
+            {
+                name: 'target',
+                description: 'The member you want to slap',
+                type: 6,
+                required: true,
+
+            },
+        ],
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
