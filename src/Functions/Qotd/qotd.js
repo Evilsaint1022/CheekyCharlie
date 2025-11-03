@@ -4,8 +4,8 @@ const db = require("../../Handlers/database");
 const { Client } = require("discord.js");
 const OpenAI = require("openai");
 
-// Every "0 7 * * *" for daily at 7AM
-const time = "0 7 * * *";
+// Run daily at 7AM Pacific/Auckland
+ const CRON_SCHEDULE = "0 7 * * *";
 
 let isRunning = false;
 let isScheduled = false;
@@ -17,9 +17,11 @@ const openai = new OpenAI({
 });
 
 /**
+ * Sends the Question of the Day (QOTD) message.
  * @param {Client} client
  */
 async function sendQuestionOfTheDay(client) {
+  // Prevent duplicate runs across shards
   if (client.shard && client.shard.id !== 0) return;
   if (isRunning) return;
 
@@ -29,48 +31,31 @@ async function sendQuestionOfTheDay(client) {
     const clientGuilds = client.guilds.cache.map(guild => guild);
 
     for (const guild of clientGuilds) {
-      const guildName = guild.name;
-      const guildId = guild.id;
-      const guildKey = `${guildName}_${guildId}`;
-
+      const guildKey = `${guild.name}_${guild.id}`;
       const qotdSettings = await db.settings.get(guildKey) || {};
-      const channelId = qotdSettings.qotdChannelId;
-      const roleId = qotdSettings.qotdRoleId; // optional now
-      const qotdState = qotdSettings.qotdState || false;
 
-      if (!channelId || !qotdState) {
-        continue;
-      }
+      const { qotdChannelId: channelId, qotdRoleId: roleId, qotdState = false } = qotdSettings;
+      if (!channelId || !qotdState) continue;
 
       const channel = await client.channels.fetch(channelId).catch(() => null);
-      if (!channel) {
-        continue;
-      }
+      if (!channel) continue;
 
       const lastQotd = await db.qotd.get(guildKey) || {};
       const now = Date.now();
 
-      if (lastQotd.timestamp && now - lastQotd.timestamp < 24 * 60 * 60 * 1000) {
-        continue;
-      }
+      // Ensure 24 hours since last QOTD
+      if (lastQotd.timestamp && now - lastQotd.timestamp < 24 * 60 * 60 * 1000) continue;
 
-      const prompts = [
-        `You are a creative kiwi and its time for the question of the day, generate a simple question that will get members chatting.`
-        ];
-
-      const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-      const finalPrompt = `${randomPrompt} Reply ONLY with a question.`;
-
+      const prompt = `You are a creative kiwi and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
       console.log(`[❓] [QOTD] Generating question for ${guild.name}...`);
 
       const response = await openai.chat.completions.create({
-        messages: [{ role: 'system', content: finalPrompt }],
+        messages: [{ role: 'system', content: prompt }],
         model: "meta-llama/llama-4-maverick-17b-128e-instruct",
         temperature: 0.7
       });
 
-      const question = response.choices[0].message.content.trim();
-
+      const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about today?";
       const messageContent = roleId
         ? `🎉 **Question of the Day!** 🎉 — <@&${roleId}>\n${question}`
         : `🎉 **Question of the Day!** 🎉\n${question}`;
@@ -88,7 +73,6 @@ async function sendQuestionOfTheDay(client) {
 
       console.log(`[❓] [QOTD] Sent new question in ${guild.name}`);
     }
-
   } catch (err) {
     console.error("[❌ QOTD Error]", err?.response?.data || err);
   } finally {
@@ -96,17 +80,23 @@ async function sendQuestionOfTheDay(client) {
   }
 }
 
+/**
+ * Starts the QOTD scheduler.
+ * @param {Client} client
+ */
 function startQotd(client) {
-  if (isScheduled) {
-    return;
-  }
+  if (isScheduled) return;
 
-  scheduledTask = cron.schedule(time, () => sendQuestionOfTheDay(client), {
+  scheduledTask = cron.schedule(CRON_SCHEDULE, () => {
+    console.log("[⏰ QOTD Scheduler] Running at 7:00 AM Pacific/Auckland...");
+    sendQuestionOfTheDay(client);
+  }, {
     scheduled: true,
     timezone: 'Pacific/Auckland'
   });
 
   isScheduled = true;
+  console.log("[✅] [QOTD Scheduler Started] Will run every day at 7:00 AM Pacific/Auckland");
 }
 
 module.exports = startQotd;
