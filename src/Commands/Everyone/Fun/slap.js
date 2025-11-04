@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const fetch = require('node-fetch'); // ✅ built-in in Node 18+, or `npm install node-fetch`
+const fetch = require('node-fetch');
+const db = require('../../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +19,6 @@ module.exports = {
         const targetName = target.username;
         const guild = interaction.guild;
 
-        // Prevent slapping yourself
         if (target.id === sender.id) {
             return interaction.reply({
                 content: "You can't slap yourself... that's just sad 😅",
@@ -26,33 +26,58 @@ module.exports = {
             });
         }
 
-        // ✅ Fetch a random slap GIF from Tenor API
-        const tenorKey = process.env.TENORKEY; // Tenor’s public demo key (you can replace it with your own)
-        const response = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
-        const data = await response.json();
-
+        const tenorKey = process.env.TENORKEY;
+        const slapgifslist = 'giflist';
         let randomGif = null;
-        if (data.results && data.results.length > 0) {
-            const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
-            randomGif = randomResult.media_formats.gif.url;
+
+        try {
+            // ✅ Fetch random slap GIF from Tenor
+            const response = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
+            const data = await response.json();
+
+            if (data.results && data.results.length > 0) {
+                const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
+                randomGif = randomResult.media_formats.gif.url;
+
+                const savedGifs = db.slapgifs.get(slapgifslist) || {}; // fallback to empty object
+
+                // Only add if the gif doesn't already exist
+                if (!Object.values(savedGifs).includes(randomGif)) {
+                    const newKey = `random_${Math.floor(Math.random() * 100000)}`;
+
+                    // ✅ Directly set the nested entry
+                    db.slapgifs.set(`${slapgifslist}.${newKey}`, randomGif);
+                }
+            }
+        
+        } catch (err) {
+            console.error("❌ Failed to fetch from Tenor:", err);
         }
 
-        // ✅ Fallback if API fails
+        // ✅ Fallback to saved GIFs
         if (!randomGif) {
-            randomGif = 'https://media.tenor.com/6N2e6QKxI6sAAAAC/anime-slap.gif';
+            const savedGifs = db.slapgifs.get(slapgifslist) || {};
+            const gifValues = Object.values(savedGifs);
+
+            if (gifValues.length > 0) {
+                randomGif = gifValues[Math.floor(Math.random() * gifValues.length)];
+            }
         }
 
-        // ✅ Generate random slap count
-        const slapcount = Math.floor(Math.random() * 10) + 1;
-        const title = `<@${sender.id}> just slapped <@${target.id}>!`;
+        if (!randomGif) {
+            return interaction.reply({
+                content: "No slap GIFs available right now 😞 Try again later.",
+                flags: 64
+            });
+        }
 
+        const slapcount = Math.floor(Math.random() * 10) + 1;
         const embed = new EmbedBuilder()
             .setColor('Random')
-            .setDescription(`${title}\n\`${targetName} just received ${slapcount} slaps!\``)
+            .setDescription(`<@${sender.id}> just slapped <@${target.id}>!\n\`${targetName} just received ${slapcount} slaps!\``)
             .setImage(randomGif)
             .setTimestamp();
 
-        // ✅ Create “Slap Back” button
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setCustomId('slap_back')
@@ -61,28 +86,52 @@ module.exports = {
         );
 
         console.log(`[👋] [SLAP] ${senderName} slapped ${targetName} in ${guild.name}`);
-
         const reply = await interaction.reply({ embeds: [embed], components: [row] });
 
-        // ✅ Set up button collector
+        // ✅ Button collector
         const collector = reply.createMessageComponentCollector({ time: 30_000 });
 
         collector.on('collect', async (btnInteraction) => {
             if (btnInteraction.user.id !== target.id) {
-                return btnInteraction.reply({ content: "Only the target can slap back!", ephemeral: true });
+                return btnInteraction.reply({ content: "Only the target can slap back!", flags: 64 });
             }
-
-            // ✅ Get new slap GIF for slapback
-            const slapBackResponse = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
-            const slapBackData = await slapBackResponse.json();
 
             let slapBackGif = null;
-            if (slapBackData.results && slapBackData.results.length > 0) {
-                const randomResult = slapBackData.results[Math.floor(Math.random() * slapBackData.results.length)];
-                slapBackGif = randomResult.media_formats.gif.url;
+            try {
+                const slapBackResponse = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
+                const slapBackData = await slapBackResponse.json();
+
+                if (slapBackData.results && slapBackData.results.length > 0) {
+                    const randomResult = slapBackData.results[Math.floor(Math.random() * slapBackData.results.length)];
+                    slapBackGif = randomResult.media_formats.gif.url;
+
+                    let savedGifs = db.slapgifs.get(slapgifslist) || {};
+                    if (typeof savedGifs !== 'object' || Array.isArray(savedGifs)) savedGifs = {};
+
+                    const exists = Object.values(savedGifs).includes(slapBackGif);
+                    if (!exists) {
+                        const newKey = `random_${Math.floor(Math.random() * 100000)}`;
+
+                        // ✅ Directly set the nested entry
+                        db.slapgifs.set(`${slapgifslist}.${newKey}`, slapBackGif);
+                    }
+                }
+            } catch (err) {
+                console.error("❌ Failed to fetch slapback from Tenor:", err);
             }
 
-            if (!slapBackGif) slapBackGif = 'https://media.tenor.com/6N2e6QKxI6sAAAAC/anime-slap.gif';
+            // ✅ Fallback for slapback
+            if (!slapBackGif) {
+                const savedGifs = db.slapgifs.get(slapgifslist) || {};
+                const gifValues = Object.values(savedGifs);
+                if (gifValues.length > 0) {
+                    slapBackGif = gifValues[Math.floor(Math.random() * gifValues.length)];
+                }
+            }
+
+            if (!slapBackGif) {
+                return btnInteraction.reply({ content: "No slap GIFs available right now 😞", flags: 64 });
+            }
 
             const slapBackCount = Math.floor(Math.random() * 10) + 1;
             const slapBackEmbed = new EmbedBuilder()
