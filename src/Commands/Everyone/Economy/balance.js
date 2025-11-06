@@ -1,8 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
-const { timeStamp } = require('console');
-const { text } = require('stream/consumers');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -21,18 +19,15 @@ module.exports = {
                 flags: 64
             });
         }
-        const ferns = "<:Ferns:1395219665638391818>"
+        const ferns = '<:Ferns:1395219665638391818>';
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
 
-        const space = 'ㅤ'
-        
-        function padText(text, padLength = 3) {
-        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-        }
+        const space = 'ㅤ';
 
-        const top =    `**╭─── 🌿${targetUser.username}'s Balance ───╮**`;
-        const bottom = `**╰─────── Use Your Ferns Wisely! ───────╯**`;
+        const top =    `**──── 🌿${targetUser.username}'s Balance ────**`;
+        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+        const bottom = `**──────── Use Your Ferns Wisely! ────────**`;
 
         // Replace dots with underscores for the database key only
         const safeUsername = targetUser.username.replace(/\./g, '_');
@@ -45,14 +40,8 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(0xFFFFFF)
         .setTitle(`${top}`)
+        .setDescription(`ㅤㅤㅤㅤ${middle}\nㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\nㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-        .addFields(
-            { name: ``, value: padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`), inline: false},
-            { name: padText('💰 Wallet'), value: padText(`${ferns}${balance.toLocaleString()}`), inline: true },
-            { name: '🏦 Bank', value: `${ferns}${bank.toLocaleString()}`, inline: true },
-            { name: ``, value: padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`), inline: false},
-            { name: ``, value: `${bottom}`, inline: false},
-        )
 
         await interaction.reply({ embeds: [embed] });
 
