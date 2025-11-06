@@ -15,7 +15,7 @@ module.exports = {
     const newKeyBase = `${newUsername}_${newUser.id}`;
 
     // Skip databases that shouldnt sync usernames
-    const excludedDatabases = ['starboard', 'starboardids', 'staff_app_questions', 'staff_app_applications','giveaways', 'giveaway_participants', 'giveaway_settings', 'specials'];
+    const excludedDatabases = ['starboard', 'starboardids', 'staff_app_questions', 'staff_app_applications','giveaways', 'giveaway_participants', 'giveaway_settings', 'specials', 'qotd'];
 
     for (const [dbName, database] of Object.entries(db)) {
       if (excludedDatabases.includes(dbName)) {
