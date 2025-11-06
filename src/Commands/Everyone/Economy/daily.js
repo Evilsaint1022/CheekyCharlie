@@ -26,10 +26,6 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
 
         const space = 'ㅤ'
-        
-        function padText(text, padLength = 3) {
-        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-        }
 
         const top = `**────── 🌿${username}'s Daily ──────**`;
         const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`
@@ -72,16 +68,10 @@ module.exports = {
 
         // Build embed
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF)
             .setTitle(`${top}`)
-            .addFields(
-                       { name: `You have claimed your daily reward of **${ferns}_${rewardAmount.toLocaleString()}_**!`, value: `ㅤㅤㅤ${middle}`, inline: false},
-                       { name: `ㅤㅤ💰 Wallet` + `ㅤㅤㅤㅤ🏦 Bank`, value: '', inline: false },
-                       { name: `ㅤㅤ_${ferns}・${balance.toLocaleString()}_` + `ㅤㅤㅤ_${ferns}・${bank.toLocaleString()}_`, value: `ㅤㅤㅤ${middle}`, inline: false },
-                       { name: `${bottom}`, value: '', inline: false},
-
-            )
+            .setDescription(`You have claimed your daily reward of **${ferns}・${rewardAmount.toLocaleString()}**!\nㅤㅤㅤㅤ${middle}\nㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\nㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`)
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+            .setColor(0xFFFFFF)
 
         await interaction.reply({ embeds: [embed] });
 
