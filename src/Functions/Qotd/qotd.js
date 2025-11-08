@@ -21,8 +21,7 @@ const openai = new OpenAI({
  * @param {Client} client
  */
 async function sendQuestionOfTheDay(client) {
-  // Prevent duplicate runs across shards
-  if (client.shard && client.shard.id !== 0) return;
+
   if (isRunning) return;
 
   isRunning = true;
