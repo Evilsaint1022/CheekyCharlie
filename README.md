@@ -208,7 +208,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 ### **🌿Question-of-the-day Setup**
 - `/set-qotd-channel` - sets a question of the day channel.
+- `/remove-qotd-channel` - Removes the channel set for Question of the day.
 - `/set-qotd-role` - sets a question of the day ping role.
+- `/remove-qotd-role` - Removes the role set for Question of the day.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 ══════════════════════════════════════════════════════════════
