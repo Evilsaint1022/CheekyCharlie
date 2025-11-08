@@ -972,6 +972,10 @@ const commands = [
         ],
     },
     {
+        name: 'remove-qotd-channel',
+        description:  'Removes the channel where the Question of the Day will be sent.',
+    },
+    {
         name: 'set-qotd-role',
         description: 'Set the role to mention for Question of the Day.',
         options: [
@@ -982,6 +986,10 @@ const commands = [
                 required: true,
             },
         ],
+    },
+    {
+        name: 'remove-qotd-role',
+        description: 'Removed the role to mention for Question of the Day.'
     },
     {
         name: 'toggle-qotd',
