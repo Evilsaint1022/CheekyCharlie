@@ -121,15 +121,15 @@ module.exports = {
 
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
-            const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
-            const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
-            const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+            const topRowFromat    = "**─────────── 🌿GIVEAWAY🌿 ──────────**"
+            const middle =              `ㅤㅤ · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+            const bottomRowFormat = "**───────────────────────────────────────**"
 
             const space = 'ㅤ'
 
             const endedEmbed_reroll = new EmbedBuilder()
                 .setTitle(`${topRowFromat}`)
-                .setDescription(`\n${space}\n${middle}\n**Prize:** ${originalGiveawayData.prize}\n **Ended:** <t:${Math.floor(originalGiveawayData.endTime / 1000)}:F>\n${middle}\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
+                .setDescription(`\n${space}\n${middle}\nㅤㅤ**・Prize:** ${originalGiveawayData.prize}\nㅤㅤ**・Ended:** <t:${Math.floor(originalGiveawayData.endTime / 1000)}:F>\n${middle}\nㅤㅤ**・Winner(s):** ${winnerMentions}\nㅤㅤ・Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
                 .setColor('#FFFFFF')
 
             const channel = guild.channels.cache.get(originalGiveawayData.channelId);
@@ -139,7 +139,7 @@ module.exports = {
                     await giveawayMessage.edit({ embeds: [endedEmbed_reroll] });
 
                     await giveawayMessage.reply({
-                        content: `🔄 **Giveaway Rerolled!**\n🎉 New winner(s): ${winnerMentions} won **${originalGiveawayData.prize}**!`
+                        content: `🔄 **Giveaway Rerolled!**\n🎉 New winner(s): ${winnerMentions} Won the **${originalGiveawayData.prize} Giveaway**!! 🎉`
                     });
                 }
             }
@@ -223,21 +223,21 @@ module.exports = {
 
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
-            const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
-            const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
-            const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+            const topRowFromat    = "**─────────── 🌿GIVEAWAY🌿 ──────────**"
+            const middle =              `ㅤㅤ · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+            const bottomRowFormat = "**───────────────────────────────────────**"
 
             const space = 'ㅤ'
 
             const endedEmbed_reroll = new EmbedBuilder()
                 .setTitle(`${topRowFromat}`)
-                .setDescription(`\n${space}\n${middle}\n**Prize:** ${giveawayData.prize}\n **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n${middle}\n **Winner(s):** ${winnerMentions}\n-# Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
+                .setDescription(`\n${space}\n${middle}\nㅤㅤ**・Prize:** ${giveawayData.prize}\nㅤㅤ**・Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>\n${middle}\nㅤㅤ**・Winner(s):** ${winnerMentions}\nㅤㅤ・Rerolled by ${user}\n${space}\n${bottomRowFormat}`)
                 .setColor('#FFFFFF')
 
             await message.edit({ embeds: [endedEmbed_reroll] });
 
             await message.reply({
-                content: `🔄 **Giveaway Rerolled!**\n🎉 New winner(s): ${winnerMentions} won **${giveawayData.prize}**!`
+                content: `🔄 **Giveaway Rerolled!**\n🎉 New winner(s): ${winnerMentions} Won the **${giveawayData.prize} Giveaway**!! 🎉`
             });
 
             console.log(`[🎉] [GIVEAWAY REROLL] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Rerolled by ${user.username}`);

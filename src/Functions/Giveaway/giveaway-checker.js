@@ -60,7 +60,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
             
             winners = participants;
             winnerMentions = winners.map(id => `<@${id}>`).join(', ');
-            replyContent = `🎉 ${winnerMentions} won **${giveawayData.prize}**!`;
+            replyContent = `**🎉 ${winnerMentions} Won the ${giveawayData.prize} Giveaway!!** 🎉`;
 
         } else {
             
@@ -73,19 +73,19 @@ async function endGiveaway(client, giveawayId, giveawayData) {
             }
 
             winnerMentions = winners.map(id => `<@${id}>`).join(', ');
-            replyContent = `🎉 ${winnerMentions} won **${giveawayData.prize}**!`;
+            replyContent = `🎉 ${winnerMentions} Won the **${giveawayData.prize} Giveaway**!! 🎉`;
 
         }
 
-        const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
-        const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
-        const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+        const topRowFromat    = "**─────────── 🌿GIVEAWAY🌿 ──────────**"
+        const middle =              `ㅤㅤ · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const bottomRowFormat = "**───────────────────────────────────────**"
 
         const space = 'ㅤ'
 
-        const prize = `**Prize:** ${giveawayData.prize}`
-        const ended = ` **Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>`
-        const winner = ` **Winner(s):** ${winnerMentions}`
+        const prize = `ㅤㅤ**・Prize:** ${giveawayData.prize}`
+        const ended = `ㅤㅤ**・Ended:** <t:${Math.floor(giveawayData.endTime / 1000)}:F>`
+        const winner = `ㅤㅤ**・Winner(s):** ${winnerMentions}`
 
         const endedEmbed = new EmbedBuilder()
             .setTitle(`${topRowFromat}`)
@@ -126,7 +126,6 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 }
 
 function startGiveawayChecker(client) {
-    console.log('[🎉] [GIVEAWAY] Starting giveaway checker...');
 
     checkGiveaways(client);
     

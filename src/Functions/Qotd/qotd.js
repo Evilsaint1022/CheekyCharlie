@@ -95,7 +95,6 @@ function startQotd(client) {
   });
 
   isScheduled = true;
-  console.log("[✅] [QOTD Scheduler Started] Will run every day at 7:00 AM Pacific/Auckland");
 }
 
 module.exports = startQotd;
