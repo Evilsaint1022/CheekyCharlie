@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -73,24 +73,23 @@ module.exports = {
           })
       )).sort((a, b) => b.stat - a.stat);
     } else if (type === 'level') {
-    const levelData = await db.levels.get(guildKey) || {};
-    entries = Object.entries(levelData).map(([key, data]) => {
-    const lastUnderscoreIndex = key.lastIndexOf('_');
-    const safeUsername = key.slice(0, lastUnderscoreIndex);
-    const userId = key.slice(lastUnderscoreIndex + 1);
-    return {
-      userId,
-      username: safeUsername.replace(/_/g, '.'),
-      safeKey: key,
-      stat: data.level || 0,
-      xp: data.xp || 0,
-      };
-    })
-    // sort by level, then XP for ties
-    .sort((a, b) => {
-    if (b.stat === a.stat) {
-        return b.xp - a.xp; // higher XP wins when levels are equal
-      }
+      const levelData = await db.levels.get(guildKey) || {};
+      entries = Object.entries(levelData).map(([key, data]) => {
+        const lastUnderscoreIndex = key.lastIndexOf('_');
+        const safeUsername = key.slice(0, lastUnderscoreIndex);
+        const userId = key.slice(lastUnderscoreIndex + 1);
+        return {
+          userId,
+          username: safeUsername.replace(/_/g, '.'),
+          safeKey: key,
+          stat: data.level || 0,
+          xp: data.xp || 0,
+        };
+      })
+      .sort((a, b) => {
+        if (b.stat === a.stat) {
+          return b.xp - a.xp; // higher XP wins when levels are equal
+        }
         return b.stat - a.stat; // higher level first
       });
     } else if (type === 'money') {
@@ -123,47 +122,35 @@ module.exports = {
     const totalPages = Math.ceil(entries.length / itemsPerPage);
     let currentPage = 0;
 
+    // ⬇️ UPDATED SECTION: added user ID display in leaderboard lines
     const generateLeaderboardEmbed = (page) => {
-    const start = page * itemsPerPage;
-    const leaderboard = entries.slice(start, start + itemsPerPage)
+      const start = page * itemsPerPage;
+      const leaderboard = entries.slice(start, start + itemsPerPage)
         .map((entry, index) => {
-    const base = `**    \n__${start + index + 1}.__  ${entry.username}`;
-      if (type === 'wallet' || type === 'bank' || type === 'money') {
-        return `${base} \n♢  ${ferns}${entry.stat.toLocaleString()}**`;
-      } else {
-        return `${base} \n♢  🎉Level ${entry.stat.toLocaleString()} (${entry.xp.toLocaleString()} XP)**`;
-      }
-      }).join('\n');
+          const base = `**__${start + index + 1}.__  ${entry.username}** - **${entry.userId}**`;
+          if (type === 'wallet' || type === 'bank' || type === 'money') {
+            return `${base}\n✦  ${ferns}・${entry.stat.toLocaleString()}`;
+          } else {
+            return `${base}\n✦  🎉・Level ${entry.stat.toLocaleString()}・\`${entry.xp.toLocaleString()} XP\``;
+          }
+        }).join('\n\n');
 
-    let leaderboardType, statLabel, statIcon;
-    if (type === 'wallet') {
-      leaderboardType = 'Wallet';
-      statLabel = `${ferns}`;
-      statIcon = '';
-    } else if (type === 'bank') {
-      leaderboardType = 'Bank';
-      statLabel = `${ferns}`;
-      statIcon = '';
-    } else if (type === 'money') {
-      leaderboardType = 'Money';
-      statLabel = `${ferns}`;
-      statIcon = '';
-    } else {
-      leaderboardType = 'Level';
-      statLabel = '🎉Level';
-      statIcon = '';
-    }
+      let leaderboardType;
+      if (type === 'wallet') leaderboardType = 'Wallet';
+      else if (type === 'bank') leaderboardType = 'Bank';
+      else if (type === 'money') leaderboardType = 'Money';
+      else leaderboardType = 'Level';
 
-    return new EmbedBuilder()
-      .setTitle(`**╭─── ${leaderboardType} Leaderboard ───╮**`)
-      .setDescription(
-        (leaderboard || "No users found.") +
-        `\n\n**╰─────[ Your Rank: #${userRank} ]─────╯**`
-      )
-      .setColor(0xFFFFFF)
-      .setThumbnail(interaction.guild.iconURL())
-      .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
-      .setTimestamp();
+      return new EmbedBuilder()
+        .setTitle(`**╭─── 🌿 ${leaderboardType} Leaderboard 🌿 ───╮**`)
+        .setDescription(
+          (leaderboard || "      No users found.") +
+              `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`
+        )
+        .setColor(0xFFFFFF)
+        .setThumbnail(interaction.guild.iconURL())
+        .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
+        .setTimestamp();
     };
 
     const row = () => new ActionRowBuilder()
