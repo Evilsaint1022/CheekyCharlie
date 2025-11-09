@@ -38,7 +38,7 @@ client.commands = new Collection();
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
-    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
+    console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
 
     // Registers Application Commands
     registerCommands(client);
@@ -90,8 +90,10 @@ setInterval(() => {
     client.user.setActivity(activity, { type: ActivityType.Custom });
 }, 5000);
 
-    // Bisechosting Finished Startup
+    // Bisechosting Finished Startup!
     console.log(`successfully finished startup`.bold.green);
+    // CheekyCharlie is Online!
+    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
 });
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------
