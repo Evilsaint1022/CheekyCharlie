@@ -27,7 +27,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Economy Games
 - 🌿Level System
 - 🌿Leaderboards
-- 🌿Voice Channels
+- 🌿Temporary Voice Channels
 - 🌿Custom Starboard
 - 🌿Bump Reminder
 - 🌿Custom AI Response
