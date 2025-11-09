@@ -58,15 +58,15 @@ module.exports = {
         const endTime = Date.now() + (duration * 60 * 1000);
         const endTimestamp = Math.floor(endTime / 1000);
 
-        const topRowFromat    = "**╭────────── 🌿GIVEAWAY🌿 ─────────╮**"
-        const middle =              ` · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
-        const bottomRowFormat = "**╰─────────────────────────────────────╯**"
+        const topRowFromat    = "**─────────── 🌿GIVEAWAY🌿 ──────────**"
+        const middle =              `ㅤㅤ · · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const bottomRowFormat = "**───────────────────────────────────────**"
 
         const space = 'ㅤ'
 
         const giveawayEmbed = new EmbedBuilder()
             .setTitle(`${topRowFromat}`)
-            .setDescription(`\n${space}\n${middle}\n**Prize:** ${prize}\n **Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\n**Winners:** ${winners}\n${middle}\n${space}\n${bottomRowFormat}`)
+            .setDescription(`\n${space}\n${middle}\nㅤㅤ**・Prize:** ${prize}\nㅤㅤ**・Ends:** <t:${endTimestamp}:R> (<t:${endTimestamp}:F>)\nㅤㅤ**・Winners:** ${winners}\n${middle}\n${space}\n${bottomRowFormat}`)
             .setColor('#FFFFFF')
 
         const row = new ActionRowBuilder()
