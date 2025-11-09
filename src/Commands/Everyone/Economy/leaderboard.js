@@ -114,6 +114,8 @@ module.exports = {
       entries.sort((a, b) => b.stat - a.stat);
     }
 
+    const bar = '───────────────────────'
+    const space = 'ㅤ'
     const ferns = '<:Ferns:1395219665638391818>';
     const userEntry = entries.find(entry => entry.safeKey === displayKey);
     const userRank = userEntry ? entries.findIndex(entry => entry.safeKey === displayKey) + 1 : 'Unranked';
@@ -127,13 +129,13 @@ module.exports = {
       const start = page * itemsPerPage;
       const leaderboard = entries.slice(start, start + itemsPerPage)
         .map((entry, index) => {
-          const base = `**__${start + index + 1}.__  ${entry.username}** - **${entry.userId}**`;
+          const base = `**__${start + index + 1}.__ ${entry.username}** - **${entry.userId}**`;
           if (type === 'wallet' || type === 'bank' || type === 'money') {
-            return `${base}\n✦  ${ferns}・${entry.stat.toLocaleString()}`;
+            return `${base}\n✦ ${ferns}・${entry.stat.toLocaleString()}\n${bar}`;
           } else {
-            return `${base}\n✦  🎉・Level ${entry.stat.toLocaleString()}・\`${entry.xp.toLocaleString()} XP\``;
+            return `${base}\n✦ 🎉・Level ${entry.stat.toLocaleString()}・\`${entry.xp.toLocaleString()} XP\`\n${bar}`;
           }
-        }).join('\n\n');
+        }).join('\n');
 
       let leaderboardType;
       if (type === 'wallet') leaderboardType = 'Wallet';
@@ -141,12 +143,15 @@ module.exports = {
       else if (type === 'money') leaderboardType = 'Money';
       else leaderboardType = 'Level';
 
+      let DescriptionType;
+      if (type === 'wallet') DescriptionType = '🌿 Here to check your wallet? 🌿';
+      else if (type === 'bank') DescriptionType = '🌿 Bank of New Zealand is here to help you! 🌿';
+      else if (type === 'money') DescriptionType = '🌿 Here Comes the Money!! 🌿'
+      else DescriptionType = '🌿 Time to gain some more levels! 🌿'
+
       return new EmbedBuilder()
         .setTitle(`**╭─── 🌿 ${leaderboardType} Leaderboard 🌿 ───╮**`)
-        .setDescription(
-          (leaderboard || "      No users found.") +
-              `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`
-        )
+        .setDescription(`\n${DescriptionType}\n${bar}\n` + (leaderboard || "        No users found.") + `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`)
         .setColor(0xFFFFFF)
         .setThumbnail(interaction.guild.iconURL())
         .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
