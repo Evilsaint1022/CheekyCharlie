@@ -41,7 +41,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿AI NSFW Content Filtering
 - 🌿Color-of-the-Week - (Updates every Week)
 
-# 🌿**Available for Everyone**🌿
+# 🌿**Everyone - Application Commands**🌿
 
 ### **🌿Economy**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -93,7 +93,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
 
-# 🌿**Staff-Only Commands**🌿
+# 🌿**Whitelisted - Application Commands**🌿
 
 ### **🌿Set-Whitelisted-Role** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
