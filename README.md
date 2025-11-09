@@ -25,21 +25,21 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 # **🌿Features🌿**
 - 🌿Full Economy System
 - 🌿Economy Games
-- 🌿Level System
 - 🌿Leaderboards
-- 🌿Temporary Voice Channels
-- 🌿Custom Starboard
+- 🌿Level System
+- 🌿Venting
+- 🌿AI Deadchat
 - 🌿Bump Reminder
-- 🌿Custom AI Response
-- 🌿AI NSFW Content Filtering
 - 🌿RSS Feed news
-- 🌿Color-of-the-Week ( updates every week )
 - 🌿Entertainment
 - 🌿Giveaway System
+- 🌿Custom Starboard
+- 🌿Custom AI Response
 - 🌿Staff Applications
-- 🌿AI Deadchat
-- 🌿Venting
 - 🌿Question-Of-The-Day
+- 🌿Temporary Voice Channels
+- 🌿AI NSFW Content Filtering
+- 🌿Color-of-the-Week - (Updates every Week)
 
 # 🌿**Available for Everyone**🌿
 
