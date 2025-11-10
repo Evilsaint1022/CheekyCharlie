@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ContainerBuilder, TextDisplayBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, ContainerBuilder, TextDisplayBuilder, MessageFlags } = require('discord.js');
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js')
 const db = require('../../../Handlers/database');
 
@@ -21,22 +21,21 @@ module.exports = {
             });
         }
 
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({
-                content: 'You do not have permission to use this command.',
-                flags: 64
-            });
-        }
-
-        if (!interaction.channel.isThread()) {
-            return interaction.reply({
-                content: '❌ This command can only be used in a staff application thread.',
-                flags: 64
-            });
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+        }
+
         const threadId = interaction.channel.id;
         const reason = interaction.options.getString('reason') || 'No reason provided';
 

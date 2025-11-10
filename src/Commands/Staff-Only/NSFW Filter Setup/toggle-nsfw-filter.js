@@ -16,20 +16,19 @@ module.exports = {
             });
         }
 
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
+
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
-        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
-            const userRoles = interaction.member.roles.cache.map(role => role.id);
-            const hasWhitelistedRole = whitelistedRoles.some(roleId => userRoles.includes(roleId));
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
 
-            if (!hasWhitelistedRole) {
-                return interaction.reply({ 
-                    content: 'You do not have permission to use this command.', 
-                    flags: MessageFlags.Ephemeral 
-                });
-            }
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const currentState = await db.settings.get(`${guildName}_${guildId}.nsfwFilter`);

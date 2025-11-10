@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -16,24 +16,26 @@ module.exports = {
             });
         }
 
-        const guildId = interaction.guild.id;
-        const guildName = interaction.guild.name;
         const username = interaction.user.username;
 
-        // Fetch whitelisted roles from the database
-        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
-        // Check for permission
-        if (
-            !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
-            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
-        ) {
-            return interaction.reply({ content: 'You do not have permission to remove the vent channel!', flags: 64 });
+        const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const stopEmbed = {
             color: 0x020202,
-            title: '__【🔴】𝘾𝙝𝙖𝙣𝙜𝙚 𝙏𝙝𝙚 𝙏𝙤𝙥𝙞𝙘__',
+            title: '🔴𝘾𝙝𝙖𝙣𝙜𝙚 𝙏𝙝𝙚 𝙏𝙤𝙥𝙞𝙘!',
             description: ' **This discussion has gotten too heated and has run its course. The Topic must now be changed. Cancel any replies you are in the middle of and do not start any new replies. Continuing on with this topic will result in a timeout.** ',
             image: {
                 url: 'https://images-ext-2.discordapp.net/external/tt-s11SUBbBxQlRsQpmHrcfgk5BJror2zd2-2tUkoww/https/i.imgur.com/B5HkQWg.jpg',
