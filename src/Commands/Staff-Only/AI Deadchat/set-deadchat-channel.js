@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { PermissionsBitField } = require('discord.js');
+const { PermissionFlagsBits, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -22,19 +22,19 @@ module.exports = {
             });
         }
 
-        const guildName = interaction.guild.name;
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
+
         const guildId = interaction.guild.id;
-        const userId = interaction.user.id;
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
-        const member = interaction.guild.members.cache.get(userId);
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
 
-        const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
-
-        if (
-            !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
-            !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
-        ) {
-            return interaction.reply({ content: 'You do not have permission to set the deadchat channel!', flags: 64 });
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const channel = interaction.options.getChannel('channel');

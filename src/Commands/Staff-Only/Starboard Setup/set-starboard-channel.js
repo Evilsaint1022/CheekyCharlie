@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, ChannelType } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, ChannelType } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -18,28 +18,21 @@ module.exports = {
         flags: 64
       });
     }
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
-    const user = interaction.user;
-    const userId = user.id;
-    const guild = interaction.guild;
-    const guildId = guild.id;
-    const guildName = guild.name;
-    const guildKey = `${guildName}_${guildId}`;
+        const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
+        const guildKey = `${guildName}_${guildId}`;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
-    const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildKey}.whitelistedRoles`) || [];
-    const member = guild.members.cache.get(userId);
-    const memberRoles = interaction.member.roles.cache.map(role => role.id);
-    const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
 
-    if (
-      !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
-      !hasPermission
-    ) {
-      return interaction.reply({
-        content: '❌ You do not have permission to set the starboard channel!',
-        flags: 64
-      });
-    }
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
     const channel = interaction.options.getChannel('channel');
 

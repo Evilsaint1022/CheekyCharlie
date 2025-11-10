@@ -11,6 +11,7 @@ module.exports = {
     const guild = interaction.guild;
     const guildKey = `${guild.name}_${guild.id}`;
     const user = interaction.user;
+    
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
@@ -19,17 +20,19 @@ module.exports = {
     }
 
     if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-      const whitelistedRoles = await db.whitelisted.get(`${guild.name}_${guild.id}.whitelistedRoles`) || [];
-      const userRoles = interaction.member.roles.cache.map(role => role.id);
-      const hasWhitelistedRole = whitelistedRoles.some(roleId => userRoles.includes(roleId));
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
-      if (!hasWhitelistedRole) {
-        return interaction.reply({
-          content: 'You do not have permission to use this command.',
-          flags: MessageFlags.Ephemeral
-        });
-      }
-    }
+        const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
     try {
       const currentSettings = await db.settings.get(guildKey);

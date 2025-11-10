@@ -995,6 +995,22 @@ const commands = [
         name: 'toggle-qotd',
         description: 'Enable or disable the Question of the Day feature.',
     },
+    {
+        name: 'set-ban-channel',
+        description: 'Set the channel where ^banned messages are counted',
+        options: [
+            {
+                name: 'channel',
+                description: 'The channel to use for banned messages',
+                type: 7,
+                required: true
+            },
+        ],
+    },
+    {
+        name: 'remove-ban-channel',
+        description: 'Remove the configured ^banned channel'
+    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------

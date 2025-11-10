@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -14,27 +14,22 @@ module.exports = {
         content: "This command cannot be used in DMs.",
         flags: 64 // Makes the reply ephemeral
     });
-}
+  }
+  
+    if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
+        }
+        const guild = interaction.guild;
+        const guildId = interaction.guild.id;
+        const guildName = interaction.guild.name;
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
-    const member = interaction.member;
-    const guild = interaction.guild;
-    const guildId = interaction.guild.id;
-    const guildName = interaction.guild.name;
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
 
-    if (!guild) {
-      return interaction.reply({ content: 'This command can only be used in a server.', flags: 64 });
-    }
-
-    const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
-    if (
-        !interaction.member.permissions.has(PermissionFlagsBits.Administrator) &&
-        !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
-    ) {
-        return interaction.reply({
-            content: 'You do not have permission to set the party drops channel!',
-            flags: 64,
-        });
-    }
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+        }
 
     const guildKey = `${guild.name}_${guild.id}_verifiedRoleId`;
     console.log(`[⭐] [REMOVED-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} removed verified role`);

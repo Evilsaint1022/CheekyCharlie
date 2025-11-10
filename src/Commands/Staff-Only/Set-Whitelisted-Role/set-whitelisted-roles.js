@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -19,18 +19,24 @@ module.exports = {
         content: "This command cannot be used in DMs.",
         flags: 64 // Makes the reply ephemeral
     });
-}
+   }
 
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', flags: 64 });
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const role = interaction.options.getRole('role');
-
-        // Fetch existing whitelisted roles from the database
         let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+
+        const memberRoles = interaction.member.roles.cache.map(role => role.id);
+        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+
+        if (!hasPermission) {
+            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+        }
+
+        const role = interaction.options.getRole('role');
 
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             WHITELISTED_ROLE_IDS.push(role.id);
