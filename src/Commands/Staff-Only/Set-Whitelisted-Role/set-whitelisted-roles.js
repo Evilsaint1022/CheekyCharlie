@@ -27,16 +27,9 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
-
-        const memberRoles = interaction.member.roles.cache.map(role => role.id);
-        const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
-
-        if (!hasPermission) {
-            return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
-        }
-
         const role = interaction.options.getRole('role');
+
+        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
 
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             WHITELISTED_ROLE_IDS.push(role.id);
