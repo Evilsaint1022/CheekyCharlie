@@ -36,7 +36,6 @@
     "node": "^25.1.0",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
-    "npm": "^11.6.2",
     "openai": "^6.8.1",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
