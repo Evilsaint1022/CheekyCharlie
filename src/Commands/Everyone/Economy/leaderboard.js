@@ -127,7 +127,7 @@ module.exports = {
       const start = page * itemsPerPage;
       const leaderboard = entries.slice(start, start + itemsPerPage)
         .map((entry, index) => {
-          const base = `**__${start + index + 1}.__  ${entry.username}** - **${entry.userId}**`;
+          const base = `**__${start + index + 1}.__  ${entry.username}**`;
           if (type === 'wallet' || type === 'bank' || type === 'money') {
             return `${base}\n✦  ${ferns}・${entry.stat.toLocaleString()}`;
           } else {
