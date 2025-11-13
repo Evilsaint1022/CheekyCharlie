@@ -39,11 +39,7 @@ async function sendQuestionOfTheDay(client) {
       const channel = await client.channels.fetch(channelId).catch(() => null);
       if (!channel) continue;
 
-      const lastQotd = await db.qotd.get(guildKey) || {};
       const now = Date.now();
-
-      // Ensure 24 hours since last QOTD
-      if (lastQotd.timestamp && now - lastQotd.timestamp < 24 * 60 * 60 * 1000) continue;
 
       const prompt = `You are a creative kiwi and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
       console.log(`[❓] [QOTD] Generating question for ${guild.name}...`);
