@@ -93,7 +93,8 @@ setInterval(() => {
     // Bisechosting Finished Startup!
     console.log(`successfully finished startup`.bold.green);
     // CheekyCharlie is Online!
-    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
+    const commandCount = client.commands.size;
+    console.log(`🌿・${client.user.tag} Is Online! (${commandCount} commands registered)`.bold.white);
 });
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------
