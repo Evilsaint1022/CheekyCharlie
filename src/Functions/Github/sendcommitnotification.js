@@ -8,11 +8,7 @@ const repo = 'CheekyCharlie';
 const discordChannelId = '1347795697369350244';
 const repoKey = `${owner}_${repo}`;
 
-function padText(text, padLength = 3) {
-        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-        }
-
-        const space = 'ㅤ'
+const space = 'ㅤ'
 
 async function sendCommitNotification(client, commit) {
   try {
@@ -24,18 +20,18 @@ async function sendCommitNotification(client, commit) {
       commit?.author?.login ||
       'Unknown';
 
-    const top = `**╭─── 🌿 ${repo} - Updates ───╮**`;
-    const middle = padText(`· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`);
-    const bottom = `**╰─────────────────────────────────╯**`;
+    const top = `**──── 🌿 ${repo} Updates 🌿 ────**`;
+    const middle = `ㅤㅤㅤ· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+    const bottom = `**─────────────────────────────────────**`;
 
-    const centeredmessage = padText(`**\`${message}\`**`);
-    const centeredauthor = padText(`**By ${authorName}**`);
+    const centeredmessage = `ㅤㅤㅤ**${message}**`;
+    const centeredauthor =  `ㅤㅤㅤ**Author: ${authorName}**`;
 
     if (!sha || !message || !htmlUrl) {
       return;
     }
 
-    const commitlink = padText(`[_🔗COMMIT LINK HERE_](${htmlUrl})`);
+    const commitlink = `[_🔗COMMIT LINK HERE_](${htmlUrl})`;
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
@@ -60,7 +56,7 @@ async function sendCommitNotification(client, commit) {
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
       .setTitle(`${top}`)
-      .setDescription(`\n${space}\n${commitlink}\n\n${middle}\n${centeredmessage}\n${middle}\n\n${centeredauthor}\n\n${bottom}`)
+      .setDescription(`\n${commitlink}\n\n${middle}\n${centeredmessage}\n${middle}\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xFFFFFF)
       .setTimestamp(new Date());
@@ -72,7 +68,6 @@ async function sendCommitNotification(client, commit) {
     await db.github.set(repoKey, previousCommits);
 
   } catch {
-    // No logging here per request (all console.error removed)
   }
 }
 
