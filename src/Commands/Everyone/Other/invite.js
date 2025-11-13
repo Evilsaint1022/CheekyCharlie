@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,7 +10,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral
     });
 }
         const { channel, user, guild } = interaction;

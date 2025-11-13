@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
+const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -14,14 +14,14 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                  flags: MessageFlags.Ephemeral
             });
         }
 
     if (!guild) {
       return interaction.reply({
         content: 'This command must be used in a server.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -44,7 +44,7 @@ module.exports = {
     if (!userData || !Array.isArray(userData.inventory) || userData.inventory.length === 0) {
       return interaction.reply({
         content: 'Your inventory is empty.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -86,7 +86,7 @@ module.exports = {
         return select.update({
           content: 'This item does not grant a role.',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -95,7 +95,7 @@ module.exports = {
         return select.update({
           content: `The role with ID \`${selectedItem.roleId}\` does not exist.`,
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -104,7 +104,7 @@ module.exports = {
         return select.update({
           content: `You already have the **${role.name}** role!`,
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -116,7 +116,7 @@ module.exports = {
         return select.update({
           content: 'Failed to assign the role. Do I have permission?',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -134,14 +134,14 @@ module.exports = {
         return select.update({
           content: 'Role was given, but failed to update your inventory.',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
       return select.update({
         content: `You used **${selectedItem.title}** and received the **${role.name}** role.`,
         components: [],
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     });
 
@@ -150,7 +150,7 @@ module.exports = {
         interaction.editReply({
           content: 'No selection made. Command expired.',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         }).catch(() => {});
       }
     });

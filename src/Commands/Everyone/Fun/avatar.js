@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,7 +16,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral
     });
 }
 
@@ -38,7 +38,7 @@ module.exports = {
             .setTimestamp();
 
         // Reply with the embed
-        await interaction.reply({ embeds: [avatarEmbed] });
+        await interaction.reply({ embeds: [avatarEmbed], flags: MessageFlags.Ephemeral });
 
         // Console Logs
         console.log(`[🌿] [AVATAR] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the avatar command for ${user.username}'s avatar.`);
