@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
@@ -39,14 +39,14 @@ module.exports = {
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
             console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeChallenger} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: MessageFlags.Ephemeral });
         }
 
         // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
         if (opponent.bot || opponent.id === user.id) {
-            return interaction.reply({ content: `❌ You Cant Challenge Bots or Yourself`, flags: 64 });
+            return interaction.reply({ content: `❌ You Cant Challenge Bots or Yourself`, flags: MessageFlags.Ephemeral });
         }
 
         // ✅ Load balances
@@ -54,13 +54,13 @@ module.exports = {
         let opponentBalance = parseInt(await db.wallet.get(balanceKeyOpponent) ?? 0);
 
         if (challengerBalance < bet) {
-            return interaction.reply({ content: `❌ You don’t have enough balance to bet ${ferns}${bet}.`, flags: 64 });
+            return interaction.reply({ content: `❌ You don’t have enough balance to bet ${ferns}${bet}.`, flags: MessageFlags.Ephemeral });
         }
         if (opponentBalance < bet) {
-            return interaction.reply({ content: `❌ ${opponent.username} doesn’t have enough balance to match this bet.`, flags: 64 });
+            return interaction.reply({ content: `❌ ${opponent.username} doesn’t have enough balance to match this bet.`, flags: MessageFlags.Ephemeral });
         }
         if (bet <= 0) {
-            return interaction.reply({ content: `❌ Bet amount must be greater than zero.`, flags: 64 });
+            return interaction.reply({ content: `❌ Bet amount must be greater than zero.`, flags: MessageFlags.Ephemeral });
         }
 
         // Ask opponent to accept
@@ -73,7 +73,8 @@ module.exports = {
 
         await interaction.reply({ 
             content: `${opponent}, you’ve been challenged to a blackjack game by ${user} for ${ferns}${bet.toLocaleString()}! Do you accept?`, 
-            components: [inviteRow] 
+            components: [inviteRow],
+            flags: MessageFlags.Ephemeral
         });
 
         const inviteMsg = await interaction.fetchReply();
@@ -130,7 +131,7 @@ module.exports = {
 
                 collector.on('collect', async (btn) => {
                     if (btn.user.id !== turn) {
-                        return btn.reply({ content: `❌ It’s not your turn!`, flags: 64 });
+                        return btn.reply({ content: `❌ It’s not your turn!`, flags: MessageFlags.Ephemeral });
                     }
 
                     let currentCards = turn === user.id ? challengerCards : opponentCards;

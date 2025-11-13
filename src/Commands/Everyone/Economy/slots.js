@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
@@ -28,7 +28,7 @@ module.exports = {
       const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
       return interaction.reply({
         content: `⏳ The /slots command is on global cooldown. Please wait ${remaining} more seconds.`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -39,14 +39,14 @@ module.exports = {
 
     let balance = await db.wallet.get(balanceKey);
     if (balance === undefined || isNaN(parseInt(balance))) {
-      return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
+      return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: MessageFlags.Ephemeral });
     }
 
     balance = parseInt(balance);
     if (bet > balance) {
-      return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
+      return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: MessageFlags.Ephemeral });
     } else if (bet <= 0) {
-      return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
+      return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: MessageFlags.Ephemeral });
     }
 
     // Deduct bet upfront
@@ -72,7 +72,7 @@ module.exports = {
       .setDescription(`Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Spinning...\``)
       .addFields({ name: 'Slots', value: `⬛ | ⬛ | ⬛`, inline: false });
 
-    const message = await interaction.editReply({ embeds: [embed] });
+    const message = await interaction.editReply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
     const interval = setInterval(async () => {
       if (finished) return; // ✅ safeguard
@@ -83,7 +83,7 @@ module.exports = {
         value: `${current.join(' | ')}`,
         inline: false
       });
-      await message.edit({ embeds: [embed] });
+      await message.edit({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
       spins++;
 
@@ -132,7 +132,7 @@ module.exports = {
             { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}`, inline: false }
           );
 
-        await message.edit({ embeds: [resultEmbed] });
+        await message.edit({ embeds: [resultEmbed], flags: MessageFlags.Ephemeral });
       }
     }, 700);
   }

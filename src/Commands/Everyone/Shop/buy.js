@@ -2,7 +2,7 @@ const {
   SlashCommandBuilder,
   StringSelectMenuBuilder,
   ActionRowBuilder,
-  ComponentType
+  ComponentType, MessageFlags
 } = require('discord.js');
 const db = require('../../../Handlers/database');
 
@@ -18,14 +18,14 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
     if (!guild) {
       return interaction.reply({
         content: 'This command must be used in a server.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
     const ferns = '<:Ferns:1395219665638391818>';
@@ -40,11 +40,11 @@ module.exports = {
       shopItems = Array.isArray(items) ? items : [];
     } catch (err) {
       console.error('Error loading shop:', err);
-      return interaction.reply({ content: 'Failed to load shop items.', flags: 64 });
+      return interaction.reply({ content: 'Failed to load shop items.', flags: MessageFlags.Ephemeral });
     }
 
     if (shopItems.length === 0) {
-      return interaction.reply({ content: 'The shop is currently empty.', flags: 64 });
+      return interaction.reply({ content: 'The shop is currently empty.', flags: MessageFlags.Ephemeral });
     }
 
     // Create selection menu
@@ -94,7 +94,7 @@ module.exports = {
         return select.update({
           content: `You need ${ferns}${selectedItem.price.toLocaleString()} to buy **${selectedItem.title}**.`,
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -115,7 +115,7 @@ module.exports = {
         return select.update({
           content: `You already have the item **${selectedItem.title}** in your inventory!`,
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -129,7 +129,7 @@ module.exports = {
           return select.update({
             content: 'That item is out of stock!',
             components: [],
-            flags: 64
+            flags: MessageFlags.Ephemeral
           });
         }
       }
@@ -153,14 +153,14 @@ module.exports = {
         return select.update({
           content: 'Failed to complete your purchase.',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         });
       }
 
       return select.update({
         content: `You bought **${selectedItem.title}** for ${ferns}${selectedItem.price.toLocaleString()}!`,
         components: [],
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     });
 
@@ -169,7 +169,7 @@ module.exports = {
         interaction.editReply({
           content: 'No selection made. Command expired.',
           components: [],
-          flags: 64
+          flags: MessageFlags.Ephemeral
         }).catch(() => {});
       }
     });

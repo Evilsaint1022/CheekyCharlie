@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 const db = require("../../../Handlers/database");
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
         const ferns = '<:Ferns:1395219665638391818>';
@@ -43,7 +43,7 @@ module.exports = {
         .setDescription(`ㅤㅤㅤㅤ${middle}\nㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\nㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
         console.log(`[🌿] [BALANCE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the balance command. ${targetUser.username}'s balance was checked.`);
     }

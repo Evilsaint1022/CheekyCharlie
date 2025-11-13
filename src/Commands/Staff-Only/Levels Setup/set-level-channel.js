@@ -18,7 +18,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
    }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -52,7 +52,7 @@ module.exports = {
         const datestamp = new Date().toLocaleDateString();
         console.log(`[⭐] [SET-LEVEL-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-level-channel command to set the channel ID "${channel.id}"`);
 
-        return interaction.reply({ content: `✅ Level-up messages will now be sent in <#${channel.id}>.`, flags: 64 });
+        return interaction.reply({ content: `✅ Level-up messages will now be sent in <#${channel.id}>.`, flags: MessageFlags.Ephemeral });
     },
 
     sendLevelUpMessage: async function (client, guildId, levelUpMessage, fallbackChannel) {

@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
   }
 
@@ -54,14 +54,14 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Bank channel set to <#${channel.id}>`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
 
     } catch (error) {
       console.error("Error setting Bank channel:", error);
       await interaction.reply({
         content: "❌ Failed to set the Bank channel.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
   }

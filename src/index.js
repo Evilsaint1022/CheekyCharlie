@@ -16,7 +16,7 @@ const commandHandler = require('../src/Handlers/commandHandler');
 // Show Guilds ----------------------------------------------------------------------------------------------------------------------
 const showGuilds = require('./ShowGuilds/showguilds');
 
-const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
+const { Client, Collection, Partials, GatewayIntentBits, ActivityType, MessageFlags } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction);
     } catch (error) {
         console.error(error);
-        await interaction.reply({ content: 'There was an error while executing this command!', flags: 64 });
+        await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
     }
 });
 

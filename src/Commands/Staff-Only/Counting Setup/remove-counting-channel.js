@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+          flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
     const guild = interaction.guild;
@@ -40,7 +40,7 @@ if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
     if (!currentSettings || !currentSettings.counting_channel) {
       return interaction.reply({
         content: '⚠️ No counting channel is currently set.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -52,7 +52,7 @@ if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
 
     await interaction.reply({
       content: '🗑️ Counting channel has been removed.',
-      flags: 64
+      flags: MessageFlags.Ephemeral
     });
     
     //console logs

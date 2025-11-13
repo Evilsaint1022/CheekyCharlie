@@ -18,7 +18,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64 // Makes the reply ephemeral
+                flags: MessageFlags.Ephemeral // Makes the reply ephemeral
             });
         }
 
@@ -51,6 +51,6 @@ module.exports = {
         const datestamp = new Date().toLocaleDateString();
         console.log(`[⭐] [SET-DEADCHAT-CHANNEL] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-deadchat-channel command to set the channel ID "${channel.id}"`);
 
-        return interaction.reply({ content: `✅ Deadchat messages will now be sent in <#${channel.id}>.\n-# Make sure the deadchat role and deadchat duration are set too and the AI deadchat is activated.`, flags: 64 });
+        return interaction.reply({ content: `✅ Deadchat messages will now be sent in <#${channel.id}>.\n-# Make sure the deadchat role and deadchat duration are set too and the AI deadchat is activated.`, flags: MessageFlags.Ephemeral });
     },
 };
