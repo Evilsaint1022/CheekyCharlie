@@ -223,18 +223,6 @@ const commands = [
         ]
     },
     {
-        name: 'aishia',
-        description: 'Talk to AISHIA, your AI companion.',
-        options: [
-            {
-                name: 'prompt',
-                description: 'What do you want to say to AISHIA?',
-                type: 3,
-                required: true,
-            },
-        ]
-    },
-    {
         name: 'counting',
         description: 'Shows the current and next expected number for counting.',
       
