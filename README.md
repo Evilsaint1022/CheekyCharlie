@@ -85,7 +85,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
-- `/aishia` - Talk to Aishia using a prompt.
 - `/slap` - Slap other members with a nice Gif.
 
 ### **🌿Other**

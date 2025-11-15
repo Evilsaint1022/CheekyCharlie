@@ -39,7 +39,6 @@ const db = {
     giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json"),
     specials: new DotDB("./src/Utilities/Storage/Settings/Specials/Specials.json"),
     qotd: new DotDB("./src/Utilities/Storage/Settings/Qotd/lastqotd.json"),
-    slapgifs: new DotDB("./src/Utilities/Storage/Fallback/slapgifs.json")
 }
 
 module.exports = db;

@@ -31,37 +31,22 @@ module.exports = {
         let randomGif = null;
 
         try {
-            // ✅ Fetch random slap GIF from Tenor
             const response = await fetch(`https://tenor.googleapis.com/v2/search?q=anime+slap&key=${tenorKey}&limit=20`);
             const data = await response.json();
 
             if (data.results && data.results.length > 0) {
-                const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
-                randomGif = randomResult.media_formats.gif.url;
+            const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
+            randomGif = randomResult.media_formats.gif.url;
 
-                const savedGifs = db.slapgifs.get(slapgifslist) || {}; // fallback to empty object
+            const savedGifs = db.slapgifs.get(slapgifslist) || {};
 
-                // Only add if the gif doesn't already exist
-                if (!Object.values(savedGifs).includes(randomGif)) {
-                    const newKey = `random_${Math.floor(Math.random() * 100000)}`;
-
-                    // ✅ Directly set the nested entry
-                    db.slapgifs.set(`${slapgifslist}.${newKey}`, randomGif);
-                }
+            if (!Object.values(savedGifs).includes(randomGif)) {
+                const newKey = `random_${Math.floor(Math.random() * 100000)}`;
+                db.slapgifs.set(`${slapgifslist}.${newKey}`, randomGif);
             }
-        
+            }
         } catch (err) {
             console.error("❌ Failed to fetch from Tenor:", err);
-        }
-
-        // ✅ Fallback to saved GIFs
-        if (!randomGif) {
-            const savedGifs = db.slapgifs.get(slapgifslist) || {};
-            const gifValues = Object.values(savedGifs);
-
-            if (gifValues.length > 0) {
-                randomGif = gifValues[Math.floor(Math.random() * gifValues.length)];
-            }
         }
 
         if (!randomGif) {
