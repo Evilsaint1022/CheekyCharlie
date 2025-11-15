@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "description": "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-encrypt-key": "openssl rand -hex 32",
+    "register-commands": "node src/register-commands.js"
   },
   "keywords": [],
   "author": "Evilsaint1022",

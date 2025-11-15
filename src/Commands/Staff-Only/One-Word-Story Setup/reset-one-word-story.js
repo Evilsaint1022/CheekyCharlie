@@ -11,7 +11,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
       });
     }
 
@@ -38,7 +38,7 @@ module.exports = {
     if (currentStory.length === 0) {
       return interaction.reply({
         content: "The one-word story is already empty.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -48,7 +48,7 @@ module.exports = {
 
     await interaction.reply({
       content: "✅ The one-word story has been reset.",
-      flags: 64
+      flags: MessageFlags.Ephemeral
     });
 
     // Console log

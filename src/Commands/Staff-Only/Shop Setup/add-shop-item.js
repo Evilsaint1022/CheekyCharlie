@@ -31,7 +31,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
         
@@ -64,7 +64,7 @@ module.exports = {
 
       // Check if item with same title exists (case insensitive)
       if (shopItems.some(item => item.title.toLowerCase() === title.toLowerCase())) {
-        return interaction.reply({ content: `❌ An item with the title "${title}" already exists in the shop.`, flags: 64 });
+        return interaction.reply({ content: `❌ An item with the title "${title}" already exists in the shop.`, flags: MessageFlags.Ephemeral });
       }
 
       // Add new item
@@ -85,13 +85,13 @@ module.exports = {
       //reply interaction
       return interaction.reply({
         content: `✅ Item "${title}" added to the shop with a stock of ${stock === -1 ? 'unlimited' : stock}.`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     } catch (error) {
       console.error('Error adding shop item:', error);
       return interaction.reply({
         content: '❌ There was an error adding the item. Please try again later.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
   }

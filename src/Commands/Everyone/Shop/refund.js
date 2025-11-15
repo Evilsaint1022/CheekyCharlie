@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
+const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -31,7 +31,7 @@ module.exports = {
     if (inventory.length === 0) {
       return interaction.reply({
         content: 'You have no items in your inventory to refund.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
 

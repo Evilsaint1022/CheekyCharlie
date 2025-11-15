@@ -19,7 +19,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -56,7 +56,7 @@ module.exports = {
 
     await interaction.reply({
       content: `✅ Counting channel has been set to <#${channel.id}>.`,
-      flags: 64
+      flags: MessageFlags.Ephemeral
     });
     //console logs
     console.log(`[⭐] [SET-COUNTING-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-channel command.`);

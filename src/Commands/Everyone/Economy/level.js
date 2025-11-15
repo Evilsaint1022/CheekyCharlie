@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64 // Ephemeral
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -36,7 +36,7 @@ module.exports = {
             if (!levelsData || !levelsData[userKey]) {
                 return interaction.reply({
                     content: `${targetUser.username} hasn't gained any XP yet. They need to participate to earn XP!`,
-                    flags: 64
+                    flags: MessageFlags.Ephemeral
                 });
             }
 
@@ -54,13 +54,13 @@ module.exports = {
 
                 .setFooter({ text: 'Keep earning XP to level up!' });
 
-            return interaction.reply({ embeds: [embed] });
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
         } catch (error) {
             console.error('Error accessing level data:', error);
             return interaction.reply({
                 content: 'There was an error accessing level data. Please try again later.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
     },

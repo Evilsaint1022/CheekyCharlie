@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -38,7 +38,7 @@ module.exports = {
         if (!settings.qotdRoleId) {
             interaction.reply({
                 contents: 'A qotd role has not been set!',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
 
         } else {
@@ -50,7 +50,7 @@ module.exports = {
 
         return interaction.reply({
         content: `✅ QOTD role has been removed`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
         });
             }   
         }

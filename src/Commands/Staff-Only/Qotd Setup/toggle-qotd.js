@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -50,7 +50,7 @@ module.exports = {
       content: settings.qotdState
         ? '✅ Question of the Day is now set to **true**.'
         : '❌ Question of the Day is now set to **false**.',
-      flags: 64
+      flags: MessageFlags.Ephemeral
     });
   }
 };
