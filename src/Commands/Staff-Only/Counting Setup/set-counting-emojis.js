@@ -20,7 +20,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
 
@@ -50,7 +50,7 @@ module.exports = {
 
     await interaction.reply({
       content: `✅ Counting emojis updated for this server:\nCorrect Emoji: ${correctEmoji}\nWrong Emoji: ${wrongEmoji}`,
-      flags: MessageFlags.Ephemeral
+      flags: 64
     });
 
     //console logs

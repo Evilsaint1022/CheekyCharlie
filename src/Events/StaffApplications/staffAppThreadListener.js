@@ -47,7 +47,7 @@ async execute(message, client) {
 
         await message.reply({
         content: '❌ Could not send message to applicant. They may have DMs disabled.',
-        flags: MessageFlags.Ephemeral
+        flags: 64
         });
 
     }

@@ -16,7 +16,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -41,7 +41,7 @@ module.exports = {
         const ignoredChannels = await db.settings.get(`${guildName}_${guildId}.ignoredAIChannels`) || [];
 
         if ( !ignoredChannels.includes(channel.id) ) {
-            return interaction.reply({ content: `Channel / Category <#${channel.id}> is not ignored for AI responses.`, flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: `Channel / Category <#${channel.id}> is not ignored for AI responses.`, flags: 64 });
         }
 
         const index = ignoredChannels.indexOf(channel.id);
@@ -54,7 +54,7 @@ module.exports = {
 
         return interaction.reply({
             content: `Channel / Category <#${channel.id}> has been removed from the ignored AI channels list.`,
-            flags: MessageFlags.Ephemeral
+            flags: 64
         });
     },
 };

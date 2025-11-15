@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
   }
 
@@ -37,7 +37,7 @@ module.exports = {
 
     // Check if a qotd channel is set
         if (!settings.qotdChannelId) {
-            return interaction.reply({ content: 'No Qotd channel is currently set.', flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: 'No Qotd channel is currently set.', flags: 64 });
 
         } else {
 
@@ -48,7 +48,7 @@ module.exports = {
 
     return interaction.reply({
       content: `✅ QOTD channel has been removed`,
-      flags: MessageFlags.Ephemeral
+      flags: 64
     });
   }
  }

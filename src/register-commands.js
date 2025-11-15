@@ -1011,77 +1011,6 @@ const commands = [
         name: 'remove-ban-channel',
         description: 'Remove the configured ^banned channel'
     },
-    {
-        name: 'set-staff-logging',
-        description: 'Set channels for staff logging (welcome, leave, ban, unban, kick)',
-        options: [
-            {
-                name: 'welcome',
-                description: 'Set the channel where welcome messages will be posted.',
-                type: 1,
-                options: [
-                    {
-                        name: 'channel',
-                        description: 'The channel for welcome messages',
-                        type: 7,
-                        required: true,
-                    },
-                ],
-            },
-            {
-                name: 'leave',
-                description: 'Set the channel where leave messages will be posted.',
-                type: 1,
-                options: [
-                    {
-                        name: 'channel',
-                        description: 'The channel for leave messages',
-                        type: 7,
-                        required: true,
-                    },
-                ],
-            },
-            {
-                name: 'ban',
-                description: 'Set the channel where ban messages will be posted.',
-                type: 1,
-                options: [
-                    {
-                        name: 'channel',
-                        description: 'The channel for ban messages',
-                        type: 7,
-                        required: true,
-                    },
-                ],
-            },
-            {
-                name: 'unban',
-                description: 'Set the channel where unban messages will be posted.',
-                type: 1,
-                options: [
-                    {
-                        name: 'channel',
-                        description: 'The channel for unban messages',
-                        type: 7,
-                        required: true,
-                    },
-                ],
-            },
-            {
-                name: 'kick',
-                description: 'Set the channel where kick messages will be posted.',
-                type: 1,
-                options: [
-                    {
-                        name: 'channel',
-                        description: 'The channel for kick messages',
-                        type: 7,
-                        required: true,
-                    },
-                ],
-            },
-        ],
-    },
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1112,16 +1041,3 @@ const registerCommands = async (client) => {
 // Exporting Register Commands --------------------------------------------------------------------------------------------------------------------------------
 
 module.exports = { registerCommands };
-
-// Run standalone if executed directly
-if (require.main === module) {
-    registerCommands(null)
-        .then(() => {
-            console.log('✅ Commands registered successfully!');
-            process.exit(0);
-        })
-        .catch((err) => {
-            console.error('❌ Failed to register commands:', err);
-            process.exit(1);
-        });
-}

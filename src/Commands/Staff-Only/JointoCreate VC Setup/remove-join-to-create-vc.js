@@ -13,7 +13,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
    }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -36,7 +36,7 @@ module.exports = {
 
         // Check if a Join To Create channel is set
         if (!currentSettings.JoinToCreateVC) {
-            return interaction.reply({ content: 'No Join To Create channel was set.', flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: 'No Join To Create channel was set.', flags: 64 });
         }
 
         // Remove the JoinToCreateVC field only
@@ -49,6 +49,6 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
         console.log(`[⭐] [REMOVE-JOIN-TO-CREATE-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} removed the Join To Create channel.`);
 
-        return interaction.reply({ content: '✅ The Join To Create channel has been removed.', flags: MessageFlags.Ephemeral });
+        return interaction.reply({ content: '✅ The Join To Create channel has been removed.', flags: 64 });
     },
 };

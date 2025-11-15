@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { MessageFlags } = require('discord.js');
 
 const catApiKey = process.env.CAT_API_KEY;
 
@@ -14,7 +13,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
 

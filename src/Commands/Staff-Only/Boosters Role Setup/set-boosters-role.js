@@ -56,14 +56,14 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Boosters role set to <@&${role.id}>`,
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
 
     } catch (err) {
       console.error('❌ Failed to update boosters role:', err);
       await interaction.reply({
         content: '❌ An error occurred while setting the boosters role.',
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
   }

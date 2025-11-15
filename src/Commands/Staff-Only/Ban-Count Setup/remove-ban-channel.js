@@ -40,7 +40,7 @@ module.exports = {
       if (!currentSettings || !currentSettings.ban_channel) {
         return await interaction.reply({
           content: `⚠️ No ban channel is currently set.`,
-          flags: MessageFlags.Ephemeral
+          flags: 64
         });
       }
 
@@ -53,13 +53,13 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Ban channel has been removed.`,
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     } catch (error) {
       console.error('[RemoveBanChannel] Error:', error);
       await interaction.reply({
         content: `❌ There was an error removing the ban channel.`,
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
   }

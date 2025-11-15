@@ -1,5 +1,5 @@
 // daily.js
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
 
 const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
@@ -14,7 +14,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -42,7 +42,7 @@ module.exports = {
 
             return interaction.reply({
                 content: `You have already claimed your daily reward! Please wait **${hours}h ${minutes}m ${seconds}s** before claiming again.`,
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
 
@@ -73,7 +73,7 @@ module.exports = {
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
             .setColor(0xFFFFFF)
 
-        await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
+        await interaction.reply({ embeds: [embed] });
 
         console.log(`[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`);
     }

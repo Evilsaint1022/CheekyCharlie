@@ -66,7 +66,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -104,7 +104,7 @@ module.exports = {
                     content: settings.whitelistEnabled 
                         ? '✅ Giveaway participation whitelist has been **enabled**. Only users with whitelisted roles can join giveaways.' 
                         : '✅ Giveaway participation whitelist has been **disabled**. Anyone can now join giveaways.', 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Whitelist ${settings.whitelistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
@@ -116,7 +116,7 @@ module.exports = {
                 if (settings.whitelistedRoles.includes(whitelistRole.id)) {
                     return interaction.reply({ 
                         content: `❌ ${whitelistRole} is already in the whitelist!`, 
-                        flags: MessageFlags.Ephemeral 
+                        flags: 64 
                     });
                 }
 
@@ -124,7 +124,7 @@ module.exports = {
                 await db.giveaway_settings.set(settingsKey, settings);
                 await interaction.reply({ 
                     content: `✅ ${whitelistRole} can now join giveaways.`, 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Role ${whitelistRole.name} added to whitelist by ${interaction.user.username}`);
@@ -136,7 +136,7 @@ module.exports = {
                 if (!settings.whitelistedRoles.includes(removeWhitelistRole.id)) {
                     return interaction.reply({ 
                         content: `❌ ${removeWhitelistRole} is not in the whitelist!`, 
-                        flags: MessageFlags.Ephemeral 
+                        flags: 64 
                     });
                 }
 
@@ -144,7 +144,7 @@ module.exports = {
                 await db.giveaway_settings.set(settingsKey, settings);
                 await interaction.reply({ 
                     content: `✅ ${removeWhitelistRole} has been removed from the giveaway participation whitelist.`, 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Role ${removeWhitelistRole.name} removed from whitelist by ${interaction.user.username}`);
@@ -158,7 +158,7 @@ module.exports = {
                     content: settings.blacklistEnabled 
                         ? '✅ Giveaway participation blacklist has been **enabled**. Users with blacklisted roles cannot join giveaways.' 
                         : '✅ Giveaway participation blacklist has been **disabled**.', 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Blacklist ${settings.blacklistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
@@ -170,14 +170,14 @@ module.exports = {
                 if (settings.blacklistedRoles.includes(blacklistRole.id)) {
                     return interaction.reply({ 
                         content: `❌ ${blacklistRole} is already in the blacklist!`, 
-                        flags: MessageFlags.Ephemeral 
+                        flags: 64 
                     });
                 }
                 settings.blacklistedRoles.push(blacklistRole.id);
                 await db.giveaway_settings.set(settingsKey, settings);
                 await interaction.reply({ 
                     content: `✅ ${blacklistRole} can no longer join giveaways.`, 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Role ${blacklistRole.name} added to blacklist by ${interaction.user.username}`);
@@ -189,7 +189,7 @@ module.exports = {
                 if (!settings.blacklistedRoles.includes(removeBlacklistRole.id)) {
                     return interaction.reply({ 
                         content: `❌ ${removeBlacklistRole} is not in the blacklist!`, 
-                        flags: MessageFlags.Ephemeral 
+                        flags: 64 
                     });
                 }
 
@@ -197,7 +197,7 @@ module.exports = {
                 await db.giveaway_settings.set(settingsKey, settings);
                 await interaction.reply({ 
                     content: `✅ ${removeBlacklistRole} has been removed from the giveaway participation blacklist.`, 
-                    flags: MessageFlags.Ephemeral 
+                    flags: 64 
                 });
 
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Role ${removeBlacklistRole.name} removed from blacklist by ${interaction.user.username}`);
@@ -218,7 +218,7 @@ module.exports = {
                         `**Whitelisted Roles:** ${whitelistRoleNames}\n\n` +
                         `**Blacklist:** ${settings.blacklistEnabled ? '✅ Enabled' : '❌ Disabled'}\n` +
                         `**Blacklisted Roles:** ${blacklistRoleNames}`,
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
                 break;
                 

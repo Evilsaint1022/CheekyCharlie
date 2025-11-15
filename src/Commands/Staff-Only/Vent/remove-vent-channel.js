@@ -11,7 +11,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
             content: "This command cannot be used in DMs.",
-            flags: MessageFlags.Ephemeral
+            flags: 64
             });
         }
 
@@ -35,7 +35,7 @@ module.exports = {
 
         // Check if a vent channel is set
         if (!currentSettings.ventChannelId) {
-            return interaction.reply({ content: 'No vent channel is currently set.', flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: 'No vent channel is currently set.', flags: 64 });
         }
 
         delete currentSettings.ventChannelId;
@@ -45,6 +45,6 @@ module.exports = {
         const timestamp = new Date().toISOString();
         console.log(`[⭐] [REMOVE-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-vent-channel command to remove the vent channel.`);
 
-        return interaction.reply({ content: '✅ The vent channel has been removed.', flags: MessageFlags.Ephemeral });
+        return interaction.reply({ content: '✅ The vent channel has been removed.', flags: 64 });
     },
 };

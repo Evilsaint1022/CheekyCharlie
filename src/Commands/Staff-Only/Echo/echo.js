@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
         
@@ -46,6 +46,6 @@ module.exports = {
         console.log(`[⭐] [ECHO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the echo command. Message: ${messageContent}`);
         
         // Reply to the user with an ephemeral message confirming the message was sent
-        await interaction.reply({ content: 'Your message has been sent!', flags: MessageFlags.Ephemeral });
+        await interaction.reply({ content: 'Your message has been sent!', flags: 64 });
     },
 };

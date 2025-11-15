@@ -11,7 +11,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+                flags: 64 // Makes the reply ephemeral
             });
           }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -37,7 +37,7 @@ module.exports = {
         if (!currentSettings || !currentSettings.story_channel) {
             return interaction.reply({
                 content: '⚠️ No story channel is currently set.',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -49,7 +49,7 @@ module.exports = {
 
         await interaction.reply({
             content: '🗑️ Story channel has been removed.',
-            flags: MessageFlags.Ephemeral
+            flags: 64
         });
 
         // Console logs

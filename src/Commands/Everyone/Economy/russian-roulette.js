@@ -1,5 +1,5 @@
 // file: commands/fun/russian_roulette.js
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 const db = require('../../../Handlers/database'); // adjust path
 const CHAMBER_SIZE = 6; // 1/6 chance per trigger pull
 
@@ -30,7 +30,7 @@ module.exports = {
       console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Command blocked for ${interaction.user.username}, ${remaining}s remaining`);
       return interaction.reply({
         content: `⏳ The /russian_roulette command is on global cooldown. Please wait ${remaining} more seconds.`,
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
@@ -43,11 +43,11 @@ module.exports = {
 
     if (opponent.bot || opponent.id === user.id) {
       console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} tried to challenge invalid target`);
-      return interaction.reply({ content: `❌ You can't challenge bots or yourself.`, flags: MessageFlags.Ephemeral });
+      return interaction.reply({ content: `❌ You can't challenge bots or yourself.`, flags: 64 });
     }
     if (bet <= 0) {
       console.log(`[RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} tried to bet ${bet}`);
-      return interaction.reply({ content: `❌ Bet must be greater than 0.`, flags: MessageFlags.Ephemeral });
+      return interaction.reply({ content: `❌ Bet must be greater than 0.`, flags: 64 });
     }
 
     await interaction.deferReply();
@@ -114,7 +114,7 @@ module.exports = {
       collector.on('collect', async btnInt => {
         if (btnInt.user.id !== currentShooter.user.id) {
           console.log(`[🌿] [RUSSIAN ROULETTE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${btnInt.user.username} tried to shoot on ${currentShooter.user.username}'s turn`);
-          return btnInt.reply({ content: `❌ It’s not your turn!`, flags: MessageFlags.Ephemeral });
+          return btnInt.reply({ content: `❌ It’s not your turn!`, flags: 64 });
         }
 
         await btnInt.deferUpdate();
@@ -185,7 +185,7 @@ module.exports = {
       try {
         await interaction.followUp({
           content: '⚠️ An error occurred while running the command.',
-          flags: MessageFlags.Ephemeral,
+          flags: 64,
         });
       } catch {}
     }

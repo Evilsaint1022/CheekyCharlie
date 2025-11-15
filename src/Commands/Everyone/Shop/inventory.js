@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
 

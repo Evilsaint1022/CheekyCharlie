@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { dropPartyEvent } = require('../../../Events/Client/drop_party');
 const db = require('../../../Handlers/database');
 
@@ -15,7 +15,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -34,14 +34,14 @@ module.exports = {
             if (!dropMessage || dropMessage.channel.id !== interaction.channel.id) {
                 return interaction.reply({
                     content: `**${ferns} No Ferns to pick up right now!**`,
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
 
             if (pickedUsers.has(userId)) {
                 return interaction.reply({
                     content: `**${ferns} You have already picked these ferns!**`,
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
 
@@ -102,7 +102,7 @@ module.exports = {
             if (!interaction.replied) {
                 await interaction.reply({
                     content: `**${ferns} Something went wrong while picking up the Ferns.**`,
-                    flags: MessageFlags.Ephemeral,
+                    flags: 64,
                 });
             }
         }

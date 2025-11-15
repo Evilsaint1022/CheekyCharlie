@@ -12,12 +12,11 @@ const { registerCommands } = require('./register-commands');
 const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
-const buttonHandler = require('./Handlers/buttonHandler');
 
 // Show Guilds ----------------------------------------------------------------------------------------------------------------------
 const showGuilds = require('./ShowGuilds/showguilds');
 
-const { Client, Collection, Partials, GatewayIntentBits, ActivityType, MessageFlags } = require('discord.js');
+const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
@@ -32,11 +31,10 @@ const client = new Client({
     // All partials
 });
 
-// Collections for commands, events, and buttons ---------------------------------------------------------------------------------------------
+// Collections for commands and events ---------------------------------------------------------------------------------------------
 
 client.events = new Collection();
 client.commands = new Collection();
-client.buttons = new Collection();
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
@@ -50,7 +48,6 @@ client.once("clientReady", async () => {
     await loadFunctions(client);
     await loadEvents(client);
     await commandHandler(client);
-    await buttonHandler(client);
     await registerAIHandler(client);
 
     // Status Toggles
@@ -93,11 +90,26 @@ setInterval(() => {
     client.user.setActivity(activity, { type: ActivityType.Custom });
 }, 5000);
 
-    // Bisecthosting Finished Startup!
-    console.log(`🌿・Successfully finished startup`.bold.white);
+    // Bisechosting Finished Startup!
+    console.log(`successfully finished startup`.bold.green);
     // CheekyCharlie is Online!
-    const commandCount = client.commands.size;
-    console.log(`🌿・${client.user.tag} Is Online! (${commandCount} commands registered)`.bold.white);
+    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
+});
+
+// Interaction Command Handler -----------------------------------------------------------------------------------------------------
+
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+
+    const command = client.commands.get(interaction.commandName);
+    if (!command) return
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({ content: 'There was an error while executing this command!', flags: 64 });
+    }
 });
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------

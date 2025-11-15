@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
   }
 
@@ -38,7 +38,7 @@ module.exports = {
         if (!channelSettings.DropPartyChannel) {
             return interaction.reply({
                 content: 'No party drop channel was set.',
-                flags: MessageFlags.Ephemeral,
+                flags: 64,
             });
         }
 
@@ -54,7 +54,7 @@ module.exports = {
 
         return interaction.reply({
             content: 'The party drops channel has been removed.',
-            flags: MessageFlags.Ephemeral,
+            flags: 64,
         });
     },
 };
