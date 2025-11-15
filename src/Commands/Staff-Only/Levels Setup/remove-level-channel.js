@@ -13,7 +13,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
 
@@ -37,7 +37,7 @@ module.exports = {
 
         // Check if a level-up channel is set
         if (!currentSettings.LevelChannel) {
-            return interaction.reply({ content: 'No level-up channel is currently set.', flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: 'No level-up channel is currently set.', flags: 64 });
         }
 
         // Remove the LevelChannelId field only
@@ -50,6 +50,6 @@ module.exports = {
         const timestamp = new Date().toISOString();
         console.log(`[⭐] [REMOVE-LEVEL-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-level-channel command to remove the level-up channel.`);
 
-        return interaction.reply({ content: '✅ The level-up channel has been removed.', flags: MessageFlags.Ephemeral });
+        return interaction.reply({ content: '✅ The level-up channel has been removed.', flags: 64 });
     }
 };

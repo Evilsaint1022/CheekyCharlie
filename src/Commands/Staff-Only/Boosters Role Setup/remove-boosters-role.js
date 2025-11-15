@@ -41,7 +41,7 @@ module.exports = {
       if (!currentSettings.boostersRoleId) {
         return interaction.reply({
           content: 'ℹ️ No boosters role is currently set.',
-          flags: MessageFlags.Ephemeral,
+          flags: 64,
         });
       }
 
@@ -53,14 +53,14 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Boosters role setting has been removed.`,
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
 
     } catch (err) {
       console.error('❌ Failed to remove boosters role:', err);
       await interaction.reply({
         content: '❌ An error occurred while removing the boosters role.',
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
   }

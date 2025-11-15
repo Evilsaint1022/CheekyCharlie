@@ -1,6 +1,6 @@
 // ping.js --------------------------------------------------------------------------------------------------------------------------------
 
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 // Exporting Ping Command -----------------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
 

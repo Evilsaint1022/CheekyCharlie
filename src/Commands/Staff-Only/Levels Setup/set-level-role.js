@@ -27,7 +27,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
 
@@ -65,7 +65,7 @@ module.exports = {
       )) {
         return interaction.reply({
           content: `⚠️ Role **${role.name}** is already assigned to level ${level} with sticky: \`${sticky}\`.`,
-          flags: MessageFlags.Ephemeral,
+          flags: 64,
         });
       }
 
@@ -79,14 +79,14 @@ module.exports = {
 
       return interaction.reply({
         content: msg,
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
 
     } catch (error) {
       console.error('Error in /set-level-role:', error);
       return interaction.reply({
         content: '❌ An unexpected error occurred while saving the role.',
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
   }

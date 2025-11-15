@@ -11,7 +11,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -36,7 +36,7 @@ module.exports = {
         if (!existingChannel) {
             return interaction.reply({
                 content: '❌ No staff application channel is currently set.',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -46,7 +46,7 @@ module.exports = {
 
         await interaction.reply({
             content: '✅ Staff application channel removed successfully.',
-            flags: MessageFlags.Ephemeral
+            flags: 64
         });
     },
 };

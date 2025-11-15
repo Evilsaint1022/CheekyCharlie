@@ -12,21 +12,15 @@ function loadFunctions(client) {
 
     const functionsDir = path.join(__dirname, '..', 'Functions'); // Path to Functions directory
     const folders = fs.readdirSync(functionsDir); // Get all folders in Functions directory
-    let successCount = 0;
-    let failureCount = 0;
-    let hasFailures = false;
 
     for (const folder of folders) {
         const folderPath = path.join(functionsDir, folder);
         if (fs.statSync(folderPath).isDirectory()) { // Ensure it's a directory
+            table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]); // Add folder name as a title row
+
             const files = fs.readdirSync(folderPath).filter((file) => file.endsWith(".js"));
 
             if (files.length === 0) {
-                if (!hasFailures) {
-                    table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                    hasFailures = true;
-                }
-                failureCount++;
                 table.push(['(No .js files found)', '⚠️ Empty']);
                 continue;
             }
@@ -43,21 +37,11 @@ function loadFunctions(client) {
                     // If it's a function, execute it with the client
                     if (typeof func === 'function') {
                         func(client);
-                        successCount++;
+                        table.push([`└── ${file}`, '✅ Loaded']);
                     } else {
-                        if (!hasFailures) {
-                            table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                            hasFailures = true;
-                        }
-                        failureCount++;
                         table.push([`└── ${file}`, '❌ Not a function']);
                     }
                 } catch (err) {
-                    if (!hasFailures) {
-                        table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                        hasFailures = true;
-                    }
-                    failureCount++;
                     table.push([`└── ${file}`, '❌ Error']);
                     console.error(`Error loading function ${folder}/${file}:`, err);
                 }
@@ -65,13 +49,9 @@ function loadFunctions(client) {
         }
     }
 
-    // Always print the table if there are failures
-    if (hasFailures) {
-        console.log('\n' + table.toString());
-        console.log(`🌿・Successfully loaded ${successCount} functions, but ${failureCount} failed`.bold.white);
-    } else {
-        console.log(`🌿・Successfully loaded ${successCount} functions`.bold.white);
-    }
+    // Print the table of functions and success message
+    console.log(table.toString());
+    console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully Loaded Functions)'.bold.green); // .bold.white equivalent
 }
 
 module.exports = { loadFunctions };

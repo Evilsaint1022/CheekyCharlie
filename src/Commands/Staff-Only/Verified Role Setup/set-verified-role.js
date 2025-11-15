@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
   }
     const targetRole = interaction.options.getRole('role');
@@ -50,10 +50,10 @@ module.exports = {
       db.settings.set(guildKey, currentSettings);
       console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Set the Verified Role to ${targetRole.name}`);
 
-      await interaction.reply({ content: `✅ Verified role has been set to **${targetRole.name}**.`, flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: `✅ Verified role has been set to **${targetRole.name}**.`, flags: 64 });
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: '❌ Failed to set the verified role.', flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: '❌ Failed to set the verified role.', flags: 64 });
     }
   }
 };

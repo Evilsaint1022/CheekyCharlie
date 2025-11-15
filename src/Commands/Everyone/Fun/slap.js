@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const fetch = require('node-fetch');
 const db = require('../../../Handlers/database');
 
@@ -22,7 +22,7 @@ module.exports = {
         if (target.id === sender.id) {
             return interaction.reply({
                 content: "You can't slap yourself... that's just sad 😅",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -67,7 +67,7 @@ module.exports = {
         if (!randomGif) {
             return interaction.reply({
                 content: "No slap GIFs available right now 😞 Try again later.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -93,7 +93,7 @@ module.exports = {
 
         collector.on('collect', async (btnInteraction) => {
             if (btnInteraction.user.id !== target.id) {
-                return btnInteraction.reply({ content: "Only the target can slap back!", flags: MessageFlags.Ephemeral });
+                return btnInteraction.reply({ content: "Only the target can slap back!", flags: 64 });
             }
 
             let slapBackGif = null;
@@ -130,7 +130,7 @@ module.exports = {
             }
 
             if (!slapBackGif) {
-                return btnInteraction.reply({ content: "No slap GIFs available right now 😞", flags: MessageFlags.Ephemeral });
+                return btnInteraction.reply({ content: "No slap GIFs available right now 😞", flags: 64 });
             }
 
             const slapBackCount = Math.floor(Math.random() * 10) + 1;

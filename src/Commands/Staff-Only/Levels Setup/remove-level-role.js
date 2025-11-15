@@ -17,7 +17,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
 
@@ -48,7 +48,7 @@ module.exports = {
       if (!removedRoleId) {
         return interaction.reply({
           content: `⚠️ No role is assigned to level ${level}.`,
-          flags: MessageFlags.Ephemeral,
+          flags: 64,
         });
       }
 
@@ -59,14 +59,14 @@ module.exports = {
 
       return interaction.reply({
         content: `✅ Removed role <@&${removedRoleId}> from level ${level}.`,
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
 
     } catch (error) {
       console.error('Error in /remove-level-role:', error);
       return interaction.reply({
         content: '❌ An unexpected error occurred while removing the role.',
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
   },

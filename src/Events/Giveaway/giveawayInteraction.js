@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { Events, EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../../Handlers/database');
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
             if (!originalGiveawayData) {
                 return interaction.reply({
                     content: '❌ This giveaway no longer exists!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -32,7 +32,7 @@ module.exports = {
             if (!participants.includes(user.id)) {
                 return interaction.reply({
                     content: '❌ You are not in this giveaway!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -57,7 +57,7 @@ module.exports = {
 
             await interaction.reply({
                 content: '✅ You have left the giveaway!',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
 
             console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString('en-GB')}] ${user.username} left giveaway ${originalGiveawayId}`);
@@ -74,7 +74,7 @@ module.exports = {
             if (!originalGiveawayData) {
                 return interaction.reply({
                     content: '❌ This giveaway no longer exists!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -86,14 +86,14 @@ module.exports = {
             if (!hasAdminPermission && !hasModRole) {
                 return interaction.reply({
                     content: '❌ You do not have permission to reroll giveaways!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
             if (!originalGiveawayData.ended) {
                 return interaction.reply({
                     content: '❌ This giveaway has not ended yet!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -102,7 +102,7 @@ module.exports = {
             if (participants.length < 1) {
                 return interaction.reply({
                     content: '❌ There are no participants in this giveaway!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -146,7 +146,7 @@ module.exports = {
 
             await interaction.reply({
                 content: '✅ Giveaway rerolled successfully (including previous winners)!',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
 
             console.log(`[🎉] [GIVEAWAY REROLL ANYWAY] [${new Date().toLocaleDateString('en-GB')}] ${guildName} - Rerolled by ${user.username}`);
@@ -161,7 +161,7 @@ module.exports = {
         if (!giveawayData) {
             return interaction.reply({
                 content: '❌ This giveaway no longer exists!',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -175,14 +175,14 @@ module.exports = {
             if (!hasAdminPermission && !hasModRole) {
                 return interaction.reply({
                     content: '❌ You do not have permission to reroll giveaways!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
             if (!giveawayData.ended) {
                 return interaction.reply({
                     content: '❌ This giveaway has not ended yet!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -203,7 +203,7 @@ module.exports = {
                 return interaction.reply({
                     content: '❌ No eligible participants remain for reroll (all participants were previous winners)!',
                     components: [continueAnywayRow],
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -257,7 +257,7 @@ module.exports = {
                     .setTitle("Participants for " + messageLink)
                     .setDescription(`There are no participants in this giveaway.`)  
                     
-                await interaction.reply({ embeds: [participantsEmbed], flags: MessageFlags.Ephemeral });
+                await interaction.reply({ embeds: [participantsEmbed], flags: 64 });
                 return;
             }
 
@@ -266,7 +266,7 @@ module.exports = {
                 .setDescription(`${participants.join("\n")}`)
                 .setFooter({ text: `${participants.length} participant${participants.length !== 1 ? 's' : ''}` });
 
-            await interaction.reply({ embeds: [participantsEmbed], flags: MessageFlags.Ephemeral });
+            await interaction.reply({ embeds: [participantsEmbed], flags: 64 });
             return;
 
         }
@@ -274,7 +274,7 @@ module.exports = {
         if (giveawayData.ended) {
             return interaction.reply({
                 content: '❌ This giveaway has already ended!',
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
 
@@ -299,7 +299,7 @@ module.exports = {
                 return interaction.reply({
                     embeds: [confirmEmbed],
                     components: [confirmRow],
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
@@ -315,14 +315,14 @@ module.exports = {
             if (blacklistEnabled && blacklistedRoles.some(roleId => memberRoles.includes(roleId))) {
                 return interaction.reply({
                     content: '❌ You are not allowed to join giveaways!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 
             if (whitelistEnabled && !whitelistedRoles.some(roleId => memberRoles.includes(roleId))) {
                 return interaction.reply({
                     content: '❌ You do not have the required role to join giveaways!',
-                    flags: MessageFlags.Ephemeral
+                    flags: 64
                 });
             }
 

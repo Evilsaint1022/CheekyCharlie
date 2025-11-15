@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const db = require('../../../Handlers/database'); // Import the database module
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
 }
 
@@ -41,7 +41,7 @@ module.exports = {
     if ( currentStory.length === 0 ) {
       return interaction.reply({
         content: "The one-word story is currently empty.",
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
 
@@ -49,7 +49,7 @@ module.exports = {
 
     return interaction.reply({
       content: `**Current One-Word Story:**\n\n${storyText}`,
-      flags: MessageFlags.Ephemeral
+      flags: 64
     });
 
   }

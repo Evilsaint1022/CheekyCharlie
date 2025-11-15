@@ -11,7 +11,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "❌ This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // ephemeral
+        flags: 64 // ephemeral
       });
     }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -35,7 +35,7 @@ module.exports = {
     if (!existing || (!existing.correct_emoji && !existing.wrong_emoji)) {
       return interaction.reply({
         content: 'ℹ️ There are no custom counting emojis set for this server.',
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
 
@@ -43,7 +43,7 @@ module.exports = {
 
     await interaction.reply({
       content: '✅ The custom counting emojis have been reset to default for this server.',
-      flags: MessageFlags.Ephemeral
+      flags: 64
     });
 
     //console logs

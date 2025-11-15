@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             });
         }
         
@@ -26,12 +26,12 @@ module.exports = {
       console.error('Failed to get shop data:', error);
       return interaction.reply({
         content: 'Failed to load shop items. Please try again later.',
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
 
     if (shopItems.length === 0) {
-      return interaction.reply({ content: 'The shop is currently empty!', flags: MessageFlags.Ephemeral });
+      return interaction.reply({ content: 'The shop is currently empty!', flags: 64 });
     }
 
     shopItems.sort((a, b) => a.price - b.price);
@@ -101,7 +101,7 @@ module.exports = {
 
     collector.on('collect', async (buttonInteraction) => {
       if (buttonInteraction.user.id !== interaction.user.id) {
-        return buttonInteraction.reply({ content: 'You cannot interact with this menu.', flags: MessageFlags.Ephemeral });
+        return buttonInteraction.reply({ content: 'You cannot interact with this menu.', flags: 64 });
       }
 
       if (buttonInteraction.customId === 'prev') currentPage--;

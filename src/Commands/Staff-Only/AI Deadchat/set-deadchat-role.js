@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                  flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+                flags: 64 // Makes the reply ephemeral
             });
         }
 
@@ -50,10 +50,10 @@ module.exports = {
       db.settings.set(guildKey, currentSettings);
       console.log(`[⭐] [SET-DEADCHAT-ROLE] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Deadchat role has been set to ${targetRole.name}.`);
 
-      await interaction.reply({ content: `✅ Deadchat role has been set to **${targetRole.name}**.\n-# Make sure the deadchat channel and deadchat duration are set too and the AI deadchat is activated.`, flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: `✅ Deadchat role has been set to **${targetRole.name}**.\n-# Make sure the deadchat channel and deadchat duration are set too and the AI deadchat is activated.`, flags: 64 });
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: '❌ Failed to set the deadchat role.', flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: '❌ Failed to set the deadchat role.', flags: 64 });
     }
   }
 };

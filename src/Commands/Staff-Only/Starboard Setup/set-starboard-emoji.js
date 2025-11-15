@@ -16,7 +16,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -45,7 +45,7 @@ module.exports = {
 
     return interaction.reply({
       content: `✅ Starboard emoji has been set to ${emojiInput}`,
-      flags: MessageFlags.Ephemeral
+      flags: 64
     });
   },
 };

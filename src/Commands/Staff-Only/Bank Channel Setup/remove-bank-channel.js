@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
   }
 
@@ -49,7 +49,7 @@ module.exports = {
       ) {
         return interaction.reply({
           content: '❌ You do not have permission to set the bank channel!',
-          flags: MessageFlags.Ephemeral
+          flags: 64
         });
       }
       
@@ -58,7 +58,7 @@ module.exports = {
 
         // Check if a Bank channel is set
         if (!currentSettings.bankchannel) {
-            return interaction.reply({ content: 'No Bank channel is currently set.', flags: MessageFlags.Ephemeral });
+            return interaction.reply({ content: 'No Bank channel is currently set.', flags: 64 });
         }
 
         delete currentSettings.bankchannel;
@@ -67,14 +67,14 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Bank channel has been removed.`,
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
 
     } catch (error) {
       console.error("Error setting Bank channel:", error);
       await interaction.reply({
         content: "❌ Failed to set the Bank channel.",
-        flags: MessageFlags.Ephemeral
+        flags: 64
       });
     }
   }

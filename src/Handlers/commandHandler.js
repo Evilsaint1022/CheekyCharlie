@@ -14,17 +14,16 @@ module.exports = async (client) => {
     });
 
     client.commands = new Collection();
-    let successCount = 0;
-    let failureCount = 0;
-    let hasFailures = false;
 
     // Loop through each folder and load commands
     for (const folder of commandFolders) {
         const commandsFolder = path.join(__dirname, `../Commands/${folder}`);
-        const addedTopics = new Set(); // Track which topics have been added to the table
 
         try {
             const folderContents = await fs.readdir(commandsFolder, { withFileTypes: true });
+
+            // Add the folder name as a title row
+            table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
 
             // Check for direct .js files in the main folder (backward compatibility)
             const directJsFiles = folderContents
@@ -42,21 +41,11 @@ module.exports = async (client) => {
                             folder,
                             topic: 'general'
                         });
-                        successCount++;
+                        table.push([`└── ${command.data.name}`, '✅ Loaded']);
                     } else {
-                        if (!hasFailures) {
-                            table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                            hasFailures = true;
-                        }
-                        failureCount++;
                         table.push([`└── ${file}`, '❌ Missing command data']);
                     }
                 } catch (error) {
-                    if (!hasFailures) {
-                        table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                        hasFailures = true;
-                    }
-                    failureCount++;
                     console.error(`Error loading command ${file}:`, error);
                     table.push([`└── ${file}`, '❌ Error']);
                 }
@@ -75,6 +64,10 @@ module.exports = async (client) => {
                     const topicFiles = await fs.readdir(topicFolder);
                     const topicJsFiles = topicFiles.filter(file => file.endsWith('.js'));
 
+                    if (topicJsFiles.length > 0) {
+                        table.push([`  📁 ${topic}`, '']);
+                    }
+
                     for (const file of topicJsFiles) {
                         try {
                             const command = require(path.join(topicFolder, file));
@@ -85,46 +78,24 @@ module.exports = async (client) => {
                                     folder,
                                     topic
                                 });
-                                successCount++;
+                                table.push([`    └── ${command.data.name}`, '✅ Loaded']);
                             } else {
-                                if (!hasFailures) {
-                                    table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                                    hasFailures = true;
-                                }
-                                if (!addedTopics.has(topic)) {
-                                    table.push([`  📁 ${topic}`, '']);
-                                    addedTopics.add(topic);
-                                }
-                                failureCount++;
                                 table.push([`    └── ${file}`, '❌ Missing command data']);
                             }
                         } catch (error) {
-                            if (!hasFailures) {
-                                table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                                hasFailures = true;
-                            }
-                            if (!addedTopics.has(topic)) {
-                                table.push([`  📁 ${topic}`, '']);
-                                addedTopics.add(topic);
-                            }
-                            failureCount++;
                             console.error(`Error loading command ${file} from topic ${topic}:`, error);
                             table.push([`    └── ${file}`, '❌ Error']);
                         }
                     }
                 } catch (error) {
-                    if (!hasFailures) {
-                        table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
-                        hasFailures = true;
-                    }
-                    if (!addedTopics.has(topic)) {
-                        table.push([`  📁 ${topic}`, '']);
-                        addedTopics.add(topic);
-                    }
-                    failureCount++;
                     console.error(`Error reading topic folder ${topic}:`, error);
-                    table.push([`    └── (folder error)`, '❌ Error']);
+                    table.push([`  📁 ${topic}`, '❌ Error']);
                 }
+            }
+
+            // If no files or directories found
+            if (directJsFiles.length === 0 && topicDirs.length === 0) {
+                table.push(['(No commands found)', '⚠️ Empty']);
             }
 
         } catch (error) {
@@ -132,11 +103,7 @@ module.exports = async (client) => {
         }
     }
 
-    // Always print the table if there are failures
-    if (hasFailures) {
-        console.log('\n' + table.toString());
-        console.log(`🌿・Successfully loaded ${successCount} commands, but ${failureCount} failed`.bold.white);
-    } else {
-        console.log(`🌿・Successfully loaded ${successCount} commands`.bold.white);
-    }
+    // Print the table of commands and a success message
+    console.log(table.toString());
+    console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully loaded commands)'.bold.green); // .bold.white equivalent
 };

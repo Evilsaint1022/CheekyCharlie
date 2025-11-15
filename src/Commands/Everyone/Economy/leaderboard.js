@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral,
+        flags: 64,
       });
     }
 
@@ -160,14 +160,14 @@ module.exports = {
         new ButtonBuilder().setCustomId('next').setLabel('Next').setStyle(ButtonStyle.Primary).setDisabled(currentPage === totalPages - 1)
       );
 
-    await interaction.reply({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()], flags: MessageFlags.Ephemeral });
+    await interaction.reply({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
     const message = await interaction.fetchReply();
 
     const collector = message.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 
     collector.on('collect', async (buttonInteraction) => {
       if (buttonInteraction.user.id !== interaction.user.id) {
-        return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", flags: MessageFlags.Ephemeral });
+        return buttonInteraction.reply({ content: "You're not allowed to use these buttons.", flags: 64 });
       }
 
       if (buttonInteraction.customId === 'previous' && currentPage > 0) {
@@ -180,7 +180,7 @@ module.exports = {
         return;
       }
 
-      await buttonInteraction.update({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()], flags: MessageFlags.Ephemeral });
+      await buttonInteraction.update({ embeds: [generateLeaderboardEmbed(currentPage)], components: [row()] });
     });
 
     collector.on('end', () => {

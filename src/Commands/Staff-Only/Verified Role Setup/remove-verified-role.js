@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
+        flags: 64 // Makes the reply ephemeral
     });
   }
   
@@ -35,10 +35,10 @@ module.exports = {
     console.log(`[⭐] [REMOVED-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} removed verified role`);
     try {
       db.settings.delete(guildKey);
-      await interaction.reply({ content: '✅ Verified role setting has been removed.', flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: '✅ Verified role setting has been removed.', flags: 64 });
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: '❌ Failed to remove the verified role setting.', flags: MessageFlags.Ephemeral });
+      await interaction.reply({ content: '❌ Failed to remove the verified role setting.', flags: 64 });
     }
   }
 };

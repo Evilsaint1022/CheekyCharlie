@@ -46,7 +46,7 @@ module.exports = {
         if ( durationInMS <= 0 ) {
             return interaction.reply({
                 content: "❌ Duration cant be 0 or less.",
-                flags: MessageFlags.Ephemeral
+                flags: 64
             })
         }
 
@@ -58,7 +58,7 @@ module.exports = {
         console.log(`[⭐] [SET-DEADCHAT-DURATION] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} Updated deadchatDuration to ${durationInSeconds} seconds`);
         return interaction.reply({
             content: "✅ Updated duration for Deadchat messages.\n-# Make sure the deadchat channel and deadchat role are set too.",
-            flags: MessageFlags.Ephemeral
+            flags: 64
         })
         
     },
