@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -30,7 +31,7 @@ module.exports = {
         // Check if the user is an owner
         if (!Owners.includes(userId)) {
         return interaction.reply({ 
-            content: 'You do not have permission to set the modmail channel!', flags: 64
+            content: 'You do not have permission to set the modmail channel!', flags: MessageFlags.Ephemeral
         });
     }
 
@@ -45,7 +46,7 @@ module.exports = {
             const timestamp = new Date().toLocaleTimeString();
             console.log(`[⭐] [SET-MODMAIL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName}_${guildId} ${interaction.user.tag} used the set-modmail-channel command to set the channel ID "${channel.id}"`);
 
-            return interaction.reply({ content: `Modmail will now be sent in <#${channel.id}>.`, flags: 64 });
+            return interaction.reply({ content: `Modmail will now be sent in <#${channel.id}>.`, flags: MessageFlags.Ephemeral });
         }
 
         await interaction.reply({ content: "Sorry, your server doesn't support this feature yet." });

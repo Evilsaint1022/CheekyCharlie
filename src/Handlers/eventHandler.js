@@ -15,15 +15,21 @@ function loadEvents(client) {
 
     const eventDir = path.join(__dirname, '..', 'Events'); // Get the path to the Events folder
     const folders = fs.readdirSync(eventDir); // Get all folders in the Events directory
+    let successCount = 0;
+    let failureCount = 0;
+    let hasFailures = false;
     
     for (const folder of folders) {
         const folderPath = path.join(eventDir, folder);
         if (fs.statSync(folderPath).isDirectory()) { // Ensure it's a directory
-            table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]); // Folder title row
-
             const files = fs.readdirSync(folderPath).filter((file) => file.endsWith('.js'));
 
             if (files.length === 0) {
+                if (!hasFailures) {
+                    table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
+                    hasFailures = true;
+                }
+                failureCount++;
                 table.push(['(No .js files found)', '⚠️ Empty']);
                 continue;
             }
@@ -45,8 +51,13 @@ function loadEvents(client) {
                             client.on(event.name, (...args) => event.execute(...args, client));
                     }
 
-                    table.push([`└── ${file}`, '✅ Loaded']);
+                    successCount++;
                 } catch (err) {
+                    if (!hasFailures) {
+                        table.push([{ colSpan: 2, content: `📂 ${folder}`, hAlign: 'left' }]);
+                        hasFailures = true;
+                    }
+                    failureCount++;
                     console.error(`Error loading event ${folder}/${file}:`, err);
                     table.push([`└── ${file}`, '❌ Error']);
                 }
@@ -54,9 +65,13 @@ function loadEvents(client) {
         }
     }
 
-    // Print the table of events and a success message
-    console.log(table.toString());
-    console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully Loaded Events)'.bold.green); // .bold.white equivalent
+    // Always print the table if there are failures
+    if (hasFailures) {
+        console.log('\n' + table.toString());
+        console.log(`🌿・Successfully loaded ${successCount} events, but ${failureCount} failed`.bold.white);
+    } else {
+        console.log(`🌿・Successfully loaded ${successCount} events`.bold.white);
+    }
 }
 
 module.exports = { loadEvents };

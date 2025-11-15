@@ -15,7 +15,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -37,7 +37,7 @@ module.exports = {
     const count = interaction.options.getNumber('count');
 
     if (count < 1) {
-      return interaction.reply({ content: 'The count must be at least 1.', flags: 64 });
+      return interaction.reply({ content: 'The count must be at least 1.', flags: MessageFlags.Ephemeral });
     }
 
     // Load or create existing starboard settings
@@ -47,6 +47,6 @@ module.exports = {
     // Save without overwriting other fields
     await db.starboard.set(guildKey, existingData);
 
-    await interaction.reply({ content: `✅ Starboard count set to **${count}**.`, flags: 64 });
+    await interaction.reply({ content: `✅ Starboard count set to **${count}**.`, flags: MessageFlags.Ephemeral });
   },
 };

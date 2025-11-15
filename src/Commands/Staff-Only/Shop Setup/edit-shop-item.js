@@ -41,7 +41,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -71,11 +71,11 @@ module.exports = {
       shopItems = Array.isArray(items) ? items : [];
     } catch (err) {
       console.error('DB Load Error:', err);
-      return interaction.reply({ content: 'Failed to load shop items.', flags: 64 });
+      return interaction.reply({ content: 'Failed to load shop items.', flags: MessageFlags.Ephemeral });
     }
 
     if (shopItems.length === 0) {
-      return interaction.reply({ content: 'Shop is empty for this server.', flags: 64 });
+      return interaction.reply({ content: 'Shop is empty for this server.', flags: MessageFlags.Ephemeral });
     }
 
     const currentTitle = interaction.options.getString('current_title').trim();
@@ -84,7 +84,7 @@ module.exports = {
     );
 
     if (index === -1) {
-      return interaction.reply({ content: `No item found with title "${currentTitle}".`, flags: 64 });
+      return interaction.reply({ content: `No item found with title "${currentTitle}".`, flags: MessageFlags.Ephemeral });
     }
 
     // Get optional update values
@@ -105,7 +105,7 @@ module.exports = {
       await db.shop.set(guildKey, shopItems);
     } catch (err) {
       console.error('DB Save Error:', err);
-      return interaction.reply({ content: 'Failed to save updated shop item.', flags: 64 });
+      return interaction.reply({ content: 'Failed to save updated shop item.', flags: MessageFlags.Ephemeral });
     }
 
     //console logs
@@ -113,7 +113,7 @@ module.exports = {
 
     return interaction.reply({
       content: `Successfully updated the item "${currentTitle}".`,
-      flags: 64,
+      flags: MessageFlags.Ephemeral,
     });
   },
 };

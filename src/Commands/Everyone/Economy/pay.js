@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
 // Replace with the actual path to your DotDatabase instance
 const db = require("../../../Handlers/database");
@@ -29,7 +29,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
     const ferns = '<:Ferns:1395219665638391818>';
@@ -38,15 +38,15 @@ module.exports = {
     const amount = interaction.options.getInteger('amount');
 
     if (sender.id === user.id) {
-      return interaction.reply({ content: 'You cannot pay yourself!', flags: 64 });
+      return interaction.reply({ content: 'You cannot pay yourself!', flags: MessageFlags.Ephemeral });
     }
 
     if (user.bot) {
-      return interaction.reply({ content: `You cannot transfer ${ferns}'s to bots!`, flags: 64 });
+      return interaction.reply({ content: `You cannot transfer ${ferns}'s to bots!`, flags: MessageFlags.Ephemeral });
     }
 
     if (amount <= 0) {
-      return interaction.reply({ content: 'The transfer amount must be greater than 0.', flags: 64 });
+      return interaction.reply({ content: 'The transfer amount must be greater than 0.', flags: MessageFlags.Ephemeral });
     }
 
     try {
@@ -60,21 +60,21 @@ module.exports = {
       const userBalance = userData.balance || 0;
 
       if (senderBalance < amount) {
-        return interaction.reply({ content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`, flags: 64 });
+        return interaction.reply({ content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`, flags: MessageFlags.Ephemeral });
       }
 
       await db.wallet.set(senderKey, { balance: senderBalance - amount });
       await db.wallet.set(userKey, { balance: userBalance + amount });
 
-      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`);
+      await interaction.reply({ content: `✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`, flags: MessageFlags.Ephemeral });
 
       console.log(`[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
     } catch (error) {
-      console.error(error);
-      return interaction.reply({
-        content: 'An error occurred while processing the transaction. Please try again later.',
-        flags: 64,
-      });
+        console.error(error);
+        return interaction.reply({
+            content: 'An error occurred while processing the transaction. Please try again later.',
+            flags: MessageFlags.Ephemeral,
+        });
     }
-  },
+  }
 };

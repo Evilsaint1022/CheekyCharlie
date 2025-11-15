@@ -29,7 +29,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
         const userId = interaction.user.id;
@@ -103,7 +103,7 @@ module.exports = {
 
         await interaction.reply({ 
             content: '✅ Giveaway created successfully!', 
-            flags: 64 
+            flags: MessageFlags.Ephemeral 
         });
     },
 };

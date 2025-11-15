@@ -15,7 +15,7 @@ module.exports = {
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -37,7 +37,7 @@ module.exports = {
     const channel = interaction.options.getChannel('channel');
 
     if (channel.type !== ChannelType.GuildText) {
-      return interaction.reply({ content: 'Please select a valid text channel.', flags: 64 });
+      return interaction.reply({ content: 'Please select a valid text channel.', flags: MessageFlags.Ephemeral });
     }
 
     // Load existing settings or initialize
@@ -49,6 +49,6 @@ module.exports = {
     // Save back without overwriting the full entry
     await db.starboard.set(guildKey, existingData);
 
-    await interaction.reply({ content: `✅ Starboard channel set to ${channel.url}.`, flags: 64 });
+    await interaction.reply({ content: `✅ Starboard channel set to ${channel.url}.`, flags: MessageFlags.Ephemeral });
   },
 };

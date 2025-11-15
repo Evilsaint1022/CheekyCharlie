@@ -56,13 +56,13 @@ module.exports = {
 
       await interaction.reply({
         content: `✅ Ban channel successfully set to ${channel}`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     } catch (error) {
       console.error('[SetBanChannel] Error:', error);
       await interaction.reply({
         content: `❌ There was an error setting the ban channel.`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
   }

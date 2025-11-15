@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -45,7 +45,7 @@ module.exports = {
         if (applicationIndex === -1) {
             return interaction.reply({
                 content: '❌ Could not find the application associated with this thread.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -84,7 +84,7 @@ module.exports = {
 
         await interaction.reply({
             content: '✅ Application declined successfully!',
-            flags: 64
+            flags: MessageFlags.Ephemeral
         });
 
         await interaction.channel.setName("[❌] " + applicant.username)

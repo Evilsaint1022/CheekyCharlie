@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database'); // adjust path if needed
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -30,7 +30,7 @@ module.exports = {
       if (!countingData) {
         return interaction.reply({
           content: '⚠️ No counting data found for this server yet.',
-          flags: 64 // ephemeral
+          flags: MessageFlags.Ephemeral
         });
       }
 
@@ -44,12 +44,12 @@ module.exports = {
         .setFooter({ text: `Last counted by user ID: ${countingData.lastUserId}` })
         .setColor('White');
 
-      await interaction.reply({ embeds: [embed], flags: 64 });
+      await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
     } catch (err) {
       console.error(err);
       await interaction.reply({
         content: '❌ An error occurred while fetching the counting data.',
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
   }

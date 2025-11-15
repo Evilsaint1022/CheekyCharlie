@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const db = require("../../../Handlers/database");
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64 // Makes the reply ephemeral
+                flags: MessageFlags.Ephemeral
             });
         }
         const ferns = '<:Ferns:1395219665638391818>';
@@ -39,7 +39,7 @@ module.exports = {
         if (bankBalance < withdrawAmount || withdrawAmount <= 0) {
             return interaction.reply({
                 content: '❌ You do not have enough Ferns in your Bank to withdraw or you entered an invalid amount.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -62,7 +62,7 @@ module.exports = {
             .setFooter({ text: 'Your Wallet is Growing!' })
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 
         // Console log
         console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the withdraw command. Withdrawal Amount: ${withdrawAmount.toLocaleString()} Ferns.`);

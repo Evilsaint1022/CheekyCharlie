@@ -1,5 +1,5 @@
 // ai-search.js
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 require('dotenv').config({ quiet: true });
 const OpenAI = require('openai');
 const db = require('../../../Handlers/database'); // make sure this is correct path
@@ -32,7 +32,7 @@ module.exports = {
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-            return interaction.reply({ content: `⏳ The /ai-search command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+            return interaction.reply({ content: `⏳ The /ai-search command is on global cooldown. Please wait ${remaining} more seconds.`, flags: MessageFlags.Ephemeral });
         }
 
         // Set the global cooldown
@@ -65,7 +65,7 @@ module.exports = {
 
     } catch (err) {
       console.error(err);
-      await interaction.editReply('❌ There was an error fetching AI results.');
+      await interaction.editReply({ content: '❌ There was an error fetching AI results.', flags: MessageFlags.Ephemeral });
     }
   }
 };

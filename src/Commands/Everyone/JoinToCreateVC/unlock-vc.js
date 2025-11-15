@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
         const voiceChannel = member.voice.channel;
 
         if (!voiceChannel) {
-            return interaction.reply({ content: '❌ You must be in a voice channel to use this command.', flags: 64 });
+            return interaction.reply({ content: '❌ You must be in a voice channel to use this command.', flags: MessageFlags.Ephemeral });
         }
 
         const guild = interaction.guild;
@@ -22,17 +22,17 @@ module.exports = {
 
         const vcData = await db.vcmembers.get(dbKey);
         if (!vcData || !vcData[vcId]) {
-            return interaction.reply({ content: '❌ This voice channel is not tracked or was not created by the bot.', flags: 64 });
+            return interaction.reply({ content: '❌ This voice channel is not tracked or was not created by the bot.', flags: MessageFlags.Ephemeral });
         }
 
         const userList = Object.keys(vcData[vcId]);
         if (userList.length === 0) {
-            return interaction.reply({ content: '❌ No tracked users found for this VC.', flags: 64 });
+            return interaction.reply({ content: '❌ No tracked users found for this VC.', flags: MessageFlags.Ephemeral });
         }
 
         const creatorId = userList[0];
         if (userId !== creatorId) {
-            return interaction.reply({ content: '❌ Only the VC creator can unlock the channel.', flags: 64 });
+            return interaction.reply({ content: '❌ Only the VC creator can unlock the channel.', flags: MessageFlags.Ephemeral });
         }
 
         try {
@@ -43,10 +43,10 @@ module.exports = {
             // Console Logs
             console.log(`[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the unlock-vc command.`);
 
-            return interaction.reply({ content: '🔓 Voice channel unlocked — @everyone can now join.', flags: 64 });
+            return interaction.reply({ content: '🔓 Voice channel unlocked — @everyone can now join.', flags: MessageFlags.Ephemeral });
         } catch (err) {
             console.error('Failed to unlock VC:', err);
-            return interaction.reply({ content: '❌ Failed to unlock the voice channel.', flags: 64 });
+            return interaction.reply({ content: '❌ Failed to unlock the voice channel.', flags: MessageFlags.Ephemeral });
         }
     }
 };

@@ -15,7 +15,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
         
@@ -38,7 +38,7 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
 
         if (channel.type !== ChannelType.GuildText) {
-            return interaction.reply({ content: 'Please select a valid text channel.', flags: 64 });
+            return interaction.reply({ content: 'Please select a valid text channel.', flags: MessageFlags.Ephemeral });
         }
 
         const existingData = await db.settings.get(guildKey) || {};
@@ -51,6 +51,6 @@ module.exports = {
         const datestamp = new Date().toLocaleDateString();
         console.log(`[⭐] [SET-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-vent-channel command to set the channel ID "${channel.id}"`);
 
-        await interaction.reply({ content: `✅ Vent channel set to ${channel.url}.`, flags: 64 });
+        await interaction.reply({ content: `✅ Vent channel set to ${channel.url}.`, flags: MessageFlags.Ephemeral });
     },
 };

@@ -18,7 +18,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
    }
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
@@ -51,6 +51,6 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
         console.log(`[⭐] [SET-JOIN-TO-CREATE-VC] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-join-to-create-vc to set the channel id "${channel.id}"`);
 
-        return interaction.reply({ content: `✅ This channel is now set to Join To Create: <#${channel.id}>.`, flags: 64 });
+        return interaction.reply({ content: `✅ This channel is now set to Join To Create: <#${channel.id}>.`, flags: MessageFlags.Ephemeral });
     },
 };

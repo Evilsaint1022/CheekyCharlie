@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -40,7 +40,7 @@ module.exports = {
         const role = interaction.options.getRole('role');
 
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
-            return interaction.reply({ content: `The role <@&${role.id}> is not in the whitelist.`, flags: 64 });
+            return interaction.reply({ content: `The role <@&${role.id}> is not in the whitelist.`, flags: MessageFlags.Ephemeral });
         }
 
         // Remove the role from the array
@@ -49,7 +49,7 @@ module.exports = {
         // Update the database with the new list of whitelisted roles
         db.whitelisted.set(`${guildName}_${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
 
-        await interaction.reply({ content: `The role <@&${role.id}> has been removed from the whitelist.`, flags: 64 });
+        await interaction.reply({ content: `The role <@&${role.id}> has been removed from the whitelist.`, flags: MessageFlags.Ephemeral });
 
         // Console Logs
         console.log(`[⭐] [REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName}_${guildId} ${interaction.user.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);

@@ -11,7 +11,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -321,7 +321,7 @@ async function handleAddFlow(interaction, questionsKey, response) {
     if (!questionText) {
         await interaction.reply({
             content: 'No question found. Please try again.',
-            flags: 64
+            flags: MessageFlags.Ephemeral
         });
         await refreshInterface(interaction, questionsKey, response);
         return;
@@ -412,7 +412,7 @@ async function handleMoveFlow(interaction, questionsKey, response) {
         if (newIndex < 0 || newIndex >= questions.length) {
             await interaction.reply({
                 content: 'Cannot move question in that direction.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
             await refreshInterface(interaction, questionsKey, response);
             return;

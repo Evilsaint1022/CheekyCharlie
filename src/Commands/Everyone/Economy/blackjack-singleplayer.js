@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
@@ -31,7 +31,7 @@ module.exports = {
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
             console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: MessageFlags.Ephemeral });
         }
 
         // Set the global cooldown
@@ -43,14 +43,14 @@ module.exports = {
 
         let balance = await db.wallet.get(balanceKey);
         if (balance === undefined || isNaN(parseInt(balance))) {
-            return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
+            return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: MessageFlags.Ephemeral });
         }
 
         balance = parseInt(balance);
         if (bet > balance) {
-            return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
+            return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: MessageFlags.Ephemeral });
         } else if (bet <= 0) {
-            return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
+            return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: MessageFlags.Ephemeral });
         }
 
         // 🎴 Blackjack logic
@@ -87,7 +87,7 @@ module.exports = {
             ]
         };
 
-        await interaction.reply({ embeds: [embed], components: [buttons] });
+        await interaction.reply({ embeds: [embed], components: [buttons], flags: MessageFlags.Ephemeral });
         const message = await interaction.fetchReply();
 
         const filter = i => i.user.id === user.id;

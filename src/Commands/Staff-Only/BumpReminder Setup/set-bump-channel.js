@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -54,14 +54,14 @@ if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
 
       await interaction.reply({
         content: `✅ Bump channel set to <#${channel.id}>`,
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
 
     } catch (error) {
       console.error("Error setting bump channel:", error);
       await interaction.reply({
         content: "❌ Failed to set the bump channel.",
-        flags: 64
+        flags: MessageFlags.Ephemeral
       });
     }
   }

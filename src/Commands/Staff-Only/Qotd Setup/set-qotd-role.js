@@ -17,7 +17,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
         return interaction.reply({
         content: "This command cannot be used in DMs.",
-        flags: 64 // Makes the reply ephemeral
+        flags: MessageFlags.Ephemeral // Makes the reply ephemeral
     });
 }
 
@@ -47,7 +47,7 @@ module.exports = {
 
     return interaction.reply({
       content: `✅ QOTD role set to ${role}`,
-      flags: 64
+      flags: MessageFlags.Ephemeral
     });
   }
 };

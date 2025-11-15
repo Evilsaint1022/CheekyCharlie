@@ -11,7 +11,7 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -31,7 +31,7 @@ module.exports = {
             
             return interaction.reply({
                 content: statusMessage,
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -41,7 +41,7 @@ module.exports = {
         if (questions.length === 0) {
             return interaction.reply({
                 content: '❌ Staff applications are not set up for this server yet. Please contact an administrator.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -51,7 +51,7 @@ module.exports = {
         if (!applicationChannelId) {
             return interaction.reply({
                 content: '❌ Staff application channel is not set up for this server yet. Please contact an administrator.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -80,7 +80,7 @@ module.exports = {
 
             await interaction.reply({
                 content: '✅ Application started! Check your DMs to begin answering questions.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
 
         } catch (error) {
@@ -90,7 +90,7 @@ module.exports = {
             console.error('Error DMing user:\n', error);
             return interaction.reply({
                 content: '❌ I couldn\'t send you a DM. Please make sure your DMs are open and try again.',
-                flags: 64
+                flags: MessageFlags.Ephemeral
             });
 
         }

@@ -26,7 +26,7 @@ module.exports = {
             if ( !interaction.replied ) {
                 await interaction.reply({
                     content: "❌ **There is currently no vent channel set!**",
-                    flags: 64
+                    flags: MessageFlags.Ephemeral
                 });
                 return;
             }
@@ -37,7 +37,7 @@ module.exports = {
             if ( !interaction.replied ) {
                 await interaction.reply({
                     content: "❌ **There is currently no vent channel set!**",
-                    flags: 64
+                    flags: MessageFlags.Ephemeral
                 });
                 return;
             }
@@ -54,7 +54,7 @@ module.exports = {
 
         const confesstionMessage = await ventChannel.send({ components: [confessionContainer], flags: [MessageFlags.IsComponentsV2] })
 
-        await interaction.reply({ content: "✅ **Cofession sent! Check out:** " + confesstionMessage.url, flags: 64 })
+        await interaction.reply({ content: "✅ **Cofession sent! Check out:** " + confesstionMessage.url, flags: MessageFlags.Ephemeral })
 
         return;
 
