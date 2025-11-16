@@ -40,7 +40,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(0xFFFFFF)
         .setTitle(`${top}`)
-        .setDescription(`ㅤㅤㅤㅤ${middle}\nㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\nㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`)
+        .setDescription(`_You are viewing ${targetUser.username}'s balance._\nㅤㅤㅤ${middle}\nㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\nㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤ${middle}\n${space}\n${bottom}`)
         .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
 
         await interaction.reply({ embeds: [embed] });
