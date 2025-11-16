@@ -47,7 +47,7 @@ async function sendQuestionOfTheDay(client) {
       const response = await openai.chat.completions.create({
         messages: [{ role: 'system', content: prompt }],
         model: "meta-llama/llama-4-maverick-17b-128e-instruct",
-        temperature: 0.7
+        temperature: 1.5
       });
 
       const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about today?";
