@@ -1,4 +1,4 @@
-# 🌿**The CheekyCharlie** - ( **Discord Bot** )🌿
+# 🌿 _**The CheekyCharlie**_ 🌿 `DISCORD BOT`
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -211,9 +211,3 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-qotd-role` - sets a question of the day ping role.
 - `/remove-qotd-role` - Removes the role set for Question of the day.
 - `/toggle-qotd` - toggles question of the day on or off.
-
-══════════════════════════════════════════════════════════════
-
-<img src="./src/Utilities/Emojis/CheekyCharlieHead.png" alt="Logo" width="250">
-
-**_You have reached the end of the Readme._**
