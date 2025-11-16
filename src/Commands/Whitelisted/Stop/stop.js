@@ -34,8 +34,8 @@ module.exports = {
         }
 
         const stopEmbed = {
-            color: 0x020202,
-            title: '🔴𝘾𝙝𝙖𝙣𝙜𝙚 𝙏𝙝𝙚 𝙏𝙤𝙥𝙞𝙘!',
+            color: 0xFF0000,
+            title: '_**🔴・Change The Topic!**_',
             description: ' **This discussion has gotten too heated and has run its course. The Topic must now be changed. Cancel any replies you are in the middle of and do not start any new replies. Continuing on with this topic will result in a timeout.** ',
             image: {
                 url: 'https://images-ext-2.discordapp.net/external/tt-s11SUBbBxQlRsQpmHrcfgk5BJror2zd2-2tUkoww/https/i.imgur.com/B5HkQWg.jpg',

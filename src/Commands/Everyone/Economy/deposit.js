@@ -54,7 +54,7 @@ module.exports = {
 
         // Create embed response
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF)
+            .setColor(0xFF0000)
             .setTitle(`**${user.username}'s Deposit**`)
             .setDescription(`Successfully deposited **${ferns}${depositAmount.toLocaleString()}**`)
 

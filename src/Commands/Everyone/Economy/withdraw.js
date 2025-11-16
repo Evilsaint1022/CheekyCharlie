@@ -51,7 +51,7 @@ module.exports = {
         await db.wallet.set(balanceKey, walletBalance);
 
         const embed = new EmbedBuilder()
-            .setColor(0xFFFFFF)
+            .setColor(0xFF0000)
             .setTitle(`**${user.username}'s Withdrawal**`)
             .setDescription(`Successfully withdrew **${ferns}${withdrawAmount.toLocaleString()}**`)
             .addFields(

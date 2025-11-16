@@ -42,7 +42,7 @@ module.exports = {
         .setTitle(`${user.username}'s Inventory`)
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .setDescription('Inventory is empty.')
-        .setColor('#ffffff')
+        .setColor(0xFF0000)
         .setFooter({ text: `Requested by ${interaction.user.username}` })
         .setTimestamp();
 
@@ -53,7 +53,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Inventory`)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-      .setColor('#ffffff')
+      .setColor(0xFF0000)
       .setFooter({ text: `Requested by ${interaction.user.username}` })
       .setTimestamp();
 
