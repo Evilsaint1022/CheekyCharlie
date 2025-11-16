@@ -5,7 +5,7 @@ const Table = require('cli-table3');
 
 module.exports = async (client) => {
 
-    const commandFolders = ["Everyone", "Staff-Only"]; // Folders to load commands from
+    const commandFolders = ["Everyone", "Whitelisted"]; // Folders to load commands from
     const table = new Table({
         head: ['Commands', 'Status'],
         style: { head: ['cyan'], border: ['grey'] },
