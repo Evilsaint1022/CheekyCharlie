@@ -171,7 +171,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-bump-channel` - Sets a channel for the bump reminder.
 - `/set-bump-role` - Sets a bump role for the bump reminder.
 
-### **🌿Ban-Count Setup**
+### **🌿Banned Channel Setup**
 - `/set-ban-channel` - Sets the ^banned channel.
 - `/remove-ban-channel` - Removes the ^banned channel.
 
