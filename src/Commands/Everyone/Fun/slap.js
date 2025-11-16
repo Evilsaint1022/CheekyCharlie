@@ -70,7 +70,8 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[👋] [SLAP] ${senderName} slapped ${targetName} in ${guild.name}`);
+        console.log(`[👋] [SLAP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${senderName} slapped ${targetName}`);
+
         const reply = await interaction.reply({ embeds: [embed], components: [row] });
 
         // ✅ Button collector
@@ -117,6 +118,8 @@ module.exports = {
             if (!slapBackGif) {
                 return btnInteraction.reply({ content: "No slap GIFs available right now 😞", flags: 64 });
             }
+
+            console.log(`[👋] [SLAP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${targetName} slapped ${senderName}`);
 
             const slapBackCount = Math.floor(Math.random() * 10) + 1;
             const slapBackEmbed = new EmbedBuilder()
