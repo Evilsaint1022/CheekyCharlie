@@ -232,12 +232,12 @@ const commands = [
         description: 'Apply to become a staff member.',
     },
     {
-        name: 'confess',
-        description: 'Confess something to the vent channel.',
+        name: 'venting',
+        description: 'Vent something to the vent channel.',
         options: [
             {
-                name: 'confession',
-                description: 'What do you want to confess?',
+                name: 'message',
+                description: 'What do you want to vent?',
                 type: 3,
                 required: true,
             },
