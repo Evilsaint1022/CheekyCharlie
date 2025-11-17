@@ -135,8 +135,8 @@ module.exports = {
 
     for (const userId of allIds) {
       // Find the full matching key (since username prefix differs)
-      const walletKey = balanceKeys.find(k => k.includes(`_${userId}.balance`));
-      const bankKey = bankKeys.find(k => k.includes(`_${userId}.bank`));
+      const walletKey = balanceKeys.find(k => k.includes(`${userId}.balance`));
+      const bankKey = bankKeys.find(k => k.includes(`${userId}.bank`));
 
       const balance = walletKey ? (await db.wallet.get(walletKey) || 0) : 0;
       const bank = bankKey ? (await db.bank.get(bankKey) || 0) : 0;
