@@ -20,8 +20,8 @@ async function sendCommitNotification(client, commit) {
       commit?.author?.login ||
       'Unknown';
 
-    const top = `**──── 🌿 ${repo} Updates 🌿 ────**`;
-    const middle = `ㅤㅤㅤ· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+    const top =    `**─────────────────────────────────────**`;
+    const middle = `ㅤㅤㅤ· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·ㅤㅤㅤ`;
     const bottom = `**─────────────────────────────────────**`;
 
     const centeredmessage = `ㅤㅤㅤ**${message}**`;
@@ -31,7 +31,7 @@ async function sendCommitNotification(client, commit) {
       return;
     }
 
-    const commitlink = `ㅤㅤㅤ[_🔗COMMIT LINK HERE_](${htmlUrl})`;
+    const commitlink = `ㅤㅤㅤ[- 🔗・COMMIT LINK HERE](${htmlUrl})`;
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
@@ -56,9 +56,9 @@ async function sendCommitNotification(client, commit) {
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
       .setTitle(`${top}`)
-      .setDescription(`${commitlink}\n${middle}\n${centeredmessage}\n${middle}\n${centeredauthor}\n${bottom}`)
+      .setDescription(`🌿 ${repo} Updates 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${space}\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
-      .setColor(0xFFFFFF)
+      .setColor(0xDE4949)
       .setTimestamp(new Date());
 
     await channel.send({ embeds: [embed] });
