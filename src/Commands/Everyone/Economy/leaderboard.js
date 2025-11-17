@@ -56,7 +56,7 @@ module.exports = {
 
           return {
             userId,
-            username: `<@${userId}>`,
+            username: `<@${userId}>` || 'Redacted',
             stat: balance
           };
         })
@@ -81,7 +81,7 @@ module.exports = {
 
           return {
             userId,
-            username: `<@${userId}>`,
+            username: `<@${userId}>` || 'Redacted',
             stat: bankBalance
           };
         })
@@ -101,7 +101,7 @@ module.exports = {
 
           return {
             userId,
-            username: `<@${userId}>`,
+            username: `<@${userId}>` || 'Redacted',
             safeKey: userId,
             stat: data.level || 0,
             xp: data.xp || 0
@@ -143,7 +143,7 @@ module.exports = {
 
       entries.push({
         userId,
-        username: `<@${userId}>`,
+        username: `<@${userId}>` || 'Redacted',
         stat: balance + bank
       });
     }
