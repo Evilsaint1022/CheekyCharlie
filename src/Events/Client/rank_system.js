@@ -8,8 +8,9 @@ module.exports = {
 
     const { guild, member, author } = message;
     const guildKey = `${guild.name}_${guild.id}`;
-    const safeUsername = author.username.replace(/\./g, '_');
-    const userKey = `${safeUsername}_${author.id}`;
+
+    // NEW: userKey is only the user ID
+    const userKey = author.id;
 
     // Check if levels feature is enabled for this guild
     const levelsSetting = await db.settings.get(guildKey);
@@ -19,6 +20,23 @@ module.exports = {
 
     // Load guild XP/level data
     let guildData = await db.levels.get(guildKey) || {};
+
+    // 🔥 NEW BLOCK — convert old username_userid keys to userid
+    for (const oldKey of Object.keys(guildData)) {
+      // match patterns like username_userid
+      if (oldKey.endsWith(`_${author.id}`) && oldKey !== userKey) {
+        // Move the data
+        guildData[userKey] = guildData[oldKey];
+        // Remove the old key
+        delete guildData[oldKey];
+
+        // Save the cleaned structure
+        await db.levels.set(guildKey, guildData);
+        break;
+      }
+    }
+
+    // Load or create user data
     let userData = guildData[userKey] || { xp: 0, level: 1 };
 
     // Load guild settings for LevelChannel
@@ -29,10 +47,10 @@ module.exports = {
     // XP gain
     let xpGain = Math.floor(Math.random() * 11) + 5;
 
-    // Check if boosters role is set in settings
+    // Check if boosters role is set
     const boostersRoleId = settings?.boostersRoleId;
 
-    // If boostersRoleId exists and the member has the role, double the XP
+    // If boostersRoleId exists and member has it, double XP
     if (boostersRoleId && member.roles.cache.has(boostersRoleId)) {
       xpGain *= 2;
     }
@@ -62,11 +80,10 @@ module.exports = {
     const currentLevel = userData.level;
 
     try {
-      const rolesToKeep = new Set(); // Sticky roles or latest earned role
+      const rolesToKeep = new Set();
       let highestUnlocked = 0;
       let highestRoleId = null;
 
-      // Iterate and find roles to keep or assign
       for (const [levelStr, config] of Object.entries(levelRoles)) {
         const level = parseInt(levelStr);
         if (currentLevel >= level) {
@@ -85,8 +102,8 @@ module.exports = {
 
       if (highestRoleId) rolesToKeep.add(highestRoleId);
 
-      // Manage roles
       const userRoles = member.roles.cache;
+
       for (const role of userRoles.values()) {
         if (
           Object.values(levelRoles).some(lr => lr.roleId === role.id) &&
@@ -96,7 +113,6 @@ module.exports = {
         }
       }
 
-      // Add missing roles
       for (const roleId of rolesToKeep) {
         if (!userRoles.has(roleId)) {
           const role = guild.roles.cache.get(roleId);
