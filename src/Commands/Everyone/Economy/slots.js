@@ -18,8 +18,7 @@ module.exports = {
     const { guild, user } = interaction;
     const bet = interaction.options.getInteger('bet');
     const ferns = '<:Ferns:1395219665638391818>';
-    const safeUsername = user.username.replace(/\./g, '_');
-    const balanceKey = `${safeUsername}_${user.id}.balance`;
+    const balanceKey = `${user.id}.balance`;
 
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
     const now = Date.now();
@@ -34,8 +33,8 @@ module.exports = {
 
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} used the Slots command.`);
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the Slots command.`);
+    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.wallet.get(balanceKey);
     if (balance === undefined || isNaN(parseInt(balance))) {
@@ -114,12 +113,12 @@ module.exports = {
           await db.wallet.set(balanceKey, balance);
           resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
           resultColor = 0x00FF00;
-          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} WON a bet of ${bet.toLocaleString()} Ferns.`);
+          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} WON a bet of ${bet.toLocaleString()} Ferns.`);
         } else {
           await db.wallet.set(balanceKey, balance);
           resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
           resultColor = 0xFF0000;
-          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} LOST a bet of ${bet.toLocaleString()} Ferns.`);
+          console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} LOST a bet of ${bet.toLocaleString()} Ferns.`);
         }
 
         const resultEmbed = new EmbedBuilder()
