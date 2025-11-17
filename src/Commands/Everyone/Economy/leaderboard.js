@@ -43,49 +43,51 @@ module.exports = {
     // WALLET
     // ------------------------------
     if (type === 'wallet') {
-      const allKeys = await db.wallet.keys();
+    const allKeys = await db.wallet.keys();
 
-      entries = (await Promise.all(
-        allKeys
-          .filter(key => key.endsWith('.balance'))
-          .map(async key => {
-            const rawKey = key.replace('.balance', '');
-            const userId = rawKey.split('_').pop(); // only ID
-            const balance = await db.wallet.get(key) || 0;
+    entries = (await Promise.all(
+      allKeys
+        .filter(key => key.endsWith('.balance'))
+        .map(async key => {
+          const base = key.replace('.balance', '');
+          const userId = base.split('_').pop(); // ✔ only ID
 
-            return {
-              userId,
-              username: `<@${userId}>`,
-              safeKey: userId,
-              stat: balance
-            };
-          })
-      )).sort((a, b) => b.stat - a.stat);
-    }
+          const balance = await db.wallet.get(key) || 0;
+
+          return {
+            userId,
+            username: `<@${userId}>`,
+            stat: balance
+          };
+        })
+    )).sort((a, b) => b.stat - a.stat);
+  }
+
 
     // ------------------------------
     // BANK
     // ------------------------------
-    else if (type === "bank") {
-      const allKeys = await db.bank.keys();
+    else if (type === 'bank') {
+    const allKeys = await db.bank.keys();
 
-      entries = (await Promise.all(
-        allKeys
-          .filter(key => key.endsWith('.bank'))
-          .map(async key => {
-            const rawKey = key.replace('.bank', '');
-            const userId = rawKey.split('_').pop();
-            const bankBalance = await db.bank.get(key) || 0;
+    entries = (await Promise.all(
+      allKeys
+        .filter(key => key.endsWith('.bank'))
+        .map(async key => {
+          const base = key.replace('.bank', '');
+          const userId = base.split('_').pop(); // ✔ only ID
 
-            return {
-              userId,
-              username: `<@${userId}>`,
-              safeKey: userId,
-              stat: bankBalance
-            };
-          })
-      )).sort((a, b) => b.stat - a.stat);
-    }
+          const bankBalance = await db.bank.get(key) || 0;
+
+          return {
+            userId,
+            username: `<@${userId}>`,
+            stat: bankBalance
+          };
+        })
+    )).sort((a, b) => b.stat - a.stat);
+  }
+
 
     // ------------------------------
     // LEVEL
@@ -114,31 +116,40 @@ module.exports = {
     // ------------------------------
     // MONEY (wallet + bank)
     // ------------------------------
-    else if (type === 'money') {
-      const balanceKeys = await db.wallet.keys();
-      const bankKeys = await db.bank.keys();
+   else if (type === 'money') {
+    const balanceKeys = await db.wallet.keys();
+    const bankKeys = await db.bank.keys();
 
-      const allIds = new Set([
-        ...balanceKeys.filter(k => k.endsWith('.balance')).map(k => k.replace('.balance', '').split('_').pop()),
-        ...bankKeys.filter(k => k.endsWith('.bank')).map(k => k.replace('.bank', '').split('_').pop())
-      ]);
+    // Collect all unique user IDs
+    const allIds = new Set([
+      ...balanceKeys
+        .filter(k => k.endsWith('.balance'))
+        .map(k => k.replace('.balance', '').split('_').pop()),
 
-      entries = [];
+      ...bankKeys
+        .filter(k => k.endsWith('.bank'))
+        .map(k => k.replace('.bank', '').split('_').pop())
+    ]);
 
-      for (const userId of allIds) {
-        const balance = await db.wallet.get(`user_${userId}.balance`) || 0;
-        const bank = await db.bank.get(`user_${userId}.bank`) || 0;
+    entries = [];
 
-        entries.push({
-          userId,
-          username: `<@${userId}>`,
-          safeKey: userId,
-          stat: balance + bank
-        });
-      }
+    for (const userId of allIds) {
+      // Find the full matching key (since username prefix differs)
+      const walletKey = balanceKeys.find(k => k.includes(`_${userId}.balance`));
+      const bankKey = bankKeys.find(k => k.includes(`_${userId}.bank`));
 
-      entries.sort((a, b) => b.stat - a.stat);
+      const balance = walletKey ? (await db.wallet.get(walletKey) || 0) : 0;
+      const bank = bankKey ? (await db.bank.get(bankKey) || 0) : 0;
+
+      entries.push({
+        userId,
+        username: `<@${userId}>`,
+        stat: balance + bank
+      });
     }
+
+    entries.sort((a, b) => b.stat - a.stat);
+  }
 
     // ------------------------------
     // USER RANKING (ID-BASED)
