@@ -31,7 +31,7 @@ async function sendCommitNotification(client, commit) {
       return;
     }
 
-    const commitlink = `ㅤㅤㅤ[- 🔗・COMMIT LINK HERE](${htmlUrl})`;
+    const commitlink = `ㅤㅤㅤ[_🔗・COMMIT LINK HERE_](${htmlUrl})`;
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
@@ -55,8 +55,7 @@ async function sendCommitNotification(client, commit) {
     // Construct the embed
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
     const embed = new EmbedBuilder()
-      .setTitle(`${top}`)
-      .setDescription(`🌿 ${repo} Updates 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${space}\n${centeredauthor}\n${bottom}`)
+      .setDescription(`${top}\n#ㅤㅤㅤ🌿 **__${repo} Updates__** 🌿\n${space}\n${commitlink}\n${space}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xDE4949)
       .setTimestamp(new Date());
