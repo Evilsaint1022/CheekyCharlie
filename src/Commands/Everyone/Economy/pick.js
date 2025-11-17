@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require('discord.js');
 const { dropPartyEvent } = require('../../../Events/Client/drop_party');
 const db = require('../../../Handlers/database');
 
-// Track users who have picked the coin for the current drop
 const pickedUsers = new Set();
 const ferns = '<:Ferns:1395219665638391818>';
 
@@ -20,13 +19,32 @@ module.exports = {
         }
 
         try {
-            const guildId = interaction.guild.id;
-            const userId = interaction.user.id;
-            const username = interaction.user.username;
+            const guild = interaction.guild;
+            const user = interaction.user;
 
-            // Use safe key for DB access (replace . with _)
-            const safeUsername = username.replace(/\./g, '_');
-            const dbKey = `${safeUsername}_${userId}`;
+            const userId = user.id;
+            const safeUsername = user.username.replace(/\./g, '_');
+
+            // Old full key object
+            const oldKey = `${safeUsername}_${userId}`;
+
+            // New userID-only object
+            const newKey = `${userId}`;
+
+            // -------------------------------------------------
+            // 🔍 DB Migration: move old object → userId only
+            // -------------------------------------------------
+
+            const oldWalletObj = await db.wallet.get(oldKey);
+
+            if (oldWalletObj !== undefined) {
+                await db.wallet.set(newKey, oldWalletObj); // copy data
+                await db.wallet.delete(oldKey);            // remove old whole object
+            }
+
+            // -------------------------------------------------
+            // 🌿 PICK LOGIC
+            // -------------------------------------------------
 
             const dropPartyData = dropPartyEvent.dropPartyData;
             const dropMessage = dropPartyData?.message;
@@ -47,35 +65,40 @@ module.exports = {
 
             pickedUsers.add(userId);
 
-            // Fetch the user's current balance from the database
+            // Load balance using new key
             let balance = 0;
-        try {
-            const userData = await db.wallet.get(dbKey);
-            balance = userData?.balance || 0;
-        }   catch (error) {
-            console.error('Error fetching user balance from database:', error);
-        }
 
-            let coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50 Ferns
+            try {
+                const userData = await db.wallet.get(newKey);
+                balance = userData?.balance || 0;
+            } catch (error) {
+                console.error('Error fetching user balance:', error);
+            }
 
-            // Check if user has booster role to apply 2x bonus
-            const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
+            let coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50
+
+            // Boosters role check
+            const guildKey = `${guild.name}_${guild.id}`;
             const settings = await db.settings.get(guildKey);
             const boostersRoleId = settings?.boostersRoleId;
 
-        if (boostersRoleId && interaction.member.roles.cache.has(boostersRoleId)) {
-            coinsEarned *= 2;
-        }
+            if (boostersRoleId && interaction.member.roles.cache.has(boostersRoleId)) {
+                coinsEarned *= 2;
+            }
 
             balance += coinsEarned;
 
+            console.log(
+                `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
+                `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+                `${guild.name} ${user.username} picked ${coinsEarned.toLocaleString()} Ferns`
+            );
 
-            console.log(`[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${username} picked ${coinsEarned.toLocaleString()} Ferns`);
-
+            // Save new balance using ID-only key
             try {
-                await db.wallet.set(dbKey, { balance });
+                await db.wallet.set(newKey, { balance });
             } catch (error) {
-                console.error('Error saving user balance to database:', error);
+                console.error('Error saving user balance:', error);
             }
 
             await interaction.reply({
@@ -88,6 +111,7 @@ module.exports = {
                 ],
             });
 
+            // Auto delete pick message after 20s
             setTimeout(async () => {
                 try {
                     const message = await interaction.fetchReply();
@@ -109,7 +133,7 @@ module.exports = {
     },
 };
 
-// Reset the picked users when a new drop occurs
+// Reset on new drop
 dropPartyEvent.on('newDrop', () => {
     pickedUsers.clear();
 });

@@ -5,7 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('deposit')
         .setDescription('Deposit points from your Wallet to your Bank.')
-        .addIntegerOption(option => 
+        .addIntegerOption(option =>
             option.setName('amount')
                 .setDescription('The amount of points to deposit.')
                 .setRequired(true)
@@ -15,49 +15,69 @@ module.exports = {
         if (interaction.channel.isDMBased()) {
             return interaction.reply({
                 content: "This command cannot be used in DMs.",
-                flags: 64 // ephemeral
+                flags: 64
             });
         }
+
         const ferns = '<:Ferns:1395219665638391818>';
-        const timestamp = new Date().toLocaleTimeString();
         const { guild, user } = interaction;
 
-        // Replace all dots in username with underscores for DB keys
         const safeUsername = user.username.replace(/\./g, '_');
 
-        // Get the deposit amount from the options
-        let depositAmount = interaction.options.getInteger('amount');
+        // Old key format (FULL OBJECT)
+        const oldKey = `${safeUsername}_${user.id}`;
 
-        // Get current balances
-        let balance = await db.wallet.get(`${safeUsername}_${user.id}.balance`) || 0;
-        let bank = await db.bank.get(`${safeUsername}_${user.id}.bank`) || 0;
+        // New ID-only key
+        const newKey = `${user.id}`;
 
-        // If depositAmount is 0, deposit all wallet points
-        if (depositAmount === 0) {
-            depositAmount = balance;
+        // -----------------------------------
+        // 🔍 DB MIGRATION — Move Old → New
+        // -----------------------------------
+
+        const oldWalletObj = await db.wallet.get(oldKey);
+        const oldBankObj = await db.bank.get(oldKey);
+
+        // Move wallet if exists
+        if (oldWalletObj !== undefined) {
+            await db.wallet.set(newKey, oldWalletObj); // copy
+            await db.wallet.delete(oldKey);           // delete whole object
         }
 
-        // Validate deposit amount
-        if (balance < depositAmount || depositAmount <= 0) {
+        // Move bank if exists
+        if (oldBankObj !== undefined) {
+            await db.bank.set(newKey, oldBankObj);
+            await db.bank.delete(oldKey);
+        }
+
+        // -----------------------------------
+        // Always use ID-only key now
+        // -----------------------------------
+
+        let balance = await db.wallet.get(`${newKey}.balance`) || 0;
+        let bank = await db.bank.get(`${newKey}.bank`) || 0;
+
+        // Deposit amount
+        let depositAmount = interaction.options.getInteger('amount');
+        if (depositAmount === 0) depositAmount = balance;
+
+        if (depositAmount <= 0 || balance < depositAmount) {
             return interaction.reply({
                 content: '❌ You do not have enough points to deposit or you entered an invalid amount.',
                 flags: 64
             });
         }
 
-        // Update balances
         balance -= depositAmount;
         bank += depositAmount;
 
-        await db.wallet.set(`${safeUsername}_${user.id}.balance`, balance);
-        await db.bank.set(`${safeUsername}_${user.id}.bank`, bank);
+        // Save
+        await db.wallet.set(`${newKey}.balance`, balance);
+        await db.bank.set(`${newKey}.bank`, bank);
 
-        // Create embed response
         const embed = new EmbedBuilder()
             .setColor('#de4949')
             .setTitle(`**${user.username}'s Deposit**`)
             .setDescription(`Successfully deposited **${ferns}${depositAmount.toLocaleString()}**`)
-
             .addFields(
                 { name: '🪙 Wallet Balance', value: `${ferns}${balance.toLocaleString()}`, inline: true },
                 { name: '🏦 Bank Balance', value: `${ferns}${bank.toLocaleString()}`, inline: true }
@@ -68,7 +88,8 @@ module.exports = {
 
         await interaction.reply({ embeds: [embed] });
 
-        // Console log
-        console.log(`[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the deposit command. Deposit Amount: ${depositAmount.toLocaleString()} Ferns`);
+        console.log(
+            `[🌿] [DEPOSIT] ${guild.name} (${guild.id}) ${user.tag} deposited ${depositAmount} Ferns.`
+        );
     },
 };
