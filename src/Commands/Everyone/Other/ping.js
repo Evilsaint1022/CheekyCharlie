@@ -25,7 +25,7 @@ module.exports = {
 
         const latency = Date.now() - start;
         const pingEmbed = {
-            color: 0xFF0000,
+            color: '#de4949',
             title: '**Pong!**',
             description: `**Latency: ${latency}ms.**`,
         };

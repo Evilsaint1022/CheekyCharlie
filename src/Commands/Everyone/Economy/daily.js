@@ -71,7 +71,7 @@ module.exports = {
             .setTitle(`${top}`)
             .setDescription(`You have claimed your daily reward of **${ferns}・${rewardAmount.toLocaleString()}**!\nㅤㅤㅤㅤ${middle}\nㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\nㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`)
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-            .setColor(0xFF0000)
+            .setColor('#de4949')
 
         await interaction.reply({ embeds: [embed] });
 

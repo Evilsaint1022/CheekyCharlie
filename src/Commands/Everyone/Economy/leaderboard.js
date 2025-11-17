@@ -147,7 +147,7 @@ module.exports = {
           (leaderboard || "      No users found.") +
               `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`
         )
-        .setColor(0xFF0000)
+        .setColor('#de4949')
         .setThumbnail(interaction.guild.iconURL())
         .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
         .setTimestamp();

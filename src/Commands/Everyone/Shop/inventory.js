@@ -53,7 +53,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Inventory`)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-      .setColor(0xFF0000)
+      .setColor('#de4949')
       .setFooter({ text: `Requested by ${interaction.user.username}` })
       .setTimestamp();
 

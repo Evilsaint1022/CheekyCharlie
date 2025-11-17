@@ -44,7 +44,7 @@ module.exports = {
             const nextLevelXp = level * 350 + 350;
 
             const embed = new EmbedBuilder()
-                .setColor(0xFF0000)
+                .setColor('#de4949')
                 .setTitle(`**${targetUser.username}'s Level**`)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .addFields(
