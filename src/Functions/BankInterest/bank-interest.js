@@ -3,6 +3,7 @@ const db = require("./../../Handlers/database");
 
 const time = "0 0 * * *"; // Daily at midnight UTC
 
+
 async function runDailyBankInterest(client) {
     if (!client) {
         console.warn("[Bank Interest] Client not defined. Skipping run.");
@@ -21,8 +22,6 @@ async function runDailyBankInterest(client) {
 
     for (const guild of client.guilds.cache.values()) {
         const guildKey = `${guild.name}_${guild.id}`;
-
-        // ✅ Await the settings fetch
         const settings = await db.settings.get(guildKey);
 
         if (!settings || !settings.bankchannel) {
@@ -30,50 +29,46 @@ async function runDailyBankInterest(client) {
             continue;
         }
 
-        const channelId = settings.bankchannel;
-        const channel = guild.channels.cache.get(channelId);
-
+        const channel = guild.channels.cache.get(settings.bankchannel);
         if (!channel) {
-            console.warn(`[Bank Interest] Channel ID ${channelId} not found in guild ${guild.name}`);
+            console.warn(`[Bank Interest] Channel ID ${settings.bankchannel} not found in guild ${guild.name}`);
             continue;
         }
 
-        // ✅ Process each bank entry
+        // ---------------------------------------
+        // 🔥 Process each bank entry using only IDs
+        // ---------------------------------------
         for (const [key, entry] of Object.entries(bankEntries)) {
+
             if (!entry || typeof entry !== 'object' || entry.bank <= 0) continue;
 
-            const underscoreIndex = key.lastIndexOf('_');
-            if (underscoreIndex === -1) {
-                console.warn(`[Bank Interest] Unexpected key format: ${key}`);
-                continue;
+            // Extract ID (ignore username part)
+            // key format example: evilsaint1022_1032169288984961056
+            let userId = key;
+
+            if (key.includes("_")) {
+                const underscoreIndex = key.lastIndexOf("_");
+                userId = key.substring(underscoreIndex + 1);
             }
 
-            const usernamePart = key.substring(0, underscoreIndex);
-            const userIdPart = key.substring(underscoreIndex + 1);
-            const safeUsername = usernamePart.replace(/\./g, '_');
-            const safeKey = `${safeUsername}_${userIdPart}`;
-
-            if (safeKey !== key) {
-                console.log(`[Bank Interest] Migrating key ${key} to ${safeKey}`);
-                await db.bank.set(safeKey, entry);
-                await db.bank.delete(key);
-            }
-
+            // Calculate interest
             const amount = entry.bank;
             const interest = Math.round(calculatePercent(amount, 1)); // 1%
             const newBalance = amount + interest;
 
-            await db.bank.set(safeKey, { bank: newBalance });
+            // Save new balance using ORIGINAL key, not userId
+            await db.bank.set(key, { bank: newBalance });
 
+            // Send Discord message
             try {
                 await channel.send(
-                    `- 💰 **[Bank Interest]** ${safeKey}: **Old Wallet:** ${ferns} \`${amount}\`, **Interest:** ${ferns} \`${interest}\`, **New Wallet:** ${ferns} \`${newBalance}\``
+                    `- **[ 💰__Bank Interest__ ]** <@${userId}>:\n> **Old Bank:** ${ferns} \`${amount}\`\n> **Interest:** ${ferns} \`${interest}\`\n> **New Bank:** ${ferns} \`${newBalance}\``
                 );
             } catch (err) {
                 console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
             }
 
-            console.log(`[💰] [Bank Interest] ${safeKey}: Old Wallet: ${amount}, Interest: ${interest}, New Wallet: ${newBalance}`);
+            console.log(`[💰] [Bank Interest] ${userId}: Old: ${amount}, Interest: ${interest}, New: ${newBalance}`);
         }
     }
 }
