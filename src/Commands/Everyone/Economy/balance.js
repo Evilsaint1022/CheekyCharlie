@@ -30,8 +30,7 @@ module.exports = {
         const bottom = `**──────── Use Your Ferns Wisely! ────────**`;
 
         // Replace dots with underscores for the database key only
-        const safeUsername = targetUser.username.replace(/\./g, '_');
-        const dbKeyPrefix = `${safeUsername}_${targetUser.id}`;
+        const dbKeyPrefix = `${targetUser.id}`;
 
         // Load values from DB using the safe key
         const balance = await db.wallet.get(`${dbKeyPrefix}.balance`) || 0;
