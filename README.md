@@ -1,4 +1,4 @@
-# 🌿 _**The CheekyCharlie**_ 🌿
+# 🌿**The CheekyCharlie**🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
 ![Status](https://img.shields.io/badge/%20Discord%20Bot-%20Yes-blue)
@@ -79,7 +79,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/staff-apply` — Start a new staff application.
 
 ### **🌿Venting**
-- `/confess` — Confess anonymously to the vent channel.
+- `/venting` — Vent anonymously to the vent channel.
 
 ### **🌿Fun**
 - `/avatar` — View your's or someone elses avatar.
