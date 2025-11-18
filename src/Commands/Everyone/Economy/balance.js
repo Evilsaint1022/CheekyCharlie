@@ -19,6 +19,7 @@ module.exports = {
                 flags: 64
             });
         }
+
         const ferns = '<:Ferns:1395219665638391818>';
         const targetUser = interaction.options.getUser('user') || interaction.user;
         const { guild } = interaction;
@@ -29,18 +30,45 @@ module.exports = {
         const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
         const bottom = `**──────── Use Your Ferns Wisely! ────────**`;
 
-        // Replace dots with underscores for the database key only
-        const dbKeyPrefix = `${targetUser.id}`;
+        // ------------------------------------------------------
+        // 1️⃣ MIGRATION — move username-based keys → ID-only keys
+        // ------------------------------------------------------
+        const safeUsername = targetUser.username.replace(/\./g, '_');
 
-        // Load values from DB using the safe key
-        const balance = await db.wallet.get(`${dbKeyPrefix}.balance`) || 0;
-        const bank = await db.bank.get(`${dbKeyPrefix}.bank`) || 0;
+        const oldKey = `${safeUsername}_${targetUser.id}`; // old format
+        const newKey = `${targetUser.id}`;                 // new format
+
+        const oldWalletObj = await db.wallet.get(oldKey);
+        const oldBankObj = await db.bank.get(oldKey);
+
+        // Move wallet if exists
+        if (oldWalletObj !== undefined) {
+            await db.wallet.set(newKey, oldWalletObj);
+            await db.wallet.delete(oldKey);
+        }
+
+        // Move bank if exists
+        if (oldBankObj !== undefined) {
+            await db.bank.set(newKey, oldBankObj);
+            await db.bank.delete(oldKey);
+        }
+        // ------------------------------------------------------
+
+        // DB lookup AFTER migration so the new keys are used
+        const balance = await db.wallet.get(`${newKey}.balance`) || 0;
+        const bank = await db.bank.get(`${newKey}.bank`) || 0;
 
         const embed = new EmbedBuilder()
-        .setColor('#de4949')
-        .setTitle(`${top}`)
-        .setDescription(`_You are viewing ${targetUser.username}'s balance._\nㅤㅤㅤ${middle}\nㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\nㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\nㅤㅤㅤ${middle}\n${space}\n${bottom}`)
-        .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
+            .setColor('#de4949')
+            .setTitle(`${top}`)
+            .setDescription(
+                `_You are viewing ${targetUser.username}'s balance._\n` +
+                `ㅤㅤㅤ${middle}\n` +
+                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
+                `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤㅤㅤ${middle}\n${space}\n${bottom}`
+            )
+            .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
 
         await interaction.reply({ embeds: [embed] });
 

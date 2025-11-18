@@ -1,9 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-
-// Replace with the actual path to your DotDatabase instance
 const db = require("../../../Handlers/database");
 
-// Replace /\./g with _ when saving
+// Replace /\./g with _ when saving (legacy)
 function escapeUsername(username) {
   return username.replace(/\./g, '_');
 }
@@ -32,6 +30,7 @@ module.exports = {
         flags: 64
       });
     }
+
     const ferns = '<:Ferns:1395219665638391818>';
     const sender = interaction.user;
     const user = interaction.options.getUser('user');
@@ -50,25 +49,70 @@ module.exports = {
     }
 
     try {
-      const senderKey = `${escapeUsername(sender.username)}_${sender.id}`;
-      const userKey = `${escapeUsername(user.username)}_${user.id}`;
+      // ------------------------------------------------------
+      // 🔄 1️⃣ MIGRATION — Convert old username_ID → ID-only
+      // ------------------------------------------------------
 
-      const senderData = await db.wallet.get(senderKey) ?? { balance: 0 };
-      const userData = await db.wallet.get(userKey) ?? { balance: 0 };
+      const senderOldKey = `${escapeUsername(sender.username)}_${sender.id}`;
+      const userOldKey = `${escapeUsername(user.username)}_${user.id}`;
+
+      const senderNewKey = `${sender.id}`;
+      const userNewKey = `${user.id}`;
+
+      // Load old objects
+      const oldSenderObj = await db.wallet.get(senderOldKey);
+      const oldUserObj = await db.wallet.get(userOldKey);
+
+      // If sender has old key → move it
+      if (oldSenderObj !== undefined) {
+        await db.wallet.set(senderNewKey, oldSenderObj);
+        await db.wallet.delete(senderOldKey);
+      }
+
+      // If recipient has old key → move it
+      if (oldUserObj !== undefined) {
+        await db.wallet.set(userNewKey, oldUserObj);
+        await db.wallet.delete(userOldKey);
+      }
+
+      // ------------------------------------------------------
+      // 2️⃣ Load balances using NEW ID-only keys
+      // ------------------------------------------------------
+
+      const senderData = await db.wallet.get(senderNewKey) ?? { balance: 0 };
+      const userData = await db.wallet.get(userNewKey) ?? { balance: 0 };
 
       const senderBalance = senderData.balance || 0;
       const userBalance = userData.balance || 0;
 
       if (senderBalance < amount) {
-        return interaction.reply({ content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`, flags: 64 });
+        return interaction.reply({
+          content: `You do not have enough points to transfer ${amount.toLocaleString()}${ferns}.`,
+          flags: 64
+        });
       }
 
-      await db.wallet.set(senderKey, { balance: senderBalance - amount });
-      await db.wallet.set(userKey, { balance: userBalance + amount });
+      // ------------------------------------------------------
+      // 3️⃣ Apply transaction
+      // ------------------------------------------------------
 
-      await interaction.reply(`✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`);
+      await db.wallet.set(senderNewKey, { balance: senderBalance - amount });
+      await db.wallet.set(userNewKey, { balance: userBalance + amount });
 
-      console.log(`[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);
+      await interaction.reply(
+        `✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
+      );
+
+      // ------------------------------------------------------
+      // Logging
+      // ------------------------------------------------------
+      console.log(
+        `[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+        `${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ` +
+        `${amount.toLocaleString()} Ferns to ${user.username}`
+      );
+
     } catch (error) {
       console.error(error);
       return interaction.reply({
@@ -78,3 +122,6 @@ module.exports = {
     }
   },
 };
+
+
+// console.log(`[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.guild.name} ${interaction.guild.id} ${sender.username} paid ${amount.toLocaleString()} Ferns to ${user.username}`);

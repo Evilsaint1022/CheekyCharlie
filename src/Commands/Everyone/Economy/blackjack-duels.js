@@ -24,11 +24,8 @@ module.exports = {
         const opponent = interaction.options.getUser('opponent');
         const bet = interaction.options.getInteger('bet');
 
-        // ✅ Sanitize usernames
-        const safeChallenger = user.username.replace(/\./g, '_');
-        const safeOpponent = opponent.username.replace(/\./g, '_');
-        const balanceKeyChallenger = `${safeChallenger}_${user.id}.balance`;
-        const balanceKeyOpponent = `${safeOpponent}_${opponent.id}.balance`;
+        const balanceKeyChallenger = `${user.id}.balance`;
+        const balanceKeyOpponent = `${opponent.id}.balance`;
 
         const ferns = '<:Ferns:1395219665638391818>';
 
