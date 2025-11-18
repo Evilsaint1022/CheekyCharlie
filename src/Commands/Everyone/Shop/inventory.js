@@ -24,9 +24,60 @@ module.exports = {
 
     const ferns = '<:Ferns:1395219665638391818>';
     const guildKey = `${guild.name}_${guild.id}`;
-    const userKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
 
-    // Load inventory
+    // OLD → NEW migration keys
+    const safeUsername = user.username.replace(/\./g, '_');
+    const oldKey = `${safeUsername}_${user.id}`;
+    const newKey = `${user.id}`;
+
+    // -------------------------------------------------------
+    // 🔥 DATABASE MIGRATION LOGIC
+    // -------------------------------------------------------
+    async function migrateData() {
+      // -------- INVENTORY --------
+      let inv = await db.inventory.get(guildKey).catch(() => undefined);
+
+      if (inv && typeof inv === 'object') {
+        if (inv[oldKey] && !inv[newKey]) {
+          inv[newKey] = inv[oldKey];
+          delete inv[oldKey];
+          await db.inventory.set(guildKey, inv);
+
+          console.log(`[MIGRATION] Inventory migrated ${oldKey} → ${newKey}`);
+        }
+      }
+
+      // -------- WALLET (safe migration) --------
+      const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
+      const newWallet = await db.wallet.get(newKey).catch(() => undefined);
+
+      if (oldWallet && !newWallet) {
+        await db.wallet.set(newKey, oldWallet);
+        await db.wallet.delete(oldKey);
+
+        console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
+      }
+
+      // -------- BANK (safe migration) --------
+      const oldBank = await db.bank.get(oldKey).catch(() => undefined);
+      const newBank = await db.bank.get(newKey).catch(() => undefined);
+
+      if (oldBank && !newBank) {
+        await db.bank.set(newKey, oldBank);
+        await db.bank.delete(oldKey);
+
+        console.log(`[MIGRATION] Bank migrated ${oldKey} → ${newKey}`);
+      }
+    }
+
+    // Run migration
+    await migrateData();
+    // -------------------------------------------------------
+
+    // Always use new ID-based key
+    const userKey = newKey;
+
+    // Load inventory after migration
     let fullInventory = {};
     try {
       const inv = await db.inventory.get(guildKey);
@@ -49,7 +100,9 @@ module.exports = {
       return interaction.reply({ embeds: [emptyEmbed] });
     }
 
-    // Build embed
+    // --------------------------
+    // Build Inventory Embed
+    // --------------------------
     const embed = new EmbedBuilder()
       .setTitle(`${user.username}'s Inventory`)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
@@ -64,6 +117,7 @@ module.exports = {
     embed.setDescription(inventoryText);
 
     console.log(`[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
+
     return interaction.reply({ embeds: [embed] });
   }
 };

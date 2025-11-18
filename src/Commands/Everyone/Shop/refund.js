@@ -11,21 +11,71 @@ module.exports = {
     const guild = interaction.guild;
 
     if (interaction.channel.isDMBased()) {
-            return interaction.reply({
-                content: "This command cannot be used in DMs.",
-                flags: 64
-            });
-        }
+      return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
 
-    const safeUsername = user.username.replace(/\./g, '_');
-    const userKey = `${safeUsername}_${user.id}`;
     const guildKey = `${guild.name}_${guild.id}`;
 
-    //console log
+    // OLD → NEW keys
+    const safeUsername = user.username.replace(/\./g, '_');
+    const oldKey = `${safeUsername}_${user.id}`;
+    const newKey = `${user.id}`;
+
     console.log(`[🌿] [REFUND] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the refund command.`);
 
-    // Get inventory
-    const userInventoryData = await db.inventory.get(`${guildKey}.${userKey}`) || {};
+    // -------------------------------------------------------
+    // 🔥 DATABASE MIGRATION LOGIC
+    // -------------------------------------------------------
+    async function migrateData() {
+      // ---------- INVENTORY ----------
+      let fullInventory = await db.inventory.get(guildKey).catch(() => undefined);
+
+      if (fullInventory && typeof fullInventory === 'object') {
+        if (fullInventory[oldKey] && !fullInventory[newKey]) {
+          fullInventory[newKey] = fullInventory[oldKey];
+          delete fullInventory[oldKey];
+          await db.inventory.set(guildKey, fullInventory);
+
+          console.log(`[MIGRATION] Inventory migrated ${oldKey} → ${newKey}`);
+        }
+      }
+
+      // ---------- WALLET ----------
+      const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
+      const newWallet = await db.wallet.get(newKey).catch(() => undefined);
+
+      if (oldWallet && !newWallet) {
+        await db.wallet.set(newKey, oldWallet);
+        await db.wallet.delete(oldKey);
+        console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
+      }
+
+      // ---------- BANK (optional safety) ----------
+      const oldBank = await db.bank.get(oldKey).catch(() => undefined);
+      const newBank = await db.bank.get(newKey).catch(() => undefined);
+
+      if (oldBank && !newBank) {
+        await db.bank.set(newKey, oldBank);
+        await db.bank.delete(oldKey);
+        console.log(`[MIGRATION] Bank migrated ${oldKey} → ${newKey}`);
+      }
+    }
+
+    // Run migration
+    await migrateData();
+    // -------------------------------------------------------
+
+    // Always use new ID key
+    const userKey = newKey;
+
+    // Get inventory after migration
+    let fullInventory = await db.inventory.get(guildKey).catch(() => ({}));
+    fullInventory = fullInventory || {};
+
+    const userInventoryData = fullInventory[userKey] || { inventory: [] };
     let inventory = userInventoryData.inventory || [];
 
     if (inventory.length === 0) {
@@ -71,15 +121,17 @@ module.exports = {
           components: []
         });
       }
+
       const ferns = '<:Ferns:1395219665638391818>';
       const refundAmount = selectedItem.price || 0;
 
       // Remove item from inventory
       inventory.splice(selectedIndex, 1);
-      await db.inventory.set(`${guildKey}.${userKey}.inventory`, inventory);
+      fullInventory[userKey].inventory = inventory;
+      await db.inventory.set(guildKey, fullInventory);
 
-      // Update balance
-      const balanceData = await db.wallet.get(userKey) || { balance: 0 };
+      // Add refunded money to balance
+      const balanceData = await db.wallet.get(userKey).catch(() => ({ balance: 0 })) || { balance: 0 };
       balanceData.balance += refundAmount;
       await db.wallet.set(userKey, balanceData);
 

@@ -16,11 +16,11 @@ module.exports = {
     const user = interaction.user;
 
     if (interaction.channel.isDMBased()) {
-            return interaction.reply({
-                content: "This command cannot be used in DMs.",
-                flags: 64
-            });
-        }
+      return interaction.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
 
     if (!guild) {
       return interaction.reply({
@@ -28,10 +28,62 @@ module.exports = {
         flags: 64
       });
     }
+
     const ferns = '<:Ferns:1395219665638391818>';
     const safeUsername = user.username.replace(/\./g, '_');
-    const dbKeyPrefix = `${safeUsername}_${user.id}`;
+
+    // 🔥 NEW: OLD (safeusername_userid) format
+    const oldKey = `${safeUsername}_${user.id}`;
+
+    // 🔥 NEW: NEW correct format (userid only)
+    const newKey = `${user.id}`;
+
     const guildKey = `${guild.name}_${guild.id}`;
+
+    // -------------------------------------------------------
+    // 🔥 DATABASE MIGRATION LOGIC
+    // -------------------------------------------------------
+    async function migrateData() {
+      // -------- WALLET --------
+      const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
+      const newWallet = await db.wallet.get(newKey).catch(() => undefined);
+
+      if (oldWallet && !newWallet) {
+        // Move old → new
+        await db.wallet.set(newKey, oldWallet);
+        await db.wallet.delete(oldKey);
+        console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
+      }
+
+      // -------- BANK (optional, future proof) --------
+      const oldBank = await db.bank.get(oldKey).catch(() => undefined);
+      const newBank = await db.bank.get(newKey).catch(() => undefined);
+
+      if (oldBank && !newBank) {
+        await db.bank.set(newKey, oldBank);
+        await db.bank.delete(oldKey);
+        console.log(`[MIGRATION] Bank migrated ${oldKey} → ${newKey}`);
+      }
+
+      // -------- INVENTORY --------
+      let inv = await db.inventory.get(guildKey).catch(() => undefined);
+      if (inv && typeof inv === 'object') {
+        if (inv[oldKey] && !inv[newKey]) {
+          // Move inventory user → new id
+          inv[newKey] = inv[oldKey];
+          delete inv[oldKey];
+          await db.inventory.set(guildKey, inv);
+          console.log(`[MIGRATION] Inventory migrated ${oldKey} → ${newKey}`);
+        }
+      }
+    }
+
+    // Run migration before anything else
+    await migrateData();
+    // -------------------------------------------------------
+
+    // From this point forward, ALWAYS use newKey
+    const dbKey = newKey;
 
     // Load shop items
     let shopItems = [];
@@ -53,11 +105,11 @@ module.exports = {
       .setPlaceholder('Select an item to buy')
       .addOptions(
         shopItems.map((item, index) => ({
-        label: `${item.title.slice(0, 75)} - 🌿${item.price.toLocaleString()}`,
-        description: item.description.slice(0, 100),
-        value: index.toString()
-      }))
-    );
+          label: `${item.title.slice(0, 75)} - 🌿${item.price.toLocaleString()}`,
+          description: item.description.slice(0, 100),
+          value: index.toString()
+        }))
+      );
 
     const row = new ActionRowBuilder().addComponents(menu);
 
@@ -79,10 +131,10 @@ module.exports = {
       const index = parseInt(select.values[0]);
       const selectedItem = shopItems[index];
 
-      // Check user balance
+      // Load balance using *new* key
       let balance = 0;
       try {
-        const bal = await db.wallet.get(dbKeyPrefix);
+        const bal = await db.wallet.get(dbKey);
         balance = typeof bal === 'object' && bal !== null && 'balance' in bal
           ? parseInt(bal.balance) || 0
           : parseInt(bal) || 0;
@@ -98,7 +150,7 @@ module.exports = {
         });
       }
 
-      // Load full inventory object for the guild
+      // Load full inventory
       let fullInventory = {};
       try {
         const inv = await db.inventory.get(guildKey);
@@ -107,10 +159,10 @@ module.exports = {
         fullInventory = {};
       }
 
-      const userInventoryData = fullInventory[dbKeyPrefix] ?? { inventory: [] };
+      const userInventoryData = fullInventory[dbKey] ?? { inventory: [] };
       const { inventory } = userInventoryData;
 
-      // Check if user already owns the item
+      // Check if user already owns item
       if (inventory.some(item => item.title === selectedItem.title)) {
         return select.update({
           content: `You already have the item **${selectedItem.title}** in your inventory!`,
@@ -121,11 +173,8 @@ module.exports = {
 
       // Handle stock
       if (typeof selectedItem.stock === 'number') {
-        if (selectedItem.stock === -1) {
-          // unlimited stock
-        } else if (selectedItem.stock > 0) {
-          selectedItem.stock -= 1;
-        } else {
+        if (selectedItem.stock > 0) selectedItem.stock -= 1;
+        else if (selectedItem.stock === 0) {
           return select.update({
             content: 'That item is out of stock!',
             components: [],
@@ -134,7 +183,7 @@ module.exports = {
         }
       }
 
-      // Add item to inventory (excluding stock field)
+      // Add item (exclude stock)
       const { stock, ...cleanItem } = selectedItem;
       inventory.push(cleanItem);
 
@@ -142,12 +191,12 @@ module.exports = {
 
       // Save changes
       try {
-        await db.shop.set(guildKey, shopItems); // update stock
+        await db.shop.set(guildKey, shopItems);
         await db.inventory.set(guildKey, {
           ...fullInventory,
-          [dbKeyPrefix]: { inventory }
+          [dbKey]: { inventory }
         });
-        await db.wallet.set(dbKeyPrefix, { balance: newBalance });
+        await db.wallet.set(dbKey, { balance: newBalance });
       } catch (err) {
         console.error('Error saving data:', err);
         return select.update({
@@ -173,6 +222,7 @@ module.exports = {
         }).catch(() => {});
       }
     });
+
     console.log(`[🌿] [BUY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the buy command.`);
   }
 };
