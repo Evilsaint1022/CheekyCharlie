@@ -21,8 +21,7 @@ module.exports = {
         const ferns = '<:Ferns:1395219665638391818>';
         const { user, guild, member } = interaction;
         const username = user.username;
-        const safeUsername = username.replace(/\./g, '_');
-        const keyBase = `${safeUsername}_${user.id}`;
+        const keyBase = `${user.id}`;
         const timestamp = new Date().toLocaleTimeString();
 
         const space = 'ㅤ'
