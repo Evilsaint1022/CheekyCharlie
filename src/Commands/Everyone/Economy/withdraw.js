@@ -22,12 +22,9 @@ module.exports = {
         const { guild, user } = interaction;
         const timestamp = new Date().toLocaleTimeString();
 
-        // Replace all dots in username with underscores for the DB key
-        const safeUsername = user.username.replace(/\./g, '_');
-
         const withdrawAmountInput = interaction.options.getInteger('amount');
-        const balanceKey = `${safeUsername}_${user.id}.balance`;
-        const bankKey = `${safeUsername}_${user.id}.bank`;
+        const balanceKey = `${user.id}.balance`;
+        const bankKey = `${user.id}.bank`;
 
         // Get current balances
         let bankBalance = await db.bank.get(bankKey) || 0;
