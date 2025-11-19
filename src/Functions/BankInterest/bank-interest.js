@@ -11,13 +11,51 @@ async function runDailyBankInterest(client) {
     }
 
     console.log("[💰] [Bank Interest] Starting Bank Interest...");
-    const bankEntries = await db.bank.all();
 
-    if (!bankEntries || typeof bankEntries !== 'object' || Object.keys(bankEntries).length === 0) {
-        console.warn("[Bank Interest] No bank data found or invalid data format.");
+    // =============================
+    // 🔧 DATABASE MIGRATION SECTION
+    // =============================
+    const rawEntries = await db.bank.all();
+    if (!rawEntries || typeof rawEntries !== "object") {
+        console.warn("[Bank Interest] No bank data found or invalid format.");
         return;
     }
 
+    const migratedEntries = {};
+
+    for (const [key, entry] of Object.entries(rawEntries)) {
+        if (!entry || typeof entry !== "object") continue;
+
+        let userId = key;
+
+        // --- Detect old format: username_userid / safeusername_userid ---
+        if (key.includes("_")) {
+            const underscoreIndex = key.lastIndexOf("_");
+            const extracted = key.substring(underscoreIndex + 1);
+
+            if (!isNaN(extracted)) userId = extracted;
+        }
+
+        // --- MIGRATE if key != userId ---
+        if (userId !== key) {
+            console.log(`[MIGRATION] Converting key "${key}" → "${userId}"`);
+
+            // Save migrated data
+            await db.bank.set(userId, entry);
+
+            // Remove old key
+            await db.bank.delete(key);
+        }
+
+        migratedEntries[userId] = entry;
+    }
+
+    // From here on, ONLY userId keys exist.
+    const bankEntries = migratedEntries;
+
+    // ============
+    // 💰 Interest
+    // ============
     const ferns = '<:Ferns:1395219665638391818>';
     const top =    `**─────────────────────────────────**`;
     const bottom = `**─────────────────────────────────**`;
@@ -37,14 +75,9 @@ async function runDailyBankInterest(client) {
             continue;
         }
 
-        for (const [key, entry] of Object.entries(bankEntries)) {
-            if (!entry || typeof entry !== 'object' || entry.bank <= 0) continue;
-
-            let userId = key;
-            if (key.includes("_")) {
-                const underscoreIndex = key.lastIndexOf("_");
-                userId = key.substring(underscoreIndex + 1);
-            }
+        // Loop through migrated entries
+        for (const [userId, entry] of Object.entries(bankEntries)) {
+            if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
 
             const member = guild.members.cache.get(userId);
             const username = member?.user?.username ?? "Unknown User";
@@ -53,25 +86,32 @@ async function runDailyBankInterest(client) {
             const interest = Math.round((1 / 100) * amount);
             const newBalance = amount + interest;
 
-            await db.bank.set(key, { bank: newBalance });
+            // Save updated amount using CLEAN userId key
+            await db.bank.set(userId, { bank: newBalance });
 
             const embed = new EmbedBuilder()
                 .setColor(0x207e37)
-                .setTitle(`💰・Daily Bank Interest for ${username}`)
-                .setDescription(`${top}\n- **__Old Bank__** ${ferns} \`${amount}\`\n- **__Interest Gained__** ${ferns} \`${interest}\`\n- **__New Balance__** ${ferns} \`${newBalance}\`\n${bottom}`)
-                .setThumbnail(member.user.displayAvatarURL())
+                .setTitle(`💰・Bank Interest for ${username}`)
+                .setDescription(
+                    `${top}\n` +
+                    `- **__Old Bank__** ${ferns} \`${amount}\`\n` +
+                    `- **__Interest Gained__** ${ferns} \`${interest}\`\n` +
+                    `- **__New Balance__** ${ferns} \`${newBalance}\`\n` +
+                    `${bottom}`
+                )
+                .setThumbnail(member?.user?.displayAvatarURL())
                 .setTimestamp();
 
             try {
                 await channel.send({
                     embeds: [embed],
-                    allowedMentions: { parse: [] } // 🚫 NO PINGS ALLOWED
+                    allowedMentions: { parse: [] } // 🚫 NO PINGS
                 });
             } catch (err) {
                 console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
             }
 
-            console.log(`[💰] [Bank Interest] ${userId}: Old: ${amount}, Interest: ${interest}, New: ${newBalance}`);
+            console.log(`[💰] [Bank Interest] ${userId}: Old ${amount}, +${interest}, New ${newBalance}`);
         }
     }
 }
