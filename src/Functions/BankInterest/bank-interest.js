@@ -4,6 +4,7 @@ const { EmbedBuilder } = require('discord.js');
 
 const time = "0 0 * * *"; // Daily at midnight UTC
 
+
 async function runDailyBankInterest(client) {
     if (!client) {
         console.warn("[Bank Interest] Client not defined. Skipping run.");
@@ -79,8 +80,21 @@ async function runDailyBankInterest(client) {
         for (const [userId, entry] of Object.entries(bankEntries)) {
             if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
 
-            const member = guild.members.cache.get(userId);
-            const username = member?.user?.username ?? "Unknown User";
+            // Try to fetch the member (for avatar)
+            let member = guild.members.cache.get(userId);
+            if (!member) {
+                try {
+                    member = await guild.members.fetch(userId);
+                } catch { member = null; }
+            }
+
+            // Fetch username directly from user ID
+            let username = "Unknown User";
+            try {
+                const user = await client.users.fetch(userId);
+                username = user.username;
+                avatar = user.displayAvatarURL();
+            } catch {}
 
             const amount = entry.bank;
             const interest = Math.round((1 / 100) * amount);
@@ -99,7 +113,7 @@ async function runDailyBankInterest(client) {
                     `- **__New Balance__** ${ferns} \`${newBalance}\`\n` +
                     `${bottom}`
                 )
-                .setThumbnail(member?.user?.displayAvatarURL())
+                .setThumbnail(avatar || member.displayAvatarURL())
                 .setTimestamp();
 
             try {
