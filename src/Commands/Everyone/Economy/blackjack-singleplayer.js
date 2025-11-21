@@ -17,11 +17,6 @@ module.exports = {
     async execute(interaction) {
         const { guild, user } = interaction;
         const bet = interaction.options.getInteger('bet');
-
-        // ✅ Sanitize username for DB keys
-        const safeUsername = user.username.replace(/\./g, '_');
-        const balanceKey = `${safeUsername}_${user.id}.balance`;
-
         const ferns = '<:Ferns:1395219665638391818>';
 
         // 🌐 GLOBAL COOLDOWN CHECK
@@ -29,24 +24,60 @@ module.exports = {
         const now = Date.now();
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
-            console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-            return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
+            console.log(`[♠️] [BLACKJACK-SINGLEPLAYER] [${guild.name}_${guild.id}] ${user.username} tried to use the blackjack-duels commmand too quickly.`);
+            return interaction.reply({
+                   content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, 
+                   flags: 64 
+                });
         }
 
-        // Set the global cooldown
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-        console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeUsername} used the BlackJack command.`);
-        console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} placed a bet of ${bet.toLocaleString()} Ferns.`);
+        // ------------------------------------------------------
+        // 🔄 1️⃣ MIGRATION — move username_userid → userid
+        // ------------------------------------------------------
+        const safeUsername = user.username.replace(/\./g, '_');
+        const oldKey = `${safeUsername}_${user.id}`; // old format
+        const newKey = `${user.id}`;                // new format
 
+        // Attempt loading using new system
+        let walletObj = await db.wallet.get(newKey);
 
-        let balance = await db.wallet.get(balanceKey);
-        if (balance === undefined || isNaN(parseInt(balance))) {
-            return interaction.reply({ content: `You don't have a valid balance record. Please contact an admin.`, flags: 64 });
+        if (walletObj === undefined) {
+            const oldWalletObj = await db.wallet.get(oldKey);
+
+            if (oldWalletObj !== undefined) {
+                // Move object
+                await db.wallet.set(newKey, oldWalletObj);
+                await db.wallet.delete(oldKey);
+
+                console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
+
+                walletObj = oldWalletObj;
+            }
         }
 
-        balance = parseInt(balance);
+        // Still missing wallet?
+        if (!walletObj || typeof walletObj !== "object") {
+            return interaction.reply({
+                content: `You don't have a wallet record yet.`,
+                flags: 64
+            });
+        }
+
+        // Extract balance from object
+        let balance = parseInt(walletObj.balance);
+
+        if (isNaN(balance)) {
+            return interaction.reply({
+                content: `Your wallet is missing a valid balance. Please contact an admin.`,
+                flags: 64
+            });
+        }
+
+        // ------------------------------------------------------
+
         if (bet > balance) {
             return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
         } else if (bet <= 0) {
@@ -108,15 +139,13 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
-                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} WON +${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
                     balance -= bet;
-                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} LOST -${bet.toLocaleString()} Ferns. New Balance: ${balance.toLocaleString()} Ferns.`);
-                } else {
-                    console.log(`[♦️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${safeUsername} TIED ±0 Ferns. Balance remains: ${balance.toLocaleString()} Ferns.`);
                 }
 
-                await db.wallet.set(balanceKey, balance);
+                // SAVE BALANCE BACK TO WALLET OBJECT
+                walletObj.balance = balance;
+                await db.wallet.set(newKey, walletObj);
 
                 const resultEmbed = {
                     color: result === 'win' ? 0x00FF00 : result === 'lose' ? 0xFF0000 : 0xFFFF00,
