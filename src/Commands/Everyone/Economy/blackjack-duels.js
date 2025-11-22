@@ -34,7 +34,7 @@ module.exports = {
         const now = Date.now();
 
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
-            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${safeChallenger} tried to use the BlackJack command too quickly.`);
+            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} tried to use the BlackJack command too quickly.`);
             const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
             return interaction.reply({ content: `⏳ The /blackjack command is on global cooldown. Please wait ${remaining} more seconds.`, flags: 64 });
         }
