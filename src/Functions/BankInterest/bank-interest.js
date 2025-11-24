@@ -2,7 +2,12 @@ const cron = require('node-cron');
 const db = require("./../../Handlers/database");
 const { EmbedBuilder } = require('discord.js');
 
-const time = "0 0 * * *"; // Daily at midnight UTC
+// Daily at midnight UTC Correct Timer ( Do Not Remove)
+const time = "0 0 * * *";
+
+// Testing Timer ( Keeping in for future use )
+// const time = "*/10 * * * * *"; // Every 10 seconds
+
 
 
 async function runDailyBankInterest(client) {
@@ -65,14 +70,14 @@ async function runDailyBankInterest(client) {
         const guildKey = `${guild.name}_${guild.id}`;
         const settings = await db.settings.get(guildKey);
 
-        if (!settings || !settings.bankchannel) {
+        if (!settings || !settings.bankinterest) {
             console.warn(`[Bank Interest] No bankchannel found for guild: ${guild.name}`);
             continue;
         }
 
-        const channel = guild.channels.cache.get(settings.bankchannel);
+        const channel = guild.channels.cache.get(settings.bankinterest);
         if (!channel) {
-            console.warn(`[Bank Interest] Channel ID ${settings.bankchannel} not found in guild ${guild.name}`);
+            console.warn(`[Bank Interest] Channel ID ${settings.bankinterest} not found in guild ${guild.name}`);
             continue;
         }
 

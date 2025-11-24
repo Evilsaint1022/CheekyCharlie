@@ -932,8 +932,8 @@ const commands = [
         ],
     },
     {
-        name: 'set-bank-channel',
-        description: 'Set the bank channel for this server.',
+        name: 'set-bankinterest-channel',
+        description: 'Set the bank interest channel for this server.',
         options: [
             {
                 name: 'channel',
@@ -944,8 +944,8 @@ const commands = [
         ],
     },
     {
-        name: 'remove-bank-channel',
-        description: 'Removes the bank channel for this server.',
+        name: 'remove-bankinterest-channel',
+        description: 'Removes the bank interest channel for this server.',
     },
     {
         name: 'set-qotd-channel',

@@ -1,10 +1,10 @@
-const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits, MessageFlags } = require("discord.js");
 const db = require("../../../Handlers/database");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("remove-bank-channel")
-    .setDescription("Removes the bank channel for this server."),
+    .setName("remove-bankinterest-channel")
+    .setDescription("Removes the bank interest channel for this server."),
 
   async execute(interaction) {
 
@@ -38,7 +38,7 @@ module.exports = {
       const userId = user.id;
       
       //console logs
-      console.log(`[💰] [REMOVE-BANK-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-bank-channel command.`);
+      console.log(`[💰] [REMOVE-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-bank-channel command.`);
 
       const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
       const member = guild.members.cache.get(userId);
@@ -57,16 +57,16 @@ module.exports = {
         const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
 
         // Check if a Bank channel is set
-        if (!currentSettings.bankchannel) {
-            return interaction.reply({ content: 'No Bank channel is currently set.', flags: 64 });
+        if (!currentSettings.bankinterest) {
+            return interaction.reply({ content: 'No Bank Interest channel is currently set.', flags: 64 });
         }
 
-        delete currentSettings.bankchannel;
+        delete currentSettings.bankinterest;
 
         db.settings.set(`${guildName}_${guildId}`, currentSettings);
 
       await interaction.reply({
-        content: `✅ Bank channel has been removed.`,
+        content: `✅ Bank Interest channel has been removed.`,
         flags: 64
       });
 
