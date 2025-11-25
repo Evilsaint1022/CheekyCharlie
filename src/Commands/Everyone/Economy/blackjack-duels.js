@@ -43,6 +43,7 @@ module.exports = {
         await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
         if (opponent.bot || opponent.id === user.id) {
+            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} tried to challenge ${opponent.username} to BlackJack`);
             return interaction.reply({ content: `❌ You Cant Challenge Bots or Yourself`, flags: 64 });
         }
 
@@ -51,12 +52,15 @@ module.exports = {
         let opponentBalance = parseInt(await db.wallet.get(balanceKeyOpponent) ?? 0);
 
         if (challengerBalance < bet) {
+            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} didn't have enough balance to bet ${ferns}${bet}.`);
             return interaction.reply({ content: `❌ You don’t have enough balance to bet ${ferns}${bet}.`, flags: 64 });
         }
         if (opponentBalance < bet) {
+            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} didn't have enough balance to bet ${ferns}${bet}.`);
             return interaction.reply({ content: `❌ ${opponent.username} doesn’t have enough balance to match this bet.`, flags: 64 });
         }
         if (bet <= 0) {
+            console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} tried to bet ${ferns}${bet}.`);
             return interaction.reply({ content: `❌ Bet amount must be greater than zero.`, flags: 64 });
         }
 
@@ -88,6 +92,7 @@ module.exports = {
 
             if (btn.customId === 'accept') {
                 await btn.update({ content: `✅ Challenge accepted! Starting blackjack...`, components: [] });
+                console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} Accepted ${opponent.username}'s blackjack challenge.`);
                 inviteCollector.stop();
 
                 // 🎴 Blackjack vs Player
@@ -163,7 +168,7 @@ module.exports = {
                         await db.wallet.set(balanceKeyChallenger, challengerBalance);
                         await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-                        console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} 🏆 ${winUser.username} wins ${bet}!`);
+                        console.log(`[♦️] [BLACKJACK_DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} 🏆 ${winUser.username} Wins ${bet}!`);
 
                         const resultEmbed = {
                             color: winner === user.id ? 0x00FF00 : 0xFF0000,

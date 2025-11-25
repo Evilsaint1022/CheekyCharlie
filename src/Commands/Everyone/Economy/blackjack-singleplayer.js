@@ -79,10 +79,14 @@ module.exports = {
         // ------------------------------------------------------
 
         if (bet > balance) {
+            console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} didn't have enough balance to bet ferns ${bet.toLocaleString()}.`);
             return interaction.reply({ content: `You don't have enough balance to place this bet.`, flags: 64 });
         } else if (bet <= 0) {
+            console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} tried to bet an invalid amount of ferns ${bet.toLocaleString()}.`);
             return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
         }
+
+        console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the blackjack-singleplayer command and bet ferns ${bet.toLocaleString()}.`);
 
         // 🎴 Blackjack logic
         const drawCard = () => Math.floor(Math.random() * 10) + 1;
@@ -139,7 +143,10 @@ module.exports = {
             if (result) {
                 if (result === 'win') {
                     balance += bet;
+                console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} Won Ferns ${bet.toLocaleString()} Ferns.`);
                 } else if (result === 'lose') {
+                // console logs
+                console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} Lost Ferns ${bet.toLocaleString()} Ferns.`);
                     balance -= bet;
                 }
 

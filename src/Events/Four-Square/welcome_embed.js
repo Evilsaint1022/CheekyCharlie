@@ -27,8 +27,6 @@ module.exports = {
     const welcomeChannel = guild.channels.cache.get('1346955022461829162');
     if (welcomeChannel) {
       await welcomeChannel.send({ content: `<@&1356828430464974941>`, embeds: [welcomeEmbed] });
-    } else {
-      console.error("Welcome channel not found. Please check the channel ID.");
     }
   },
 };
