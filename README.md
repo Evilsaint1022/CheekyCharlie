@@ -87,6 +87,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/slap` - Slap other members with a nice Gif.
+- `/kick` - Kick other members with a nice Gif.
 
 ### **🌿Other**
 - `/github` — Github link to CheeckyCharlies Repo.

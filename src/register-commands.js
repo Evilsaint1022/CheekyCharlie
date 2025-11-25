@@ -274,6 +274,20 @@ const commands = [
             },
         ],
     },
+    {
+        name: 'kick',
+        description: 'Kick another member with a random GIF!',
+        options: [
+            {
+                name: 'target',
+                description: 'The member you want to kick',
+                type: 6,
+                required: true,
+
+            },
+        ],
+
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 

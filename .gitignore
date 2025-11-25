@@ -37,3 +37,5 @@ start.bat
 /src/Utilities/Storage/Settings/Specials/Specials.json
 /src/Utilities/Storage/Settings/Qotd/lastqotd.json
 /src/Utilities/Storage/Fallback/slapgifs.json
+/src/Utilities/Storage/Fallback/kickgifs.json
+/src/Utilities/Storage/Fallback/huggifs.json

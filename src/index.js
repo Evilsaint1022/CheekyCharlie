@@ -57,14 +57,15 @@ client.once("clientReady", async () => {
 
     // Status Groups
     const normalstatus = [
-    "Shopping at the Four-Square",
-    "✌🏻 Nek Minnit",
-    "Awww Gummon",
-    "🗿 Built Like a Mitre 10",
-    "Made in New Zealand",
-    "Dm if you have any issues.",
-    "😵 You Cant Park There sir",
-    "What Happened Mr Drifta"
+    "🌿・Shopping at the Four-Square",
+    "🌿・Made in New Zealand",
+    "🌿・Stocking Shelves",
+    "🌿・Packing up the boxes",
+    "🌿・Stocking the Fridges",
+    "🌿・message me if you have any issues.",
+    "🌿・Helping a Customer",
+    "🌿・Bisechosting",
+    "🌿・Greeting Customers at the Door"
 ];
 
 const downstatus = [
