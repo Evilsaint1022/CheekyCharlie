@@ -70,7 +70,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[👢] [Kick] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${senderName} Kicked ${targetName}`);
+        console.log(`[👢] [KICK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${senderName} Kicked ${targetName}`);
 
         const reply = await interaction.reply({ embeds: [embed], components: [row] });
 
@@ -119,7 +119,7 @@ module.exports = {
                 return btnInteraction.reply({ content: "No slap GIFs available right now 😞", flags: 64 });
             }
 
-            console.log(`[👢] [Kick] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${targetName} Kicked ${senderName}`);
+            console.log(`[👢] [KICK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${targetName} Kicked ${senderName}`);
 
             const slapBackCount = Math.floor(Math.random() * 10) + 1;
             const slapBackEmbed = new EmbedBuilder()

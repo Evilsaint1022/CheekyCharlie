@@ -288,6 +288,18 @@ const commands = [
         ],
 
     },
+    {
+        name: 'emoji',
+        description: 'Show a custom emoji as an image (PNG/GIF).',
+        options: [
+            {
+                name: 'emoji',
+                description: 'Enter the emoji',
+                type: 3,
+                required: true,
+            },
+        ],
+    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 

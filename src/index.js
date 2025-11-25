@@ -57,15 +57,15 @@ client.once("clientReady", async () => {
 
     // Status Groups
     const normalstatus = [
-    "🌿・Shopping at the Four-Square",
-    "🌿・Made in New Zealand",
-    "🌿・Stocking Shelves",
-    "🌿・Packing up the boxes",
-    "🌿・Stocking the Fridges",
-    "🌿・message me if you have any issues.",
-    "🌿・Helping a Customer",
-    "🌿・Bisechosting",
-    "🌿・Greeting Customers at the Door"
+    "🌿Shopping at the Four-Square",
+    "🌿Made in New Zealand",
+    "🌿Stocking Shelves",
+    "🌿Packing up the boxes",
+    "🌿Stocking the Fridges",
+    "🌿message me if you have any issues.",
+    "🌿Helping a Customer",
+    "🌿Bisechosting",
+    "🌿Greeting Customers at the Door"
 ];
 
 const downstatus = [

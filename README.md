@@ -88,6 +88,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/slap` - Slap other members with a nice Gif.
 - `/kick` - Kick other members with a nice Gif.
+- `/emoji` - Show a custom emoji as an image (PNG/GIF).
 
 ### **🌿Other**
 - `/github` — Github link to CheeckyCharlies Repo.
