@@ -1,12 +1,19 @@
 const { Events } = require('discord.js');
 const db = require("../../Handlers/database");
 
-const reminderDelay = 2 * 60 * 60 * 1000; // 2 hours
+// The actual reminder delay
+const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
+
+// For testing --> ( DO NOT REMOVE! )
+// const reminderDelay = 10 * 1000; // --> 10 seconds
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
+
+    //const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
     const targetBotId = '302050872383242240'; // Disboard bot ID
+
     if (!message.guild) return;
 
     const guildName = message.guild.name;
@@ -23,7 +30,7 @@ module.exports = {
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
 
-      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  ${guildName} ${guildId} - Bump Has been Scheduled!`);
+      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Scheduled!`);
       await message.channel.send(`**You bumped the Server!**\n**Thank you for Bumping ❤️**`);
 
       const now = Date.now();
@@ -40,7 +47,7 @@ module.exports = {
   },
 };
 
-async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey, guildName, guildId) {
+async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey,) {
   const bumpInfo = await db.lastbump.get(cooldownKey);
   if (!bumpInfo || !bumpInfo.timestamp || !bumpInfo.userId) return;
 
@@ -48,9 +55,15 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
   const timeLeft = reminderDelay - timePassed;
 
   const runReminder = async () => {
+
     try {
       const channel = await client.channels.fetch(channelId);
       if (!channel) return;
+
+      // Get guild info properly
+      const guild = channel.guild;
+      const guildName = guild?.name || "Unknown Guild";
+      const guildId = guild?.id || "Unknown ID";
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
       await channel.send(`${mention}\n**It's time to bump the server again! ❤️**`);

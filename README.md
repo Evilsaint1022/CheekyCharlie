@@ -1,7 +1,6 @@
-# 🌿**The CheekyCharlie**🌿
+# 🌿**The CheekyCharlie Discord Bot**🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
-![Status](https://img.shields.io/badge/%20Discord%20Bot-%20Yes-brightgreen)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hosted By](https://img.shields.io/badge/Hosted%20By-Bisecthosting.com-blue)](https://bisecthosting.com)
@@ -18,7 +17,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 # **🌿CheekyCharlie Support Server🌿**
 
-[Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
+![alt text](./src/Utilities/Github/icons/discordicon.png) [Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
@@ -27,8 +26,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿[OPENAI](https://openai.com/api/)
 - 🌿[GROQ](https://groq.com/)
 - 🌿[TENOR](https://tenor.com/developer/keyregistration)
-- 🌿[CAT_API](https://thecatapi.com/)
-- 🌿[DOG_API](https://thedogapi.com/)
+- 🌿[CAT API](https://thecatapi.com/)
+- 🌿[DOG API](https://thedogapi.com/)
 
 # **🌿Features🌿**
 - 🌿Full Economy System
