@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const db = require("./../../Handlers/database");
 const { EmbedBuilder } = require('discord.js');
 
-// Daily at midnight UTC Correct Timer ( Do Not Remove)
+// Daily at midnight UTC Correct Timer ( DO NOT REMOVE! )
 const time = "0 0 * * *";
 
 // Testing Timer ( Keeping in for future use )
@@ -16,14 +16,14 @@ async function runDailyBankInterest(client) {
         return;
     }
 
-    console.log("[💰] [Bank Interest] Starting Bank Interest...");
+    console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
 
     // =============================
     // 🔧 DATABASE MIGRATION SECTION
     // =============================
     const rawEntries = await db.bank.all();
     if (!rawEntries || typeof rawEntries !== "object") {
-        console.warn("[Bank Interest] No bank data found or invalid format.");
+        console.warn("[Bank Interest] No bank data found.");
         return;
     }
 
@@ -71,7 +71,6 @@ async function runDailyBankInterest(client) {
         const settings = await db.settings.get(guildKey);
 
         if (!settings || !settings.bankinterest) {
-            console.warn(`[Bank Interest] No bankchannel found for guild: ${guild.name}`);
             continue;
         }
 
@@ -130,7 +129,7 @@ async function runDailyBankInterest(client) {
                 console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
             }
 
-            console.log(`[💰] [Bank Interest] ${userId}: Old ${amount}, +${interest}, New ${newBalance}`);
+            console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
         }
     }
 }
