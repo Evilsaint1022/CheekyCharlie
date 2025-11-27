@@ -20,7 +20,7 @@ module.exports = {
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
 
-      console.log(`[⬆️] [BUMP] ${guildKey} - Valid Bump Detected`);
+      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  ${message.guild.name} ${message.guild.id} - Bump Has been Scheduled!`);
       await message.channel.send(`**You bumped the Server!**\n**Thank you for Bumping ❤️**`);
 
       const now = Date.now();
@@ -51,7 +51,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
       await channel.send(`${mention}\n**It's time to bump the server again! ❤️**`);
-      console.log(`[⬆️] [BUMP] Reminder Sent in ${guildKey}`);
+      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Its Time to Bump!`);
     } catch (err) {
       console.error(`[⬆️] [BUMP] Failed to send reminder:`, err);
     }

@@ -16,6 +16,7 @@ module.exports = {
             
             try {
                 // React with the shrimp emoji 🦐
+                console.log(`[🦐] [SHRIMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Shrimp Reaction in ${message.channel.name} ${message.channel.id}`)
                 await message.react('🦐');
             } catch (error) {
             // Ignore Error: Unknown Emoji

@@ -55,6 +55,7 @@ module.exports = {
                 try {
                     await message.react(emoji);
                     reactionCount++;
+                    console.log(`[${emoji}] [ANIMAL REACTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Reacted with ${emoji} in ${message.channel.name} ${message.channel.id}`);
                 } catch (err) {
                 // Ignore Error: Unknown Emoji
                 if (err.code !== 10014) return;

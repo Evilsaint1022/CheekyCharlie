@@ -19,6 +19,7 @@ module.exports = {
       const randomLink = links[Math.floor(Math.random() * links.length)];
 
       try {
+        console.log(`[👋] [BYE GUYS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Sent "Bye Guys" in ${message.channel.name} ${message.channel.id}`);
         await message.channel.send(randomLink);
       } catch (error) {
         // Ignore Error: Unknown Emoji

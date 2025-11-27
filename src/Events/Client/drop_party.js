@@ -90,18 +90,18 @@ module.exports = {
                     '**🎉 A Drop Party Has Started!🎉**\n*Use the **/pick** command to grab your rewards!*'
                 );
 
-                console.log(`[🎉] [DROP PARTY] ${guildName} - Drop party message sent.`);
+                console.log(`[🎉] [DROP PARTY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Drop party message sent.`);
                 dropPartyEvent.triggerNewDrop(dropMessage);
 
                 setTimeout(() => {
                     if (dropMessage.deletable) {
                         dropMessage.delete().catch(console.error);
                         dropPartyEvent.clearDrop();
-                        console.log(`[🎉] [DROP PARTY] ${guildName} - Drop party message deleted.`);
+                        console.log(`[🎉] [DROP PARTY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Drop party message deleted.`);
                     }
                 }, 40000);
             } else {
-                console.log(`[🎉] [DROP PARTY] ${guildName} - Channel not found or could not be fetched.`);
+                console.log(`[🎉] [DROP PARTY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Channel not found or could not be fetched.`);
             }
 
             await saveLastDropTime(guildKey, currentTime);

@@ -40,7 +40,7 @@ module.exports = {
 
       // Convert the canvas to a buffer and send as an attachment
       const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: 'welcome.png' });
-
+      
       // Send the customized welcome message with the image attachment
       await channel.send({
         content: `**🌿Kia ora <@${member.id}>, Welcome to the New Zealand family!**\n` +
