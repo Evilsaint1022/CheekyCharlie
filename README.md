@@ -23,6 +23,14 @@ https://github.com/NZ-Linix/dotdatabase
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
 
+# **🌿API Keys🌿**
+- 🌿OPENAI - https://openai.com/api/
+- 🌿GROQ - https://groq.com/
+- 🌿TENOR - https://tenor.com/developer/keyregistration
+- 🌿CAT_API - https://thecatapi.com/
+- 🌿DOG_API - https://thedogapi.com/
+- 🌿AISHIA - Provided by @nz_linix
+
 # **🌿Features🌿**
 - 🌿Full Economy System
 - 🌿Economy Games
