@@ -2,6 +2,8 @@ require('dotenv').config({ quiet: true });
 const fetch = require('node-fetch');
 const db = require('../../Handlers/database');
 const { EmbedBuilder } = require('discord.js');
+const path = require('path');
+const { loadImage } = require('@napi-rs/canvas');
 
 const owner = 'Evilsaint1022';
 const repo = 'CheekyCharlie';
@@ -11,6 +13,11 @@ const repoKey = `${owner}_${repo}`;
 const space = 'ㅤ'
 
 async function sendCommitNotification(client, commit) {
+
+// Load the welcome template and member avatar
+      const repoimagepath = path.join(__dirname, '../../Utilities/Github/repostoredimage.png');
+      const repoimage = await loadImage(repoimagepath);
+
   try {
     const sha = commit?.sha;
     const message = commit?.commit?.message;
@@ -54,6 +61,11 @@ async function sendCommitNotification(client, commit) {
 
     // Construct the embed
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
+
+    if (!repoImageUrl) {
+      repoImageUrl = repoimage;
+    }
+
     const embed = new EmbedBuilder()
       .setDescription(`${top}\n# 🌿 **__${repo} Updates__** 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
