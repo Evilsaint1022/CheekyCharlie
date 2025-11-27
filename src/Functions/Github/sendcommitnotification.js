@@ -67,7 +67,7 @@ async function sendCommitNotification(client, commit) {
     }
 
     const embed = new EmbedBuilder()
-      .setDescription(`${top}\n# 🌿 **__${repo} Updates__** 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${bottom}`)
+      .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xDE4949)
       .setTimestamp(new Date());

@@ -18,6 +18,8 @@ module.exports = {
             const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
             const activeVCs = await db.vc.get(activeIdsKey) || {};
 
+            console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} left and ${oldState.channel.name} ${oldState.channel.id} has been Deleted!`);
+
             if (!activeVCs[oldState.channel.id]) return;
 
             const oldChannel = oldState.channel;

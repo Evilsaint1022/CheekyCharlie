@@ -21,6 +21,8 @@ module.exports = {
             // Wait 3 seconds before reacting
             await new Promise(resolve => setTimeout(resolve, 3000));
 
+            console.log(`[❤️] [WELCOME REACTION] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Welcome Reaction in ${message.channel.name} ${message.channel.id}`);
+            
             // React with the custom emoji
             await message.react('❤️');
             reactionCount++;

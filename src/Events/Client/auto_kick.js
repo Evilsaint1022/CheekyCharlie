@@ -34,7 +34,7 @@ module.exports = {
       try {
         if (!member.roles.cache.has(verifiedRoleId)) {
           await member.kick("Didn't Verify Quick Enough!");
-          console.log(`[x] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Kicked ${member.user.tag} Didn't Verify Quick Enough!`);
+          console.log(`[❌] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Kicked ${member.user.tag} Didn't Verify Quick Enough!`);
         }
       } catch (error) {
         console.error(`Failed to kick ${member.user.tag}:`, error);

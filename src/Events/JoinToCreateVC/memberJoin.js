@@ -21,6 +21,8 @@ module.exports = {
             const settings = await db.settings.get(`${guildName}_${guildId}`) || {};
             const joinToCreateVC = settings.JoinToCreateVC;
 
+            console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined and ${newState.channel.name} ${newState.channel.id} has been Created!`);
+
             if (joinToCreateVC && joinToCreateVC === newState.channel.id) {
                 const newChannel = await guild.channels.create({
                     name: `${member.user.username}'s Voice`,

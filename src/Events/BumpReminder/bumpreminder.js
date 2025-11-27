@@ -9,7 +9,10 @@ module.exports = {
     const targetBotId = '302050872383242240'; // Disboard bot ID
     if (!message.guild) return;
 
-    const guildKey = `${message.guild.name}_${message.guild.id}`;
+    const guildName = message.guild.name;
+    const guildId = message.guild.id;
+
+    const guildKey = `${guildName}_${guildId}`;
     const cooldownKey = guildKey;
 
     try {
@@ -20,7 +23,7 @@ module.exports = {
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
 
-      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  ${message.guild.name} ${message.guild.id} - Bump Has been Scheduled!`);
+      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  ${guildName} ${guildId} - Bump Has been Scheduled!`);
       await message.channel.send(`**You bumped the Server!**\n**Thank you for Bumping ❤️**`);
 
       const now = Date.now();
@@ -37,7 +40,7 @@ module.exports = {
   },
 };
 
-async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey) {
+async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey, guildName, guildId) {
   const bumpInfo = await db.lastbump.get(cooldownKey);
   if (!bumpInfo || !bumpInfo.timestamp || !bumpInfo.userId) return;
 
@@ -51,7 +54,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
       await channel.send(`${mention}\n**It's time to bump the server again! ❤️**`);
-      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Its Time to Bump!`);
+      console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Its Time to Bump!`);
     } catch (err) {
       console.error(`[⬆️] [BUMP] Failed to send reminder:`, err);
     }

@@ -91,6 +91,8 @@ module.exports = {
 
         }
 
+        console.log(`[] [ONE-WORD-STORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${message.author.username} added the word ${newWord} to the One Word Story!`);
+
         await db.onewordstory.set(guildKey + ".story", currentStory);
         await db.onewordstory.set(guildKey + ".lastAuthor", message.author.id);
 
