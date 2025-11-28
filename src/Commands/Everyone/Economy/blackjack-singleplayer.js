@@ -86,7 +86,7 @@ module.exports = {
             return interaction.reply({ content: `Bet amount must be greater than zero.`, flags: 64 });
         }
 
-        console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the blackjack-singleplayer command and bet ferns ${bet.toLocaleString()}.`);
+        console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} - ${user.username} used the blackjack-singleplayer command and bet ferns ${bet.toLocaleString()}.`);
 
         // 🎴 Blackjack logic
         const drawCard = () => Math.floor(Math.random() * 10) + 1;
@@ -129,35 +129,46 @@ module.exports = {
         const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
         collector.on('collect', async (buttonInteraction) => {
+
             if (buttonInteraction.customId === 'hit') {
+                // Player draws one card
                 playerCards.push(drawCard());
                 playerTotal = playerCards.reduce((a, b) => a + b, 0);
+
             } else if (buttonInteraction.customId === 'stand') {
+                // Dealer must finish playing immediately
                 while (dealerTotal < 17) {
                     dealerCards.push(drawCard());
                     dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
                 }
+
+                // Lock player actions after standing
+                collector.stop('stood');
             }
 
+            // Always check for win/lose/tie after any action
             const result = checkGameResult();
-            if (result) {
-                if (result === 'win') {
+
+            // If Stand was pressed, result will always resolve now
+            if (result || buttonInteraction.customId === 'stand') {
+
+                const finalResult = result || checkGameResult();
+
+                if (finalResult === 'win') {
                     balance += bet;
-                console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} Won Ferns ${bet.toLocaleString()} Ferns.`);
-                } else if (result === 'lose') {
-                // console logs
-                console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} Lost Ferns ${bet.toLocaleString()} Ferns.`);
+                    console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} - ${user.username} Won +${bet.toLocaleString()} Ferns.`);
+                } else if (finalResult === 'lose') {
                     balance -= bet;
+                    console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} - ${user.username} Lost -${bet.toLocaleString()} Ferns.`);
                 }
 
-                // SAVE BALANCE BACK TO WALLET OBJECT
                 walletObj.balance = balance;
                 await db.wallet.set(newKey, walletObj);
 
                 const resultEmbed = {
-                    color: result === 'win' ? 0x00FF00 : result === 'lose' ? 0xFF0000 : 0xFFFF00,
+                    color: finalResult === 'win' ? 0x00FF00 : finalResult === 'lose' ? 0xFF0000 : 0xFFFF00,
                     title: `**__♠️ Blackjack Results ♠️__**`,
-                    description: `You ${result === 'win' ? 'won' : result === 'lose' ? 'lost' : 'tied'} your bet of ${ferns}${bet.toLocaleString()}`,
+                    description: `You ${finalResult === 'win' ? 'won' : finalResult === 'lose' ? 'lost' : 'tied'} your bet of ${ferns}${bet.toLocaleString()}`,
                     thumbnail: { url: user.displayAvatarURL() },
                     fields: [
                         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -168,24 +179,31 @@ module.exports = {
                     ]
                 };
 
-                await buttonInteraction.update({ embeds: [resultEmbed], components: [] });
-                collector.stop();
-            } else {
-                const updatedEmbed = {
-                    color: 0xFFFFFF,
-                    title: `**__♣️ Blackjack ♣️__**`,
-                    description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
-                    thumbnail: { url: user.displayAvatarURL() },
-                    fields: [
-                        { name: 'Your Cards', value: playerCards.join(', '), inline: true },
-                        { name: 'Your Total', value: playerTotal.toString(), inline: true },
-                        { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
-                    ]
-                };
+                await buttonInteraction.update({
+                    embeds: [resultEmbed],
+                    components: [] // disable buttons
+                });
 
-                await buttonInteraction.update({ embeds: [updatedEmbed], components: [buttons] });
+                return;
             }
+
+            // If no final result yet (player hit), show updated status
+            const updatedEmbed = {
+                color: 0xFFFFFF,
+                title: `**__♣️ Blackjack ♣️__**`,
+                description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
+                thumbnail: { url: user.displayAvatarURL() },
+                fields: [
+                    { name: 'Your Cards', value: playerCards.join(', '), inline: true },
+                    { name: 'Your Total', value: playerTotal.toString(), inline: true },
+                    { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+                ]
+            };
+
+            await buttonInteraction.update({ embeds: [updatedEmbed], components: [buttons] });
+
         });
+
 
         collector.on('end', () => {
             if (!message.editable) return;
