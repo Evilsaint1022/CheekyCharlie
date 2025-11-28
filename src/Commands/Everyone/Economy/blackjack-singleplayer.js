@@ -155,7 +155,7 @@ module.exports = {
                 const finalResult = result || checkGameResult();
 
                 if (finalResult === 'win') {
-                    balance += bet;
+                    balance += bet * 2;
                     console.log(`[♠️] [BLACKJACK_SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} - ${user.username} Won +${bet.toLocaleString()} Ferns.`);
                 } else if (finalResult === 'lose') {
                     balance -= bet;

@@ -158,11 +158,11 @@ module.exports = {
                         let loseUser = winner === user.id ? opponent : user;
 
                         if (winner === user.id) {
-                            challengerBalance += bet;
+                            challengerBalance += bet * 2;
                             opponentBalance -= bet;
                         } else {
                             challengerBalance -= bet;
-                            opponentBalance += bet;
+                            opponentBalance += bet * 2;
                         }
 
                         await db.wallet.set(balanceKeyChallenger, challengerBalance);
