@@ -9,6 +9,9 @@ module.exports = {
     const channelId = '1346995573596622928';
     const channel = member.guild.channels.cache.get(channelId);
 
+    // Makes sure it only sends for the Four-Square Server.
+    if (!channel) return;
+
     try {
       // Load the welcome template and member avatar
       const templatePath = path.join(__dirname, '../../Utilities/Banners/welcome.png');

@@ -3,8 +3,11 @@ const { Events, EmbedBuilder } = require('discord.js');
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
+
     // Fetch the guild to get the total member count
     const guild = member.guild;
+    const welcomechannel = '1346995573596622928';
+    const welcomersrole = '1356828430464974941';
 
     // Create the embed message
     const welcomeEmbed = new EmbedBuilder()
@@ -24,9 +27,11 @@ module.exports = {
       .setColor(0x207e37); // Optional: set a color for the embed
 
     // Send the role mention and embed message to the specified channel by ID
-    const welcomeChannel = guild.channels.cache.get('1346955022461829162');
+    const welcomeChannel = guild.channels.cache.get(welcomechannel);
     if (welcomeChannel) {
-      await welcomeChannel.send({ content: `<@&1356828430464974941>`, embeds: [welcomeEmbed] });
+      await welcomeChannel.send({ content: `<@&${welcomersrole}>`, embeds: [welcomeEmbed] });
+       } else {
+      return;
     }
   },
 };

@@ -26,6 +26,13 @@ module.exports = {
 
   async execute(interaction, client) {
 
+     if (interaction.channel.isDMBased()) {
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
+
     const guildId = interaction.guild.id;
     const guildName = interaction.guild.name;
 

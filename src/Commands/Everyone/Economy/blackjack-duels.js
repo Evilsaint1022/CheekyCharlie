@@ -20,6 +20,14 @@ module.exports = {
         ),
 
     async execute(interaction) {
+
+        if (interaction.channel.isDMBased()) {
+            return interaction.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
+
         const { guild, user } = interaction;
         const opponent = interaction.options.getUser('opponent');
         const bet = interaction.options.getInteger('bet');
