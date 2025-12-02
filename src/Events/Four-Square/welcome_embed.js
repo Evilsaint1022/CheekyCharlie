@@ -6,7 +6,7 @@ module.exports = {
 
     // Fetch the guild to get the total member count
     const guild = member.guild;
-    const welcomechannel = '1346995573596622928';
+    const welcomechannel = '1346955022461829162';
     const welcomersrole = '1356828430464974941';
 
     // Create the embed message
