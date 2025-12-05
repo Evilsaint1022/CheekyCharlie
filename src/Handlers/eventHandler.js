@@ -4,7 +4,7 @@ const path = require('path');
 
 function loadEvents(client) {
 
-    client.setMaxListeners(20)
+    client.setMaxListeners(100)
 
     const table = new Table({
         head: ['Events', 'Status'],
