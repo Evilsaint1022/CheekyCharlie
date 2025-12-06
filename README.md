@@ -59,7 +59,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/pick` - Picks Ferns when the dropparty's drops.
 - `/pay` - Pay other members Ferns.
 
-### **🌿<ins>Economy-Games</ins>**
+### **🌿<ins>Economy Games</ins>**
 - `/blackjack-duels` - Play Blackjack with other users.
 - `/blackjack-singleplayer` - Starts a game of blackjack.
 - `/russian-roulette` - Play a game of russian roulette with other users.
