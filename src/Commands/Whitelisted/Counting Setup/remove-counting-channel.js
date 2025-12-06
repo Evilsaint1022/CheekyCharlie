@@ -15,11 +15,7 @@ module.exports = {
         flags: 64 // Makes the reply ephemeral
     });
 }
-    const guild = interaction.guild;
-
-if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
-        }
+        const guild = interaction.guild;
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;

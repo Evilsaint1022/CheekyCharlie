@@ -47,10 +47,6 @@ module.exports = {
 
         const user = interaction.user;
         const guild = interaction.guild;
-        
-        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
-        }
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;

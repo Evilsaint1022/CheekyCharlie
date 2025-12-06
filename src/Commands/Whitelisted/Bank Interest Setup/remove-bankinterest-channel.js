@@ -16,10 +16,6 @@ module.exports = {
     });
   }
 
-  if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
-        }
-
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
         const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];

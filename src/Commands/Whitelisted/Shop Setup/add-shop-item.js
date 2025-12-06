@@ -34,10 +34,6 @@ module.exports = {
                 flags: 64
             });
         }
-        
-        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', flags: MessageFlags.Ephemeral });
-        }
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
