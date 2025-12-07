@@ -45,7 +45,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Question-Of-The-Day
 - 🌿Temporary Voice Channels
 - 🌿AI NSFW Content Filtering
-- 🌿Color-of-the-Week - (Updates every Week)
+- 🌿Color-of-the-Week
 
 # 🌿<ins>**Everyone - Application Commands**</ins>🌿
 
