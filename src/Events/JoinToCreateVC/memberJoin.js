@@ -21,8 +21,6 @@ module.exports = {
             const settings = await db.settings.get(`${guildName}_${guildId}`) || {};
             const joinToCreateVC = settings.JoinToCreateVC;
 
-            console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined and ${newState.channel.name} ${newState.channel.id} has been Created!`);
-
             if (joinToCreateVC && joinToCreateVC === newState.channel.id) {
                 const newChannel = await guild.channels.create({
                     name: `${member.user.username}'s Voice`,
@@ -34,6 +32,8 @@ module.exports = {
                         deny: overwrite.deny
                     }))
                 });
+
+                console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined and ${member.user.username}'s Voice has been Created!`);
 
                 await member.voice.setChannel(newChannel).catch(err => {
                     console.error("[TEMP VC / JOIN TO CREATE] Error moving member to new channel.");
