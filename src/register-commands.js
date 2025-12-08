@@ -275,6 +275,18 @@ const commands = [
         ],
     },
     {
+        name: 'kiss',
+        description: 'Kiss another member with a random GIF!',
+        options: [
+            {
+                name: 'target',
+                description: 'The member you want to kiss',
+                type: 6,
+                required: true,
+            },
+        ],
+    },
+    {
         name: 'kick',
         description: 'Kick another member with a random GIF!',
         options: [

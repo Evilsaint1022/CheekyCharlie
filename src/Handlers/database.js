@@ -40,6 +40,7 @@ const db = {
     specials: new DotDB("./src/Utilities/Storage/Settings/Specials/Specials.json"),
     qotd: new DotDB("./src/Utilities/Storage/Settings/Qotd/lastqotd.json"),
     slapgifs: new DotDB("./src/Utilities/Storage/Fallback/slapgifs.json"),
+    kissgifs: new DotDB("./src/Utilities/Storage/Fallback/kissgifs.json"),
     kickgifs: new DotDB("./src/Utilities/Storage/Fallback/kickgifs.json"),
     huggifs: new DotDB("./src/Utilities/Storage/Fallback/huggifs.json")
 }
