@@ -41,7 +41,7 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "nodemon": "^3.1.11"
   },
   "overrides": {
