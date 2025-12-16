@@ -15,8 +15,8 @@ const space = 'ㅤ'
 async function sendCommitNotification(client, commit) {
 
 // Load the welcome template and member avatar
-      const repoimagepath = path.join(__dirname, '../../Utilities/Github/repostoredimage.png');
-      const repoimage = await loadImage(repoimagepath);
+const repoImagePath = path.join(__dirname, '../../Utilities/Github/repostoredimage.png');
+const repoImage = await loadImage(repoImagePath);
 
   try {
     const sha = commit?.sha;
@@ -63,11 +63,11 @@ async function sendCommitNotification(client, commit) {
     const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
 
     if (!repoImageUrl) {
-      repoImageUrl = repoimage;
+    repoImageUrl = repoImage;
     }
 
     const embed = new EmbedBuilder()
-      .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${bottom}`)
+      .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n\n${commitlink}\n\n${middle}\n${centeredmessage}\n\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xDE4949)
       .setTimestamp(new Date());
