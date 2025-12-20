@@ -16,7 +16,7 @@ module.exports = {
             });
         }
         
-    const guildkey = `${interaction.guild.name}_${interaction.guild.id}`;
+    const guildkey = `${interaction.guild.id}`;
     let shopItems = [];
 
     try {

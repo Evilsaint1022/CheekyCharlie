@@ -29,13 +29,13 @@ module.exports = {
         const guildName = interaction.guild.name;
         const role = interaction.options.getRole('role');
 
-        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         if (!WHITELISTED_ROLE_IDS.includes(role.id)) {
             WHITELISTED_ROLE_IDS.push(role.id);
 
             // Update the database with the new list of whitelisted roles
-            db.whitelisted.set(`${guildName}_${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
+            db.whitelisted.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
         }
 
         await interaction.reply({ content: `The role <@&${role.id}> has been added to the whitelist.`, flags: 64 });

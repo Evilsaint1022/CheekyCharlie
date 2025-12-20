@@ -38,7 +38,7 @@ module.exports = {
     // 🔥 NEW: NEW correct format (userid only)
     const newKey = `${user.id}`;
 
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     // -------------------------------------------------------
     // 🔥 DATABASE MIGRATION LOGIC

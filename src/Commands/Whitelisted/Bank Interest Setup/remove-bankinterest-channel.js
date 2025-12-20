@@ -18,7 +18,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -36,7 +36,7 @@ module.exports = {
       //console logs
       console.log(`[💰] [REMOVE-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-bank-channel command.`);
 
-      const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+      const whitelistedRoles = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
       const member = guild.members.cache.get(userId);
 
       if (
@@ -50,7 +50,7 @@ module.exports = {
       }
       
       // Fetch current settings or default to empty object
-        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const currentSettings = await db.settings.get(`${guildId}`) || {};
 
         // Check if a Bank channel is set
         if (!currentSettings.bankinterest) {
@@ -59,7 +59,7 @@ module.exports = {
 
         delete currentSettings.bankinterest;
 
-        db.settings.set(`${guildName}_${guildId}`, currentSettings);
+        db.settings.set(`$${guildId}`, currentSettings);
 
       await interaction.reply({
         content: `✅ Bank Interest channel has been removed.`,

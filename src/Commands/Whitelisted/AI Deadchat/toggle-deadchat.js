@@ -18,7 +18,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -29,16 +29,16 @@ module.exports = {
 
         console.log(`[⭐] [TOGGLE-DEADCHAT] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the toggle deadchat command.`);
         
-        const currentState = await db.settings.get(`${guildName}_${guildId}.deadchatState`);
+        const currentState = await db.settings.get(`$${guildId}.deadchatState`);
 
         if (currentState) {
-            await db.settings.set(`${guildName}_${guildId}.deadchatState`, false);
+            await db.settings.set(`${guildId}.deadchatState`, false);
             await interaction.reply({
                 content: 'AI Deadchat messages have been disabled for this server.',
                 flags: MessageFlags.Ephemeral,
             });
         } else {
-            await db.settings.set(`${guildName}_${guildId}.deadchatState`, true);
+            await db.settings.set(`${guildId}.deadchatState`, true);
             await interaction.reply({
                 content: 'AI Deadchat messages have been enabled for this server.\n-# Make sure the deadchat channel, deadchat role and deadchat duration are set too.',
                 flags: MessageFlags.Ephemeral,

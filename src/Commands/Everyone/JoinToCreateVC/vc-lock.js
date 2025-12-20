@@ -18,7 +18,7 @@ module.exports = {
         const guildId = guild.id;
         const guildName = guild.name;
         const vcId = voiceChannel.id;
-        const dbKey = `${guildName}_${guildId}_members`;
+        const dbKey = `${guildId}_members`;
 
         // Load full voice member map
         const vcData = await db.vcmembers.get(dbKey);

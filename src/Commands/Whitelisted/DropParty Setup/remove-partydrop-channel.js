@@ -18,7 +18,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -28,7 +28,7 @@ module.exports = {
         }
 
         // Fetch current settings or default to empty object
-        const channelSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const channelSettings = await db.settings.get(`${guildId}`) || {};
 
         // Check if a party drop channel is set
         if (!channelSettings.DropPartyChannel) {
@@ -42,7 +42,7 @@ module.exports = {
         delete channelSettings.DropPartyChannel;
 
         // Save updated settings object
-        db.settings.set(`${guildName}_${guildId}`, channelSettings);
+        db.settings.set(`${guildId}`, channelSettings);
 
         // Logging the action
         const timestamp = new Date().toISOString();

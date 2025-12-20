@@ -34,7 +34,7 @@ const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
   if (message.author.bot) return;
   if (!message.mentions.has(client.user)) return;
 
-  const ignoredChannels = await db.settings.get(`${message.guild.name}_${message.guild.id}.ignoredAIChannels`) || [];
+  const ignoredChannels = await db.settings.get(`${message.guild.id}.ignoredAIChannels`) || [];
 
   if ( ignoredChannels.includes(message.channel.id) ) return;
   if ( ignoredChannels.includes(message.channel.parent.id) ) return;

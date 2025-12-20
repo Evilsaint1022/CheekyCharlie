@@ -21,7 +21,7 @@ module.exports = {
 
         const confession = interaction.options.getString('message');
 
-        const ventChannelId = await db.settings.get(`${interaction.guild.name}_${interaction.guild.id}.ventChannelId`);
+        const ventChannelId = await db.settings.get(`${interaction.guild.id}.ventChannelId`);
         const ventChannel = await interaction.guild.channels.fetch(ventChannelId).catch(async (e) => {
             if ( !interaction.replied ) {
                 await interaction.reply({

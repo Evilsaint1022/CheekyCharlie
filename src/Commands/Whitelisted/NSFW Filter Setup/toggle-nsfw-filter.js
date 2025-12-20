@@ -18,7 +18,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -27,16 +27,16 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-        const currentState = await db.settings.get(`${guildName}_${guildId}.nsfwFilter`);
+        const currentState = await db.settings.get(`${guildId}.nsfwFilter`);
 
         if (currentState) {
-            await db.settings.set(`${guildName}_${guildId}.nsfwFilter`, false);
+            await db.settings.set(`${guildId}.nsfwFilter`, false);
             await interaction.reply({
                 content: 'NSFW filter has been disabled for this server.',
                 flags: MessageFlags.Ephemeral,
             });
         } else {
-            await db.settings.set(`${guildName}_${guildId}.nsfwFilter`, true);
+            await db.settings.set(`${guildId}.nsfwFilter`, true);
             await interaction.reply({
                 content: 'NSFW filter has been enabled for this server.',
                 flags: MessageFlags.Ephemeral,

@@ -33,7 +33,7 @@ module.exports = {
     }
 
     const type = interaction.options.getString('type');
-    const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
+    const guildKey = `${interaction.guild.id}`;
 
     console.log(`[🌿 LEADERBOARD] ${interaction.guild.name} (${interaction.guild.id}) | ${interaction.user.tag} used '${type}' leaderboard`);
 

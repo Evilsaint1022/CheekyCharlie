@@ -35,7 +35,7 @@ module.exports = {
             });
         }
 
-        const questionsKey = `${guildName}_${guildId}.questions`;
+        const questionsKey = `${guildId}.questions`;
         const questions = await db.staff_app_questions.get(questionsKey) || [];
 
         if (questions.length === 0) {
@@ -45,7 +45,7 @@ module.exports = {
             });
         }
 
-        const channelKey = `${guildName}_${guildId}.channel`;
+        const channelKey = `${guildId}.channel`;
         const applicationChannelId = await db.staff_app_questions.get(channelKey);
 
         if (!applicationChannelId) {

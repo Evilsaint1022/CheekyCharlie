@@ -23,7 +23,7 @@ module.exports = {
     }
 
     const ferns = '<:Ferns:1395219665638391818>';
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     // OLD → NEW migration keys
     const safeUsername = user.username.replace(/\./g, '_');
