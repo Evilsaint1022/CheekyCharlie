@@ -32,7 +32,7 @@ const repoImage = await loadImage(repoImagePath);
     const bottom = `**─────────────────────────────────────**`;
 
     const centeredmessage = `ㅤㅤㅤ**${message}**`;
-    const centeredauthor =  `ㅤㅤㅤ🌿**__The Author is ${authorName}__**`;
+    const centeredauthor =  `ㅤㅤㅤ🌿**${authorName}**🌿`;
 
     if (!sha || !message || !htmlUrl) {
       return;
@@ -67,7 +67,7 @@ const repoImage = await loadImage(repoImagePath);
     }
 
     const embed = new EmbedBuilder()
-      .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n\n${commitlink}\n\n${middle}\n${centeredmessage}\n\n${centeredauthor}\n${bottom}`)
+      .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n${centeredmessage}\nㅤ\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
       .setColor(0xDE4949)
       .setTimestamp(new Date());
