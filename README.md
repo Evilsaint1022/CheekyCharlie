@@ -49,7 +49,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿AI NSFW Content Filtering
 - 🌿Color-of-the-Week
 
-# 🌿<ins>**Everyone - Application Commands**</ins>🌿
+<details><summary><h2>🌿<ins>Everyone - Application Commands</ins>🌿</h2></summary>
 
 ### **🌿<ins>Economy</ins>**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -104,7 +104,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/invite` — Generates a temporary invite link.
 - `/ping` — Check Bots Latency.
 
-# 🌿<ins>**Whitelisted - Application Commands**</ins>🌿
+</details>
+
+<details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2></summary>
 
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
@@ -223,3 +225,5 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-qotd-role` - sets a question of the day ping role.
 - `/remove-qotd-role` - Removes the role set for Question of the day.
 - `/toggle-qotd` - toggles question of the day on or off.
+
+</details>
