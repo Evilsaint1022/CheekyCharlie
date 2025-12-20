@@ -49,7 +49,11 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿AI NSFW Content Filtering
 - 🌿Color-of-the-Week
 
-<details><summary><h2>🌿<ins>Everyone - Application Commands</ins>🌿</h2></summary>
+<details><summary><h2>🌿<ins>Everyone - Application Commands</ins>🌿</h2>
+
+`These are commands that everyone can use and require no premissions to use.`
+
+</summary>
 
 ### **🌿<ins>Economy</ins>**
 - `/leaderboard` — Balance/Level Leaderboard.
@@ -106,7 +110,11 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 </details>
 
-<details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2></summary>
+<details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
+
+`These are commands that only Whitelisted roles can use and require permission to use.`
+
+</summary>
 
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
 - `/set-whitelisted-roles` — Set whitelisted Roles.
