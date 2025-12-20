@@ -3,7 +3,7 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "* * * * * *";
+const time = "0 */5 * * * *";
 
 let isRunning = false;
 let isScheduled = false;
@@ -156,7 +156,15 @@ function startDeadchat(client) {
 
     client.on('messageCreate', messageHandler);
 
-    scheduledTask = cron.schedule(time, () => checkAIDeadchat(client), {
+    scheduledTask = cron.schedule(time, () => {
+        (async () => {
+            try {
+                await checkAIDeadchat(client);
+            } catch (err) {
+                console.error('[💭] [AI Deadchat] Error in scheduled task: ', err);
+            }
+        })();
+    }, {
         scheduled: true,
         timezone: 'UTC'
     });
