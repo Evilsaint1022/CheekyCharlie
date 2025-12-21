@@ -120,10 +120,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/set-whitelisted-roles` — Set whitelisted Roles.
 - `/remove-whitelisted-roles` — Remove whitelisted Roles.
 
-### **🌿<ins>Echo Command</ins>**
+### **🌿<ins>Other</ins>**
 - `/echo` — Echo Messages
-
-### **🌿<ins>Stop Command</ins>**
 - `/stop` - Staff Command to Cooldown Chat During Heated Moments.
 
 ### **🌿<ins>Counting Setup</ins>**

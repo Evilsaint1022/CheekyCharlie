@@ -1037,6 +1037,24 @@ const commands = [
         name: 'remove-ban-channel',
         description: 'Remove the configured ^banned channel'
     },
+    {
+        name: 'steal',
+        description: 'Steal an emoji and add it to this server',
+        options: [
+            {
+                name: 'emoji',
+                description: 'The emoji you want to steal',
+                type: 3,
+                required: true
+            },
+            {
+                name: 'name',
+                description: 'Optional name for the emoji',
+                type: 3,
+                required: false
+            },
+        ],
+    }
 ];
 
 // Rest -------------------------------------------------------------------------------------------------------------------------------------------------
