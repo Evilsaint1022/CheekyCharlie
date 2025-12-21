@@ -9,7 +9,7 @@ module.exports = {
 
   async execute(interaction) {
     const guild = interaction.guild;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
     const username = interaction.user.username;
 
     if (interaction.channel.isDMBased()) {

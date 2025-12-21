@@ -27,9 +27,9 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-    const guildKey = `${guild.id}`;
+      const guildKey = `${guildId}`;
 
-    const settings = await db.settings.get(guildKey) || {};
+      const settings = await db.settings.get(guildKey) || {};
 
     // Check if a qotd channel is set
         if (!settings.qotdChannelId) {
