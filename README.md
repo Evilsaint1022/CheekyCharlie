@@ -123,6 +123,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 ### **🌿<ins>Other</ins>**
 - `/echo` — Echo Messages
 - `/stop` - Staff Command to Cooldown Chat During Heated Moments.
+- `/steal` - Steal emojis from other guilds.
 
 ### **🌿<ins>Counting Setup</ins>**
 - `/set-counting-channel` - Sets the counting entertainment channel.
