@@ -12,7 +12,7 @@ module.exports = {
 
         if ( message.author.bot || !message.guild ) { return; }
 
-        const NsfwFilterEnabled = await db.settings.get(`${message.guild.name}_${message.guild.id}.nsfwFilter`);
+        const NsfwFilterEnabled = await db.settings.get(`${message.guild.id}.nsfwFilter`);
 
         if ( !NsfwFilterEnabled ) {
             // NSFW filter is disabled, do nothing
@@ -39,8 +39,8 @@ module.exports = {
             });
         });
 
-        const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.goodChoices`) || [];
-        const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.badChoices`) || [];
+        const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.id}.goodChoices`) || [];
+        const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.id}.badChoices`) || [];
 
         const goodChoicesContent = currentGoodChoices.map(choice => choice.content).join("\n") || "No Good Choices";
         const badChoicesContent = currentBadChoices.map(choice => choice.content).join("\n") || "No Bad Choices";
@@ -82,7 +82,7 @@ module.exports = {
                     
                 }
 
-                const nsfwLogsChannelId = await db.settings.get(`${message.guild.name}_${message.guild.id}.nsfwLogsChannel`);
+                const nsfwLogsChannelId = await db.settings.get(`${message.guild.id}.nsfwLogsChannel`);
 
                 if ( nsfwLogsChannelId ) {
 
@@ -230,7 +230,7 @@ module.exports = {
 
                             if (  interaction.customId === 'good-choice' ) {
 
-                                const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.goodChoices`) || [];
+                                const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.id}.goodChoices`) || [];
 
                                 currentGoodChoices.push({
                                     content: messageContent,
@@ -240,13 +240,13 @@ module.exports = {
                                     currentGoodChoices.shift();
                                 }
 
-                                await db.ai_nsfw_training.set(`${message.guild.name}_${message.guild.id}.goodChoices`, currentGoodChoices);
+                                await db.ai_nsfw_training.set(`${message.guild.id}.goodChoices`, currentGoodChoices);
 
                             }
 
                             if (  interaction.customId === 'bad-choice' ) {
 
-                                const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.badChoices`) || [];
+                                const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.id}.badChoices`) || [];
 
                                 currentBadChoices.push({
                                     content: messageContent,
@@ -256,7 +256,7 @@ module.exports = {
                                     currentBadChoices.shift();
                                 }
 
-                                await db.ai_nsfw_training.set(`${message.guild.name}_${message.guild.id}.badChoices`, currentBadChoices);
+                                await db.ai_nsfw_training.set(`${message.guild.id}.badChoices`, currentBadChoices);
 
                             }
 
@@ -292,7 +292,7 @@ module.exports = {
                     
                 }
 
-                const nsfwLogsChannelId = await db.settings.get(`${message.guild.name}_${message.guild.id}.nsfwLogsChannel`);
+                const nsfwLogsChannelId = await db.settings.get(`${message.guild.id}.nsfwLogsChannel`);
 
                 if ( nsfwLogsChannelId ) {
 
@@ -442,7 +442,7 @@ module.exports = {
 
                             if (  interaction.customId === 'good-choice' ) {
 
-                                const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.goodChoices`) || [];
+                                const currentGoodChoices = await db.ai_nsfw_training.get(`${message.guild.id}.goodChoices`) || [];
 
                                 currentGoodChoices.push({
                                     content: messageContent,
@@ -452,13 +452,13 @@ module.exports = {
                                     currentGoodChoices.shift();
                                 }
 
-                                await db.ai_nsfw_training.set(`${message.guild.name}_${message.guild.id}.goodChoices`, currentGoodChoices);
+                                await db.ai_nsfw_training.set(`${message.guild.id}.goodChoices`, currentGoodChoices);
 
                             }
 
                             if (  interaction.customId === 'bad-choice' ) {
 
-                                const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.name}_${message.guild.id}.badChoices`) || [];
+                                const currentBadChoices = await db.ai_nsfw_training.get(`${message.guild.id}.badChoices`) || [];
 
                                 currentBadChoices.push({
                                     content: messageContent,
@@ -468,7 +468,7 @@ module.exports = {
                                     currentBadChoices.shift();
                                 }
 
-                                await db.ai_nsfw_training.set(`${message.guild.name}_${message.guild.id}.badChoices`, currentBadChoices);
+                                await db.ai_nsfw_training.set(`${message.guild.id}.badChoices`, currentBadChoices);
 
                             }
 

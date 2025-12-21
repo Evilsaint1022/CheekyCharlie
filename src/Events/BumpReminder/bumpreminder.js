@@ -19,7 +19,7 @@ module.exports = {
     const guildName = message.guild.name;
     const guildId = message.guild.id;
 
-    const guildKey = `${guildName}_${guildId}`;
+    const guildKey = `${guildId}`;
     const cooldownKey = guildKey;
 
     try {

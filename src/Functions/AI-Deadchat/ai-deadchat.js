@@ -3,7 +3,7 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "* * * * * *";
+const time = "0 */5 * * * *";
 
 let isRunning = false;
 let isScheduled = false;
@@ -37,7 +37,7 @@ async function checkAIDeadchat(client) {
             const guildName = guild.name;
             const guildId = guild.id;
 
-            const deadchatSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+            const deadchatSettings = await db.settings.get(`${guildId}`) || {};
 
             const durationMs = Number(deadchatSettings.deadchatDuration);
             const roleId = deadchatSettings.deadchatRoleId;
@@ -50,7 +50,7 @@ async function checkAIDeadchat(client) {
 
             if ( !role ) continue;
 
-            const lastDeadchatId = await db.ai_deadchat.get(`${guildName}_${guildId}.lastDeadchatMessage`) || "";
+            const lastDeadchatId = await db.ai_deadchat.get(`${guildId}.lastDeadchatMessage`) || "";
             const channel = await client.channels.fetch(channelId);
 
             if ( !channel ) continue;
@@ -115,7 +115,7 @@ async function checkAIDeadchat(client) {
                     allowedMentions: { roles: [role.id] }
                 });
 
-                await db.ai_deadchat.set(`${guildName}_${guildId}.lastDeadchatMessage`, deadchatMessage.id);
+                await db.ai_deadchat.set(`${guildId}.lastDeadchatMessage`, deadchatMessage.id);
 
                 GuildTimeoutMap.delete(guildId);
                 
@@ -156,7 +156,15 @@ function startDeadchat(client) {
 
     client.on('messageCreate', messageHandler);
 
-    scheduledTask = cron.schedule(time, () => checkAIDeadchat(client), {
+    scheduledTask = cron.schedule(time, () => {
+        (async () => {
+            try {
+                await checkAIDeadchat(client);
+            } catch (err) {
+                console.error('[💭] [AI Deadchat] Error in scheduled task: ', err);
+            }
+        })();
+    }, {
         scheduled: true,
         timezone: 'UTC'
     });

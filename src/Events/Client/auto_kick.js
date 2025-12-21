@@ -14,7 +14,7 @@ module.exports = {
     const guildName = member.guild.name;
 
     // Construct the settings key for the guild
-    const settingsKey = `${guildName}_${guildId}`;
+    const settingsKey = `${guildId}`;
 
     let guildSettings;
     try {

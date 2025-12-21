@@ -12,7 +12,7 @@ module.exports = async function updateStarboard(reaction) {
 
   const safeUsername = username.replace(/\./g, '_');
   const messageId = message.id;
-  const guildKey = `${guildName}_${guildId}`; // Guild key for storage
+  const guildKey = `${guildId}`; // Guild key for storage
 
   function padText(text, padLength = 3) {
         return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
