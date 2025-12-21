@@ -8,7 +8,7 @@ module.exports = {
     if (message.author.bot || !message.guild) return;
 
     const guild = message.guild;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
     const currentChannelId = message.channel.id;
 
     // Get ban channel from settings

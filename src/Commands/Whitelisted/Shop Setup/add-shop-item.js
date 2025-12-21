@@ -37,7 +37,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -53,7 +53,7 @@ module.exports = {
       const price = interaction.options.getInteger('price');
       const stock = interaction.options.getInteger('stock') ?? -1; // Default to -1 if not provided
 
-      const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
+      const guildKey = `${interaction.guild.id}`;
 
       // Get current shop array or empty array
       let shopItems = await db.shop.get(guildKey) || [];

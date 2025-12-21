@@ -27,7 +27,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -46,11 +46,11 @@ module.exports = {
             })
         }
 
-        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const currentSettings = await db.settings.get(`${guildId}`) || {};
 
         currentSettings.deadchatDuration = durationInMS;
 
-        db.settings.set(`${guildName}_${guildId}`, currentSettings);
+        db.settings.set(`${guildId}`, currentSettings);
         console.log(`[⭐] [SET-DEADCHAT-DURATION] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} Updated deadchatDuration to ${durationInSeconds} seconds`);
         return interaction.reply({
             content: "✅ Updated duration for Deadchat messages.\n-# Make sure the deadchat channel and deadchat role are set too.",

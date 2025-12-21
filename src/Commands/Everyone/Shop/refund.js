@@ -17,7 +17,7 @@ module.exports = {
       });
     }
 
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     // OLD → NEW keys
     const safeUsername = user.username.replace(/\./g, '_');

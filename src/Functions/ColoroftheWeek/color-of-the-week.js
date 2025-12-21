@@ -48,7 +48,7 @@ async function changeCotwColors(client) {
   const now = Date.now();
 
   for (const [guildId, guild] of client.guilds.cache) {
-    const guildKey = `${guild.name}_${guildId}`;
+    const guildKey = `${guildId}`;
 
     const settings = await db.settings.get(guildKey);
     if (!settings) continue;
@@ -105,7 +105,7 @@ module.exports = async function (client) {
     let nextRunDelay = CHANGE_INTERVAL; // Default full interval
 
     for (const [guildId, guild] of client.guilds.cache) {
-      const guildKey = `${guild.name}_${guildId}`;
+      const guildKey = `${guildId}`;
       const colorData = await db.coloroftheweek.get(guildKey);
       if (!colorData || !colorData.lastChangeTime) {
         nextRunDelay = 0; // Run immediately if never set

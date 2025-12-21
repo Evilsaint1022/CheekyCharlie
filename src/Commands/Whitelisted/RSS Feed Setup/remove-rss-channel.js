@@ -26,7 +26,7 @@ module.exports = {
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
 
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasWhitelistedRole = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
 
@@ -37,8 +37,8 @@ module.exports = {
             });
         }
 
-        await db.settings.delete(`${guildName}_${guildId}.rssTopics`);
-        await db.settings.delete(`${guildName}_${guildId}.rssNewsChannel`);
+        await db.settings.delete(`${guildId}.rssTopics`);
+        await db.settings.delete(`${guildId}.rssNewsChannel`);
 
         await interaction.reply({
             content: 'RSS channel has been removed.',

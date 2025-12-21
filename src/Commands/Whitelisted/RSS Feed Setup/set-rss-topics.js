@@ -19,7 +19,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -28,7 +28,7 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-        const rssNewsChannelId = await db.settings.get(`${guildName}_${guildId}.rssNewsChannel`);
+        const rssNewsChannelId = await db.settings.get(`${guildId}.rssNewsChannel`);
 
         if ( !rssNewsChannelId ) {
             return interaction.reply({ content: 'RSS News Channel is not set. Please set it using the `/set-rss-channel` command.', flags: MessageFlags.Ephemeral });
@@ -42,7 +42,7 @@ module.exports = {
 
         const topics = availableTopics;
 
-        const currentTopics = await db.settings.get(`${guildName}_${guildId}.rssTopics`) || [];
+        const currentTopics = await db.settings.get(`${guildId}.rssTopics`) || [];
 
         function createTopicsContainer(topics, currentTopics) {
             const container = new ContainerBuilder();
@@ -129,11 +129,11 @@ module.exports = {
 
                 if ( currentTopics.length === 0 ) {
 
-                    await db.settings.set(`${guildName}_${guildId}.rssTopics`, []);
+                    await db.settings.set(`${guildId}.rssTopics`, []);
                     
                 } else {
 
-                    await db.settings.set(`${guildName}_${guildId}.rssTopics`, currentTopics);
+                    await db.settings.set(`${guildId}.rssTopics`, currentTopics);
 
                 }
 

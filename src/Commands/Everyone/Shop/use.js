@@ -25,7 +25,7 @@ module.exports = {
       });
     }
 
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
     const userIdKey = user.id; // ✅ NEW clean ID-only key
     console.log(`[🌿] [USE] [${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
 

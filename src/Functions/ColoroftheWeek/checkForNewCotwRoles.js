@@ -44,7 +44,7 @@ const colors = [
 
 async function checkForNewCotwRoles(client) {
   for (const [guildId, guild] of client.guilds.cache) {
-    const guildKey = `${guild.name}_${guildId}`;
+    const guildKey = `${guildId}`;
     const settings = await db.settings.get(guildKey);
     if (!settings || !settings.cotw) continue;
 

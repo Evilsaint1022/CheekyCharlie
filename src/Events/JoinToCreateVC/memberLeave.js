@@ -15,7 +15,7 @@ module.exports = {
         const guildId = guild.id;
         const guildName = guild.name;
 
-        const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
+        const activeIdsKey = `${guildId}_activeVCs`;
         const activeVCs = await db.vc.get(activeIdsKey) || {};
 
         if (oldState.channel && !newState.channel) {

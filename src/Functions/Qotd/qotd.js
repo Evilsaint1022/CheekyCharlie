@@ -30,7 +30,7 @@ async function sendQuestionOfTheDay(client) {
     const clientGuilds = client.guilds.cache.map(guild => guild);
 
     for (const guild of clientGuilds) {
-      const guildKey = `${guild.name}_${guild.id}`;
+      const guildKey = `${guild.id}`;
       const qotdSettings = await db.settings.get(guildKey) || {};
 
       const { qotdChannelId: channelId, qotdRoleId: roleId, qotdState = false } = qotdSettings;

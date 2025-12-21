@@ -16,7 +16,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -29,16 +29,16 @@ module.exports = {
     console.log(`[⭐] [TOGGLE-LEVELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the toggle levels command.`);
 
     // Get current levels state (default false)
-    const currentState = await db.settings.get(`${guildName}_${guildId}.levels`) || false;
+    const currentState = await db.settings.get(`${guildId}.levels`) || false;
 
     if (currentState) {
-      await db.settings.set(`${guildName}_${guildId}.levels`, false);
+      await db.settings.set(`${guildId}.levels`, false);
       await interaction.reply({
         content: 'Levels feature has been **disabled** for this server.',
         flags: MessageFlags.Ephemeral,
       });
     } else {
-      await db.settings.set(`${guildName}_${guildId}.levels`, true);
+      await db.settings.set(`${guildId}.levels`, true);
       await interaction.reply({
         content: 'Levels feature has been **enabled** for this server.',
         flags: MessageFlags.Ephemeral,

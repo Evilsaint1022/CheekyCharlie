@@ -24,7 +24,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -33,7 +33,7 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
         
-        const ignoredChannels = await db.settings.get(`${guildName}_${guildId}.ignoredAIChannels`) || [];
+        const ignoredChannels = await db.settings.get(`${guildId}.ignoredAIChannels`) || [];
 
         if ( ignoredChannels.includes(channel.id) ) {
             return interaction.reply({ content: `Channel / Category <#${channel.id}> is already ignored for AI responses.`, flags: 64 });
@@ -41,7 +41,7 @@ module.exports = {
 
         ignoredChannels.push(channel.id);
 
-        await db.settings.set(`${guildName}_${guildId}.ignoredAIChannels`, ignoredChannels);
+        await db.settings.set(`${guildId}.ignoredAIChannels`, ignoredChannels);
         console.log(`[⭐] [SET-IGNORE-AI-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} Added channel / category <#${channel.id}> to the ignored AI channels list.`);
 
         return interaction.reply({

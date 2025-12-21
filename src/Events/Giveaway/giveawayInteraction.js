@@ -16,7 +16,7 @@ module.exports = {
         if (customId.startsWith('giveaway_confirm_leave_')) {
             
             const originalMessageId = customId.replace('giveaway_confirm_leave_', '');
-            const originalGiveawayId = `${guildName}_${guildId}_${originalMessageId}`;
+            const originalGiveawayId = `${guildId}_${originalMessageId}`;
             
             const originalGiveawayData = await db.giveaways.get(originalGiveawayId);
             
@@ -67,7 +67,7 @@ module.exports = {
         if (customId.startsWith('giveaway_reroll_anyway_')) {
             
             const originalMessageId = customId.replace('giveaway_reroll_anyway_', '');
-            const originalGiveawayId = `${guildName}_${guildId}_${originalMessageId}`;
+            const originalGiveawayId = `${guildId}_${originalMessageId}`;
             
             const originalGiveawayData = await db.giveaways.get(originalGiveawayId);
             
@@ -78,7 +78,7 @@ module.exports = {
                 });
             }
 
-            const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+            const whitelistedRoles = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
             const member = guild.members.cache.get(user.id);
             const hasAdminPermission = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
             const hasModRole = whitelistedRoles.some(roleId => member.roles.cache.has(roleId));
@@ -154,7 +154,7 @@ module.exports = {
         }
 
         const messageId = message.id;
-        const giveawayId = `${guildName}_${guildId}_${messageId}`;
+        const giveawayId = `${guildId}_${messageId}`;
 
         const giveawayData = await db.giveaways.get(giveawayId);
         
@@ -167,7 +167,7 @@ module.exports = {
 
         if (customId === 'giveaway_reroll') {
             
-            const whitelistedRoles = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+            const whitelistedRoles = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
             const member = guild.members.cache.get(user.id);
             const hasAdminPermission = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
             const hasModRole = whitelistedRoles.some(roleId => member.roles.cache.has(roleId));
@@ -303,7 +303,7 @@ module.exports = {
                 });
             }
 
-            const giveawaySettings = await db.giveaway_settings.get(`${guildName}_${guildId}`) || {};
+            const giveawaySettings = await db.giveaway_settings.get(`${guildId}`) || {};
             const whitelistEnabled = giveawaySettings.whitelistEnabled || false;
             const blacklistEnabled = giveawaySettings.blacklistEnabled || false;
             const whitelistedRoles = giveawaySettings.whitelistedRoles || [];

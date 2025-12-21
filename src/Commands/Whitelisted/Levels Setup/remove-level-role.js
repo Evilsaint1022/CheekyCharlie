@@ -23,7 +23,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -34,7 +34,7 @@ module.exports = {
 
     const level = interaction.options.getInteger('level');
     const guild = interaction.guild;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     try {
       let roleMap = await db.levelroles.get(guildKey) || {};
@@ -51,7 +51,7 @@ module.exports = {
       // Delete and update
       delete roleMap[level];
       await db.levelroles.set(guildKey, roleMap);
-      console.log(`[⭐] [REMOVE-LEVEL-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${interaction.user.tag} removed role <@&${removedRoleId}> from level ${level}.`);
+      console.log(`[⭐] [REMOVE-LEVEL-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} removed role <@&${removedRoleId}> from level ${level}.`);
 
       return interaction.reply({
         content: `✅ Removed role <@&${removedRoleId}> from level ${level}.`,

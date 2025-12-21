@@ -24,7 +24,7 @@ module.exports = {
         const interactionUser = interaction.user;
         const targetUser = interaction.options.getUser('user') || interaction.user;
 
-        const guildKey = `${guild.name}_${guild.id}`;
+        const guildKey = `${guild.id}`;
         const userKey = `${targetUser.id}`;
 
         console.log(`[🌿] [LEVEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interactionUser.username} used the level command to get ${targetUser.username}'s level.`);

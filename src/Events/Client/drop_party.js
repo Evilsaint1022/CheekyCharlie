@@ -52,7 +52,7 @@ module.exports = {
 
         const guildId = message.guild.id;
         const guildName = message.guild.name;
-        const guildKey = `${guildName}_${guildId}`;
+        const guildKey = `${guildId}`;
 
         // Load the DropPartyChannel from the database
         let DropPartyChannel;

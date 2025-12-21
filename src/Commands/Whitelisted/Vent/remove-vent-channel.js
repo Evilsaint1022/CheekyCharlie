@@ -17,7 +17,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -27,7 +27,7 @@ module.exports = {
         }
 
         // Fetch current settings or default to empty object
-        const currentSettings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const currentSettings = await db.settings.get(`${guildId}`) || {};
 
         // Check if a vent channel is set
         if (!currentSettings.ventChannelId) {
@@ -36,7 +36,7 @@ module.exports = {
 
         delete currentSettings.ventChannelId;
 
-        db.settings.set(`${guildName}_${guildId}`, currentSettings);
+        db.settings.set(`${guildId}`, currentSettings);
 
         const timestamp = new Date().toISOString();
         console.log(`[⭐] [REMOVE-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-vent-channel command to remove the vent channel.`);

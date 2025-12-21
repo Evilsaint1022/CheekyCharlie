@@ -18,7 +18,7 @@ module.exports = {
         const guildName = guild.name;
         const memberId = member.id;
 
-        const settings = await db.settings.get(`${guildName}_${guildId}`) || {};
+        const settings = await db.settings.get(`${guildId}`) || {};
         const joinToCreateVC = settings.JoinToCreateVC;
 
         // Check if user JOINED or SWITCHED INTO the Join To Create channel
@@ -54,7 +54,7 @@ module.exports = {
             });
 
             // Track temporary VC
-            const activeIdsKey = `${guildName}_${guildId}_activeVCs`;
+            const activeIdsKey = `${guildId}_activeVCs`;
             const activeVCs = await db.vc.get(activeIdsKey) || {};
             activeVCs[newChannel.id] = true;
             await db.vc.set(activeIdsKey, activeVCs);
@@ -62,7 +62,7 @@ module.exports = {
 
         // Add member to NEW VC
         if (newState.channel && oldState.channelId !== newState.channelId) {
-            const key = `${guildName}_${guildId}_members`;
+            const key = `${guildId}_members`;
             const vcId = newState.channelId;
             const data = await db.vcmembers.get(key) || {};
 
@@ -74,7 +74,7 @@ module.exports = {
 
         // Remove member from OLD VC
         if (oldState.channel && oldState.channelId !== newState.channelId) {
-            const key = `${guildName}_${guildId}_members`;
+            const key = `${guildId}_members`;
             const oldVcId = oldState.channelId;
             const data = await db.vcmembers.get(key) || {};
 

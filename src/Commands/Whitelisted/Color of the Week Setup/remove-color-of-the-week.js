@@ -9,7 +9,7 @@ module.exports = {
 
   async execute(interaction) {
     const guild = interaction.guild;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
     const user = interaction.user;
     
     if (interaction.channel.isDMBased()) {
@@ -21,7 +21,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -53,6 +53,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
-    console.log(`[⭐] [REMOVE-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the remove-color-of-the-week command.`);
+    console.log(`[⭐] [REMOVE-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guildId} ${user.username} used the remove-color-of-the-week command.`);
   }
 };

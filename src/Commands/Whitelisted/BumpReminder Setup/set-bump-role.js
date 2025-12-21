@@ -23,7 +23,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -39,7 +39,7 @@ module.exports = {
 
 
       const role = options.getRole("role");
-      const key = `${guildName}_${guildId}`;
+      const key = `${guildId}`;
 
       const existing = await db.bump.get(key) || {};
       existing.roleId = role.id;

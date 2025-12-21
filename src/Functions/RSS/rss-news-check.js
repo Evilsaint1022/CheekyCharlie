@@ -26,11 +26,11 @@ async function runRSSNews(client) {
                 const serverName = guild.name;
                 const serverId   = guild.id;
 
-                const rssChannel = await db.settings.get(`${serverName}_${serverId}.rssNewsChannel`);
+                const rssChannel = await db.settings.get(`${serverId}.rssNewsChannel`);
 
                 if (!rssChannel) continue;
 
-                const rssTopics = await db.settings.get(`${serverName}_${serverId}.rssTopics`);
+                const rssTopics = await db.settings.get(`${serverId}.rssTopics`);
                 if (  !rssTopics || !Array.isArray(rssTopics) || rssTopics.length === 0 ) continue;
 
                 for ( const topic of rssTopics ) {

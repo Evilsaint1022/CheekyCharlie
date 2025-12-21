@@ -7,7 +7,7 @@ module.exports = {
     if (message.author.bot || message.channel.isDMBased()) return;
 
     const { guild, member, author } = message;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     // NEW: userKey is only the user ID
     const userKey = author.id;

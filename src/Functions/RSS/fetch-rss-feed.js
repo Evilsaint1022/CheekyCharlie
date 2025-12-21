@@ -18,7 +18,7 @@ async function fetchRSSforServer(serverId, serverName, rssUrl) {
     throw new Error("serverId is required");
   }
 
-  const key = `${serverName}_${serverId}.sentGuids`;
+  const key = `${serverId}.sentGuids`;
 
   try {
     const feed = await parser.parseURL(rssUrl);

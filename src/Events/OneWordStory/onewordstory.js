@@ -14,7 +14,7 @@ module.exports = {
         if (message.author.bot || !message.guild) return;
 
         const guild = message.guild;
-        const guildKey = `${guild.name}_${guild.id}`;
+        const guildKey = `${guild.id}`;
         const currentChannelId = message.channel.id;
 
         const storyChannel = await db.settings.get(guildKey + ".story_channel");

@@ -67,7 +67,7 @@ async function runDailyBankInterest(client) {
     const bottom = `**─────────────────────────────────**`;
 
     for (const guild of client.guilds.cache.values()) {
-        const guildKey = `${guild.name}_${guild.id}`;
+        const guildKey = `${guild.id}`;
         const settings = await db.settings.get(guildKey);
 
         if (!settings || !settings.bankinterest) {

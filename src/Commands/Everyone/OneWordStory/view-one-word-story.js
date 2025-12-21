@@ -20,7 +20,7 @@ module.exports = {
 
     const guild = interaction.guild;
 
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
 
     const currentStory = await db.onewordstory.get(guildKey + ".story") || [];
 

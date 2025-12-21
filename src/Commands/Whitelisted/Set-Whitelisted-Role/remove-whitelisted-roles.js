@@ -28,7 +28,7 @@ module.exports = {
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        let WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
@@ -47,7 +47,7 @@ module.exports = {
         WHITELISTED_ROLE_IDS = WHITELISTED_ROLE_IDS.filter(id => id !== role.id);
 
         // Update the database with the new list of whitelisted roles
-        db.whitelisted.set(`${guildName}_${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
+        db.whitelisted.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
 
         await interaction.reply({ content: `The role <@&${role.id}> has been removed from the whitelist.`, flags: 64 });
 

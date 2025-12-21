@@ -49,7 +49,7 @@ async execute(message, client) {
         return;
     }
 
-    const questionsKey = `${guildName}_${guildId}.questions`;
+    const questionsKey = `${guildId}.questions`;
     const questions = await db.staff_app_questions.get(questionsKey) || [];    if (questions.length === 0) {
         await message.reply('❌ Application questions are no longer available.');
         return;
@@ -130,7 +130,7 @@ async function handlePendingApplicationMessage(message, client, application, gui
 async function finalizeApplication(message, client, application, guildName, guildId, questions) {
     try {
 
-        const channelKey = `${guildName}_${guildId}.channel`;
+        const channelKey = `${guildId}.channel`;
         const applicationChannelId = await db.staff_app_questions.get(channelKey);
 
         if (!applicationChannelId) {

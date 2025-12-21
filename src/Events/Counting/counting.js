@@ -11,7 +11,7 @@ module.exports = {
     if (message.author.bot || !message.guild) return;
     const username = message.author.username;
     const guild = message.guild;
-    const guildKey = `${guild.name}_${guild.id}`;
+    const guildKey = `${guild.id}`;
     const currentChannelId = message.channel.id;
 
     // Exit early if already processing

@@ -26,11 +26,11 @@ module.exports = {
 
     const correctEmoji = interaction.options.getString('correct_emoji');
     const wrongEmoji = interaction.options.getString('wrong_emoji');
-    const guildKey = `${interaction.guild.name}_${interaction.guild.id}`;
+    const guildKey = `${interaction.guild.id}`;
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
-        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildName}_${guildId}.whitelistedRoles`) || [];
+        const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = interaction.member.roles.cache.map(role => role.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
