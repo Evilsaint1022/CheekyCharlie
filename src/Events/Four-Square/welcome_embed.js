@@ -1,13 +1,25 @@
 const { Events, EmbedBuilder } = require('discord.js');
+const db = require('../../Handlers/database');
 
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
 
+    // Ignore bots
+    if (member.user.bot) return;
+
     // Fetch the guild to get the total member count
     const guild = member.guild;
     const welcomechannel = '1346955022461829162';
     const welcomersrole = '1356828430464974941';
+
+    const key = `${member.guild.id}`;
+
+    // Get saved members (or empty array if none)
+    let joinedMembers = await db.members.get(key) || [];
+
+    // If this exact member already joined → stop
+    if (joinedMembers.includes(member.id)) return;
 
     // Create the embed message
     const welcomeEmbed = new EmbedBuilder()

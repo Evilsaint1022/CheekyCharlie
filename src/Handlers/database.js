@@ -42,7 +42,8 @@ const db = {
     slapgifs: new DotDB("./src/Utilities/Storage/Fallback/slapgifs.json"),
     kissgifs: new DotDB("./src/Utilities/Storage/Fallback/kissgifs.json"),
     kickgifs: new DotDB("./src/Utilities/Storage/Fallback/kickgifs.json"),
-    huggifs: new DotDB("./src/Utilities/Storage/Fallback/huggifs.json")
+    huggifs: new DotDB("./src/Utilities/Storage/Fallback/huggifs.json"),
+    members: new DotDB("./src/Utilities/Storage/Settings/JoinedMembers/joinedmembers.json"),
 }
 
 module.exports = db;

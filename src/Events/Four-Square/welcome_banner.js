@@ -1,6 +1,7 @@
 const { Events, AttachmentBuilder } = require('discord.js');
 const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const path = require('path');
+const db = require('../../Handlers/database');
 
 module.exports = {
   name: Events.GuildMemberAdd,
@@ -11,6 +12,19 @@ module.exports = {
 
     // Makes sure it only sends for the Four-Square Server.
     if (!channel) return;
+    if (member.user.bot) return;
+
+    const key = `${member.guild.id}`;
+
+    // Get saved members (or empty array if none)
+    let joinedMembers = await db.members.get(key) || [];
+
+    // If this exact member already joined → stop
+    if (joinedMembers.includes(member.id)) return;
+
+    // Save this member
+    joinedMembers.push(member.id);
+    await db.members.set(key, joinedMembers);
 
     try {
       // Load the welcome template and member avatar
