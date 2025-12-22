@@ -45,13 +45,13 @@ module.exports = {
         // Ignore bot messages
         if (message.author.bot) return;
 
-        const lowerContent = message.content.toLowerCase();
+        const words = message.content.toLowerCase().split(/\s+/);
         let reactionCount = 0;
 
         // Check each animal name in the map
         for (const [animal, emoji] of Object.entries(animalEmojiMap)) {
             if (reactionCount >= MAX_REACTIONS) break; // Stop if limit reached
-            if (lowerContent.includes(animal)) {
+            if (words.includes(animal.toLowerCase())) {
                 try {
                     await message.react(emoji);
                     reactionCount++;
