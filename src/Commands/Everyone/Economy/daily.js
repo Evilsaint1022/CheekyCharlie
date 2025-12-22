@@ -77,7 +77,7 @@ module.exports = {
         }
 
         // Check for booster role
-        const guildKey = `${guild.name}_${guild.id}`;
+        const guildKey = `${guild.id}`;
         const guildSettings = await db.settings.get(guildKey) || {};
         const boosterRoleId = guildSettings.boostersRoleId;
 

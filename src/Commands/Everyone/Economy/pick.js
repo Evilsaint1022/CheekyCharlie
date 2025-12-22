@@ -78,7 +78,7 @@ module.exports = {
             let coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50
 
             // Boosters role check
-            const guildKey = `${guild.name}_${guild.id}`;
+            const guildKey = `${guild.id}`;
             const settings = await db.settings.get(guildKey);
             const boostersRoleId = settings?.boostersRoleId;
 
@@ -105,7 +105,7 @@ module.exports = {
                 embeds: [
                     {
                         title: `${ferns} Ferns Picked!`,
-                        description: `You picked **${ferns}${coinsEarned.toLocaleString()}**`,
+                        description: `You picked **${ferns}・${coinsEarned.toLocaleString()}**`,
                         color: 0xDE4949,
                     },
                 ],

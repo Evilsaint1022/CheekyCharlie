@@ -59,16 +59,19 @@ module.exports = {
         const bank = await db.bank.get(`${newKey}.bank`) || 0;
 
         const embed = new EmbedBuilder()
-            .setColor('#de4949')
+            .setColor(0x207e37)
             .setTitle(`${top}`)
             .setDescription(
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `ㅤㅤㅤ${middle}\n` +
                 `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
                 `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤ${middle}\n${space}\n${bottom}`
+                `ㅤㅤㅤ${middle}`
             )
+            .setFooter({ text: '🌿Thanks for using Bank-NZ' })
+            .setTimestamp()
             .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
+            
 
         await interaction.reply({ embeds: [embed] });
 

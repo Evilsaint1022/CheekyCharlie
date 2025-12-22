@@ -24,6 +24,10 @@ module.exports = {
         const ferns = '<:Ferns:1395219665638391818>';
         const safeUsername = user.username.replace(/\./g, '_');
 
+        const top = `**──── 🌿${user.username}'s Withdrawal ────**`
+        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+        const space = 'ㅤ'
+
         // Old key format (FULL OBJECT)
         const oldKey = `${safeUsername}_${user.id}`;
 
@@ -80,15 +84,17 @@ module.exports = {
         await db.wallet.set(walletKey, walletBalance);
 
         const embed = new EmbedBuilder()
-            .setColor('#de4949')
-            .setTitle(`**${user.username}'s Withdrawal**`)
-            .setDescription(`Successfully withdrew **${ferns}${withdrawAmount.toLocaleString()}**`)
-            .addFields(
-                { name: '🪙 Wallet Balance', value: `${ferns}${walletBalance.toLocaleString()}`, inline: true },
-                { name: '🏦 Bank Balance', value: `${ferns}${bankBalance.toLocaleString()}`, inline: true }
+            .setColor(0x207e37)
+            .setTitle(`${top}`)
+            .setDescription(
+                `_Successfully withdrew **${ferns}・${withdrawAmount.toLocaleString()}**_\n` +
+                `ㅤㅤㅤ${middle}\n` +
+                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
+                `ㅤㅤㅤ${ferns}・${walletBalance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bankBalance.toLocaleString()}\n` +
+                `ㅤㅤㅤ${middle}`
             )
             .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-            .setFooter({ text: 'Your Wallet is Growing!' })
+            .setFooter({ text: '🌿Thanks for using Bank-NZ' })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
