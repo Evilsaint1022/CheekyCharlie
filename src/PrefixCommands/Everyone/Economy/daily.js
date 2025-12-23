@@ -10,10 +10,13 @@ module.exports = {
     description: "Claim your daily Ferns!",
 
     async execute(message, args) {
-        // Block DMs
-        if (!message.guild) {
-            return message.reply("This command cannot be used in DMs.");
-        }
+        
+        if (message.channel.isDMBased()) {
+      return message.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
 
         const ferns = '<:Ferns:1395219665638391818>';
         const { author, guild, member } = message;

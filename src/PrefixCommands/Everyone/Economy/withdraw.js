@@ -9,10 +9,12 @@ module.exports = {
 
     async execute(message, args) {
 
-        // Prevent command usage in DMs
-        if (!message.guild) {
-            return message.reply("This command cannot be used in DMs.");
-        }
+        if (message.channel.isDMBased()) {
+      return message.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
 
         const { guild, author } = message;
         const ferns = '<:Ferns:1395219665638391818>';
