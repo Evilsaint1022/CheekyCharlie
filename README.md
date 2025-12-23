@@ -234,3 +234,24 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
+
+<details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
+
+`These are commands that everyone can use and require no premissions to use.`
+
+</summary>
+
+### **🌿<ins>Economy</ins>**
+- `!leaderboard` — wallet/bank/money/level Leaderboard.
+- `!balance` — Check your Ferns balance or another user by mentioning them. 
+- `!deposit` — Deposit Ferns into your Bank. `!deposit all` or `!deposit 100`
+- `!withdraw` — Withdraw Ferns from your Bank. `!withdraw all` or `!withdraw 100`
+- `!level` — Check Current Level or another using by mentioning them.
+- `!daily` — Daily Currency Collect.
+- `!pick` - Picks Ferns when the dropparty's drops.
+- `!pay` - Pay other members Ferns by mentioning them.
+
+### **🌿<ins>Counting</ins>**
+- `!counting` — View the current and next expected number for the counting.
+
+</details>
