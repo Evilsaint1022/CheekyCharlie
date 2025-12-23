@@ -91,7 +91,7 @@ module.exports = {
 
         // Save
         await db.wallet.set(`${newKey}.balance`, balance);
-        await db.lastclaim.set(`${newKey}.lastClaim`, currentTime);
+        await db.lastclaim.set(`${newKey}.daily`, currentTime);
 
         // Embed
         const embed = new EmbedBuilder()
