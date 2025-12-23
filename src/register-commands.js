@@ -111,10 +111,6 @@ const commands = [
         ]
     },
     {
-        name: 'pick',
-        description: 'Pick up the dropped ferns for points!',
-    },
-    {
         name: 'blackjack-singleplayer',
         description: 'Play a game of blackjack and bet your balance!',
         options: [
