@@ -57,7 +57,7 @@ module.exports = {
         }
         // ------------------------------------------------------
 
-        const lastClaim = await db.lastclaim.get(`${newKey}.lastClaim`) || 0;
+        const lastClaim = await db.lastclaim.get(`${newKey}.daily`) || 0;
         const currentTime = Date.now();
 
         // Cooldown check

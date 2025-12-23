@@ -62,7 +62,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/withdraw` — Withdraw Ferns from your Bank.
 - `/level` — Check Current Level.
 - `/daily` — Daily Currency Collect.
-- `/pick` - Picks Ferns when the dropparty's drops.
 - `/pay` - Pay other members Ferns.
 
 ### **🌿<ins>Economy Games</ins>**

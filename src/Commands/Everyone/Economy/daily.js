@@ -61,7 +61,7 @@ module.exports = {
         // ------------------------------------------------------
 
         // After migration, everything uses the new ID-only key.
-        const lastClaim = await db.lastclaim.get(`${newKey}.lastClaim`) || 0;
+        const lastClaim = await db.lastclaim.get(`${newKey}.daily`) || 0;
         const currentTime = Date.now();
 
         if (currentTime - lastClaim < dailyCooldown) {
