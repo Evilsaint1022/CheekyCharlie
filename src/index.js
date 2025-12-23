@@ -12,6 +12,7 @@ const { registerCommands } = require('./register-commands');
 const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
+const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
 
 // Show Guilds ----------------------------------------------------------------------------------------------------------------------
 const showGuilds = require('./ShowGuilds/showguilds');
@@ -35,6 +36,10 @@ const client = new Client({
 
 client.events = new Collection();
 client.commands = new Collection();
+client.prefixCommands = new Collection();
+
+// Global Variables ----------------------------------------------------------------------------------------------------------------
+client.prefix = "!"; // 👈 PREFIX DEFINED HERE
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
@@ -48,6 +53,7 @@ client.once("clientReady", async () => {
     await loadFunctions(client);
     await loadEvents(client);
     await commandHandler(client);
+    await PrefixCommands(client);
     await registerAIHandler(client);
 
     // Status Toggles
@@ -111,6 +117,25 @@ client.on('interactionCreate', async interaction => {
         console.error(error);
         await interaction.reply({ content: 'There was an error while executing this command!', flags: 64 });
     }
+});
+
+// Prefix Command Handler -----------------------------------------------------------------------------------------------------------
+
+client.on("messageCreate", async (message) => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(client.prefix)) return;
+
+  const args = message.content
+    .slice(client.prefix.length)
+    .trim()
+    .split(/ +/);
+
+  const commandName = args.shift().toLowerCase();
+  const command = client.prefixCommands.get(commandName);
+
+  if (!command) return;
+
+  await command.execute(message, args, client);
 });
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
