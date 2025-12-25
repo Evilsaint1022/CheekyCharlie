@@ -4,14 +4,13 @@ const db = require("../../Handlers/database");
 // The actual reminder delay
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
 
-// For testing --> ( DO NOT REMOVE! )
-// const reminderDelay = 10 * 1000; // --> 10 seconds
+// const reminderDelay = 10 * 1000; // --> 10 seconds for testing
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
 
-    //const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+    // const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
     const targetBotId = '302050872383242240'; // Disboard bot ID
 
     if (!message.guild) return;
@@ -21,6 +20,7 @@ module.exports = {
 
     const guildKey = `${guildId}`;
     const cooldownKey = guildKey;
+    const space = 'ㅤ'
 
     try {
       const bumpData = await db.bump.get(guildKey);
@@ -30,8 +30,14 @@ module.exports = {
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
 
+      const bumpcounter = (await db.bumpcounter.get(guildKey)) ?? 0;
+
+      await db.bumpcounter.set(guildKey, bumpcounter + 1);
+
+      const currentbumpcount = await db.bumpcounter.get(guildKey, bumpcounter);
+
       console.log(`[⬆️] [BUMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Scheduled!`);
-      await message.channel.send(`**You bumped the Server!**\n**Thank you for Bumping ❤️**`);
+      await message.channel.send(`# 🎉 **__You bumped the Server!__** 🎉\n> **Thank you for Bumping ❤️**\n> **Bumper #${currentbumpcount}**`);
 
       const now = Date.now();
 
