@@ -248,9 +248,16 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?level` — Check your current level or check another users by using `?level @user`.
 - `?daily` — Daily ferns collect.
 - `?pick` - Picks ferns when the drop party's drops.
-- `?pay` - Pay other members Ferns by using `?pay @user`.
+- `?pay` - Pay other users ferns by using `?pay @user`.
 
 ### **🌿<ins>Counting</ins>**
 - `?counting` — View the current and next expected number for the guilds counting.
+
+### **🌿<ins>Fun</ins>**
+- `?slap` - Slap other users by using `?slap @user`.
+- `?kick` - Kick other users by using `?kick @user`.
+- `?hug` - Hug other users by using `?hug @user`.
+- `?kiss` - Kiss other users by using `?kiss @user`.
+- `?tickle` - Tickle other users by using `?tickle @user`.
 
 </details>
