@@ -87,7 +87,7 @@ module.exports = {
             if (channel) {
 
                 const dropMessage = await channel.send(
-                    '**🎉 A Drop Party Has Started!🎉**\n*Use the **!pick** command to grab your rewards!*'
+                    '**🎉 A Drop Party Has Started!🎉**\n**Use the `?pick` command to grab your rewards!**'
                 );
 
                 console.log(`[🎉] [DROP PARTY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Drop party message sent.`);

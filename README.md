@@ -241,16 +241,16 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 </summary>
 
 ### **🌿<ins>Economy</ins>**
-- `!leaderboard` — wallet/bank/money/level Leaderboard.
-- `!balance` — Check your Ferns balance or another user by mentioning them. 
-- `!deposit` — Deposit Ferns into your Bank. `!deposit all` or `!deposit 100`
-- `!withdraw` — Withdraw Ferns from your Bank. `!withdraw all` or `!withdraw 100`
-- `!level` — Check Current Level or another using by mentioning them.
-- `!daily` — Daily Currency Collect.
-- `!pick` - Picks Ferns when the dropparty's drops.
-- `!pay` - Pay other members Ferns by mentioning them.
+- `?leaderboard` — Check the wallet/bank/money/level leaderboard. `?leaderboard money`.
+- `?balance` — Check your ferns balance or check another users by using `?balance @user`.
+- `?deposit` — Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
+- `?withdraw` — Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
+- `?level` — Check your current level or check another users by using `?level @user`.
+- `?daily` — Daily ferns collect.
+- `?pick` - Picks ferns when the drop party's drops.
+- `?pay` - Pay other members Ferns by using `?pay @user`.
 
 ### **🌿<ins>Counting</ins>**
-- `!counting` — View the current and next expected number for the counting.
+- `?counting` — View the current and next expected number for the guilds counting.
 
 </details>

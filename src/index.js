@@ -38,9 +38,6 @@ client.events = new Collection();
 client.commands = new Collection();
 client.prefixCommands = new Collection();
 
-// Global Variables ----------------------------------------------------------------------------------------------------------------
-client.prefix = "!"; // 👈 PREFIX DEFINED HERE
-
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
@@ -120,6 +117,8 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Prefix Command Handler -----------------------------------------------------------------------------------------------------------
+
+client.prefix = "?"; // 👈 PREFIX DEFINED HERE
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;

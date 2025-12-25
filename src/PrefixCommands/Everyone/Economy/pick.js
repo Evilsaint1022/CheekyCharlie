@@ -107,6 +107,7 @@ module.exports = {
             setTimeout(async () => {
                 try {
                     if (reply.deletable) await reply.delete();
+                    if (message.deletable) await message.delete();
                 } catch (err) {
                     console.error('Error deleting pick message:', err);
                 }
