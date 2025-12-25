@@ -43,6 +43,8 @@ const db = {
     kissgifs: new DotDB("./src/Utilities/Storage/Fallback/kissgifs.json"),
     kickgifs: new DotDB("./src/Utilities/Storage/Fallback/kickgifs.json"),
     huggifs: new DotDB("./src/Utilities/Storage/Fallback/huggifs.json"),
+    ticklegifs: new DotDB("./src/Utilities/Storage/Fallback/ticklegifs.json"),
+    fun_counters: new DotDB("./src/Utilities/Storage/Settings/Fun/counters.json"),
     members: new DotDB("./src/Utilities/Storage/Settings/JoinedMembers/joinedmembers.json"),
     bumpcounter: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcounter.json")
 }

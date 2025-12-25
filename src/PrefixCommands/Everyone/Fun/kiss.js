@@ -1,31 +1,25 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const fetch = require('node-fetch');
 const db = require('../../../Handlers/database');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('kiss')
-        .setDescription('Kiss another member with a random GIF!')
-        .addUserOption(option =>
-            option.setName('target')
-                .setDescription('The member you want to kiss')
-                .setRequired(true)
-        ),
-
-    async execute(interaction) {
-        const target = interaction.options.getUser('target');
-        const sender = interaction.user;
+    name: 'kiss',
+    description: 'Kiss another member with a random GIF!',
+    async execute(message, args) {
+        const target = message.mentions.users.first() || (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
+        const sender = message.author;
         const senderName = sender.username;
-        const targetName = target.username;
-        const guild = interaction.guild;
+        const guild = message.guild;
 
-        if (target.id === sender.id) {
-            return interaction.reply({
-                content: "You can't kiss yourself... that's just weird 😅",
-                flags: 64
-            });
+        if (!target) {
+            return message.reply("You need to mention someone or provide a valid user ID to kiss!");
         }
 
+        if (target.id === sender.id) {
+            return message.reply("You can't kiss yourself... that's just weird 😅");
+        }
+
+        const targetName = target.username;
         const tenorKey = process.env.TENORKEY;
         const kissgiflist = 'giflist';
         let randomGif = null;
@@ -35,31 +29,42 @@ module.exports = {
             const data = await response.json();
 
             if (data.results && data.results.length > 0) {
-            const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
-            randomGif = randomResult.media_formats.gif.url;
+                const randomResult = data.results[Math.floor(Math.random() * data.results.length)];
+                randomGif = randomResult.media_formats.gif.url;
 
-            const savedGifs = db.kissgifs.get(kissgiflist) || {};
+                const savedGifs = await db.kissgifs.get(kissgiflist) || {};
 
-            if (!Object.values(savedGifs).includes(randomGif)) {
-                const newKey = `random_${Math.floor(Math.random() * 100000)}`;
-                db.kissgifs.set(`${kissgiflist}.${newKey}`, randomGif);
-            }
+                if (!Object.values(savedGifs).includes(randomGif)) {
+                    const newKey = `random_${Math.floor(Math.random() * 100000)}`;
+                    await db.kissgifs.set(`${kissgiflist}.${newKey}`, randomGif);
+                }
             }
         } catch (err) {
             console.error("❌ Failed to fetch from Tenor:", err);
         }
 
+        // Fallback to saved GIFs if Tenor fails
         if (!randomGif) {
-            return interaction.reply({
-                content: "No kiss GIFs available right now 😞 Try again later.",
-                flags: 64
-            });
+            const savedGifs = await db.kissgifs.get(kissgiflist) || {};
+            const gifValues = Object.values(savedGifs);
+            if (gifValues.length > 0) {
+                randomGif = gifValues[Math.floor(Math.random() * gifValues.length)];
+            }
         }
 
-        const kisscount = Math.floor(Math.random() * 10) + 1;
+        if (!randomGif) {
+            return message.reply("No kiss GIFs available right now 😞 Try again later.");
+        }
+
+        // Update kiss counter
+        let currentKisses = await db.fun_counters.get(`${target.id}.kisses`);
+        if (typeof currentKisses !== 'number') currentKisses = 0;
+        currentKisses++;
+        await db.fun_counters.set(`${target.id}.kisses`, currentKisses);
+
         const embed = new EmbedBuilder()
             .setColor('Random')
-            .setDescription(`<@${sender.id}> just kissed <@${target.id}>!\n\`${targetName} just received ${kisscount} kisses!\``)
+            .setDescription(`<@${sender.id}> just kissed <@${target.id}>!\n-# <@${target.id}> has been kissed a total of ${currentKisses} times.`)
             .setImage(randomGif)
             .setTimestamp();
 
@@ -72,7 +77,7 @@ module.exports = {
 
         console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${senderName} kissed ${targetName}`);
 
-        const reply = await interaction.reply({ embeds: [embed], components: [row] });
+        const reply = await message.reply({ embeds: [embed], components: [row] });
 
         // ✅ Button collector
         const collector = reply.createMessageComponentCollector({ time: 30_000 });
@@ -91,15 +96,13 @@ module.exports = {
                     const randomResult = kissBackData.results[Math.floor(Math.random() * kissBackData.results.length)];
                     kissBackGif = randomResult.media_formats.gif.url;
 
-                    let savedGifs = db.kissgifs.get(kissgiflist) || {};
+                    let savedGifs = await db.kissgifs.get(kissgiflist) || {};
                     if (typeof savedGifs !== 'object' || Array.isArray(savedGifs)) savedGifs = {};
 
                     const exists = Object.values(savedGifs).includes(kissBackGif);
                     if (!exists) {
                         const newKey = `random_${Math.floor(Math.random() * 100000)}`;
-
-                        // ✅ Directly set the nested entry
-                        db.kissgifs.set(`${kissgiflist}.${newKey}`, kissBackGif);
+                        await db.kissgifs.set(`${kissgiflist}.${newKey}`, kissBackGif);
                     }
                 }
             } catch (err) {
@@ -108,7 +111,7 @@ module.exports = {
 
             // ✅ Fallback for kissback
             if (!kissBackGif) {
-                const savedGifs = db.kissgifs.get(kissgiflist) || {};
+                const savedGifs = await db.kissgifs.get(kissgiflist) || {};
                 const gifValues = Object.values(savedGifs);
                 if (gifValues.length > 0) {
                     kissBackGif = gifValues[Math.floor(Math.random() * gifValues.length)];
@@ -119,12 +122,17 @@ module.exports = {
                 return btnInteraction.reply({ content: "No kiss GIFs available right now 😞", flags: 64 });
             }
 
+            // Update kiss counter for the original sender
+            let senderKisses = await db.fun_counters.get(`${sender.id}.kisses`);
+            if (typeof senderKisses !== 'number') senderKisses = 0;
+            senderKisses++;
+            await db.fun_counters.set(`${sender.id}.kisses`, senderKisses);
+
             console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${targetName} kissed ${senderName}`);
 
-            const kissBackCount = Math.floor(Math.random() * 10) + 1;
             const kissBackEmbed = new EmbedBuilder()
                 .setColor('Random')
-                .setDescription(`<@${target.id}> kissed <@${sender.id}> back!\n\`${senderName} just received ${kissBackCount} kisses!\``)
+                .setDescription(`<@${target.id}> kissed <@${sender.id}> back!\n-# <@${sender.id}> has been kissed a total of ${senderKisses} times.`)
                 .setImage(kissBackGif)
                 .setTimestamp();
 

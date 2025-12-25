@@ -262,45 +262,6 @@ const commands = [
         ],
     },
     {
-        name: 'slap',
-        description: 'Slap another member with a random GIF!',
-        options: [
-            {
-                name: 'target',
-                description: 'The member you want to slap',
-                type: 6,
-                required: true,
-
-            },
-        ],
-    },
-    {
-        name: 'kiss',
-        description: 'Kiss another member with a random GIF!',
-        options: [
-            {
-                name: 'target',
-                description: 'The member you want to kiss',
-                type: 6,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: 'kick',
-        description: 'Kick another member with a random GIF!',
-        options: [
-            {
-                name: 'target',
-                description: 'The member you want to kick',
-                type: 6,
-                required: true,
-
-            },
-        ],
-
-    },
-    {
         name: 'emoji',
         description: 'Show a custom emoji as an image (PNG/GIF).',
         options: [
