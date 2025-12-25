@@ -9,6 +9,10 @@ const { Routes } = require('discord.js');
 // ------------------------------------------------- @Everyone Application Commands ---------------------------------------------------------------------
 const commands = [
     {
+        name: 'help',
+        description: 'Get a list of available commands.',
+    },
+    {
         name: 'ping',
         description: 'Checks the bot latency!',
     },
