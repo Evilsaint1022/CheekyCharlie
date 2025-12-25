@@ -17,6 +17,8 @@ module.exports = {
     }
 
     const guildId = interaction.guild.id;
+    const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`
+    const space = 'ㅤ'
 
     // Get whitelisted roles from DB
     const WHITELISTED_ROLE_IDS =
@@ -32,29 +34,34 @@ module.exports = {
 
     // Public commands
     const publicCommands = [
-      '- `?leaderboard` — Check the wallet/bank/money/level leaderboard. `?leaderboard money`',
-      '- `?balance` — Check your ferns balance or check another users by using `?balance @user`',
-      '- `?deposit` — Deposit ferns into your bank using `?deposit all` or `?deposit 100`',
-      '- `?withdraw` — Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`',
-      '- `?level` — Check your current level or check another users by using `?level @user`',
-      '- `?daily` — Daily ferns collect.',
-      '- `?pick` - Picks ferns when the drop party`s drops.',
-      '- `?pay` - Pay other members Ferns by using `?pay @user`',
-      '- `?counting` — View the current and next expected number for the guilds counting.'
+      '🌿 **__Economy__** 🌿',
+      '- `?leaderboard`・Check the wallet/bank/money/level leaderboard. `?leaderboard money`',
+      '- `?balance`・Check your ferns balance or check another users by using `?balance @user`',
+      '- `?deposit`・Deposit ferns into your bank using `?deposit all` or `?deposit 100`',
+      '- `?withdraw`・Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`',
+      '- `?level`・Check your current level or check another users by using `?level @user`',
+      '- `?daily`・Daily ferns collect.',
+      '- `?pick`・Picks ferns when the drop party`s drops.',
+      '- `?pay`・Pay other members Ferns by using `?pay @user`',
+      `${space}`,
+      '🌿 **__Counting__** 🌿',
+      '- `?counting`・View the current and next expected number for the guilds counting.',
+      `\nㅤ\n${middle}`
     ];
 
     // Whitelisted-only commands
     const whitelistedCommands = [
-    '`Whitelisted Prefix Commands Comming Soon...`'
+    '`Whitelisted Prefix Commands Comming Soon...`',
+    `\n${middle}`
     ];
 
     const embed = new EmbedBuilder()
       .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
       .setColor('#de4949')
       .setThumbnail(interaction.client.user.displayAvatarURL())
-      .setDescription('_Here are the available prefix commands:_')
+      .setDescription('ㅤ\nPrefix Has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' + middle)
       .addFields({
-        name: '🌿 **__Everyone Prefix Commands__** 🌿',
+        name: '🌿 **__Everyone Prefix Commands__** 🌿\nㅤ\n',
         value: publicCommands.join('\n')
       })
       .setFooter({ text: `Requested by ${interaction.user.tag}` })
@@ -63,7 +70,7 @@ module.exports = {
     // Only show whitelisted commands if user has permission
     if (hasPermission) {
       embed.addFields({
-        name: '🌿 **__Whitelisted Prefix Commands__** 🌿',
+        name: '🌿 **__Whitelisted Prefix Commands__** 🌿\nㅤ',
         value: whitelistedCommands.join('\n')
       });
     }
