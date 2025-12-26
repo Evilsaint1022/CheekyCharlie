@@ -1,18 +1,22 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
+const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
 // const reminderDelay = 10 * 1000; // --> 10 seconds for testing
- const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
+
+const targetBotId = '302050872383242240'; // Disboard bot ID
+// const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
 
-    // const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
-    const targetBotId = '302050872383242240'; // Disboard bot ID
+
+    
 
     if (!message.guild) return;
 
+    const guild = message.guild;
     const guildName = message.guild.name;
     const guildId = message.guild.id;
 
@@ -50,8 +54,13 @@ module.exports = {
 
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
-      console.log(`[⬆️] [BUMPREMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${message.channel.name} ${message.channel.id}`);
-      await message.channel.send(`# 🎉**__<@${bumpuser}>__**🎉\n> **_You have been given ${ferns}・${rewardAmount.toLocaleString()}_**\n> **Thank you for Bumping ❤️**\nㅤ\n**🌿 Bumper #${currentbumpcount} 🌿**`);
+      const bumped = new EmbedBuilder()
+      .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n|| **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_** ||\n**_Thank you <@${bumpuser}> for Bumping ❤️_**\nㅤ\n- **\`Bumper #${currentbumpcount}\`**`)
+      .setColor(0x207e37)
+      .setThumbnail(guild.iconURL())
+
+      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${message.channel.name} ${message.channel.id}`);
+      await message.channel.send({ embeds: [bumped] });
 
       const now = Date.now();
 
@@ -62,7 +71,7 @@ module.exports = {
 
       scheduleReminder(message.client, channelId, roleId, cooldownKey, guildKey);
     } catch (err) {
-      console.error(`[⬆️] [BUMP] Error handling bump message:`, err);
+      console.error(`[⬆️] [BUMP REMINDER] Error handling bump message:`, err);
     }
   },
 };
@@ -86,10 +95,16 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
       const guildId = guild?.id || "Unknown ID";
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
-      await channel.send(`# 🎉**__It's Bump Time!__**🎉\n> **_Its been 2 hours and its time to bump again!_**\n> **_Friendly Reminder ${mention}_** ❤️`);
-      console.log(`[⬆️] [BUMPREMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Its Time to Bump again in ${channel.name} ${channel.id}`);
+
+      const bumpreminder = new EmbedBuilder()
+        .setDescription(`## 🌿 **__It's Bump Time!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n||  **You can bump by typing \`/bump\`** ||\nㅤ\n- **_Friendly Reminder ${mention}_** ❤️`)
+        .setColor(0x207e37)
+        .setThumbnail(guild.iconURL())
+
+      await channel.send({ content: mention, embeds: [bumpreminder] });
+      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Its Time to Bump again in ${channel.name} ${channel.id}`);
     } catch (err) {
-      console.error(`[⬆️] [BUMPREMINDER] Failed to send reminder:`, err);
+      console.error(`[⬆️] [BUMP REMINDER] Failed to send reminder:`, err);
     }
   };
 
