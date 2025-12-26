@@ -55,7 +55,8 @@ module.exports = {
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
       const bumped = new EmbedBuilder()
-      .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n|| **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_** ||\n**_Thank you <@${bumpuser}> for Bumping ❤️_**\nㅤ\n- **\`Bumper #${currentbumpcount}\`**`)
+      .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
+      .setFooter({ text: `Bumper: #${currentbumpcount}` })
       .setColor(0x207e37)
       .setThumbnail(guild.iconURL())
 
@@ -97,7 +98,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
 
       const bumpreminder = new EmbedBuilder()
-        .setDescription(`## 🌿 **__It's Bump Time!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n||  **You can bump by typing \`/bump\`** ||\nㅤ\n- **_Friendly Reminder ${mention}_** ❤️`)
+        .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
 
