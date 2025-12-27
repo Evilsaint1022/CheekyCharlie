@@ -51,7 +51,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 <details><summary><h2>🌿<ins>Everyone - Application Commands</ins>🌿</h2>
   
-`Warning: We are converting most application commands to prefix commands`
+> **Warning! -  We are converting most application commands to prefix commands**
 
 </summary>
 
@@ -94,7 +94,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
   
-`Warning: We are converting most application commands to prefix commands`
+> **Warning! -  We are converting most application commands to prefix commands**
 
 </summary>
 
@@ -219,7 +219,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 <details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
 
-`The prefix is currently set to ?`
+- **The prefix is currently set to ?**
 
 </summary>
 
