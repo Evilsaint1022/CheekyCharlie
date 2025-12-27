@@ -46,7 +46,9 @@ const db = {
     ticklegifs: new DotDB("./src/Utilities/Storage/Fallback/ticklegifs.json"),
     fun_counters: new DotDB("./src/Utilities/Storage/Settings/Fun/counters.json"),
     members: new DotDB("./src/Utilities/Storage/Settings/JoinedMembers/joinedmembers.json"),
-    bumpcounter: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcounter.json")
+    bumpcounter: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcounter.json"),
+    birthdays: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdays.json"),
+    birthdaysettings: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json")
 }
 
 module.exports = db;

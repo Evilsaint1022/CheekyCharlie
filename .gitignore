@@ -44,3 +44,5 @@ start.bat
 /src/Utilities/Storage/Settings/JoinedMembers/joinedmembers.json
 /src/Utilities/Storage/Settings/Bump/bumpcounter.json
 /src/Utilities/Storage/Settings/Fun/counters.json
+/src/Utilities/Storage/Settings/Birthdays/birthdays.json
+/src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json
