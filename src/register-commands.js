@@ -29,14 +29,6 @@ const commands = [
         ],
     },
     {
-        name: 'cat',
-        description: 'Get a random cat image from The Cat API',
-    },
-    {
-        name: 'dog',
-        description: 'Get a random dog image from The Dog API',
-    },
-    {
         name: 'github',
         description: 'Get the Evilsaint1022 GitHub Repository link',
     },
