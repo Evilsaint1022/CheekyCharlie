@@ -55,20 +55,10 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 </summary>
 
-### **🌿<ins>Economy</ins>**
-- `/leaderboard` — Balance/Level Leaderboard.
-- `/balance` — Check your Ferns balance.
-- `/deposit` — Deposit Ferns into your Bank.
-- `/withdraw` — Withdraw Ferns from your Bank.
-- `/level` — Check Current Level.
-- `/daily` — Daily Currency Collect.
-- `/pay` - Pay other members Ferns.
-
 ### **🌿<ins>Economy Games</ins>**
 - `/blackjack-duels` - Play Blackjack with other users.
 - `/blackjack-singleplayer` - Starts a game of blackjack.
 - `/russian-roulette` - Play a game of russian roulette with other users.
-- `/slots` - Starts a game of slots.
 
 ### **🌿<ins>Shop</ins>**
 - `/shop` - checks the server shop.
@@ -84,9 +74,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 ### **🌿<ins>One-Word-Story</ins>**
 - `/view-one-word-story` - view the current story in the server
 
-### **🌿<ins>Counting</ins>**
-- `/counting` — View the current and next expected number for the counting.
-
 ### **🌿<ins>Staff Applications</ins>**
 - `/staff-apply` — Start a new staff application.
 
@@ -98,8 +85,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `/cat` — Generates a random picture of a cat.
 - `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
-- `/slap` - Slap other members with a nice Gif.
-- `/kick` - Kick other members with a nice Gif.
 - `/emoji` - Show a custom emoji as an image (PNG/GIF).
 
 ### **🌿<ins>Other</ins>**
@@ -249,6 +234,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?daily` — Daily ferns collect.
 - `?pick` - Picks ferns when the drop party's drops.
 - `?pay` - Pay other users ferns by using `?pay @user`.
+
+### **🌿<ins>Economy Games</ins>**
+- `?slots` - Starts a game of slots using `?slots bet`.
 
 ### **🌿<ins>Counting</ins>**
 - `?counting` — View the current and next expected number for the guilds counting.

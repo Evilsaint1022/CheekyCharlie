@@ -41,78 +41,8 @@ const commands = [
         description: 'Get the Evilsaint1022 GitHub Repository link',
     },
     {
-        name: 'balance',
-        description: "Check your current balance or another user's balance.",
-        options: [
-            {
-                name: 'user',
-                description: 'The user to check the balance of',
-                type: 6,
-                required: false,
-            },
-        ]
-    },
-    {
-        name: 'daily',
-        description: 'Claim your daily ferns!',
-    },
-    {
         name: 'invite',
         description: 'Invite your friends!',
-    },
-    {
-        name: 'deposit',
-        description: 'Deposit points from your Wallet to your Bank.',
-        options: [
-            {
-                name: 'amount',
-                description: 'The amount of points to deposit.',
-                type: 4,
-                required: true,
-            },
-        ]
-    },
-    {
-        name: 'withdraw',
-        description: 'Withdraw points from your Bank to your Wallet.',
-        options: [
-            {
-                name: 'amount',
-                description: 'The amount of points to withdraw.',
-                type: 4,
-                required: true,
-            },
-        ]
-    },
-    {
-        name: 'leaderboard',
-        description: 'Displays The Leaderboard',
-        options: [
-            {
-                name: 'type',
-                description: 'Which leaderboard would you like to see?',
-                type: 3,
-                required: true,
-                choices: [
-                    { name: "Wallet", value: "wallet"},
-                    { name: 'Bank', value: 'bank' },
-                    { name: "Money", value: "money"},
-                    { name: 'Level', value: 'level' }
-                ],
-            },
-        ]
-    },
-    {
-        name: 'level', 
-        description: 'Check your current level or another user\'s level.',
-        options: [
-            {
-                name: 'user',
-                description: 'The user to check the level of',
-                type: 6,
-                required: false,
-            },
-        ]
     },
     {
         name: 'blackjack-singleplayer',
@@ -145,24 +75,6 @@ const commands = [
         ],
     },
     {
-        name: 'pay',
-        description: 'Transfer points to another member.',
-        options: [
-           {
-               name: 'user',
-               description: 'The member to whom you want to transfer points.',
-               type: 6,
-               required: true,
-           },
-           {
-               name: 'amount',
-               description: 'The number of points to transfer.',
-               type: 4,
-               required: true,
-           },
-       ],
-    },
-    {
         name: 'shop',
         description: 'View the items available in the shop.',
     },
@@ -191,18 +103,6 @@ const commands = [
         ]
     },
     {
-        name: 'slots',
-        description: 'Spin the slot machine and try your luck!',
-        options: [
-            {
-                name: 'bet',
-                description: 'The amount of points to bet.',
-                type: 4,
-                required: true,
-            },
-        ]
-    },
-    {
         name: 'lock-vc',
         description: 'Locks the voice channel.',
     },
@@ -221,11 +121,6 @@ const commands = [
                 required: true,
             },
         ]
-    },
-    {
-        name: 'counting',
-        description: 'Shows the current and next expected number for counting.',
-      
     },
     {
         name: 'staff-apply',
