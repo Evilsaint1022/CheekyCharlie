@@ -82,8 +82,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 ### **🌿<ins>Fun</ins>**
 - `/avatar` — View your's or someone elses avatar.
-- `/cat` — Generates a random picture of a cat.
-- `/dog` — Generates a random picture of a dog.
 - `/ai-search` - Use 'gpt-4o-mini' to search for results
 - `/emoji` - Show a custom emoji as an image (PNG/GIF).
 
@@ -221,7 +219,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 <details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
 
-`These are commands that everyone can use and require no premissions to use.`
+` `The prefix is currently set to ?` `
 
 </summary>
 
@@ -242,6 +240,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?counting` — View the current and next expected number for the guilds counting.
 
 ### **🌿<ins>Fun</ins>**
+- `?cat` — Generates a random picture of a cat.
+- `?dog` — Generates a random picture of a dog.
+.
 - `?slap` - Slap other users by using `?slap @user`.
 - `?kick` - Kick other users by using `?kick @user`.
 - `?hug` - Hug other users by using `?hug @user`.
