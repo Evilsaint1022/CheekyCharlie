@@ -41,8 +41,7 @@ module.exports = {
 
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the Slots command.`);
-    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} placed a bet of ${bet.toLocaleString()} Ferns.`);
+    console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the Slots command and placed a bet of ${bet.toLocaleString()} Ferns.`);
 
     let balance = await db.wallet.get(balanceKey);
     if (balance === undefined || isNaN(parseInt(balance))) {

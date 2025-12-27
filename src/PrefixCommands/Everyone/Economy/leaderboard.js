@@ -39,7 +39,7 @@ module.exports = {
     const guildKey = `${message.guild.id}`;
 
     console.log(
-      `[🌿 LEADERBOARD] ${message.guild.name} (${message.guild.id}) | ` +
+      `[🌿] [LEADERBOARD] ${message.guild.name} (${message.guild.id}) | ` +
       `${message.author.tag} used '${type}' leaderboard`
     );
 
