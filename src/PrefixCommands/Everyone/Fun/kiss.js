@@ -75,7 +75,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${senderName} kissed ${targetName}`);
+        console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${guild.id} ${senderName} kissed ${targetName}`);
 
         const reply = await message.reply({ embeds: [embed], components: [row] });
 
@@ -128,7 +128,7 @@ module.exports = {
             senderKisses++;
             await db.fun_counters.set(`${sender.id}.kisses`, senderKisses);
 
-            console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${targetName} kissed ${senderName}`);
+            console.log(`[💋] [KISS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} kissed ${senderName}`);
 
             const kissBackEmbed = new EmbedBuilder()
                 .setColor('Random')

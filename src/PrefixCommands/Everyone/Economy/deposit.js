@@ -96,7 +96,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [DEPOSIT] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount} Ferns.`
+            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount} Ferns.`
         );
     },
 };

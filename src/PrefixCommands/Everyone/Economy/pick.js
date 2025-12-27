@@ -84,7 +84,7 @@ module.exports = {
             console.log(
                 `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-                `${guild.name} ${user.username} picked ${coinsEarned.toLocaleString()} Ferns`
+                `${guild.name} ${guild.id} ${user.username} picked ${coinsEarned.toLocaleString()} Ferns`
             );
 
             // Save new balance using ID-only key

@@ -11,9 +11,11 @@ module.exports = {
 
   async execute(message, args) {
 
-    // ❌ No DMs
     if (message.channel.isDMBased()) {
-      return message.reply("This command cannot be used in DMs.");
+      return message.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
     }
 
     const { guild, author } = message;
