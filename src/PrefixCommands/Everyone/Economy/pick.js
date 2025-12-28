@@ -50,11 +50,22 @@ module.exports = {
             const dropMessage = dropPartyData?.message;
 
             if (!dropMessage || dropMessage.channel.id !== message.channel.id) {
-                return message.reply(`**${ferns} No Ferns to pick up right now!**`);
+                
+            const reply = await message.reply(`**No Ferns to pick up right now!**`);
+
+                setTimeout(() => {
+                    reply.delete().catch(() => {});
+                }, 5000); // 5 seconds
+                return;
             }
 
             if (pickedUsers.has(userId)) {
-                return message.reply(`**${ferns} You have already picked these ferns!**`);
+            const reply = await message.reply(`**You have already picked these ferns!**`);
+
+                setTimeout(() => {
+                    reply.delete().catch(() => {});
+                }, 5000); // 5 seconds
+                return;
             }
 
             pickedUsers.add(userId);
