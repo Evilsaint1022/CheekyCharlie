@@ -53,18 +53,21 @@ module.exports = {
                 
             const reply = await message.reply(`**No Ferns to pick up right now!**`);
 
-                setTimeout(() => {
-                    reply.delete().catch(() => {});
-                }, 5000); // 5 seconds
+
+                setTimeout(async () => {
+                    await reply.delete().catch(() => {});
+                    await message.delete().catch(() => {});
+                }, 5000);
                 return;
             }
 
             if (pickedUsers.has(userId)) {
             const reply = await message.reply(`**You have already picked these ferns!**`);
 
-                setTimeout(() => {
-                    reply.delete().catch(() => {});
-                }, 5000); // 5 seconds
+                setTimeout(async () => {
+                    await reply.delete().catch(() => {});
+                    await message.delete().catch(() => {});
+                }, 5000);
                 return;
             }
 
