@@ -5,7 +5,11 @@ const { Client } = require("discord.js");
 const OpenAI = require("openai");
 
 // Run daily at 7AM Pacific/Auckland
- const CRON_SCHEDULE = "0 7 * * *";
+const CRON_SCHEDULE = "0 7 * * *";
+// const CRON_SCHEDULE = "* * * * *";
+
+const nzDate = new Date().toLocaleDateString('en-GB');
+const nzTimestamp = new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" });
 
 let isRunning = false;
 let isScheduled = false;
@@ -41,8 +45,8 @@ async function sendQuestionOfTheDay(client) {
 
       const now = Date.now();
 
-      const prompt = `You are a creative kiwi and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
-      console.log(`[❓] [QOTD] Generating question for ${guild.name}...`);
+      const prompt = `You are a creative and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
+      console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} Generating question of the day...`);
 
       const response = await openai.chat.completions.create({
         messages: [{ role: 'system', content: prompt }],
@@ -60,16 +64,18 @@ async function sendQuestionOfTheDay(client) {
         allowedMentions: roleId ? { roles: [roleId] } : { parse: [] }
       });
 
-      await db.qotd.set(guildKey, {
+      const key = `${guild.id}.${nzDate} ${nzTimestamp}`;
+
+      await db.qotd.set(key, {
         messageId: sentMessage.id,
         timestamp: now,
         question
       });
 
-      console.log(`[❓] [QOTD] Sent new question in ${guild.name}`);
+      console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} Sent new question in ${channel.name} ${channel.id} - ${question}`);
     }
   } catch (err) {
-    console.error("[❌ QOTD Error]", err?.response?.data || err);
+    console.error("[❌] [QOTD] [Error]", err?.response?.data || err);
   } finally {
     isRunning = false;
   }
@@ -83,7 +89,7 @@ function startQotd(client) {
   if (isScheduled) return;
 
   scheduledTask = cron.schedule(CRON_SCHEDULE, () => {
-    console.log("[⏰ QOTD Scheduler] Running at 7:00 AM Pacific/Auckland...");
+    console.log(`[⏰] [QOTD Scheduler] Running at 7:00 AM Pacific/Auckland...`);
     sendQuestionOfTheDay(client);
   }, {
     scheduled: true,
