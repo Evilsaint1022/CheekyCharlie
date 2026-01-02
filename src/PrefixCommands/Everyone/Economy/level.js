@@ -61,8 +61,8 @@ module.exports = {
             .setDescription(
                 `_You are viewing ${targetUser.username}'s level._\n` +
                 `ㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ• **Level:** ${level.toLocaleString()}\n` +
-                `ㅤㅤㅤ• **XP:** ${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()}\n` +
+                `ㅤㅤㅤ✦ **Level:** ${level.toLocaleString()}\n` +
+                `ㅤㅤㅤ✦ **XP:** ${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()}\n` +
                 `ㅤㅤㅤ${middle}\n`
             )
             .setFooter({ text: '🌿Keep up the good work!' })
