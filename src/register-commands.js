@@ -131,24 +131,6 @@ const commands = [
         ],
     },
     {
-        name: 'russian-roulette',
-        description: 'Challenge another member to Russian Roulette. Winner takes the pot.',
-        options: [
-            {
-                name: 'target',
-                description: 'Member to challenge',
-                type: 6,
-                required: true,
-            },
-            {
-                name: 'bet',
-                description: 'Amount to bet',
-                type: 4,
-                required: true,
-            },
-        ],
-    },
-    {
         name: 'emoji',
         description: 'Show a custom emoji as an image (PNG/GIF).',
         options: [
