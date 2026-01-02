@@ -15,10 +15,10 @@ module.exports = async function updateStarboard(reaction) {
   const guildKey = `${guildId}`; // Guild key for storage
 
   function padText(text, padLength = 3) {
-        return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-        }
+    return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
+  }
 
-        const space = 'ㅤ'
+  const space = 'ㅤ';
 
   try {
     const config = await db.starboard.get(guildKey);
@@ -99,6 +99,7 @@ module.exports = async function updateStarboard(reaction) {
 
     lines.push(`${middle}`);
 
+    // ✅ CHANGE: Always try to edit existing starboard message first
     if (storedUrl) {
       const oldId = storedUrl.split('/').pop();
       try {
@@ -108,7 +109,7 @@ module.exports = async function updateStarboard(reaction) {
           return;
         }
       } catch (_) {
-        // Continue to post a new one if original is deleted
+        // Only post a new one if the old message truly no longer exists
       }
     }
 
