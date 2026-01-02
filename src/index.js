@@ -130,7 +130,10 @@ client.on("messageCreate", async (message) => {
     .split(/ +/);
 
   const commandName = args.shift().toLowerCase();
-  const command = client.prefixCommands.get(commandName);
+  
+    const command =
+    client.prefixCommands.get(commandName) ||
+    client.prefixCommands.find(cmd => cmd.aliases?.includes(commandName));
 
   if (!command) return;
 
