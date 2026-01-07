@@ -238,14 +238,27 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 ### **🌿<ins>Counting</ins>**
 - `?counting` — View the current and next expected number for the guilds counting.
 
+### **🌿<ins>Birthdays</ins>**
+- `?birthday set` - Sets a birthday using `?birthday set dd/mm`.
+
 ### **🌿<ins>Fun</ins>**
 - `?cat` — Generates a random picture of a cat.
 - `?dog` — Generates a random picture of a dog.
-.
 - `?slap` - Slap other users by using `?slap @user`.
 - `?kick` - Kick other users by using `?kick @user`.
 - `?hug` - Hug other users by using `?hug @user`.
 - `?kiss` - Kiss other users by using `?kiss @user`.
 - `?tickle` - Tickle other users by using `?tickle @user`.
 
+</details>
+
+<details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
+
+> **The prefix is currently set to ?**
+
+</summary>
+
+### **🌿<ins>Birthdays</ins>**
+- `?birthdaychannel` - Sets a birthday channel for the birthday messages.
+- `?birthdayrole` - Sets a role to be pinged for the birthday messages.
 </details>
