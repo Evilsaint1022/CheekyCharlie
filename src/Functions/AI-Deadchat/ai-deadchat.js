@@ -3,7 +3,7 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "0 */5 * * * *";
+const time = "0 */5 * * * *"; // every 5 minutes at second 0
 
 let isRunning = false;
 let isScheduled = false;
@@ -24,6 +24,7 @@ async function checkAIDeadchat(client) {
     }
 
     if (isRunning) {
+        console.log(`[💭] [AI Deadchat] is already Running...`);
         return;
     }
 
@@ -50,10 +51,8 @@ async function checkAIDeadchat(client) {
 
             if ( !role ) continue;
 
-            const lastDeadchatId = await db.ai_deadchat.get(`${guildId}.lastDeadchatMessage`) || "";
-            const channel = await client.channels.fetch(channelId);
-
-            if ( !channel ) continue;
+            const lastDeadchatId = await db.ai_deadchat.get(`${guildId}`) || {};
+            const channel = await guild.channels.fetch(channelId);
 
             if ( !deadchatState ) continue;
 
@@ -115,7 +114,19 @@ async function checkAIDeadchat(client) {
                     allowedMentions: { roles: [role.id] }
                 });
 
-                await db.ai_deadchat.set(`${guildId}.lastDeadchatMessage`, deadchatMessage.id);
+                console.log(`[💭] [AI DEADCHAT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${reply.trim()} `);
+      
+
+                const timestamp = Date.now();
+
+                const ai_deadchat = ({
+                    channelId: channel.id,
+                    messageId: deadchatMessage.id,
+                    Timestamp: timestamp,
+                    content: reply.trim(),
+                });
+
+                await db.ai_deadchat.set(`${guildId}`, ai_deadchat);
 
                 GuildTimeoutMap.delete(guildId);
                 
