@@ -53,21 +53,29 @@ module.exports = {
                 
             const reply = await message.reply(`**No Ferns to pick up right now!**`);
 
-
-                setTimeout(async () => {
-                    await reply.delete().catch(() => {});
-                    await message.delete().catch(() => {});
-                }, 5000);
+            setTimeout(async () => {
+                try {
+                    if (reply.deletable) await reply.delete();
+                    if (message.deletable) await message.delete();
+                } catch (err) {
+                    console.error('Error deleting pick message:', err);
+                }
+            }, 5000);
                 return;
             }
 
             if (pickedUsers.has(userId)) {
+
             const reply = await message.reply(`**You have already picked these ferns!**`);
 
-                setTimeout(async () => {
-                    await reply.delete().catch(() => {});
-                    await message.delete().catch(() => {});
-                }, 5000);
+            setTimeout(async () => {
+                try {
+                    if (reply.deletable) await reply.delete();
+                    if (message.deletable) await message.delete();
+                } catch (err) {
+                    console.error('Error deleting pick message:', err);
+                }
+            }, 5000);
                 return;
             }
 
