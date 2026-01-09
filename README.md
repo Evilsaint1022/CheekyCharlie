@@ -239,7 +239,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?counting` - View the current and next expected number for the guilds counting.
 
 ### **🌿<ins>Birthdays</ins>**
-- `?birthday set` - Sets a birthday using `?birthday set dd/mm`.
+- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
 
 ### **🌿<ins>Fun</ins>**
 - `?cat` - Generates a random picture of a cat.
