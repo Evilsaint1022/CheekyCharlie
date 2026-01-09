@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const db = require('../../Handlers/database');
+const { wordsToNumbers } = require('words-to-numbers');
 
 // Prevent race conditions with a lock per guild
 const processingLocks = new Set();
@@ -33,8 +34,9 @@ module.exports = {
         lastUserId: null
       };
 
-      let userNumber = parseInt(message.content.trim());
-      let userMessage = message.content.trim()
+      const convertedMessage = wordsToNumbers(message.content.trim());
+      let userNumber = parseInt(convertedMessage);
+      let userMessage = convertedMessage.toString();
 
       const jsKeywords = [
           "break", "case", "catch", "class", "const", "continue", "debugger", "default",
@@ -51,18 +53,7 @@ module.exports = {
 
       userMessage = userMessage.replaceAll("^", "**")
 
-      let wasFactorialReplaced = false;
       let wasCalculated = false;
-      
-      userMessage = userMessage.replace(/(\d+)!/g, (match, n) => {
-        n = Number(n);
-        if (!Number.isInteger(n) || n < 0) return match;
-        let fact = 1;
-        for (let i = 1; i <= n; i++) fact *= i;
-        wasFactorialReplaced = true;
-        wasCalculated = true;
-        return fact.toString();
-      });
 
       const userMsg_not_IsNumber = isNaN(userMessage)
 
@@ -77,7 +68,7 @@ module.exports = {
         userNumber = Number(userMessage);
       }
 
-      if (isNaN(userNumber) || (!wasCalculated && !wasFactorialReplaced && message.content.trim() !== userNumber.toString())) return;
+      if (isNaN(userNumber) || (!wasCalculated && convertedMessage.toString() !== userNumber.toString())) return;
 
       // ❌ Same user sent a message twice — reset the count!
       if (message.author.id === countData.lastUserId) {
