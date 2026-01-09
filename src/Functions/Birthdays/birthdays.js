@@ -6,13 +6,13 @@ const TEST_CHANNEL_ID = '1395774255928442880';
 
 module.exports = async (client) => {
 
-  cron.schedule('0 */1 * * * *', async () => {
+  cron.schedule('0 */5 * * * *', async () => {
 
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = String(today.getMonth() + 1).padStart(2, '0');
     const todayDay = String(today.getDate()).padStart(2, '0');
-    const todayKey = `${todayDay}-${todayMonth}-${todayYear}`;
+    const todayKey = `${todayDay}-${todayMonth}`;
 
     for (const guild of client.guilds.cache.values()) {
 
@@ -26,12 +26,12 @@ module.exports = async (client) => {
         const bday = guildBirthdays[userId];
 
         const userKey =
-          `${String(bday.day).padStart(2, '0')}-${String(bday.month).padStart(2, '0')}-${bday.year}`;
+          `${String(bday.day).padStart(2, '0')}-${String(bday.month).padStart(2, '0')}`;
 
         if (userKey !== todayKey) continue;
 
         // 🔒 per-user duplicate protection
-        if (sentData[userId] === todayKey) {
+        if (sentData[userId] === todayKey + "-" + bday.year) {
           continue;
         }
 
@@ -39,6 +39,7 @@ module.exports = async (client) => {
         try {
           member = await guild.members.fetch(userId);
         } catch {
+          console.log(`[🎂] [Birthdays] Failed to fetch member ${userId} in guild ${guild.id}`)
           continue;
         }
 
@@ -53,6 +54,7 @@ module.exports = async (client) => {
         try {
           channel = await guild.channels.fetch(channelId);
         } catch {
+          console.log(`[🎂] [Birthdays] Failed to fetch birthday channel ${channelId} in guild ${guild.id}`)
           continue;
         }
 
@@ -76,8 +78,10 @@ module.exports = async (client) => {
         ${role ? `\n<@&${role.id}>` : ''}`
         );
 
+        console.log(`[🎂] [Birthdays] Happy birthday to ${member}! (Successfully sent message)`)
+
         // ✅ ONLY touch this user’s entry
-        sentData[userId] = todayKey;
+        sentData[userId] = todayKey + "-" + bday.year;
       }
 
       // 💾 save once per guild (more efficient & safer)
