@@ -81,7 +81,7 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setTitle('🎰 **__Spinning the Slots__**')
-      .setColor(0xFFFFFF)
+      .setColor(0x207e37)
       .setThumbnail(author.displayAvatarURL())
       .setDescription(`Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Spinning...\``)
       .addFields({ name: 'Slots', value: '⬛ | ⬛ | ⬛' });

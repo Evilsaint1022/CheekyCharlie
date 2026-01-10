@@ -80,7 +80,7 @@ module.exports = {
     embeds.push(
       new EmbedBuilder()
         .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
-        .setColor('#de4949')
+        .setColor(0x207e37)
         .setThumbnail(interaction.client.user.displayAvatarURL())
         .setDescription(
           'ㅤ\n> Prefix has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' +

@@ -187,7 +187,7 @@ module.exports = {
           (leaderboard || "*No users found.*") +
           `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`
         )
-        .setColor('#de4949')
+        .setColor(0x207e37)
         .setThumbnail(message.guild.iconURL())
         .setFooter({
           text: `Page ${page + 1} of ${totalPages}`,

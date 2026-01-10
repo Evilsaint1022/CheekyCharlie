@@ -92,7 +92,7 @@ module.exports = {
         `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
       )
       .setThumbnail(author.displayAvatarURL({ dynamic: true }))
-      .setColor("#de4949");
+      .setColor(0x207e37);
 
     await message.reply({ embeds: [embed] });
 

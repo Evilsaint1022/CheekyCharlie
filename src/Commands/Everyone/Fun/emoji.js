@@ -39,7 +39,7 @@ module.exports = {
             .setTitle(`🌿**__Here is the following emoji:__**`)
             .setDescription(`Emoji Name: ${emojiName}\nEmoji ID: ${emojiId}`)
             .setImage(imageURL)
-            .setColor('#de4949');
+            .setColor(0x207e37);
 
         return interaction.reply({ embeds: [embed] });
     }

@@ -33,7 +33,7 @@ module.exports = {
         const avatarEmbed = new EmbedBuilder()
             .setTitle(`${user.username}'s Avatar`)
             .setImage(avatarUrl)
-            .setColor('#de4949')
+            .setColor(0x207e37)
             .setFooter({ text: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 

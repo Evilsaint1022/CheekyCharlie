@@ -48,7 +48,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(`**╭─── 🌿The ${interaction.guild.name} Shop ───╮**`)
         .setDescription('*You can buy things using the **`/buy`** command.*\n· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·')
-        .setColor('#de4949')
+        .setColor(0x207e37)
         .setFooter({ text: `Page ${page + 1} of ${totalPages}`, iconURL: interaction.client.user.displayAvatarURL() })
         .setThumbnail(interaction.guild.iconURL())
         .setTimestamp();

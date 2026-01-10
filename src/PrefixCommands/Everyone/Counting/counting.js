@@ -41,7 +41,7 @@ module.exports = {
                     { name: 'Next Number', value: `${countingData.expected}`, inline: true }
                 )
                 .setFooter({ text: `Last counted by user ID: ${countingData.lastUserId}` })
-                .setColor('White');
+                .setColor(0x207e37);
 
             await message.reply({ embeds: [embed] });
 

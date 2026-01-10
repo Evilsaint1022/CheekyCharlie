@@ -55,7 +55,7 @@ module.exports = {
             const nextLevelXp = level * 350 + 350;
 
             const embed = new EmbedBuilder()
-                .setColor('#de4949')
+                .setColor(0x207e37)
                 .setTitle(top)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .setDescription(
