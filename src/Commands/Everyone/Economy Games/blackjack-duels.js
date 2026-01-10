@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
-const GLOBAL_COOLDOWN_KEY = `blackjack_duels`;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,6 +33,8 @@ module.exports = {
 
         const balanceKeyChallenger = `${user.id}.balance`;
         const balanceKeyOpponent = `${opponent.id}.balance`;
+
+        const GLOBAL_COOLDOWN_KEY = `${guild.id}.blackjack-duels`;
 
         const ferns = '<:Ferns:1395219665638391818>';
 

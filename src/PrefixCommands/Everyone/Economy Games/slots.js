@@ -2,7 +2,6 @@ const { EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
-const GLOBAL_COOLDOWN_KEY = 'slots_global';
 
 module.exports = {
   name: 'slots',
@@ -21,6 +20,7 @@ module.exports = {
     const { guild, author } = message;
     const ferns = '<:Ferns:1395219665638391818>';
     const balanceKey = `${author.id}.balance`;
+    const GLOBAL_COOLDOWN_KEY = `${guild.id}.slots`;
 
     // 🎯 Get bet amount
     const bet = parseInt(args[0]);
