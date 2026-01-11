@@ -58,6 +58,7 @@ module.exports = {
                     if (reply.deletable) await reply.delete();
                     if (message.deletable) await message.delete();
                 } catch (err) {
+                    if (err.code !== 10008) return;
                     console.error('Error deleting pick message:', err);
                 }
             }, 5000);
@@ -73,6 +74,7 @@ module.exports = {
                     if (reply.deletable) await reply.delete();
                     if (message.deletable) await message.delete();
                 } catch (err) {
+                    if (err.code !== 10008) return;
                     console.error('Error deleting pick message:', err);
                 }
             }, 5000);
@@ -131,6 +133,7 @@ module.exports = {
                     if (reply.deletable) await reply.delete();
                     if (message.deletable) await message.delete();
                 } catch (err) {
+                    if (err.code !== 10008) return;
                     console.error('Error deleting pick message:', err);
                 }
             }, 20000);
