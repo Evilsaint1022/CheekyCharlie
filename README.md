@@ -55,27 +55,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 </summary>
 
-### **🌿<ins>Shop</ins>**
-- `/shop` - checks the server shop.
-- `/buy` - buys a item from the shop.
-- `/use` - uses the item bought from from the shop.
-- `/refund` - refunds the item from the shop.
-- `/inventory` - checks the items in the users inventory.
-
-### **🌿<ins>Join-to-Create VC</ins>**
-- `/lock-vc` - locks the join-to-create vc channel.
-- `/unlock-vc` - unlocks the join-to-create vc channel.
-
-### **🌿<ins>One-Word-Story</ins>**
-- `/view-one-word-story` - view the current story in the server
-
-### **🌿<ins>Staff Applications</ins>**
-- `/staff-apply` - Start a new staff application.
-
-### **🌿<ins>Venting</ins>**
-- `/venting` - Vent anonymously to the vent channel.
-
-### **🌿<ins>Other</ins>**
+### **🌿<ins>Help</ins>**
+- `/help` - Help command that displays commands.
 - `/github` - Github link to CheeckyCharlies Repo.
 - `/invite` - Generates a temporary invite link.
 - `/ping` - Check Bots Latency.
@@ -227,6 +208,26 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
 - `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
+
+### **🌿<ins>Shop</ins>**
+- `?shop` - checks the server shop.
+- `?buy` - buys a item from the shop.
+- `?use` - uses the item bought from from the shop.
+- `?refund` - refunds the item from the shop.
+- `?inventory` - checks the items in the users inventory.
+
+### **🌿<ins>Join-to-Create VC</ins>**
+- `?lock-vc` - locks the join-to-create vc channel.
+- `?unlock-vc` - unlocks the join-to-create vc channel.
+
+### **🌿<ins>One-Word-Story</ins>**
+- `?view-one-word-story` - view the current story in the server
+
+### **🌿<ins>Staff Applications</ins>**
+- `?staff-apply` - Start a new staff application.
+
+### **🌿<ins>Venting</ins>**
+- `?venting` - Vent anonymously to the vent channel.
 
 ### **🌿<ins>Counting</ins>**
 - `?counting` - View the current and next expected number for the guilds counting.
