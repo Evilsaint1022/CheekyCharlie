@@ -49,24 +49,15 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿AI NSFW Content Filtering
 - 🌿Color-of-the-Week
 
-<details><summary><h2>🌿<ins>Everyone - Application Commands</ins>🌿</h2>
-  
-> **Warning! -  We are converting most application commands to prefix commands**
+<h2>🌿<ins>Getting Started</ins>🌿</h2>
 
-</summary>
-
-### **🌿<ins>Help</ins>**
 - `/help` - Help command that displays commands.
 - `/github` - Github link to CheeckyCharlies Repo.
-- `/invite` - Generates a temporary invite link.
+- `/invite` - Generates a temporary invite link for server you are in.
 - `/ping` - Check Bots Latency.
-
-</details>
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
   
-> **Warning! -  We are converting most application commands to prefix commands**
-
 </summary>
 
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
@@ -189,9 +180,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 </details>
 
 <details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
-
-> **The prefix is currently set to ?**
-
+  
 </summary>
 
 ### **🌿<ins>Economy</ins>**
@@ -250,8 +239,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 </details>
 
 <details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
-
-> **The prefix is currently set to ?**
 
 </summary>
 
