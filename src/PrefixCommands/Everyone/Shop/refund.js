@@ -1,22 +1,22 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
+const {
+  StringSelectMenuBuilder,
+  ActionRowBuilder,
+  ComponentType
+} = require('discord.js');
+
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('refund')
-    .setDescription('Refund an item from your inventory and get your money back.'),
+  name: 'refund',
 
-  async execute(interaction) {
-    const user = interaction.user;
-    const guild = interaction.guild;
-
-    if (interaction.channel.isDMBased()) {
-      return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
-      });
+  async execute(message) {
+    // Block DMs
+    if (!message.guild) {
+      return message.reply('This command cannot be used in DMs.');
     }
 
+    const user = message.author;
+    const guild = message.guild;
     const guildKey = `${guild.id}`;
 
     // OLD → NEW keys
@@ -24,10 +24,14 @@ module.exports = {
     const oldKey = `${safeUsername}_${user.id}`;
     const newKey = `${user.id}`;
 
-    console.log(`[🌿] [REFUND] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the refund command.`);
+    console.log(
+      `[🌿] [REFUND] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
+      `${guild.name} ${guild.id} ${user.username} used the refund command.`
+    );
 
     // -------------------------------------------------------
-    // 🔥 DATABASE MIGRATION LOGIC
+    // 🔥 DATABASE MIGRATION LOGIC (UNCHANGED)
     // -------------------------------------------------------
     async function migrateData() {
       // ---------- INVENTORY ----------
@@ -53,7 +57,7 @@ module.exports = {
         console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
       }
 
-      // ---------- BANK (optional safety) ----------
+      // ---------- BANK ----------
       const oldBank = await db.bank.get(oldKey).catch(() => undefined);
       const newBank = await db.bank.get(newKey).catch(() => undefined);
 
@@ -64,28 +68,24 @@ module.exports = {
       }
     }
 
-    // Run migration
     await migrateData();
     // -------------------------------------------------------
 
-    // Always use new ID key
+    // Always use ID-based key
     const userKey = newKey;
 
-    // Get inventory after migration
-    let fullInventory = await db.inventory.get(guildKey).catch(() => ({}));
-    fullInventory = fullInventory || {};
-
+    // Load inventory
+    let fullInventory = await db.inventory.get(guildKey).catch(() => ({})) || {};
     const userInventoryData = fullInventory[userKey] || { inventory: [] };
     let inventory = userInventoryData.inventory || [];
 
     if (inventory.length === 0) {
-      return interaction.reply({
-        content: 'You have no items in your inventory to refund.',
-        flags: 64
-      });
+      return message.reply('You have no items in your inventory to refund.');
     }
 
-    // Create selection menu
+    // --------------------------
+    // Build select menu options
+    // --------------------------
     const options = inventory.map((item, index) => ({
       label: item.title.length > 25 ? item.title.slice(0, 22) + '...' : item.title,
       description: item.description?.slice(0, 50) || 'No description.',
@@ -99,12 +99,15 @@ module.exports = {
 
     const row = new ActionRowBuilder().addComponents(selectMenu);
 
-    await interaction.reply({
+    const reply = await message.reply({
       content: 'Choose the item you want to refund:',
-      components: [row],
+      components: [row]
     });
 
-    const collector = interaction.channel.createMessageComponentCollector({
+    // --------------------------
+    // Collector
+    // --------------------------
+    const collector = reply.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
       time: 15000,
       max: 1,
@@ -112,7 +115,7 @@ module.exports = {
     });
 
     collector.on('collect', async selectInteraction => {
-      const selectedIndex = parseInt(selectInteraction.values[0]);
+      const selectedIndex = parseInt(selectInteraction.values[0], 10);
       const selectedItem = inventory[selectedIndex];
 
       if (!selectedItem) {
@@ -130,8 +133,10 @@ module.exports = {
       fullInventory[userKey].inventory = inventory;
       await db.inventory.set(guildKey, fullInventory);
 
-      // Add refunded money to balance
-      const balanceData = await db.wallet.get(userKey).catch(() => ({ balance: 0 })) || { balance: 0 };
+      // Add money back to wallet
+      const balanceData =
+        (await db.wallet.get(userKey).catch(() => ({ balance: 0 }))) || { balance: 0 };
+
       balanceData.balance += refundAmount;
       await db.wallet.set(userKey, balanceData);
 
@@ -143,7 +148,7 @@ module.exports = {
 
     collector.on('end', collected => {
       if (collected.size === 0) {
-        interaction.editReply({
+        reply.edit({
           content: 'You didn’t select an item in time.',
           components: []
         }).catch(() => {});

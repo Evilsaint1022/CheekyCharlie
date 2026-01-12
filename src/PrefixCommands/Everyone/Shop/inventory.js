@@ -1,26 +1,23 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('inventory')
-    .setDescription("Displays a user's inventory.")
-    .addUserOption(option =>
-      option.setName('user')
-        .setDescription("Select a user to view their inventory.")
-        .setRequired(false)
-    ),
+  name: 'inventory',
+  aliases: ['inv'],
 
-  async execute(interaction) {
-    const user = interaction.options.getUser('user') || interaction.user;
-    const guild = interaction.guild;
-
-    if (interaction.channel.isDMBased()) {
-      return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
-      });
+  async execute(message, args) {
+    // Block DMs
+    if (!message.guild) {
+      return message.reply('This command cannot be used in DMs.');
     }
+
+    const guild = message.guild;
+
+    // Get mentioned user or fallback to message author
+    const user =
+      message.mentions.users.first() ||
+      (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null) ||
+      message.author;
 
     const ferns = '<:Ferns:1395219665638391818>';
     const guildKey = `${guild.id}`;
@@ -31,7 +28,7 @@ module.exports = {
     const newKey = `${user.id}`;
 
     // -------------------------------------------------------
-    // 🔥 DATABASE MIGRATION LOGIC
+    // 🔥 DATABASE MIGRATION LOGIC (UNCHANGED)
     // -------------------------------------------------------
     async function migrateData() {
       // -------- INVENTORY --------
@@ -47,7 +44,7 @@ module.exports = {
         }
       }
 
-      // -------- WALLET (safe migration) --------
+      // -------- WALLET --------
       const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
       const newWallet = await db.wallet.get(newKey).catch(() => undefined);
 
@@ -58,7 +55,7 @@ module.exports = {
         console.log(`[MIGRATION] Wallet migrated ${oldKey} → ${newKey}`);
       }
 
-      // -------- BANK (safe migration) --------
+      // -------- BANK --------
       const oldBank = await db.bank.get(oldKey).catch(() => undefined);
       const newBank = await db.bank.get(newKey).catch(() => undefined);
 
@@ -70,14 +67,13 @@ module.exports = {
       }
     }
 
-    // Run migration
     await migrateData();
     // -------------------------------------------------------
 
-    // Always use new ID-based key
+    // Always use ID-based key
     const userKey = newKey;
 
-    // Load inventory after migration
+    // Load inventory
     let fullInventory = {};
     try {
       const inv = await db.inventory.get(guildKey);
@@ -88,16 +84,17 @@ module.exports = {
 
     const userData = fullInventory[userKey];
 
+    // Empty inventory
     if (!userData || !Array.isArray(userData.inventory) || userData.inventory.length === 0) {
       const emptyEmbed = new EmbedBuilder()
         .setTitle(`${user.username}'s Inventory`)
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .setDescription('Inventory is empty.')
         .setColor(0xFF0000)
-        .setFooter({ text: `Requested by ${interaction.user.username}` })
+        .setFooter({ text: `Requested by ${message.author.username}` })
         .setTimestamp();
 
-      return interaction.reply({ embeds: [emptyEmbed] });
+      return message.reply({ embeds: [emptyEmbed] });
     }
 
     // --------------------------
@@ -107,17 +104,23 @@ module.exports = {
       .setTitle(`${user.username}'s Inventory`)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
       .setColor('#de4949')
-      .setFooter({ text: `Requested by ${interaction.user.username}` })
+      .setFooter({ text: `Requested by ${message.author.username}` })
       .setTimestamp();
 
-    const inventoryText = userData.inventory.map((item, index) => {
-      return `**${index + 1}.** **__${item.title}__** - **${ferns}${item.price.toLocaleString()}**`;
-    }).join('\n');
+    const inventoryText = userData.inventory
+      .map((item, index) => {
+        return `**${index + 1}.** **__${item.title}__** - **${ferns}${item.price.toLocaleString()}**`;
+      })
+      .join('\n');
 
     embed.setDescription(inventoryText);
 
-    console.log(`[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} used the inventory command.`);
+    console.log(
+      `[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
+      `${guild.name} ${guild.id} ${message.author.username} used the inventory command.`
+    );
 
-    return interaction.reply({ embeds: [embed] });
+    return message.reply({ embeds: [embed] });
   }
 };

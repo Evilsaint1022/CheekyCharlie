@@ -24,58 +24,6 @@ const commands = [
         name: 'invite',
         description: 'Invite your friends!',
     },
-    {
-        name: 'shop',
-        description: 'View the items available in the shop.',
-    },
-    {
-        name: 'buy',
-        description: 'Buy an item from the shop.',
-    },
-    {
-        name: 'use',
-        description: 'Use an item from your inventory.',
-    },
-    {
-        name: 'refund',
-        description: 'Refund an item from your inventory and get your ferns back.',
-    },
-    {
-        name: 'inventory',
-        description: 'View your inventory.',
-        options: [
-            {
-                name: 'user',
-                description: 'The user to view their inventory.',
-                type: 6,
-                required: false,
-            },
-        ]
-    },
-    {
-        name: 'lock-vc',
-        description: 'Locks the voice channel.',
-    },
-    {
-        name: 'unlock-vc',
-        description: 'Unlocks the voice channel.',
-    },
-    {
-        name: 'staff-apply',
-        description: 'Apply to become a staff member.',
-    },
-    {
-        name: 'venting',
-        description: 'Vent something to the vent channel.',
-        options: [
-            {
-                name: 'message',
-                description: 'What do you want to vent?',
-                type: 3,
-                required: true,
-            },
-        ],
-    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 

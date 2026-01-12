@@ -1,33 +1,33 @@
-const { SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
+const {
+  StringSelectMenuBuilder,
+  ActionRowBuilder,
+  ComponentType
+} = require('discord.js');
+
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('use')
-    .setDescription('Use an item from your inventory.'),
+  name: 'use',
 
-  async execute(interaction) {
-    const guild = interaction.guild;
-    const member = interaction.member;
-    const user = interaction.user;
-
-    if (interaction.channel.isDMBased()) {
-      return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
-      });
+  async execute(message) {
+    // -------------------------
+    // BASIC CHECKS
+    // -------------------------
+    if (!message.guild) {
+      return message.reply('This command cannot be used in DMs.');
     }
 
-    if (!guild) {
-      return interaction.reply({
-        content: 'This command must be used in a server.',
-        flags: 64
-      });
-    }
+    const guild = message.guild;
+    const member = message.member;
+    const user = message.author;
 
     const guildKey = `${guild.id}`;
-    const userIdKey = user.id; // ✅ NEW clean ID-only key
-    console.log(`[🌿] [USE] [${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
+    const userIdKey = user.id; // ✅ clean ID-only key
+
+    console.log(
+      `[🌿] [USE] [${new Date().toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
+      `${guild.name} ${guild.id} ${user.username} used the use command.`
+    );
 
     // -------------------------
     // LOAD INVENTORY + MIGRATE
@@ -40,15 +40,14 @@ module.exports = {
       fullInventory = {};
     }
 
-    // Check for old key
     const oldKey = `${user.username.replace(/\./g, '_')}_${user.id}`;
     let userData = null;
 
-    // CASE 1: migrated key already exists
+    // CASE 1: new key exists
     if (fullInventory[userIdKey]) {
       userData = fullInventory[userIdKey];
 
-      // If old key ALSO exists, merge it then delete
+      // Merge old key if present
       if (fullInventory[oldKey]) {
         if (Array.isArray(fullInventory[oldKey].inventory)) {
           userData.inventory = [
@@ -56,20 +55,20 @@ module.exports = {
             ...fullInventory[oldKey].inventory
           ];
         }
+
         delete fullInventory[oldKey];
         await db.inventory.set(guildKey, fullInventory);
       }
     }
-    // CASE 2: old key exists, migrate it
+    // CASE 2: only old key exists
     else if (fullInventory[oldKey]) {
       userData = fullInventory[oldKey];
       delete fullInventory[oldKey];
 
       fullInventory[userIdKey] = userData;
-
       await db.inventory.set(guildKey, fullInventory);
     }
-    // CASE 3: no inventory exists
+    // CASE 3: no inventory at all
     else {
       userData = { inventory: [] };
       fullInventory[userIdKey] = userData;
@@ -80,10 +79,7 @@ module.exports = {
     // EMPTY INVENTORY CHECK
     // -------------------------
     if (!Array.isArray(userData.inventory) || userData.inventory.length === 0) {
-      return interaction.reply({
-        content: 'Your inventory is empty.',
-        flags: 64
-      });
+      return message.reply('Your inventory is empty.');
     }
 
     // -------------------------
@@ -102,14 +98,15 @@ module.exports = {
 
     const row = new ActionRowBuilder().addComponents(menu);
 
-    await interaction.reply({
+    const reply = await message.reply({
       content: 'Choose an item to use:',
-      components: [row],
+      components: [row]
     });
 
-    const message = await interaction.fetchReply();
-
-    const collector = message.createMessageComponentCollector({
+    // -------------------------
+    // COLLECTOR
+    // -------------------------
+    const collector = reply.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
       time: 15000,
       max: 1,
@@ -120,14 +117,13 @@ module.exports = {
     // ITEM SELECTED
     // -------------------------
     collector.on('collect', async select => {
-      const index = parseInt(select.values[0]);
+      const index = parseInt(select.values[0], 10);
       const selectedItem = userData.inventory[index];
 
-      if (!selectedItem.roleId) {
+      if (!selectedItem?.roleId) {
         return select.update({
           content: 'This item does not grant a role.',
-          components: [],
-          flags: 64
+          components: []
         });
       }
 
@@ -135,16 +131,14 @@ module.exports = {
       if (!role) {
         return select.update({
           content: `The role with ID \`${selectedItem.roleId}\` does not exist.`,
-          components: [],
-          flags: 64
+          components: []
         });
       }
 
       if (member.roles.cache.has(role.id)) {
         return select.update({
           content: `You already have the **${role.name}** role!`,
-          components: [],
-          flags: 64
+          components: []
         });
       }
 
@@ -154,30 +148,26 @@ module.exports = {
         console.error('Failed to add role:', err);
         return select.update({
           content: 'Failed to assign the role. Do I have permission?',
-          components: [],
-          flags: 64
+          components: []
         });
       }
 
-      // Remove inventory item
+      // Remove item from inventory
       userData.inventory.splice(index, 1);
-
       fullInventory[userIdKey] = userData;
       await db.inventory.set(guildKey, fullInventory);
 
       return select.update({
         content: `You used **${selectedItem.title}** and received the **${role.name}** role.`,
-        components: [],
-        flags: 64
+        components: []
       });
     });
 
     collector.on('end', collected => {
       if (collected.size === 0) {
-        interaction.editReply({
+        reply.edit({
           content: 'No selection made. Command expired.',
-          components: [],
-          flags: 64
+          components: []
         }).catch(() => {});
       }
     });
