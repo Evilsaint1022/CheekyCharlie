@@ -8,18 +8,28 @@ const {
 
 const db = require('../../../Handlers/database');
 
+/**
+ * Splits an array into pages of a fixed size
+ */
+function chunkByItems(array, itemsPerPage = 15) {
+  const pages = [];
+  for (let i = 0; i < array.length; i += itemsPerPage) {
+    pages.push(array.slice(i, i + itemsPerPage).join('\n'));
+  }
+  return pages;
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Shows all available commands'),
 
   async execute(interaction) {
-
-    // Prevent command usage in DMs
+    // Prevent DMs
     if (interaction.channel.isDMBased()) {
       return interaction.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
+        content: 'This command cannot be used in DMs.',
+        ephemeral: true
       });
     }
 
@@ -27,17 +37,18 @@ module.exports = {
     const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
     const space = 'ㅤ';
 
-    // Get whitelisted roles
+    // ===================== PERMISSIONS =====================
+
     const WHITELISTED_ROLE_IDS =
       (await db.whitelisted.get(`${guildId}.whitelistedRoles`)) || [];
 
     const memberRoles = interaction.member.roles.cache.map(r => r.id);
-
     const hasPermission = WHITELISTED_ROLE_IDS.some(id =>
       memberRoles.includes(id)
     );
 
     // ===================== COMMAND LISTS =====================
+    // Each line = ONE item (important for 15 per page)
 
     const publicCommands = [
       '🌿 **__Economy__** 🌿',
@@ -51,12 +62,40 @@ module.exports = {
       '- `?pay`・Pay other members Ferns.',
       `${space}`,
       `🌿 **__Economy Games__** 🌿`,
+      '- `blackjack-singleplayer` - Starts a game of blackjack using `?blackjack bet.`',
+      '- `?blackjack-duels` - Starts a game of blackjack duels using `?blackjack-duels @user bet.`',
       '- `?slots` - Starts a game of slots using `?slots bet`.',
+      `${space}`,
+      '🌿 **__Shop__** 🌿',
+      '- `?shop` - View the shop.',
+      '- `?buy` - Buy items from the shop.',
+      '- `?use` - Use items.',
+      '- `?refund` - refund items bought from the shop.',
+      '- `?inventory` - View your inventory.',
+      `${space}`,
+      '🌿 **__Join-to-Create VC_** 🌿',
+      '- `?lock-vc` - Locks the join-to-create vc channel.',
+      '- `?unlock-vc` - Unlocks the join-to-create vc channel.',
+      `${space}`,
+      '🌿 **__One-Word-Story__** 🌿',
+      '- `?view-one-word-story` - Starts a game of one-word-story.',
+      `${space}`,
+      '🌿 **__Staff Applications__** 🌿',
+      '- `?staff-apply` - Start a new staff application',
+      `${space}`,
+      '🌿 **__Venting__** 🌿',
+      '- `?vent` - Vent anonymously to the vent channel.',
       `${space}`,
       '🌿 **__Counting__** 🌿',
       '- `?counting`・View the current and next expected number.',
       `${space}`,
+      '🌿 **__Birthdays__** 🌿',
+      '- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.',
+      `${space}`,
       '🌿 **__Fun__** 🌿',
+      '- `?avatar` - View yours or someone elses avatar using `?pfp @user`',
+      '- `?ai-search` - Use `gpt-4o-mini` to search for results `?ai text`',
+      '- `?emoji` - Show a custom emoji as an image (PNG/GIF) using `?e Emoji`.',
       '- `?cat` - Generates a random picture of a cat.',
       '- `?dog` - Generates a random picture of a dog.',
       '- `?slap` - Slap other users by using `?slap @user`.',
@@ -64,6 +103,10 @@ module.exports = {
       '- `?hug` - Hug other users by using `?hug @user`.',
       '- `?kiss` - Kiss other users by using `?kiss @user`.',
       '- `?tickle` - Tickle other users by using `?tickle @user`.',
+      `${space}`,
+      '🌿 **__Others__** 🌿',
+      '- `?ping` - Check the bot`s latency.',
+      '- `?invite` - Generates a temporary invite link for server you are in.',
       `\nㅤ\n${middle}`
     ];
 
@@ -76,45 +119,45 @@ module.exports = {
 
     const embeds = [];
 
-    // Page 0 — Everyone
-    embeds.push(
-      new EmbedBuilder()
-        .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
-        .setColor(0x207e37)
-        .setThumbnail(interaction.client.user.displayAvatarURL())
-        .setDescription(
-          'ㅤ\n> Prefix has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' +
-          middle
-        )
-        .addFields({
-          name: '🌿 **__Everyone Prefix Commands__** 🌿\nㅤ',
-          value: publicCommands.join('\n')
-        })
-        .setFooter({ text: `Requested by ${interaction.user.tag}` })
-        .setTimestamp()
-    );
+    // Public pages (15 items per page)
+    const publicPages = chunkByItems(publicCommands, 15);
 
-    // Page 1 — Whitelisted (ONLY if allowed)
-    if (hasPermission) {
+    publicPages.forEach((content, index) => {
       embeds.push(
         new EmbedBuilder()
-          .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
-          .setColor('#de4949')
+          .setTitle('🌿 **CheekyCharlie Help Menu** 🌿')
+          .setColor(0x207e37)
           .setThumbnail(interaction.client.user.displayAvatarURL())
           .setDescription(
-          'ㅤ\n> Prefix has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' +
-          middle
-        )
-          .addFields({
-            name: '🌿 **__Whitelisted Prefix Commands__** 🌿\nㅤ',
-            value: whitelistedCommands.join('\n')
+            `> Prefix: \`?\`\n\n${content}\n\n${middle}`
+          )
+          .setFooter({
+            text: `Page ${index + 1}/${publicPages.length} • Requested by ${interaction.user.tag}`
           })
-          .setFooter({ text: `Requested by ${interaction.user.tag}` })
           .setTimestamp()
       );
+    });
+
+    // Whitelisted pages
+    if (hasPermission) {
+      const staffPages = chunkByItems(whitelistedCommands, 15);
+
+      staffPages.forEach((content, index) => {
+        embeds.push(
+          new EmbedBuilder()
+            .setTitle('🌿 **Whitelisted Commands** 🌿')
+            .setColor(0xde4949)
+            .setThumbnail(interaction.client.user.displayAvatarURL())
+            .setDescription(`${content}\n\n${middle}`)
+            .setFooter({
+              text: `Staff Page ${index + 1}/${staffPages.length} • ${interaction.user.tag}`
+            })
+            .setTimestamp()
+        );
+      });
     }
 
-// ===================== BUTTONS =====================
+    // ===================== BUTTONS =====================
 
     let page = 0;
 
@@ -162,7 +205,9 @@ module.exports = {
         return i.update({
           components: [
             new ActionRowBuilder().addComponents(
-              row.components.map(btn => ButtonBuilder.from(btn).setDisabled(true))
+              row.components.map(btn =>
+                ButtonBuilder.from(btn).setDisabled(true)
+              )
             )
           ]
         });

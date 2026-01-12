@@ -7,13 +7,23 @@ const {
 
 const db = require('../../../Handlers/database');
 
+/**
+ * Splits an array into pages of a fixed size
+ */
+function chunkByItems(array, itemsPerPage = 15) {
+  const pages = [];
+  for (let i = 0; i < array.length; i += itemsPerPage) {
+    pages.push(array.slice(i, i + itemsPerPage).join('\n'));
+  }
+  return pages;
+}
+
 module.exports = {
   name: 'help',
   aliases: ['commands'],
 
-  async execute(message, args) {
-
-    // Prevent command usage in DMs
+  async execute(message) {
+    // Prevent DMs
     if (!message.guild) {
       return message.reply('This command cannot be used in DMs.');
     }
@@ -28,7 +38,6 @@ module.exports = {
       (await db.whitelisted.get(`${guildId}.whitelistedRoles`)) || [];
 
     const memberRoles = message.member.roles.cache.map(r => r.id);
-
     const hasPermission = WHITELISTED_ROLE_IDS.some(id =>
       memberRoles.includes(id)
     );
@@ -47,19 +56,51 @@ module.exports = {
       '- `?pay`・Pay other members Ferns.',
       `${space}`,
       `🌿 **__Economy Games__** 🌿`,
+      '- `blackjack-singleplayer` - Starts a game of blackjack using `?blackjack bet.`',
+      '- `?blackjack-duels` - Starts a game of blackjack duels using `?blackjack-duels @user bet.`',
       '- `?slots` - Starts a game of slots using `?slots bet`.',
+      `${space}`,
+      '🌿 **__Shop__** 🌿',
+      '- `?shop` - View the shop.',
+      '- `?buy` - Buy items from the shop.',
+      '- `?use` - Use items.',
+      '- `?refund` - refund items bought from the shop.',
+      '- `?inventory` - View your inventory.',
+      `${space}`,
+      '🌿 **__Join-to-Create VC__** 🌿',
+      '- `?lock-vc` - Locks the join-to-create vc channel.',
+      '- `?unlock-vc` - Unlocks the join-to-create vc channel.',
+      `${space}`,
+      '🌿 **__One-Word-Story__** 🌿',
+      '- `?view-one-word-story` - Starts a game of one-word-story.',
+      `${space}`,
+      '🌿 **__Staff Applications__** 🌿',
+      '- `?staff-apply` - Start a new staff application',
+      `${space}`,
+      '🌿 **__Venting__** 🌿',
+      '- `?vent` - Vent anonymously to the vent channel.',
       `${space}`,
       '🌿 **__Counting__** 🌿',
       '- `?counting`・View the current and next expected number.',
       `${space}`,
+      '🌿 **__Birthdays__** 🌿',
+      '- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.',
+      `${space}`,
       '🌿 **__Fun__** 🌿',
-      '- `?cat` - Generates a random picture of a cat.',
-      '- `?dog` - Generates a random picture of a dog.',
-      '- `?slap` - Slap other users by using `?slap @user`.',
-      '- `?kick` - Kick other users by using `?kick @user`.',
-      '- `?hug` - Hug other users by using `?hug @user`.',
-      '- `?kiss` - Kiss other users by using `?kiss @user`.',
-      '- `?tickle` - Tickle other users by using `?tickle @user`.',
+      '- `?avatar` - View yours or someone elses avatar.',
+      '- `?ai-search` - Use AI search.',
+      '- `?emoji` - Show a custom emoji.',
+      '- `?cat` - Random cat image.',
+      '- `?dog` - Random dog image.',
+      '- `?slap` - Slap a user.',
+      '- `?kick` - Kick a user.',
+      '- `?hug` - Hug a user.',
+      '- `?kiss` - Kiss a user.',
+      '- `?tickle` - Tickle a user.',
+      `${space}`,
+      '🌿 **__Others__** 🌿',
+      '- `?ping` - Check the bot`s latency.',
+      '- `?invite` - Generate a server invite.',
       `\nㅤ\n${middle}`
     ];
 
@@ -72,42 +113,36 @@ module.exports = {
 
     const embeds = [];
 
-    // Page 0 — Everyone
-    embeds.push(
-      new EmbedBuilder()
-        .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
-        .setColor(0x207e37)
-        .setThumbnail(message.client.user.displayAvatarURL())
-        .setDescription(
-          'ㅤ\n> Prefix has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' +
-          middle
-        )
-        .addFields({
-          name: '🌿 **__Everyone Prefix Commands__** 🌿\nㅤ',
-          value: publicCommands.join('\n')
-        })
-        .setFooter({ text: `Requested by ${message.author.tag}` })
-        .setTimestamp()
-    );
-
-    // Page 1 — Whitelisted
-    if (hasPermission) {
+    const publicPages = chunkByItems(publicCommands, 15);
+    publicPages.forEach((content, index) => {
       embeds.push(
         new EmbedBuilder()
-          .setTitle('🌿 **__CheekyCharlie Help Menu__** 🌿')
-          .setColor('#de4949')
+          .setTitle('🌿 **CheekyCharlie Help Menu** 🌿')
+          .setColor(0x207e37)
           .setThumbnail(message.client.user.displayAvatarURL())
-          .setDescription(
-            'ㅤ\n> Prefix has been set to `?`\n\nHere are the available prefix commands:\nㅤ\n' +
-            middle
-          )
-          .addFields({
-            name: '🌿 **__Whitelisted Prefix Commands__** 🌿\nㅤ',
-            value: whitelistedCommands.join('\n')
+          .setDescription(`> Prefix: \`?\`\n\n${content}\n\n${middle}`)
+          .setFooter({
+            text: `Page ${index + 1}/${publicPages.length} • Requested by ${message.author.tag}`
           })
-          .setFooter({ text: `Requested by ${message.author.tag}` })
           .setTimestamp()
       );
+    });
+
+    if (hasPermission) {
+      const staffPages = chunkByItems(whitelistedCommands, 15);
+      staffPages.forEach((content, index) => {
+        embeds.push(
+          new EmbedBuilder()
+            .setTitle('🌿 **Whitelisted Commands** 🌿')
+            .setColor(0xde4949)
+            .setThumbnail(message.client.user.displayAvatarURL())
+            .setDescription(`${content}\n\n${middle}`)
+            .setFooter({
+              text: `Staff Page ${index + 1}/${staffPages.length} • ${message.author.tag}`
+            })
+            .setTimestamp()
+        );
+      });
     }
 
     // ===================== BUTTONS =====================
@@ -120,12 +155,10 @@ module.exports = {
         .setLabel('Previous')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(true),
-
       new ButtonBuilder()
         .setCustomId('stop')
         .setLabel('Stop')
         .setStyle(ButtonStyle.Danger),
-
       new ButtonBuilder()
         .setCustomId('next')
         .setLabel('Next')
@@ -133,19 +166,18 @@ module.exports = {
         .setDisabled(embeds.length === 1)
     );
 
-    const sentMessage = await message.channel.send({
+    const helpMessage = await message.reply({
       embeds: [embeds[page]],
       components: [row]
     });
 
     // ===================== COLLECTOR =====================
 
-    const collector = sentMessage.createMessageComponentCollector({
+    const collector = helpMessage.createMessageComponentCollector({
       time: 60_000
     });
 
     collector.on('collect', async i => {
-
       if (i.user.id !== message.author.id) {
         return i.reply({
           content: "You can't use these buttons.",
@@ -154,7 +186,7 @@ module.exports = {
       }
 
       if (i.customId === 'stop') {
-        collector.stop('stopped');
+        collector.stop();
         return i.update({
           components: [
             new ActionRowBuilder().addComponents(
@@ -180,7 +212,7 @@ module.exports = {
 
     collector.on('end', async () => {
       row.components.forEach(btn => btn.setDisabled(true));
-      await sentMessage.edit({ components: [row] });
+      await helpMessage.edit({ components: [row] });
     });
   }
 };
