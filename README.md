@@ -52,8 +52,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
 
 - `/help` - Help command that displays commands.
-- `/github` - Github link to CheeckyCharlies Repo.
-- `/invite` - Generates a temporary invite link for server you are in.
 - `/ping` - Check Bots Latency.
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
@@ -235,6 +233,10 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?hug` - Hug other users by using `?hug @user`.
 - `?kiss` - Kiss other users by using `?kiss @user`.
 - `?tickle` - Tickle other users by using `?tickle @user`.
+
+### **🌿<ins>Other</ins>**
+- `/github` - Github link to CheeckyCharlies Repo.
+- `/invite` - Generates a temporary invite link for server you are in.
 
 </details>
 
