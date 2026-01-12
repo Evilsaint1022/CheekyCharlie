@@ -50,9 +50,18 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Color-of-the-Week
 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
+<detials>
+  
+**Commands are slash commands, so type `/help` in chat to see them.**  
+**_Make sure the bot has permission to Send Messages and Use Application Commands._**  
+**_Some commands may require specific roles or permissions depending on your server setup._**  
 
 - `/help` - Help command that displays commands.
 - `/ping` - Check Bots Latency.
+
+**That’s it — you’re ready to use CheekyCharlie!**
+
+</detials>
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
   
