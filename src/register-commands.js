@@ -16,14 +16,6 @@ const commands = [
         name: 'ping',
         description: 'Checks the bot latency!',
     },
-    {
-        name: 'github',
-        description: 'Get the Evilsaint1022 GitHub Repository link',
-    },
-    {
-        name: 'invite',
-        description: 'Invite your friends!',
-    },
 
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
