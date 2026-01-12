@@ -55,10 +55,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 </summary>
 
-### **🌿<ins>Economy Games</ins>**
-- `/blackjack-duels` - Play Blackjack with other users.
-- `/blackjack-singleplayer` - Starts a game of blackjack.
-
 ### **🌿<ins>Shop</ins>**
 - `/shop` - checks the server shop.
 - `/buy` - buys a item from the shop.
@@ -78,11 +74,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 
 ### **🌿<ins>Venting</ins>**
 - `/venting` - Vent anonymously to the vent channel.
-
-### **🌿<ins>Fun</ins>**
-- `/avatar` - View your's or someone elses avatar.
-- `/ai-search` - Use 'gpt-4o-mini' to search for results
-- `/emoji` - Show a custom emoji as an image (PNG/GIF).
 
 ### **🌿<ins>Other</ins>**
 - `/github` - Github link to CheeckyCharlies Repo.
@@ -233,6 +224,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?pay` - Pay other users ferns by using `?pay @user`.
 
 ### **🌿<ins>Economy Games</ins>**
+- `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
+- `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
 
 ### **🌿<ins>Counting</ins>**
@@ -242,6 +235,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
 
 ### **🌿<ins>Fun</ins>**
+- `?avatar` - View your's or someone elses avatar using `?pfp @user`.
+- `?ai-search` - Use 'gpt-4o-mini' to search for results `?ai text`.
+- `?emoji` - Show a custom emoji as an image (PNG/GIF) using `?e Emoji` 
 - `?cat` - Generates a random picture of a cat.
 - `?dog` - Generates a random picture of a dog.
 - `?slap` - Slap other users by using `?slap @user`.
