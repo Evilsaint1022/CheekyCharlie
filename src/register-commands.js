@@ -17,54 +17,12 @@ const commands = [
         description: 'Checks the bot latency!',
     },
     {
-        name: 'avatar',
-        description: 'Displays the avatar of a specified user or your own.',
-        options: [
-            {
-                name: 'user',
-                description: 'The user whose avatar you want to see',
-                type: 6,
-                required: false,
-            },
-        ],
-    },
-    {
         name: 'github',
         description: 'Get the Evilsaint1022 GitHub Repository link',
     },
     {
         name: 'invite',
         description: 'Invite your friends!',
-    },
-    {
-        name: 'blackjack-singleplayer',
-        description: 'Play a game of blackjack and bet your balance!',
-        options: [
-            {
-                name: 'bet',
-                description: 'The amount to bet',
-                type: 4,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: 'blackjack-duels',
-        description: 'Challenge another member to a blackjack game and bet your balance!',
-        options: [
-            {
-                name: 'opponent',
-                description: 'The member you want to challenge',
-                type: 6,
-                required: true,
-            },
-            {
-                name: 'bet',
-                description: 'The amount to bet',
-                type: 4,
-                required: true,
-            },
-        ],
     },
     {
         name: 'shop',
@@ -103,18 +61,6 @@ const commands = [
         description: 'Unlocks the voice channel.',
     },
     {
-        name: 'ai-search',
-        description: 'Search for results using AI.',
-        options: [
-            {
-                name: 'query',
-                description: 'What do you want to search for?',
-                type: 3,
-                required: true,
-            },
-        ]
-    },
-    {
         name: 'staff-apply',
         description: 'Apply to become a staff member.',
     },
@@ -125,18 +71,6 @@ const commands = [
             {
                 name: 'message',
                 description: 'What do you want to vent?',
-                type: 3,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: 'emoji',
-        description: 'Show a custom emoji as an image (PNG/GIF).',
-        options: [
-            {
-                name: 'emoji',
-                description: 'Enter the emoji',
                 type: 3,
                 required: true,
             },
