@@ -52,7 +52,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
 <detials>
   
-**Commands are slash commands, so type `/help` in chat to see them.**  
+**Commands are `Slash` & `Prefix` commands, so type `/help` in chat to see them.**  
 **_Make sure the bot has permission to Send Messages and Use Application Commands._**  
 **_Some commands may require specific roles or permissions depending on your server setup._**  
 
@@ -244,8 +244,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?tickle` - Tickle other users by using `?tickle @user`.
 
 ### **🌿<ins>Other</ins>**
-- `/github` - Github link to CheeckyCharlies Repo.
-- `/invite` - Generates a temporary invite link for server you are in.
+- `?github` - Github link to CheeckyCharlies Repo.
+- `?invite` - Generates a temporary invite link for server you are in.
 
 </details>
 
