@@ -29,7 +29,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿[TENOR](https://tenor.com/developer/keyregistration)
 - 🌿[CAT API](https://thecatapi.com/)
 - 🌿[DOG API](https://thedogapi.com/)
-- 🌿[SIMPSONS](https://thesimpsonsapi.com/)
+- 🌿[SIMPSONS API](https://thesimpsonsapi.com/)
 
 # **🌿<ins>Features</ins>🌿**
 - 🌿Full Economy System
