@@ -29,6 +29,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿[TENOR](https://tenor.com/developer/keyregistration)
 - 🌿[CAT API](https://thecatapi.com/)
 - 🌿[DOG API](https://thedogapi.com/)
+- 🌿[SIMPSONS](https://thesimpsonsapi.com/)
 
 # **🌿<ins>Features</ins>🌿**
 - 🌿Full Economy System
@@ -242,6 +243,9 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - `?hug` - Hug other users by using `?hug @user`.
 - `?kiss` - Kiss other users by using `?kiss @user`.
 - `?tickle` - Tickle other users by using `?tickle @user`.
+
+### **🌿<ins>Simpsons</ins>**
+- `?characters` - Displays all characters that you can roleplay as.
 
 ### **🌿<ins>Other</ins>**
 - `?github` - Github link to CheeckyCharlies Repo.
