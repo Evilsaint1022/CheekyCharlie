@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { Events, EmbedBuilder, PermissionsBitField } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -11,49 +11,67 @@ module.exports = {
     const match = message.content.match(/^:([^:]+):\s*(.+)/);
     if (!match) return;
 
-    const guildName = message.guild.name;
-    const guildId = message.guild.id;
-
-    const characterName = match[1].trim().toLowerCase();
+    const characterNameInput = match[1].trim().toLowerCase();
     const text = match[2].trim();
     if (!text) return;
 
     try {
       const res = await fetch('https://thesimpsonsapi.com/api/characters');
       const data = await res.json();
-
       const characters = data.results;
+
       if (!Array.isArray(characters)) return;
 
       const character = characters.find(c =>
-        c.name.toLowerCase().startsWith(characterName)
+        c.name.toLowerCase().startsWith(characterNameInput)
       );
 
       if (!character) return;
 
-      // ✅ Thumbnail URL from CDN
+      // Character thumbnail
       const thumbnail = `https://cdn.thesimpsonsapi.com/500/character/${character.id}.webp`;
 
       const embed = new EmbedBuilder()
-        .setAuthor({
-          name: character.name,
-          iconURL: character.image
-        })
-        .setThumbnail(thumbnail)
-        .setDescription(text)
+        .setDescription(`${text}\n\n`)
         .setColor(0xF9E547)
         .setFooter({ text: '💛 The Simpsons Roleplay' });
 
-      await message.channel.send({ embeds: [embed] });
+      // 🔎 Find or create webhook
+      let webhook;
+      const webhooks = await message.channel.fetchWebhooks();
+      webhook = webhooks.find(w => w.name === 'Simpsons RP');
 
-      console.log(`[💛] [SIMPSONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} - ${characterName}:${text}`);
+      if (!webhook) {
+        if (
+          !message.guild.members.me.permissions.has(
+            PermissionsBitField.Flags.ManageWebhooks
+          )
+        ) return;
 
+        webhook = await message.channel.createWebhook({
+          name: 'Simpsons RP',
+        });
+      }
+
+      // 📤 Send message as webhook
+      await webhook.send({
+        username: character.name,
+        avatarURL: thumbnail,
+        embeds: [embed],
+      });
+
+      // 🧹 Delete original message
       if (message.deletable) {
         await message.delete();
       }
 
+      console.log(
+        `[💛] [SIMPSONS] ${message.guild.name} (${message.guild.id}) ` +
+        `${message.author.username} -> ${character.name}: ${text}`
+      );
+
     } catch (err) {
-      console.error('Simpsons RP Error:', err);
+      console.error('Simpsons RP Webhook Error:', err);
     }
   }
 };
