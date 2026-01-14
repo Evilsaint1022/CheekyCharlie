@@ -29,6 +29,21 @@ module.exports = {
     const ferns = '<:Ferns:1395219665638391818>';
 
     try {
+      const lastBumpData = await db.lastbump.get(guildKey);
+      const lastBumpTimestamp = lastBumpData?.timestamp || 0;
+
+      const currentTimestamp = Date.now();
+      const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
+
+    // If it’s NOT time yet, ignore the message
+    if (timeSinceLastBump < reminderDelay) return;
+
+    } catch (err) {
+      console.error('Bump check error:', err);
+    }
+
+
+    try {
       const bumpData = await db.bump.get(guildKey);
       if (!bumpData || !bumpData.channelId) return;
 
