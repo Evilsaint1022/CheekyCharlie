@@ -56,7 +56,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
   
 **Commands are `Slash` & `Prefix` commands, so type `/help` in chat to see them.**  
 
-**Guild owners can type `/set-whitelisted-role` to set the whitelisted role.**  
+**Type `/set-whitelisted-role` to set the whitelisted role.**  
 _Setting the whitelisted role gives that role access to the whitelisted commands._
 
 - `/help` - Help command that displays commands.
@@ -65,6 +65,81 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 **That’s it — you’re ready to use CheekyCharlie!**
 
 </detials>
+
+<details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
+  
+</summary>
+
+### **🌿<ins>Economy</ins>**
+- `?leaderboard` - Check the wallet/bank/money/level leaderboard. `?leaderboard money`.
+- `?balance` - Check your ferns balance or check another users by using `?balance @user`.
+- `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
+- `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
+- `?level` - Check your current level or check another users by using `?level @user`.
+- `?daily` - Daily ferns collect.
+- `?pick` - Picks ferns when the drop party's drops.
+- `?pay` - Pay other users ferns by using `?pay @user`.
+
+### **🌿<ins>Economy Games</ins>**
+- `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
+- `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
+- `?slots` - Starts a game of slots using `?slots bet`.
+
+### **🌿<ins>Shop</ins>**
+- `?shop` - checks the server shop.
+- `?buy` - buys a item from the shop.
+- `?use` - uses the item bought from from the shop.
+- `?refund` - refunds the item from the shop.
+- `?inventory` - checks the items in the users inventory.
+
+### **🌿<ins>Join-to-Create VC</ins>**
+- `?lock-vc` - locks the join-to-create vc channel.
+- `?unlock-vc` - unlocks the join-to-create vc channel.
+
+### **🌿<ins>One-Word-Story</ins>**
+- `?view-one-word-story` - view the current story in the server
+
+### **🌿<ins>Staff Applications</ins>**
+- `?staff-apply` - Start a new staff application.
+
+### **🌿<ins>Venting</ins>**
+- `?venting` - Vent anonymously to the vent channel.
+
+### **🌿<ins>Counting</ins>**
+- `?counting` - View the current and next expected number for the guilds counting.
+
+### **🌿<ins>Birthdays</ins>**
+- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
+
+### **🌿<ins>Fun</ins>**
+- `?avatar` - View your's or someone elses avatar using `?pfp @user`.
+- `?ai-search` - Use 'gpt-4o-mini' to search for results `?ai text`.
+- `?emoji` - Show a custom emoji as an image (PNG/GIF) using `?e Emoji` 
+- `?cat` - Generates a random picture of a cat.
+- `?dog` - Generates a random picture of a dog.
+- `?slap` - Slap other users by using `?slap @user`.
+- `?kick` - Kick other users by using `?kick @user`.
+- `?hug` - Hug other users by using `?hug @user`.
+- `?kiss` - Kiss other users by using `?kiss @user`.
+- `?tickle` - Tickle other users by using `?tickle @user`.
+
+### **🌿<ins>Simpsons</ins>**
+- `?characters` - Displays all characters that you can roleplay as.
+
+### **🌿<ins>Other</ins>**
+- `?github` - Github link to CheeckyCharlies Repo.
+- `?invite` - Generates a temporary invite link for server you are in.
+
+</details>
+
+<details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
+
+</summary>
+
+### **🌿<ins>Birthdays</ins>**
+- `?birthdaychannel` - Sets a birthday channel for the birthday messages.
+- `?birthdayrole` - Sets a role to be pinged for the birthday messages.
+</details>
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
   
@@ -187,79 +262,4 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `/remove-qotd-role` - Removes the role set for Question of the day.
 - `/toggle-qotd` - toggles question of the day on or off.
 
-</details>
-
-<details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
-  
-</summary>
-
-### **🌿<ins>Economy</ins>**
-- `?leaderboard` - Check the wallet/bank/money/level leaderboard. `?leaderboard money`.
-- `?balance` - Check your ferns balance or check another users by using `?balance @user`.
-- `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
-- `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
-- `?level` - Check your current level or check another users by using `?level @user`.
-- `?daily` - Daily ferns collect.
-- `?pick` - Picks ferns when the drop party's drops.
-- `?pay` - Pay other users ferns by using `?pay @user`.
-
-### **🌿<ins>Economy Games</ins>**
-- `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
-- `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
-- `?slots` - Starts a game of slots using `?slots bet`.
-
-### **🌿<ins>Shop</ins>**
-- `?shop` - checks the server shop.
-- `?buy` - buys a item from the shop.
-- `?use` - uses the item bought from from the shop.
-- `?refund` - refunds the item from the shop.
-- `?inventory` - checks the items in the users inventory.
-
-### **🌿<ins>Join-to-Create VC</ins>**
-- `?lock-vc` - locks the join-to-create vc channel.
-- `?unlock-vc` - unlocks the join-to-create vc channel.
-
-### **🌿<ins>One-Word-Story</ins>**
-- `?view-one-word-story` - view the current story in the server
-
-### **🌿<ins>Staff Applications</ins>**
-- `?staff-apply` - Start a new staff application.
-
-### **🌿<ins>Venting</ins>**
-- `?venting` - Vent anonymously to the vent channel.
-
-### **🌿<ins>Counting</ins>**
-- `?counting` - View the current and next expected number for the guilds counting.
-
-### **🌿<ins>Birthdays</ins>**
-- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
-
-### **🌿<ins>Fun</ins>**
-- `?avatar` - View your's or someone elses avatar using `?pfp @user`.
-- `?ai-search` - Use 'gpt-4o-mini' to search for results `?ai text`.
-- `?emoji` - Show a custom emoji as an image (PNG/GIF) using `?e Emoji` 
-- `?cat` - Generates a random picture of a cat.
-- `?dog` - Generates a random picture of a dog.
-- `?slap` - Slap other users by using `?slap @user`.
-- `?kick` - Kick other users by using `?kick @user`.
-- `?hug` - Hug other users by using `?hug @user`.
-- `?kiss` - Kiss other users by using `?kiss @user`.
-- `?tickle` - Tickle other users by using `?tickle @user`.
-
-### **🌿<ins>Simpsons</ins>**
-- `?characters` - Displays all characters that you can roleplay as.
-
-### **🌿<ins>Other</ins>**
-- `?github` - Github link to CheeckyCharlies Repo.
-- `?invite` - Generates a temporary invite link for server you are in.
-
-</details>
-
-<details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
-
-</summary>
-
-### **🌿<ins>Birthdays</ins>**
-- `?birthdaychannel` - Sets a birthday channel for the birthday messages.
-- `?birthdayrole` - Sets a role to be pinged for the birthday messages.
 </details>
