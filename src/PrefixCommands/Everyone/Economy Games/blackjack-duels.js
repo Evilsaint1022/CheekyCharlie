@@ -65,6 +65,8 @@ module.exports = {
       return message.reply(`❌ ${opponent.username} doesn’t have enough balance to match this bet.`);
     }
 
+    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet.toLocaleString()} ferns.`);
+
     // 📨 Invite
     const inviteRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
@@ -75,6 +77,7 @@ module.exports = {
       content: `${opponent}, you’ve been challenged to a blackjack duel by ${author} for ${ferns}${bet.toLocaleString()}!`,
       components: [inviteRow]
     });
+    
 
     const filter = i => i.user.id === opponent.id;
     const inviteCollector = inviteMsg.createMessageComponentCollector({ filter, time: 30000 });
@@ -83,12 +86,15 @@ module.exports = {
       if (btn.customId === 'decline') {
         await btn.update({ content: `${opponent.username} declined the blackjack challenge.`, components: [] });
         inviteCollector.stop();
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} declined ${author.username} blackjack game for ${bet.toLocaleString()} ferns.`);
         return;
       }
 
       if (btn.customId === 'accept') {
         await btn.update({ content: `✅ Challenge accepted! Starting blackjack...`, components: [] });
         inviteCollector.stop();
+
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} accepted ${author.username} blackjack game for ${bet.toLocaleString()} ferns.`);
 
         // 🎴 Blackjack Logic
         const drawCard = () => Math.floor(Math.random() * 10) + 1;
@@ -140,9 +146,11 @@ module.exports = {
             if (winner.id === author.id) {
               challengerBalance += bet * 2;
               opponentBalance -= bet;
+              console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()}`);
             } else {
               challengerBalance -= bet;
               opponentBalance += bet * 2;
+              console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} won the bet of ${bet.toLocaleString()}`);
             }
 
             await db.wallet.set(balanceKeyChallenger, challengerBalance);

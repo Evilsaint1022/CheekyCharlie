@@ -72,6 +72,8 @@ module.exports = {
       return message.reply('❌ You don’t have enough balance to place this bet.');
     }
 
+    console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ferns.`);
+
     // 🎴 Blackjack Logic
     const drawCard = () => Math.floor(Math.random() * 10) + 1;
 
@@ -131,8 +133,20 @@ module.exports = {
       if (result || btn.customId === 'stand') {
         const finalResult = result || checkGameResult();
 
-        if (finalResult === 'win') balance += bet * 2;
-        if (finalResult === 'lose') balance -= bet;
+        if (finalResult === 'win') { 
+          balance += bet * 2;
+          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ferns`);
+        }
+        if (finalResult === 'lose') {
+          balance -= bet;
+          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ferns`);
+        }
+
+        if (finalResult === 'tie') {
+          balance += bet;
+          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ferns back!`);
+
+        }
 
         walletObj.balance = balance;
         await db.wallet.set(newKey, walletObj);
