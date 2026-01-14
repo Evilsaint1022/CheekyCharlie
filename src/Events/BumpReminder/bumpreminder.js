@@ -1,18 +1,18 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
-const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-// const reminderDelay = 10 * 1000; // --> 10 seconds for testing
+// const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
+const reminderDelay = 10 * 1000; // --> 10 seconds for testing
 
-const targetBotId = '302050872383242240'; // Disboard bot ID
-// const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+// const targetBotId = '302050872383242240'; // Disboard bot ID
+const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+
+// 🔒 Tracks active reminders so they only run once
+const activeReminders = new Set();
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
-
-
-    
 
     if (!message.guild) return;
 
@@ -40,12 +40,10 @@ module.exports = {
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
       const rewardAmount = 100;
 
-       let balance = await db.wallet.get(`${newKey}.balance`) || 0;
+      let balance = await db.wallet.get(`${newKey}.balance`) || 0;
 
-       // Add reward
-        balance += rewardAmount;
-
-        await db.wallet.set(`${newKey}.balance`, balance);
+      balance += rewardAmount;
+      await db.wallet.set(`${newKey}.balance`, balance);
 
       // bumper counter stuff
       const bumpcounter = (await db.bumpcounter.get(guildKey)) ?? 0;
@@ -55,10 +53,10 @@ module.exports = {
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
       const bumped = new EmbedBuilder()
-      .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
-      .setFooter({ text: `Bumper: #${currentbumpcount}` })
-      .setColor(0x207e37)
-      .setThumbnail(guild.iconURL())
+        .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
+        .setFooter({ text: `Bumper: #${currentbumpcount}` })
+        .setColor(0x207e37)
+        .setThumbnail(guild.iconURL())
 
       console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${message.channel.name} ${message.channel.id}`);
       await message.channel.send({ embeds: [bumped] });
@@ -67,17 +65,22 @@ module.exports = {
 
       await db.lastbump.set(cooldownKey, {
         timestamp: now,
-        userId: message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id
+        userId: bumpuser
       });
 
+      // 🔒 Prevent duplicate scheduling
+      if (activeReminders.has(guildKey)) return;
+
+      activeReminders.add(guildKey);
       scheduleReminder(message.client, channelId, roleId, cooldownKey, guildKey);
+
     } catch (err) {
       console.error(`[⬆️] [BUMP REMINDER] Error handling bump message:`, err);
     }
   },
 };
 
-async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey,) {
+async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey) {
   const bumpInfo = await db.lastbump.get(cooldownKey);
   if (!bumpInfo || !bumpInfo.timestamp || !bumpInfo.userId) return;
 
@@ -85,12 +88,10 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
   const timeLeft = reminderDelay - timePassed;
 
   const runReminder = async () => {
-
     try {
       const channel = await client.channels.fetch(channelId);
       if (!channel) return;
 
-      // Get guild info properly
       const guild = channel.guild;
       const guildName = guild?.name || "Unknown Guild";
       const guildId = guild?.id || "Unknown ID";
@@ -103,9 +104,13 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
         .setThumbnail(guild.iconURL())
 
       await channel.send({ content: mention, embeds: [bumpreminder] });
+
       console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Its Time to Bump again in ${channel.name} ${channel.id}`);
     } catch (err) {
       console.error(`[⬆️] [BUMP REMINDER] Failed to send reminder:`, err);
+    } finally {
+      // 🔓 Allow next bump to schedule again
+      activeReminders.delete(guildKey);
     }
   };
 
