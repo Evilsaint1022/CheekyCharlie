@@ -8,182 +8,194 @@ module.exports = {
   aliases: ['bjd', 'blackjackduel'],
 
   async execute(message, args) {
-    // ❌ No DMs
     if (!message.guild) {
       return message.reply('This command cannot be used in DMs.');
     }
 
     const { guild, author, channel } = message;
-
-    // 🧑 Opponent
     const opponent = message.mentions.users.first();
-    if (!opponent) {
-      return message.reply('❌ You must mention a user to challenge.');
-    }
-
-    // 💰 Bet
     const bet = parseInt(args[1]);
-    if (isNaN(bet)) {
-      return message.reply('❌ You must provide a valid bet amount.');
-    }
-
     const ferns = '<:Ferns:1395219665638391818>';
 
-    // ❌ Invalid opponent
-    if (opponent.bot || opponent.id === author.id) {
+    if (!opponent) return message.reply('❌ You must mention a user to challenge.');
+    if (opponent.bot || opponent.id === author.id)
       return message.reply('❌ You can’t challenge bots or yourself.');
-    }
+    if (isNaN(bet) || bet <= 0)
+      return message.reply('❌ You must provide a valid bet amount.');
 
-    // 🌐 GLOBAL COOLDOWN
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.blackjack-duels`;
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
     const now = Date.now();
 
     if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
       const remaining = Math.ceil((COOLDOWN_TIME - (now - lastUsed)) / 1000);
-      return message.reply(`⏳ The blackjack duel command is on cooldown. Please wait ${remaining} seconds.`);
+      return message.reply(`⏳ Blackjack duels is on cooldown for ${remaining}s.`);
     }
 
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
-    // 💳 Balances
     const balanceKeyChallenger = `${author.id}.balance`;
     const balanceKeyOpponent = `${opponent.id}.balance`;
 
     let challengerBalance = parseInt(await db.wallet.get(balanceKeyChallenger) ?? 0);
     let opponentBalance = parseInt(await db.wallet.get(balanceKeyOpponent) ?? 0);
 
-    if (bet <= 0) {
-      return message.reply('❌ Bet amount must be greater than zero.');
-    }
-
-    if (challengerBalance < bet) {
+    if (challengerBalance < bet)
       return message.reply(`❌ You don’t have enough balance to bet ${ferns}${bet}.`);
-    }
+    if (opponentBalance < bet)
+      return message.reply(`❌ ${opponent.username} doesn’t have enough balance.`);
 
-    if (opponentBalance < bet) {
-      return message.reply(`❌ ${opponent.username} doesn’t have enough balance to match this bet.`);
-    }
+    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet} ferns`);
 
-    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet.toLocaleString()} ferns.`);
-
-    // 📨 Invite
     const inviteRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
       new ButtonBuilder().setCustomId('decline').setLabel('Decline').setStyle(ButtonStyle.Danger)
     );
 
     const inviteMsg = await channel.send({
-      content: `${opponent}, you’ve been challenged to a blackjack duel by ${author} for ${ferns}${bet.toLocaleString()}!`,
+      content: `${opponent}, you’ve been challenged by ${author} for ${ferns}${bet}!`,
       components: [inviteRow]
     });
-    
 
-    const filter = i => i.user.id === opponent.id;
-    const inviteCollector = inviteMsg.createMessageComponentCollector({ filter, time: 30000 });
+    const inviteCollector = inviteMsg.createMessageComponentCollector({
+      filter: i => i.user.id === opponent.id,
+      time: 30000
+    });
 
-    inviteCollector.on('collect', async (btn) => {
+    inviteCollector.on('collect', async btn => {
       if (btn.customId === 'decline') {
-        await btn.update({ content: `${opponent.username} declined the blackjack challenge.`, components: [] });
-        inviteCollector.stop();
-        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} declined ${author.username} blackjack game for ${bet.toLocaleString()} ferns.`);
-        return;
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} declined the duel`);
+        return btn.update({ content: '❌ Challenge declined.', components: [] });
       }
 
-      if (btn.customId === 'accept') {
-        await btn.update({ content: `✅ Challenge accepted! Starting blackjack...`, components: [] });
-        inviteCollector.stop();
+      await btn.update({ content: '✅ Challenge accepted! Starting blackjack...', components: [] });
+      inviteCollector.stop();
 
-        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} accepted ${author.username} blackjack game for ${bet.toLocaleString()} ferns.`);
+      console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Duel started between ${author.username} and ${opponent.username}`);
 
-        // 🎴 Blackjack Logic
-        const drawCard = () => Math.floor(Math.random() * 10) + 1;
-        const calcTotal = cards => cards.reduce((a, b) => a + b, 0);
+      const drawCard = () => Math.floor(Math.random() * 10) + 1;
+      const calcTotal = cards => cards.reduce((a, b) => a + b, 0);
 
-        let challengerCards = [drawCard(), drawCard()];
-        let opponentCards = [drawCard(), drawCard()];
-        let turn = author.id;
+      let challengerCards = [drawCard(), drawCard()];
+      let opponentCards = [drawCard(), drawCard()];
 
-        const buttons = new ActionRowBuilder().addComponents(
-          new ButtonBuilder().setCustomId('hit').setLabel('Hit').setStyle(ButtonStyle.Primary),
-          new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
-        );
+      let turn = author.id;
+      let stands = { [author.id]: false, [opponent.id]: false };
 
-        const makeEmbed = () => ({
-          color: 0xFFFFFF,
-          title: '**__♦️ Blackjack Duel ♦️__**',
-          description: `${author.username} vs ${opponent.username}\n\nBet: ${ferns}${bet.toLocaleString()}`,
-          fields: [
-            { name: `${author.username}'s Cards`, value: challengerCards.join(', ') },
-            { name: `${author.username}'s Total`, value: calcTotal(challengerCards).toString() },
-            { name: `${opponent.username}'s Cards`, value: opponentCards.join(', ') },
-            { name: `${opponent.username}'s Total`, value: calcTotal(opponentCards).toString() },
-            { name: 'Turn', value: `<@${turn}>` }
-          ]
-        });
+      const buttons = new ActionRowBuilder().addComponents(
+        new ButtonBuilder().setCustomId('hit').setLabel('Hit').setStyle(ButtonStyle.Primary),
+        new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
+      );
 
-        const gameMsg = await channel.send({ embeds: [makeEmbed()], components: [buttons] });
-        const collector = gameMsg.createMessageComponentCollector({ time: 60000 });
+      const makeEmbed = () => ({
+        color: 0xffffff,
+        title: '**__♦️ Blackjack Duel ♦️__**',
+        description: `${author.username} vs ${opponent.username}\n\nBet: ${ferns}${bet}`,
+        fields: [
+          {
+            name: `${author.username}'s Cards`,
+            value: challengerCards.join(', ')
+          },
+          {
+            name: `${opponent.username}'s Cards`,
+            value: turn === author.id ? 'Hidden' : opponentCards.join(', ')
+          },
+          {
+            name: 'Turn',
+            value: `<@${turn}>`
+          }
+        ]
+      });
 
-        collector.on('collect', async (btn) => {
-          if (btn.user.id !== turn) {
-            return btn.reply({ content: '❌ It’s not your turn!', ephemeral: true });
+      const gameMsg = await channel.send({ embeds: [makeEmbed()], components: [buttons] });
+      const collector = gameMsg.createMessageComponentCollector({ time: 60000 });
+
+      collector.on('collect', async btn => {
+        if (btn.user.id !== turn)
+          return btn.reply({ content: '❌ It’s not your turn!', ephemeral: true });
+
+        let cards = turn === author.id ? challengerCards : opponentCards;
+
+        if (btn.customId === 'hit') {
+          cards.push(drawCard());
+          stands[turn] = false;
+        }
+
+        if (btn.customId === 'stand') {
+          stands[turn] = true;
+        }
+
+        const challengerTotal = calcTotal(challengerCards);
+        const opponentTotal = calcTotal(opponentCards);
+
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${btn.user.username} -> ${btn.customId}`);
+
+        if (challengerTotal > 21 || opponentTotal > 21) {
+          collector.stop();
+          const winner = challengerTotal > 21 ? opponent : author;
+
+          if (winner.id === author.id) {
+            challengerBalance += bet;
+            opponentBalance -= bet;
+          } else {
+            challengerBalance -= bet;
+            opponentBalance += bet;
           }
 
-          let currentCards = turn === author.id ? challengerCards : opponentCards;
+          await db.wallet.set(balanceKeyChallenger, challengerBalance);
+          await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-          if (btn.customId === 'hit') currentCards.push(drawCard());
-          if (btn.customId === 'stand') turn = turn === author.id ? opponent.id : author.id;
+          console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by bust`);
 
-          const challengerTotal = calcTotal(challengerCards);
-          const opponentTotal = calcTotal(opponentCards);
+          return btn.update({
+            embeds: [{
+              color: 0x00ff00,
+              title: '**__♠️ Blackjack Results ♠️__**',
+              description: `${winner.username} wins ${ferns}${bet}!`
+            }],
+            components: []
+          });
+        }
+
+        if (stands[author.id] && stands[opponent.id]) {
+          collector.stop();
 
           let winner = null;
-          if (challengerTotal > 21) winner = opponent;
-          if (opponentTotal > 21) winner = author;
+          if (challengerTotal > opponentTotal) winner = author;
+          else if (opponentTotal > challengerTotal) winner = opponent;
 
           if (winner) {
             if (winner.id === author.id) {
-              challengerBalance += bet * 2;
+              challengerBalance += bet;
               opponentBalance -= bet;
-              console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()}`);
             } else {
               challengerBalance -= bet;
-              opponentBalance += bet * 2;
-              console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} won the bet of ${bet.toLocaleString()}`);
+              opponentBalance += bet;
             }
 
             await db.wallet.set(balanceKeyChallenger, challengerBalance);
             await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-            return btn.update({
-              embeds: [{
-                color: 0x00FF00,
-                title: '**__♠️ Blackjack Results ♠️__**',
-                description: `${winner.username} wins ${ferns}${bet.toLocaleString()}!`,
-                fields: [
-                  { name: `${author.username}'s Balance`, value: `${ferns}${challengerBalance}` },
-                  { name: `${opponent.username}'s Balance`, value: `${ferns}${opponentBalance}` }
-                ]
-              }],
-              components: []
-            });
+            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by total`);
+          } else {
+            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id}  Duel ended in a tie`);
           }
 
-          if (btn.customId === 'hit') {
-            turn = turn === author.id ? opponent.id : author.id;
-          }
+          return btn.update({
+            embeds: [{
+              color: 0x00ff00,
+              title: '**__♠️ Blackjack Results ♠️__**',
+              description: winner
+                ? `${winner.username} wins ${ferns}${bet}!`
+                : '🤝 It’s a tie!'
+            }],
+            components: []
+          });
+        }
 
-          await btn.update({ embeds: [makeEmbed()], components: [buttons] });
-        });
-      }
-    });
-
-    inviteCollector.on('end', async (collected) => {
-      if (!inviteMsg.editable) return;
-      if (collected.size === 0) {
-        inviteMsg.edit({ content: `⌛ ${opponent.username} did not respond in time.`, components: [] });
-      }
+        turn = turn === author.id ? opponent.id : author.id;
+        await btn.update({ embeds: [makeEmbed()], components: [buttons] });
+      });
     });
   }
 };

@@ -72,7 +72,11 @@ module.exports = {
       return message.reply('❌ You don’t have enough balance to place this bet.');
     }
 
-    console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ferns.`);
+    console.log(
+      `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ferns.`
+    );
 
     // 🎴 Blackjack Logic
     const drawCard = () => Math.floor(Math.random() * 10) + 1;
@@ -83,13 +87,16 @@ module.exports = {
     let playerTotal = playerCards.reduce((a, b) => a + b, 0);
     let dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
 
-    const checkGameResult = () => {
+    const checkPlayerBust = () => {
       if (playerTotal > 21) return 'lose';
-      if (dealerTotal > 21) return 'win';
-      if (dealerTotal >= 17 && playerTotal > dealerTotal) return 'win';
-      if (dealerTotal >= 17 && playerTotal < dealerTotal) return 'lose';
-      if (dealerTotal >= 17 && playerTotal === dealerTotal) return 'tie';
       return null;
+    };
+
+    const checkFinalResult = () => {
+      if (dealerTotal > 21) return 'win';
+      if (playerTotal > dealerTotal) return 'win';
+      if (playerTotal < dealerTotal) return 'lose';
+      return 'tie';
     };
 
     const buttons = new ActionRowBuilder().addComponents(
@@ -97,7 +104,7 @@ module.exports = {
       new ButtonBuilder().setCustomId('stand').setLabel('Stand').setStyle(ButtonStyle.Secondary)
     );
 
-    const embed = {
+    const gameEmbed = {
       color: 0xFFFFFF,
       title: '**__♦️ Blackjack ♦️__**',
       description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
@@ -105,19 +112,27 @@ module.exports = {
       fields: [
         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
         { name: 'Your Total', value: playerTotal.toString(), inline: true },
-        { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+        { name: `Dealer's Cards`, value: `${dealerCards[0]}, ?`, inline: false }
       ]
     };
 
-    const gameMsg = await channel.send({ embeds: [embed], components: [buttons] });
+    const gameMsg = await channel.send({ embeds: [gameEmbed], components: [buttons] });
 
     const filter = i => i.user.id === author.id;
     const collector = gameMsg.createMessageComponentCollector({ filter, time: 60000 });
 
     collector.on('collect', async (btn) => {
+      await btn.deferUpdate();
+
       if (btn.customId === 'hit') {
         playerCards.push(drawCard());
         playerTotal = playerCards.reduce((a, b) => a + b, 0);
+
+        const bust = checkPlayerBust();
+        if (bust) {
+          collector.stop('bust');
+          return;
+        }
       }
 
       if (btn.customId === 'stand') {
@@ -125,47 +140,8 @@ module.exports = {
           dealerCards.push(drawCard());
           dealerTotal = dealerCards.reduce((a, b) => a + b, 0);
         }
-        collector.stop('stood');
-      }
-
-      const result = checkGameResult();
-
-      if (result || btn.customId === 'stand') {
-        const finalResult = result || checkGameResult();
-
-        if (finalResult === 'win') { 
-          balance += bet * 2;
-          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ferns`);
-        }
-        if (finalResult === 'lose') {
-          balance -= bet;
-          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ferns`);
-        }
-
-        if (finalResult === 'tie') {
-          balance += bet;
-          console.log(`[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ferns back!`);
-
-        }
-
-        walletObj.balance = balance;
-        await db.wallet.set(newKey, walletObj);
-
-        const resultEmbed = {
-          color: finalResult === 'win' ? 0x00FF00 : finalResult === 'lose' ? 0xFF0000 : 0xFFFF00,
-          title: '**__♠️ Blackjack Results ♠️__**',
-          description: `You ${finalResult} your bet of ${ferns}${bet.toLocaleString()}`,
-          thumbnail: { url: author.displayAvatarURL() },
-          fields: [
-            { name: 'Your Cards', value: playerCards.join(', '), inline: true },
-            { name: 'Your Total', value: playerTotal.toString(), inline: true },
-            { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
-            { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-            { name: '**__New Balance__**', value: `${ferns}${balance.toLocaleString()}`, inline: false }
-          ]
-        };
-
-        return btn.update({ embeds: [resultEmbed], components: [] });
+        collector.stop('stand');
+        return;
       }
 
       const updatedEmbed = {
@@ -176,15 +152,68 @@ module.exports = {
         fields: [
           { name: 'Your Cards', value: playerCards.join(', '), inline: true },
           { name: 'Your Total', value: playerTotal.toString(), inline: true },
-          { name: `Dealer's Cards`, value: dealerCards[0] + ', ?', inline: false }
+          { name: `Dealer's Cards`, value: `${dealerCards[0]}, ?`, inline: false }
         ]
       };
 
-      await btn.update({ embeds: [updatedEmbed], components: [buttons] });
+      await gameMsg.edit({ embeds: [updatedEmbed], components: [buttons] });
     });
 
-    collector.on('end', () => {
-      if (gameMsg.editable) gameMsg.edit({ components: [] });
+    collector.on('end', async (_, reason) => {
+      let finalResult;
+
+      if (reason === 'bust') {
+        finalResult = 'lose';
+      } else {
+        finalResult = checkFinalResult();
+      }
+
+      if (finalResult === 'win') {
+        balance += bet;
+        console.log(
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+          `${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ferns`
+        );
+      }
+
+      if (finalResult === 'lose') {
+        balance -= bet;
+        console.log(
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+          `${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ferns`
+        );
+      }
+
+      if (finalResult === 'tie') {
+        console.log(
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+          `${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ferns back!`
+        );
+      }
+
+      walletObj.balance = balance;
+      await db.wallet.set(newKey, walletObj);
+
+      const resultEmbed = {
+        color: finalResult === 'win' ? 0x00FF00 : finalResult === 'lose' ? 0xFF0000 : 0xFFFF00,
+        title: '**__♠️ Blackjack Results ♠️__**',
+        description: `You **${finalResult.toUpperCase()}** ${ferns}${bet.toLocaleString()}`,
+        thumbnail: { url: author.displayAvatarURL() },
+        fields: [
+          { name: 'Your Cards', value: playerCards.join(', '), inline: true },
+          { name: 'Your Total', value: playerTotal.toString(), inline: true },
+          { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
+          { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
+          { name: '**__New Balance__**', value: `${ferns}${balance.toLocaleString()}`, inline: false }
+        ]
+      };
+
+      if (gameMsg.editable) {
+        await gameMsg.edit({ embeds: [resultEmbed], components: [] });
+      }
     });
   }
 };
