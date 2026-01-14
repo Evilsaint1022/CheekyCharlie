@@ -1,11 +1,11 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
-// const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-const reminderDelay = 10 * 1000; // --> 10 seconds for testing
+const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
+// const reminderDelay = 10 * 1000; // --> 10 seconds for testing
 
-// const targetBotId = '302050872383242240'; // Disboard bot ID
-const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+const targetBotId = '302050872383242240'; // Disboard bot ID
+// const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
 
 // 🔒 Tracks active reminders so they only run once
 const activeReminders = new Set();
