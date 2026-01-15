@@ -43,7 +43,8 @@ module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
         // Ignore bot messages
-        if (message.author.bot) return;
+       if (message.author.bot) return;
+       if (message.webhookId) return;
 
         const words = message.content.toLowerCase().split(/\s+/);
         let reactionCount = 0;
@@ -52,11 +53,20 @@ module.exports = {
         for (const [animal, emoji] of Object.entries(animalEmojiMap)) {
             if (reactionCount >= MAX_REACTIONS) break; // Stop if limit reached
             if (words.includes(animal.toLowerCase())) {
+
                 try {
-                    await message.react(emoji);
-                    reactionCount++;
-                    console.log(`[${emoji}] [ANIMAL REACTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Reacted with ${emoji} ${animal} in ${message.channel.name} ${message.channel.id}`);
-                } catch (err) {
+        // Wait 5 seconds
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        // 🔍 Re-fetch the message to ensure it still exists
+        const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);
+        if (!fetchedMessage) return; // Message was deleted
+
+        await message.react(emoji);
+        reactionCount++;
+        console.log(`[${emoji}] [ANIMAL REACTIONS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Reacted with ${emoji} ${animal} in ${message.channel.name} ${message.channel.id}`);
+
+                } catch (error) {
                 // Ignore Error: Unknown Emoji
                 if (err.code !== 10014) return;
                 if (err.code !== 30010) return;

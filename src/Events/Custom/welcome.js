@@ -1,38 +1,40 @@
 // events/welcome_reaction.js
-
 module.exports = {
-    name: 'messageCreate',
-    once: false,
-    async execute(message) {
+  name: 'messageCreate',
+  once: false,
+  async execute(message) {
 
-        const MAX_REACTIONS = 20;
-        let reactionCount = 0;
+    // Ignore bots & webhooks
+    if (message.author.bot) return;
+    if (message.webhookId) return;
 
-        // Ignore bot messages
-        if (message.author.bot) return;
+    // Check content
+    if (!message.content.toLowerCase().includes('welcome')) return;
 
-        // Check if the message contains the word "welcome" (case-insensitive)
-        if (message.content.toLowerCase().includes('welcome')) {
+    try {
+      // Wait 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
-        // Check if the message has already reached the maximum number of reactions
-        if (reactionCount >= MAX_REACTIONS) return; // Stop if limit reached
+      // 🔍 Re-fetch the message to ensure it still exists
+      const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);
+      if (!fetchedMessage) return; // Message was deleted
 
-        try {
-            // Wait 3 seconds before reacting
-            await new Promise(resolve => setTimeout(resolve, 3000));
+      console.log(
+        `[❤️] [WELCOME REACTION] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+        `${message.guild.name} (${message.guild.id}) - ` +
+        `#${message.channel.name} (${message.channel.id})`
+      );
 
-            console.log(`[❤️] [WELCOME REACTION] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Welcome Reaction in ${message.channel.name} ${message.channel.id}`);
-            
-            // React with the custom emoji
-            await message.react('❤️');
-            reactionCount++;
-            } catch (error) {
-            // Ignore Error: Unknown Emoji
-            if (err.code !== 10014) return;
-            if (err.code !== 30010) return;
-            if (err.code !== 98881) return;
-            console.error('Failed to add reaction:', error);
-            }
-        }
-    },
+      await fetchedMessage.react('❤️');
+
+    } catch (error) {
+      // Ignore Error: Unknown Emoji
+      if (err.code !== 10014) return;
+      if (err.code !== 30010) return;
+      if (err.code !== 98881) return;
+
+      console.error('Failed to add welcome reaction:', error);
+    }
+  },
 };
