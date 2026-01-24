@@ -59,11 +59,12 @@ const repoImage = await loadImage(repoImagePath);
       return;
     }
 
-    // Construct the embed
-    const repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
+    let repoImageUrl;
 
-    if (!repoImageUrl) {
-    repoImageUrl = repoImage;
+    if (owner && repo) {
+      repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
+    } else {
+      repoImageUrl = repoImage;
     }
 
     const embed = new EmbedBuilder()
