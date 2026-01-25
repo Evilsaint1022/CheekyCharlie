@@ -10,6 +10,8 @@ const targetBotId = '302050872383242240'; // Disboard bot ID
 // 🔒 Tracks active reminders so they only run once
 const activeReminders = new Set();
 
+const guildBumpedLastMinute = new Set();
+
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
@@ -35,13 +37,17 @@ module.exports = {
       const currentTimestamp = Date.now();
       const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
 
-    // If it’s NOT time yet, ignore the message
-    if (timeSinceLastBump < reminderDelay) return;
+      // If it’s NOT time yet, ignore the message
+      if (timeSinceLastBump < reminderDelay) return;
+
+      if ( guildBumpedLastMinute.has(guildId) ) { // <- The guild was already bumped in the last minute
+        if ( message.author.id == targetBotId ) {await message.delete();}
+        return;
+      }
 
     } catch (err) {
       console.error('Bump check error:', err);
     }
-
 
     try {
       const bumpData = await db.bump.get(guildKey);
@@ -51,6 +57,12 @@ module.exports = {
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
       if (!message.author.bot && !message.content.toLowerCase().includes('Bump done!')) return;
+
+      guildBumpedLastMinute.add(guildId);
+
+      setTimeout(() => {
+        guildBumpedLastMinute.delete(guildId);
+      }, 60000);
 
       // Add Rewards to the Bump User
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
