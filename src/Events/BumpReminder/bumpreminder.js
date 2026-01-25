@@ -50,6 +50,7 @@ module.exports = {
       const { channelId, roleId } = bumpData;
 
       if (message.author.id !== targetBotId || message.channel.id !== channelId) return;
+      if (!message.author.bot && !message.content.toLowerCase().includes('Bump done!')) return;
 
       // Add Rewards to the Bump User
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
