@@ -76,9 +76,12 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
 - `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
 - `?level` - Check your current level or check another users by using `?level @user`.
-- `?daily` - Daily ferns collect.
 - `?pick` - Picks ferns when the drop party's drops.
 - `?pay` - Pay other users ferns by using `?pay @user`.
+- `?beg` - Begs for ferns.
+- `?daily` - Daily ferns collect.
+- `?weekly` - Weekly ferns collect.
+- `?monthly` - Monthly ferns collect.
 
 ### **🌿<ins>Economy Games</ins>**
 - `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
