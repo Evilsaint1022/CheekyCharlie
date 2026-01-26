@@ -1,34 +1,32 @@
-// daily.js (PREFIX COMMAND)
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
 
-const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
-const baseRewardAmount = 100; // Base daily reward
+const weeklyCooldown = 7 * 24 * 60 * 60 * 1000; // 7 days
+const baseRewardAmount = 1000; // Weekly reward
 
 module.exports = {
-    name: "daily",
-    description: "Claim your daily Ferns!",
+    name: "weekly",
+    description: "Claim your weekly Ferns!",
 
     async execute(message, args) {
-        
+
         if (message.channel.isDMBased()) {
-      return message.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
-      });
-    }
+            return message.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
         const ferns = '<:Ferns:1395219665638391818>';
         const { author, guild, member } = message;
         const username = author.username;
         const userId = author.id;
 
-        const timestamp = new Date().toLocaleTimeString();
         const space = 'ㅤ';
 
-        const top = `**────── 🌿${username}'s Daily ──────**`;
+        const top = `**────── 🌿${username}'s Weekly ──────**`;
         const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`;
-        const bottom = `**────── Come back tomorrow for more! ──────**`;
+        const bottom = `**────── Come back next week for more! ──────**`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -57,19 +55,23 @@ module.exports = {
         }
         // ------------------------------------------------------
 
-        const lastClaim = await db.lastclaim.get(`${newKey}.daily`) || 0;
+        const lastClaim = await db.lastclaim.get(`${newKey}.weekly`) || 0;
         const currentTime = Date.now();
 
         // Cooldown check
-        if (currentTime - lastClaim < dailyCooldown) {
-            const timeLeft = dailyCooldown - (currentTime - lastClaim);
-            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        if (currentTime - lastClaim < weeklyCooldown) {
+            const timeLeft = weeklyCooldown - (currentTime - lastClaim);
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+                (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+            );
 
             return message.reply(
-                `⏳You have already claimed your daily reward!\n` +
-                `Please wait **${hours}h ${minutes}m ${seconds}s** before claiming again.`
+                `⏳You have already claimed your weekly reward!\n` +
+                `Please wait **${days}d ${hours}h ${minutes}m** before claiming again.`
             );
         }
 
@@ -91,13 +93,13 @@ module.exports = {
 
         // Save
         await db.wallet.set(`${newKey}.balance`, balance);
-        await db.lastclaim.set(`${newKey}.daily`, currentTime);
+        await db.lastclaim.set(`${newKey}.weekly`, currentTime);
 
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `You have claimed your daily reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
+                `You have claimed your weekly reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
                 `ㅤㅤㅤㅤ${middle}\n` +
                 `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
                 `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
@@ -109,9 +111,9 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [WEEKLY] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`
+            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount} Ferns.`
         );
     }
 };

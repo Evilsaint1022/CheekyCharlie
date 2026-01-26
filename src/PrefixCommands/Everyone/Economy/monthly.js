@@ -87,7 +87,7 @@ module.exports = {
       .setDescription(
         `You have claimed your monthly reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
         `ㅤㅤㅤㅤ${middle}\n` +
-        `ㅤㅤㅤㅤ💰 Walletㅤㅤㅤㅤ🏦 Bank\n` +
+        `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
         `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
         `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
       )
