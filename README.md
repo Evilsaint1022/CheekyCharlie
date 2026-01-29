@@ -41,7 +41,6 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Role-Play
 - 🌿Bump Reminder
 - 🌿RSS Feed news
-- 🌿Entertainment
 - 🌿Giveaway System
 - 🌿Custom Starboard
 - 🌿Custom AI Response

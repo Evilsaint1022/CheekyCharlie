@@ -4,7 +4,7 @@ const { Collection } = require("discord.js");
 const Table = require("cli-table3");
 
 module.exports = async (client) => {
-  const commandFolders = ["Everyone", "Whitelisted"];
+  const commandFolders = ["Everyone", "Whitelisted", "Owners"];
 
   const table = new Table({
     head: ["Prefix Commands", "Status"],
