@@ -67,6 +67,12 @@ const repoImage = await loadImage(repoImagePath);
       repoImageUrl = repoImage;
     }
 
+    console.log(
+                `[⭐] [GITHUB] [${new Date().toLocaleDateString('en-GB')}] ` +
+                `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+                `Sending a new commit message in ${discordChannelId} - ${repoKey}: ${htmlUrl} `
+            );
+
     const embed = new EmbedBuilder()
       .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n${centeredmessage}\nㅤ\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
