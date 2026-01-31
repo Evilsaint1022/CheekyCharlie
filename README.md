@@ -138,6 +138,11 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </summary>
 
+### **🌿<ins>Other</ins>**
+- `?echo` - Echo's messages by using `?echo messagecontent`
+- `?stop` - Staff command to use during heated moments in chat.
+- `?steal` - Steal emojis from other guilds by using `?steal emoji emojiname` or just `?steal emoji`.
+
 ### **🌿<ins>Birthdays</ins>**
 - `?birthdaychannel` - Sets a birthday channel for the birthday messages.
 - `?birthdayrole` - Sets a role to be pinged for the birthday messages.
@@ -150,11 +155,6 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
 - `/set-whitelisted-roles` - Set whitelisted Roles.
 - `/remove-whitelisted-roles` - Remove whitelisted Roles.
-
-### **🌿<ins>Other</ins>**
-- `/echo` - Echo Messages
-- `/stop` - Staff Command to Cooldown Chat During Heated Moments.
-- `/steal` - Steal emojis from other guilds.
 
 ### **🌿<ins>Counting Setup</ins>**
 - `/set-counting-channel` - Sets the counting entertainment channel.

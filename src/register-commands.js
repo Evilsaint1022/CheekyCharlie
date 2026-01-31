@@ -20,18 +20,6 @@ const commands = [
     // ------------------------------------------------- @Staff Application Commands ------------------------------------------------------------------------
 
     {
-        name: 'echo',
-        description: 'Replies with the message you provide',
-        options: [
-            {
-                name: 'message',
-                description: 'The message to echo back',
-                type: 3,
-                required: true,
-            },
-        ],
-    },
-    {
         name: 'set-whitelisted-roles',
         description: 'Sets the whitelisted roles for the echo command',
         options: [
@@ -573,10 +561,6 @@ const commands = [
         description: 'Remove the current vent channel',
     },
     {
-        name: 'stop',
-        description: 'Staff command to calm down the server.',
-    },
-    {
         name: 'giveaway',
         description: 'Create a giveaway',
         options: [
@@ -740,24 +724,6 @@ const commands = [
     {
         name: 'remove-ban-channel',
         description: 'Remove the configured ^banned channel'
-    },
-    {
-        name: 'steal',
-        description: 'Steal an emoji and add it to this server',
-        options: [
-            {
-                name: 'emoji',
-                description: 'The emoji you want to steal',
-                type: 3,
-                required: true
-            },
-            {
-                name: 'name',
-                description: 'Optional name for the emoji',
-                type: 3,
-                required: false
-            },
-        ],
     }
 ];
 
