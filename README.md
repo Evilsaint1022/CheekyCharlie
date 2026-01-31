@@ -38,7 +38,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Level System
 - 🌿Venting
 - 🌿AI Deadchat
-- 🌿Role-Play
+- 🌿RolePlay
 - 🌿Bump Reminder
 - 🌿RSS Feed news
 - 🌿Giveaway System
