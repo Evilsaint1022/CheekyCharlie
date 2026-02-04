@@ -32,7 +32,7 @@
     "dotenv": "^17.2.3",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.3",
-    "node": "^25.5.0",
+    "node": "^25.6.0",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
     "openai": "^6.17.0",
