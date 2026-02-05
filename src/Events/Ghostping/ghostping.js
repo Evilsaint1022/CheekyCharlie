@@ -28,7 +28,7 @@ module.exports = {
 
                 // Send a notification in the channel
                 message.channel.send({
-                    content: `👻 **Ghost Ping Alert!** ${message.author} pinged ${pingedUsers} and deleted the message.`
+                    content: `# 👻 **__Ghost Ping Alert!__**\n**${message.author} pinged ${pingedUsers} and deleted the message.**`
                 });
             } catch (err) {
                 console.error('Error detecting ghost ping:', err);
