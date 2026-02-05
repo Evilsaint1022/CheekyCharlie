@@ -48,14 +48,15 @@ const repoImage = await loadImage(repoImagePath);
 
     // Skip if already sent
     if (previousCommits.includes(sha)) {
-      console.warn(`[Github] Commit ${sha} already posted. Skipping.`);
+      console.warn(`[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  Commit ${sha} already posted. Skipping.`);
       return;
     }
 
     // Fetch the Discord channel
     const channel = await client.channels.fetch(discordChannelId);
     if (!channel) {
-      console.warn(`[Github] Discord channel with ID ${discordChannelId} not found.`);
+      console.warn(
+        `[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Discord channel with ID ${discordChannelId} not found.`);
       return;
     }
 

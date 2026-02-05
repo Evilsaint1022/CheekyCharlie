@@ -15,7 +15,7 @@ async function scrapeCommits(client) {
       }
 
     } catch (err) {
-      console.error('[GITHUB] Error during commit check:', err);
+      console.error(`[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Error during commit check:`, err);
     }
 
     await new Promise(resolve => setTimeout(resolve, 5000));
