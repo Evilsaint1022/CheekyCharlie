@@ -54,7 +54,7 @@ async function sendQuestionOfTheDay(client) {
         temperature: 1.5
       });
 
-      const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about today?";
+      const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about" || "What’s your morning" || "What’s your afternoon"  || "What’s your night";
       const messageContent = roleId
         ? `🎉 **Question of the Day!** 🎉 — <@&${roleId}>\n${question}`
         : `🎉 **Question of the Day!** 🎉\n${question}`;
