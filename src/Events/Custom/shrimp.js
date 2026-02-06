@@ -7,6 +7,7 @@ module.exports = {
 
         if (message.author.bot) return;
         if (message.webhookId) return;
+        if (message.content.includes(':')) return;
 
         const MAX_REACTIONS = 20;
         let reactionCount = 0;
@@ -15,8 +16,6 @@ module.exports = {
         if (message.content.toLowerCase().includes('shrimp')) {
         
         try {
-        // Wait 5 seconds
-        await new Promise(resolve => setTimeout(resolve, 5000));
 
         // 🔍 Re-fetch the message to ensure it still exists
         const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);

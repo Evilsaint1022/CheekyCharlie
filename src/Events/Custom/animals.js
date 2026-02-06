@@ -45,6 +45,7 @@ module.exports = {
         // Ignore bot messages
        if (message.author.bot) return;
        if (message.webhookId) return;
+       if (message.content.includes(':')) return;
 
         const words = message.content.toLowerCase().split(/\s+/);
         let reactionCount = 0;
@@ -54,9 +55,7 @@ module.exports = {
             if (reactionCount >= MAX_REACTIONS) break; // Stop if limit reached
             if (words.includes(animal.toLowerCase())) {
 
-                try {
-        // Wait 5 seconds
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        try {
 
         // 🔍 Re-fetch the message to ensure it still exists
         const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);

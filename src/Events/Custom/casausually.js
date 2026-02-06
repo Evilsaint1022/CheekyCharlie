@@ -10,6 +10,7 @@ module.exports = {
         // Ignore bot messages
        if (message.author.bot) return;
        if (message.webhookId) return;
+       if (message.content.includes(':')) return;
 
         const lowerContent = message.content.toLowerCase();
         let reactionCount = 0;
@@ -17,8 +18,6 @@ module.exports = {
         if (reactionCount < MAX_REACTIONS && lowerContent.includes('pony')) {
 
     try {
-        // Wait 5 seconds
-        await new Promise(resolve => setTimeout(resolve, 5000));
 
         // 🔍 Re-fetch the message to ensure it still exists
         const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);

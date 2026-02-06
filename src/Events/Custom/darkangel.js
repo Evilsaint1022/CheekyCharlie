@@ -5,12 +5,11 @@ module.exports = {
       // Ignore bot messages
        if (message.author.bot) return;
        if (message.webhookId) return;
+       if (message.content.includes(':')) return;
 
         const content = message.content.toLowerCase();
 
         try {
-        // Wait 5 seconds
-        await new Promise(resolve => setTimeout(resolve, 5000));
 
         // 🔍 Re-fetch the message to ensure it still exists
         const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);
