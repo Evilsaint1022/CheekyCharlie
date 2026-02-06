@@ -77,7 +77,7 @@ const repoImage = await loadImage(repoImagePath);
     const embed = new EmbedBuilder()
       .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n${centeredmessage}\nㅤ\n${centeredauthor}\n${bottom}`)
       .setImage(repoImageUrl)
-      .setColor(0xDE4949)
+      .setColor(0xFFD700)
       .setTimestamp(new Date());
 
     await channel.send({ embeds: [embed] });
