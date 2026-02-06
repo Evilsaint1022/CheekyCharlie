@@ -33,6 +33,7 @@ module.exports = {
       });
     }
 
+    const guildName = interaction.guild.name;
     const guildId = interaction.guild.id;
     const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
     const space = 'ㅤ';
@@ -47,72 +48,73 @@ module.exports = {
       memberRoles.includes(id)
     );
 
+    // ===================== PERMISSIONS =====================
+
+    console.log(`[🌿] [HELP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the help command.`);
+
     // ===================== COMMAND LISTS =====================
-    // Each line = ONE item (important for 15 per page)
+    // Each line = ONE item (important for 20 per page)
 
     const publicCommands = [
-      '🌿 **__Economy__** 🌿',
-      '- `?leaderboard`・Check the wallet/bank/money/level leaderboard.',
-      '- `?balance`・Check your ferns balance or check another users balance.',
-      '- `?deposit`・Deposit ferns into your bank.',
-      '- `?withdraw`・Withdraw ferns from your bank.',
-      '- `?level`・Check your current level or other users level.',
-      '- `?daily`・Daily ferns collect.',
-      '- `?pick`・Picks ferns when the drop party`s drops.',
-      '- `?pay`・Pay other members Ferns.',
-      `${space}`,
-      `🌿 **__Economy Games__** 🌿`,
-      '- `blackjack-singleplayer` - Starts a game of blackjack using `?blackjack bet.`',
-      '- `?blackjack-duels` - Starts a game of blackjack duels using `?blackjack-duels @user bet.`',
-      '- `?slots` - Starts a game of slots using `?slots bet`.',
-      `${space}`,
-      '🌿 **__Shop__** 🌿',
-      '- `?shop` - View the shop.',
-      '- `?buy` - Buy items from the shop.',
+      '### 🌿 **__Economy__** 🌿',
+      '- `?leaderboard`・Check the wallet/bank/money/level leaderboard',
+      '- `?balance`・Check your ferns balance or check another users balance',
+      '- `?deposit`・Deposit ferns into your bank',
+      '- `?withdraw`・Withdraw ferns from your bank',
+      '- `?level`・Check your current level or other users level',
+      '- `?pick`・Picks ferns when the drop party`s drops',
+      '- `?pay`・Pay other members Ferns',
+      '- `?beg`・Beg for ferns',
+      '- `?daily`・Daily ferns collect',
+      '- `?weekly`・Weekly ferns collect',
+      '- `?monthly`・Monthly ferns collect',
+      `### 🌿 **__Economy Games__** 🌿`,
+      '- `blackjack-singleplayer` - Starts a game of blackjack`',
+      '- `?blackjack-duels` - Starts a game of blackjack duels`',
+      '- `?slots` - Starts a game of slots using `?slots bet`',
+      '### 🌿 **__Shop__** 🌿',
+      '- `?shop` - View the shop',
+      '- `?buy` - Buy items from the shop',
       '- `?use` - Use items.',
-      '- `?refund` - refund items bought from the shop.',
-      '- `?inventory` - View your inventory.',
-      `${space}`,
-      '🌿 **__Join-to-Create VC_** 🌿',
-      '- `?lock-vc` - Locks the join-to-create vc channel.',
-      '- `?unlock-vc` - Unlocks the join-to-create vc channel.',
-      `${space}`,
-      '🌿 **__One-Word-Story__** 🌿',
-      '- `?view-one-word-story` - Starts a game of one-word-story.',
-      `${space}`,
-      '🌿 **__Staff Applications__** 🌿',
+      '- `?refund` - refund items bought from the shop',
+      '- `?inventory` - View your inventory',
+      '### 🌿 **__Join-to-Create VC__** 🌿',
+      '- `?lock-vc` - Locks the join-to-create vc channel',
+      '- `?unlock-vc` - Unlocks the join-to-create vc channel',
+      '### 🌿 **__One-Word-Story__** 🌿',
+      '- `?view-one-word-story` - Views the current story in the server',
+      '### 🌿 **__Staff Applications__** 🌿',
       '- `?staff-apply` - Start a new staff application',
-      `${space}`,
-      '🌿 **__Venting__** 🌿',
-      '- `?vent` - Vent anonymously to the vent channel.',
-      `${space}`,
-      '🌿 **__Counting__** 🌿',
-      '- `?counting`・View the current and next expected number.',
-      `${space}`,
-      '🌿 **__Birthdays__** 🌿',
-      '- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.',
-      `${space}`,
-      '🌿 **__Fun__** 🌿',
-      '- `?avatar` - View yours or someone elses avatar using `?pfp @user`',
-      '- `?ai-search` - Use `gpt-4o-mini` to search for results `?ai text`',
-      '- `?emoji` - Show a custom emoji as an image (PNG/GIF) using `?e Emoji`.',
-      '- `?cat` - Generates a random picture of a cat.',
-      '- `?dog` - Generates a random picture of a dog.',
-      '- `?slap` - Slap other users by using `?slap @user`.',
-      '- `?kick` - Kick other users by using `?kick @user`.',
-      '- `?hug` - Hug other users by using `?hug @user`.',
-      '- `?kiss` - Kiss other users by using `?kiss @user`.',
-      '- `?tickle` - Tickle other users by using `?tickle @user`.',
-      `${space}`,
-      '🌿 **__Others__** 🌿',
-      '- `?ping` - Check the bot`s latency.',
-      '- `?invite` - Generates a temporary invite link for server you are in.',
-      `\nㅤ\n${middle}`
+      '### 🌿 **__Venting__** 🌿',
+      '- `?vent` - Vent anonymously to the vent channel',
+      '### 🌿 **__Counting__** 🌿',
+      '- `?counting`・View the current and next expected number',
+      '### 🌿 **__Birthdays__** 🌿',
+      '- `?birthday set` - Set your birthday. Format:`dd/mm/yyyy`',
+      '### 🌿 **__Fun__** 🌿',
+      '- `?avatar` - View yours or someone elses avatar',
+      '- `?ai-search` - Use AI search',
+      '- `?emoji` - Show a custom emoji',
+      '- `?cat` - Random cat image.',
+      '- `?dog` - Random dog image',
+      '- `?slap` - Slap a user',
+      '- `?kick` - Kick a user',
+      '- `?hug` - Hug a user',
+      '- `?kiss` - Kiss a user',
+      '- `?tickle` - Tickle a user',
+      '### 🌿 **__Others__** 🌿',
+      '- `?ping` - Check the bot`s latency',
+      '- `?invite` - Generate a server invite',
     ];
 
     const whitelistedCommands = [
-      '`Whitelisted Prefix Commands Coming Soon...`',
-      `\n${middle}`
+      '### 🌿 **__Others__** 🌿',
+      '- `?echo` - Repeats what ever you say',
+      '- `?stop` - Staff command to use during heated moments in chat',
+      '- `?steal` - Steal emojis from other guilds',
+      '### 🌿 **__Birthdays__** 🌿',
+      '- `?birthdaychannel` - Sets a birthday channel for the birthday messages',
+      '- `?birthdayrole` - Sets a role to be pinged for the birthday messages',
     ];
 
     // ===================== EMBEDS =====================
@@ -120,16 +122,16 @@ module.exports = {
     const embeds = [];
 
     // Public pages (15 items per page)
-    const publicPages = chunkByItems(publicCommands, 15);
+    const publicPages = chunkByItems(publicCommands, 19);
 
     publicPages.forEach((content, index) => {
       embeds.push(
         new EmbedBuilder()
-          .setTitle('🌿 **CheekyCharlie Help Menu** 🌿')
+          .setTitle(`🌿 **__Help Menu__** 🌿`)
           .setColor(0x207e37)
           .setThumbnail(interaction.client.user.displayAvatarURL())
           .setDescription(
-            `> Prefix: \`?\`\n\n${content}\n\n${middle}`
+            `- **The Prefix has been set to** \`?\`\n${middle}\n${content}\n${middle}`
           )
           .setFooter({
             text: `Page ${index + 1}/${publicPages.length} • Requested by ${interaction.user.tag}`
@@ -140,15 +142,15 @@ module.exports = {
 
     // Whitelisted pages
     if (hasPermission) {
-      const staffPages = chunkByItems(whitelistedCommands, 15);
+      const staffPages = chunkByItems(whitelistedCommands, 19);
 
       staffPages.forEach((content, index) => {
         embeds.push(
           new EmbedBuilder()
-            .setTitle('🌿 **Whitelisted Commands** 🌿')
-            .setColor(0xde4949)
+            .setTitle('🌿 **__Whitelisted Commands__** 🌿')
+            .setColor(0x207e37)
             .setThumbnail(interaction.client.user.displayAvatarURL())
-            .setDescription(`${content}\n\n${middle}`)
+            .setDescription(`${middle}\n${content}\n${middle}`)
             .setFooter({
               text: `Staff Page ${index + 1}/${staffPages.length} • ${interaction.user.tag}`
             })
