@@ -118,7 +118,8 @@ module.exports = {
       '- `?steal`・teal emojis from other guilds',
       '### 🌿 **__Birthdays__** 🌿',
       '- `?birthdaychannel`・Sets a birthday channel for the birthday messages',
-      '- `?birthdayrole`・Sets a role to be pinged for the birthday messages',
+      '- `?birthdaypingrole`・Sets a role to be pinged for the birthday messages',
+      '- `?birthdaygivenrole`・Sets a role to be given for birthdays',
     ];
 
     // ===================== EMBEDS =====================

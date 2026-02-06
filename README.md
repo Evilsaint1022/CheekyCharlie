@@ -146,7 +146,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Birthdays</ins>**
 - `?birthdaychannel` - Sets a birthday channel for the birthday messages.
-- `?birthdayrole` - Sets a role to be pinged for the birthday messages.
+- `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
+- `?birthdaygivenrole` - Sets a role that will be given to the birthday user.
 </details>
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>

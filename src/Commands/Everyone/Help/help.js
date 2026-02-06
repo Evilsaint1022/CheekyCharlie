@@ -107,6 +107,17 @@ module.exports = {
       '- `?invite`・Generate a server invite',
     ];
 
+    const whitelistedCommands = [
+      '### 🌿 **__Others__** 🌿',
+      '- `?echo`・Repeats what ever you say',
+      '- `?stop`・Staff command to use during heated moments in chat',
+      '- `?steal`・teal emojis from other guilds',
+      '### 🌿 **__Birthdays__** 🌿',
+      '- `?birthdaychannel`・Sets a birthday channel for the birthday messages',
+      '- `?birthdaypingrole`・Sets a role to be pinged for the birthday messages',
+      '- `?birthdaygivenrole`・Sets a role to be given for birthdays',
+    ];
+
     // ===================== EMBEDS =====================
 
     const embeds = [];
