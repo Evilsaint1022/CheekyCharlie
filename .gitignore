@@ -48,3 +48,5 @@ start.bat
 /src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json
 /src/Utilities/Storage/Settings/Birthdays/birthdayssent.json
 /src/Utilities/Storage/Settings/OptOut/optout.json
+/src/Utilities/Storage/Economy/Stolen/rob.json
+/src/Utilities/Storage/Economy/Stolen/heist.json
