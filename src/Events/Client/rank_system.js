@@ -79,6 +79,8 @@ module.exports = {
     const levelRoles = await db.levelroles.get(guildKey) || {};
     const currentLevel = userData.level;
 
+    if (!levelRoles) return;
+
     try {
       const rolesToKeep = new Set();
       let highestUnlocked = 0;
