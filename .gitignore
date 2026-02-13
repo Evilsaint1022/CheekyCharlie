@@ -47,3 +47,4 @@ start.bat
 /src/Utilities/Storage/Settings/Birthdays/birthdays.json
 /src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json
 /src/Utilities/Storage/Settings/Birthdays/birthdayssent.json
+/src/Utilities/Storage/Settings/OptOut/optout.json

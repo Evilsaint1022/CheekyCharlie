@@ -49,7 +49,8 @@ const db = {
     bumpcounter: new DotDB("./src/Utilities/Storage/Settings/Bump/bumpcounter.json"),
     birthdays: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdays.json"),
     birthdaysettings: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json"),
-    birthdays_sent: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdayssent.json")
+    birthdays_sent: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdayssent.json"),
+    optout: new DotDB("./src/Utilities/Storage/Settings/OptOut/optout.json")
 }
 
 module.exports = db;
