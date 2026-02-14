@@ -78,6 +78,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?level` - Check your current level or check another users by using `?level @user`.
 - `?pick` - Picks ferns when the drop party's drops.
 - `?pay` - Pay other users ferns by using `?pay @user`.
+- `?rob` - Rob other users wallets by using `?rob @user`.
+- `?heist` - Rob other users banks by using `?heist @user`.
 - `?beg` - Begs for ferns.
 - `?daily` - Daily ferns collect.
 - `?weekly` - Weekly ferns collect.
