@@ -90,6 +90,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
 
+### **🌿<ins>Passive Mode</ins>**
+- `?passive` - Toggles passive mode on and off.
+
 ### **🌿<ins>Shop</ins>**
 - `?shop` - checks the server shop.
 - `?buy` - buys a item from the shop.
