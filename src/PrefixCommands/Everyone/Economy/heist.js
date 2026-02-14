@@ -18,11 +18,18 @@ module.exports = {
 
     if (target.id === robber.id) return message.reply('You cannot heist yourself!');
 
-    // Passive Mode Check
+    // Target Passive Mode Check
     const targetPassive = await db.passive.get(target.id);
 
     if (targetPassive?.passive) {
       return message.reply(`🛡️ ${target.username} is in passive mode!`);
+    }
+
+    // Robber Passive Mode Check
+    const robberPassive = await db.passive.get(robber.id);
+
+    if (robberPassive?.passive) {
+      return message.reply(`🛡️ You Cant Heist In Passive Mode!`);
     }
 
     // Command Cooldown check
