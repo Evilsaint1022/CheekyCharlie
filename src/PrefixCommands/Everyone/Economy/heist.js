@@ -95,8 +95,9 @@ module.exports = {
     await db.bank.set(target.id, targetData);
     await db.bank.set(robber.id, robberData);
 
-    // Fetch updated values safely
-    const updatedBank = (await db.bank.get(`${robber.id}.bank`)) || 0;
+      // DB lookup AFTER migration
+      const balance = await db.wallet.get(`${robber.id}.balance`) || 0;
+      const bank = await db.bank.get(`${robber.id}.bank`) || 0;
 
     console.log(
       `[🌿] [HEIST] [${new Date().toLocaleDateString('en-GB')}] ` +
