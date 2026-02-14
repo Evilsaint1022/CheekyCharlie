@@ -41,6 +41,7 @@ start.bat
 /src/Utilities/Storage/Fallback/huggifs.json
 /src/Utilities/Storage/Fallback/kissgifs.json
 /src/Utilities/Storage/Fallback/ticklegifs.json
+/src/Utilities/Storage/Fallback/punchgifs.json
 /src/Utilities/Storage/Settings/JoinedMembers/joinedmembers.json
 /src/Utilities/Storage/Settings/Bump/bumpcounter.json
 /src/Utilities/Storage/Settings/Fun/counters.json

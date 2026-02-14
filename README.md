@@ -130,6 +130,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?hug` - Hug other users by using `?hug @user`.
 - `?kiss` - Kiss other users by using `?kiss @user`.
 - `?tickle` - Tickle other users by using `?tickle @user`.
+- `?punch` - Punch other users by using `?punch @user`.
 
 ### **🌿<ins>Simpsons</ins>**
 - `?characters` - Displays all characters that you can roleplay as.

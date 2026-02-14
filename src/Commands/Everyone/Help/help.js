@@ -102,6 +102,7 @@ module.exports = {
       '- `?hug`・Hug a user',
       '- `?kiss`・Kiss a user',
       '- `?tickle`・Tickle a user',
+      '- `?punch`・Punch a user',
       '### 🌿 **__Others__** 🌿',
       '- `?ping`・Check the bot`s latency',
       '- `?invite`・Generate a server invite',
