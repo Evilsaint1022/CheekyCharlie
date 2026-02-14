@@ -35,7 +35,7 @@
     "node": "^25.6.1",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
-    "openai": "^6.21.0",
+    "openai": "^6.22.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
