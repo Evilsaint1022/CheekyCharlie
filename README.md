@@ -36,20 +36,20 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Economy Games
 - 🌿Leaderboards
 - 🌿Level System
+- 🌿Roleplay
 - 🌿Venting
 - 🌿AI Deadchat
-- 🌿RolePlay
-- 🌿Ghost-Ping
+- 🌿Ghost Ping
+- 🌿RSS Feed News
 - 🌿Bump Reminder
-- 🌿RSS Feed news
 - 🌿Giveaway System
 - 🌿Custom Starboard
+- 🌿Color Of Rhe Week
 - 🌿Custom AI Response
 - 🌿Staff Applications
-- 🌿Question-Of-The-Day
+- 🌿Question Of The Day
 - 🌿Temporary Voice Channels
 - 🌿AI NSFW Content Filtering
-- 🌿Color-of-the-Week
 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
 <detials>
@@ -71,7 +71,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 </summary>
 
 ### **🌿<ins>Economy</ins>**
-- `?leaderboard` - Check the wallet/bank/money/level leaderboard. `?leaderboard money`.
+- `?leaderboard` - Check the `wallet`/`bank`/`money`/`level` leaderboard. `?leaderboard money`.
 - `?balance` - Check your ferns balance or check another users by using `?balance @user`.
 - `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
 - `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
