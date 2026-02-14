@@ -50,7 +50,7 @@ const db = {
     birthdays: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdays.json"),
     birthdaysettings: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json"),
     birthdays_sent: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdayssent.json"),
-    optout: new DotDB("./src/Utilities/Storage/Settings/OptOut/optout.json"),
+    passive: new DotDB("./src/Utilities/Storage/Settings/Passive/passive.json"),
     stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json")
 }
 
