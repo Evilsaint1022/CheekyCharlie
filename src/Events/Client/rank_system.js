@@ -6,7 +6,17 @@ module.exports = {
   async execute(message) {
     if (message.author.bot || message.channel.isDMBased()) return;
 
-    const { guild, member, author } = message;
+    const { guild, author } = message;
+
+    // Ensure member is fetched properly
+    let member = message.member;
+    if (!member) {
+      try {
+        member = await guild.members.fetch(author.id);
+      } catch (err) {
+        return; // If still can't fetch, stop execution
+      }
+    }
     const guildKey = `${guild.id}`;
 
     // NEW: userKey is only the user ID
