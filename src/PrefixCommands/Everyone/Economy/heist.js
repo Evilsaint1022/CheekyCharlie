@@ -91,14 +91,14 @@ module.exports = {
     );
 
     const embed = new EmbedBuilder()
-      .setColor(0x2ecc71)
+      .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
         `You Heisted **${target.username}** for **${stealAmount}** Ferns!\n` +
-        `ㅤㅤㅤ${middle}\n` +
-        `ㅤㅤㅤ**🏦 __Bank__**\n` +
-        `ㅤㅤㅤ${ferns}・${updatedBank.toLocaleString()}\n` +
-        `ㅤㅤㅤ${middle}`
+          `ㅤㅤㅤ${middle}\n` +
+          `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
+          `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
+          `ㅤㅤㅤ${middle}`
       )
       .setFooter({ text: '🌿 Banks aren’t as safe as they seem...' })
       .setTimestamp()

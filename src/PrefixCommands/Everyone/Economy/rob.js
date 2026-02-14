@@ -95,7 +95,7 @@ module.exports = {
         );
 
     const embed = new EmbedBuilder()
-      .setColor(0x2ecc71)
+      .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
           `You Robbed **${target.username}** for **${stealAmount}** Ferns!\n` +
