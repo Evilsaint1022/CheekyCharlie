@@ -9,39 +9,100 @@ module.exports = {
 
     const robber = message.author;
     const target =
-            message.mentions.users.first() ||
-            (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
+      message.mentions.users.first() ||
+      (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
 
     if (!target) return message.reply('You must mention someone to heist!');
 
+    if (target.bot) return message.reply('You cannot heist a bot!');
+
     if (target.id === robber.id) return message.reply('You cannot heist yourself!');
 
-    // Get wallets
-    const robberData = await db.bank.get(robber.id) ?? { balance: 0 };
-    const targetData = await db.bank.get(target.id) ?? { balance: 0 };
+    // Command Cooldown check
+    const commandcooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const now = Date.now();
+    const lastUsed = await db.cooldowns.get(`${robber.id}.lastheist`);
 
-    const robberBalance = robberData.balance ?? 0;
-    const targetBalance = targetData.balance ?? 0;
+    if (now - lastUsed < commandcooldown) {
+      const timeLeft = commandcooldown - (now - lastUsed);
 
-    if (targetBalance <= 0) {
-      return message.reply(`${target.username} has no money to steal in the bank!`);
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      return message.reply(
+        `⏳ Hold up! You can heist again in **${hours}h ${minutes}m ${seconds}s**.`
+      );
+    }
+
+    // Target Cooldown check
+    const UserCooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const lastheist = await db.stolen.get(`${target.id}.timestamp`);
+
+    if (now - lastheist < UserCooldown) {
+      const timeLeft = UserCooldown - (now - lastheist);
+
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      return message.reply(
+        `⏳ Hold up! ${target.username} can't be stolen from again for **${hours}h ${minutes}m ${seconds}s**.`
+      );
+    }
+
+    const top = `**──── 🌿 Heist Successful 🌿 ────**`;
+    const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+    const ferns = '<:Ferns:1395219665638391818>';
+
+    // Get banks
+    const robberData = await db.bank.get(robber.id) ?? { bank: 0 };
+    const targetData = await db.bank.get(target.id) ?? { bank: 0 };
+
+    const robberBank = robberData.bank ?? 0;
+    const targetBank = targetData.bank ?? 0;
+
+    if (targetBank <= 0) {
+      return message.reply(`${target.username} has no money in their bank to steal!`);
     }
 
     const randomAmount = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-    const stealAmount = Math.min(randomAmount, targetBalance); // don't steal more than they have
+    const stealAmount = Math.min(randomAmount, targetBank);
+
+    // Update cooldowns
+    await db.stolen.set(`${target.id}.timestamp`, now);
+    await db.cooldowns.set(`${robber.id}.lastheist`, now);
 
     // Update balances
-    targetData.balance -= stealAmount;
-    robberData.balance += stealAmount;
+    targetData.bank -= stealAmount;
+    robberData.bank += stealAmount;
 
-    // Save back to db
+    // Save back to db.bank
     await db.bank.set(target.id, targetData);
     await db.bank.set(robber.id, robberData);
 
+    // Fetch updated values safely
+    const updatedBank = (await db.bank.get(`${robber.id}.bank`)) || 0;
+
+    console.log(
+      `[🌿] [HEIST] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount} ferns.`
+    );
+
     const embed = new EmbedBuilder()
       .setColor(0x2ecc71)
-      .setTitle('🦹 Heist Successful!')
-      .setDescription(`You stole **$${stealAmount}** from ${target.username}!`);
+      .setTitle(top)
+      .setDescription(
+        `You Heisted **${target.username}** for **${stealAmount}** Ferns!\n` +
+        `ㅤㅤㅤ${middle}\n` +
+        `ㅤㅤㅤ**🏦 __Bank__**\n` +
+        `ㅤㅤㅤ${ferns}・${updatedBank.toLocaleString()}\n` +
+        `ㅤㅤㅤ${middle}`
+      )
+      .setFooter({ text: '🌿 Banks aren’t as safe as they seem...' })
+      .setTimestamp()
+      .setThumbnail(robber.displayAvatarURL({ dynamic: true }));
 
     return message.reply({ embeds: [embed] });
   }

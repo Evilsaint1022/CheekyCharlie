@@ -33,7 +33,7 @@ module.exports = {
 
     // User Cooldown check
     const UserCooldown = 24 * 60 * 60 * 1000; // 24 hours
-    const lastrob = await db.robcooldown.get(`${target.id}.timestamp`);
+    const lastrob = await db.stolen.get(`${target.id}.timestamp`);
 
     if (now - lastrob < UserCooldown) {
       const timeLeft = UserCooldown - (now - lastrob);
@@ -43,7 +43,7 @@ module.exports = {
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
       return message.reply(
-        `⏳ Hold up! ${target.username} cant for robbed again for **${hours}h ${minutes}m ${seconds}s**.`
+        `⏳ Hold up! ${target.username} cant be stolen from again for **${hours}h ${minutes}m ${seconds}s**.`
       );
     }
 
@@ -73,7 +73,7 @@ module.exports = {
     const stealAmount = Math.min(randomAmount, targetBalance); // don't steal more than they have
 
     // Update cooldown
-    await db.robcooldown.set(`${target.id}.timestamp`, now);
+    await db.stolen.set(`${target.id}.timestamp`, now);
     await db.cooldowns.set(`${robber.id}.lastrob`, now);
 
     // Update balances
