@@ -9,11 +9,11 @@ module.exports = {
     async execute(message, args) {
 
         if (message.channel.isDMBased()) {
-      return message.reply({
-        content: "This command cannot be used in DMs.",
-        flags: 64
-      });
-    }
+            return message.reply({
+                content: "This command cannot be used in DMs.",
+                flags: 64
+            });
+        }
 
         // Console log
         console.log(
@@ -33,6 +33,17 @@ module.exports = {
                 return message.reply('⚠️ No counting data found for this server yet.');
             }
 
+            let lastUser = 'Unknown User';
+
+            if (countingData.lastUserId) {
+                try {
+                    const user = await message.client.users.fetch(countingData.lastUserId);
+                    lastUser = user.username; // or user.tag if you want username#1234
+                } catch (err) {
+                    console.error('Failed to fetch user:', err);
+                }
+            }
+
             // Build embed
             const embed = new EmbedBuilder()
                 .setTitle(`🌿 ${guildName} 🌿`)
@@ -41,7 +52,7 @@ module.exports = {
                     { name: 'Next Number', value: `${countingData.expected}`, inline: true },
                     { name: 'Record', value: `${countingData.record}`, inline: true },
                 )
-                .setFooter({ text: `Last counted by user ID: ${countingData.lastUserId}` })
+                .setFooter({ text: `Last counted by ${lastUser}` })
                 .setColor(0x207e37);
 
             await message.reply({ embeds: [embed] });
