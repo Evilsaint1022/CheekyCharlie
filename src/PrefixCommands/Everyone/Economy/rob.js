@@ -12,6 +12,13 @@ module.exports = {
             message.mentions.users.first() ||
             (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
 
+    // Passive Mode Check
+    const targetPassive = await db.passive.get(target.id);
+
+    if (targetPassive?.passive) {
+      return message.reply(`🛡️ ${target.username} is in passive mode!`);
+    }
+
     
 
     // Command Cooldown check
