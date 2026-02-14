@@ -31,8 +31,11 @@ module.exports = {
       const countData = await db.counting.get(guildKey) || {
         current: 0,
         expected: 1,
-        lastUserId: null
+        lastUserId: null,
+        record: 0
       };
+
+      const currentRecord = Number(countData.record) || 0;
 
       const convertedMessage = wordsToNumbers(message.content.trim());
       let userNumber = parseInt(convertedMessage);
@@ -82,7 +85,8 @@ module.exports = {
         await db.counting.set(guildKey, {
           current: 0,
           expected: 1,
-          lastUserId: null
+          lastUserId: null,
+          record: currentRecord
         });
 
         console.log(`[❌] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
@@ -104,12 +108,16 @@ module.exports = {
         await db.counting.set(guildKey, {
           current: 0,
           expected: 1,
-          lastUserId: null
+          lastUserId: null,
+          record: currentRecord
         });
 
         console.log(`[❌] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
 
       } else {
+
+        const newRecord = userNumber > currentRecord ? userNumber : currentRecord;
+
         await message.react(CORRECT_EMOJI).catch(() => null);
 
         if (wasCalculated) {
@@ -139,7 +147,8 @@ module.exports = {
         await db.counting.set(guildKey, {
           current: userNumber,
           expected: userNumber + 1,
-          lastUserId: message.author.id
+          lastUserId: message.author.id,
+          record: newRecord
         });
 
         console.log(`[✅] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1}`)

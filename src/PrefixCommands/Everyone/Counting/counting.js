@@ -4,7 +4,7 @@ const db = require('../../../Handlers/database'); // adjust path if needed
 
 module.exports = {
     name: "counting",
-    description: "Shows the current and next expected number for counting.",
+    description: "Shows the current, next expected and record number for counting.",
 
     async execute(message, args) {
 
@@ -38,7 +38,8 @@ module.exports = {
                 .setTitle(`🌿 ${guildName} 🌿`)
                 .addFields(
                     { name: 'Current Number', value: `${countingData.current}`, inline: true },
-                    { name: 'Next Number', value: `${countingData.expected}`, inline: true }
+                    { name: 'Next Number', value: `${countingData.expected}`, inline: true },
+                    { name: 'Record', value: `${countingData.record}`, inline: true },
                 )
                 .setFooter({ text: `Last counted by user ID: ${countingData.lastUserId}` })
                 .setColor(0x207e37);

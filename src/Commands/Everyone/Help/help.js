@@ -88,7 +88,7 @@ module.exports = {
       '### 🌿 **__Venting__** 🌿',
       '- `?venting`・Vent anonymously to the vent channel',
       '### 🌿 **__Counting__** 🌿',
-      '- `?counting`・View the current and next expected number',
+      '- `?counting`・View the current, next expected and record number for the guilds counting.',
       '### 🌿 **__Birthdays__** 🌿',
       '- `?birthday set`・Set your birthday. Format:`dd/mm/yyyy`',
       '### 🌿 **__Fun__** 🌿',

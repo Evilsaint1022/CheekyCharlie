@@ -114,7 +114,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?venting` - Vent anonymously to the vent channel.
 
 ### **🌿<ins>Counting</ins>**
-- `?counting` - View the current and next expected number for the guilds counting.
+- `?counting` - View the current, next expected and record number for the guilds counting.
 
 ### **🌿<ins>Birthdays</ins>**
 - `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
