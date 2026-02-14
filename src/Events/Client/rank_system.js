@@ -127,7 +127,7 @@ module.exports = {
 
       for (const roleId of rolesToKeep) {
         if (!userRoles.has(roleId)) {
-          const role = guild.roles.cache.get(roleId);
+          const role = await guild.roles.fetch(roleId);
           if (role) await member.roles.add(role).catch(console.error);
         }
       }
