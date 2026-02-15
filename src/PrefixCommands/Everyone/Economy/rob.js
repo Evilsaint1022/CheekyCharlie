@@ -12,18 +12,18 @@ module.exports = {
             message.mentions.users.first() ||
             (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
 
-    // Passive Mode Check
-    const targetPassive = await db.passive.get(target.id);
+    // Target Passive Mode Check
+    let targetPassive = await db.passive.get(target.id);
 
-    if (targetPassive?.passive) {
-      return message.reply(`🛡️ ${target.username} is in passive mode!`);
+    // If no data exists, set default to true
+    if (targetPassive === undefined || targetPassive === null) {
+      targetPassive = { passive: true };
+      await db.passive.set(target.id, targetPassive);
     }
 
-    // Robber Passive Mode Check
-    const robberPassive = await db.passive.get(robber.id);
-
-    if (robberPassive?.passive) {
-      return message.reply(`🛡️ You Cant Rob In Passive Mode!`);
+    // If passive is enabled
+    if (targetPassive.passive === true) {
+      return message.reply(`🛡️ ${target.username} is in passive mode!`);
     }
 
     // Command Cooldown check

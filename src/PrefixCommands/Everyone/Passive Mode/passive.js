@@ -14,7 +14,7 @@ module.exports = {
 
     // If user not in DB yet
     if (!userData) {
-      userData = { passive: false };
+      userData = { passive: true };
     }
 
     // Toggle passive

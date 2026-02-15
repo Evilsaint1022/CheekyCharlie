@@ -19,11 +19,19 @@ module.exports = {
     if (target.id === robber.id) return message.reply('You cannot heist yourself!');
 
     // Target Passive Mode Check
-    const targetPassive = await db.passive.get(target.id);
+    let targetPassive = await db.passive.get(target.id);
 
-    if (targetPassive?.passive) {
+    // If no data exists, set default to true
+    if (targetPassive === undefined || targetPassive === null) {
+      targetPassive = { passive: true };
+      await db.passive.set(target.id, targetPassive);
+    }
+
+    // If passive is enabled
+    if (targetPassive.passive === true) {
       return message.reply(`🛡️ ${target.username} is in passive mode!`);
     }
+
 
     // Robber Passive Mode Check
     const robberPassive = await db.passive.get(robber.id);
