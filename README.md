@@ -44,7 +44,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Bump Reminder
 - 🌿Giveaway System
 - 🌿Custom Starboard
-- 🌿Color Of Rhe Week
+- 🌿Color Of The Week
 - 🌿Custom AI Response
 - 🌿Staff Applications
 - 🌿Question Of The Day
