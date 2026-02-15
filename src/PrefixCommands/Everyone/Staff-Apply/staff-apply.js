@@ -21,6 +21,14 @@ module.exports = {
         const guildName = message.guild.name;
         const userId = message.author.id;
 
+        const staffsettings = await db.settings.get(`${guildId}.staffapplications`);
+
+        if (staffsettings !== true) {
+            return message.reply(
+                '❌ Staff applications are closed.'
+            );
+        }
+
         const applications =
             await db.staff_app_applications.get('applications') || [];
 
