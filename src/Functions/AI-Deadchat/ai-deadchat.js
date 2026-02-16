@@ -3,7 +3,8 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "0 */5 * * * *"; // every 5 minutes at second 0
+// const time = "*/5 * * * * *"; // every 5 seconds for testing.
+const time = "0 */5 * * * *"; // every 5 minutes
 
 let isRunning = false;
 let isScheduled = false;
@@ -70,6 +71,7 @@ async function checkAIDeadchat(client) {
             if (GuildTimeoutMap.has(guildId)) continue;
 
             const timeout = setTimeout(async () => {
+            try {
 
                 const prompts = [
                 "You are a Kiwi. The chat is dead. Ask a random New Zealand related question.",
@@ -104,7 +106,7 @@ async function checkAIDeadchat(client) {
                         { role: 'system', content: finalPrompt },
                     ],
                     model: "meta-llama/llama-4-maverick-17b-128e-instruct",
-                    temperature: 0.7,
+                    temperature: 1.5,
                 });
 
                 const reply = response.choices[0].message.content;
@@ -128,8 +130,12 @@ async function checkAIDeadchat(client) {
 
                 await db.ai_deadchat.set(`${guildId}`, ai_deadchat);
 
-                GuildTimeoutMap.delete(guildId);
-                
+                } catch (err) {
+                    console.error(`[💭] [AI Deadchat] Timeout Error in ${guildId}:`, err);
+                } finally {
+                    GuildTimeoutMap.delete(guildId);
+                }
+
             }, durationMs);
 
             GuildTimeoutMap.set(guildId, timeout);
