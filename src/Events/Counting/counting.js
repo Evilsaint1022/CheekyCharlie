@@ -89,7 +89,7 @@ module.exports = {
           record: currentRecord
         });
 
-        console.log(`[❌] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
+        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
 
         return;
       }
@@ -112,7 +112,7 @@ module.exports = {
           record: currentRecord
         });
 
-        console.log(`[❌] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
+        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
 
       } else {
 
@@ -151,7 +151,7 @@ module.exports = {
           record: newRecord
         });
 
-        console.log(`[✅] [Counting] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1}`)
+        console.log(`[✅] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1}`)
       }
 
     } finally {
