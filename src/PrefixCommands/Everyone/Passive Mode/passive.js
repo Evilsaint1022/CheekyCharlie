@@ -9,6 +9,23 @@ module.exports = {
     const userId = message.author.id;
     const username = message.author.username;
 
+    // Command Cooldown check
+    const commandcooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const now = Date.now();
+    const lastUsed = await db.cooldowns.get(`${userId}.lastpassive`);
+
+    if (now - lastUsed < commandcooldown) {
+      const timeLeft = commandcooldown - (now - lastUsed);
+
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      return message.reply(
+        `⏳ Hold up! You can use passive again in **${hours}h ${minutes}m ${seconds}s**.`
+      );
+    }
+
     // Get current passive data
     let userData = await db.passive.get(userId);
 
@@ -19,6 +36,9 @@ module.exports = {
 
     // Toggle passive
     const newStatus = !userData.passive;
+
+    // Update cooldown
+    await db.cooldowns.set(`${userId}.lastpassive`, now);
 
     // Save to database
     await db.passive.set(userId, {
