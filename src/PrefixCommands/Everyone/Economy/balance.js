@@ -30,9 +30,9 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const top = `**──── 🌿${targetUser.username}'s Balance ────**`;
-        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
-        const bottom = `**──────── Use Your Ferns Wisely! ────────**`;
+        const top = `**🌿 __${targetUser.username}'s Balance__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Thanks for using Bank-NZ`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -65,13 +65,12 @@ module.exports = {
             .setTitle(top)
             .setDescription(
                 `_You are viewing ${targetUser.username}'s balance._\n` +
-                `ㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤ${middle}`
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `${middle}`
             )
-            .setFooter({ text: '🌿Thanks for using Bank-NZ' })
-            .setTimestamp()
+            .setFooter({ text: bottom })
             .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
 
         await message.reply({ embeds: [embed] });
