@@ -23,6 +23,8 @@ module.exports = {
         const bottom = `🌿・Thanks for using Bank-NZ`;
 
         const space = 'ㅤ';
+
+        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
         const ferns = '<:Ferns:1395219665638391818>';
 
         const safeUsername = author.username.replace(/\./g, '_');

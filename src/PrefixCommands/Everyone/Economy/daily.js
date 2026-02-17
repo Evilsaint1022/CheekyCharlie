@@ -18,7 +18,9 @@ module.exports = {
       });
     }
 
+        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
         const ferns = '<:Ferns:1395219665638391818>';
+
         const { author, guild, member } = message;
         const username = author.username;
         const userId = author.id;

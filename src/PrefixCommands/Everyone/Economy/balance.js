@@ -16,7 +16,9 @@ module.exports = {
       });
     }
 
-        const ferns = '<:Ferns:1395219665638391818>';
+       // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
+       const ferns = '<:Ferns:1395219665638391818>';
+
         const { guild, author } = message;
 
         // Resolve target user:
@@ -67,7 +69,7 @@ module.exports = {
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

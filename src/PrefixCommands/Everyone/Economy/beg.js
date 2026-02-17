@@ -34,6 +34,8 @@ module.exports = {
         const { author, guild } = message;
         const userId = author.id;
         const username = author.username;
+
+        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
         const ferns = '<:Ferns:1395219665638391818>';
 
         const space = 'ㅤ';
@@ -77,7 +79,7 @@ module.exports = {
                 `_${phrase}_ **${ferns}・${reward}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
