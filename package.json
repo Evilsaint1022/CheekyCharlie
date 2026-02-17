@@ -21,7 +21,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.13.1",
     "@discordjs/rest": "^2.6.0",
-    "@napi-rs/canvas": "^0.1.92",
+    "@napi-rs/canvas": "^0.1.93",
     "axios": "^1.13.5",
     "cheerio": "^1.2.0",
     "child_process": "^1.0.2",
