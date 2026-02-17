@@ -120,12 +120,12 @@ module.exports = {
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `You Heisted **${target.username}** for **${stealAmount}** Ferns!\n` +
-            `${middle}\n` +
-            `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-            `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
-            `${middle}`
-          )
+        `_You Heisted_ **${target.username}** _for_ **${stealAmount}** _Ferns!_\n` +
+        `${middle}\n` +
+        `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+        `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+        `${middle}`
+      )
       .setFooter({ text: bottom })
       .setThumbnail(robber.displayAvatarURL({ dynamic: true }));
 

@@ -101,7 +101,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `You have claimed your weekly reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
+                `_You have claimed your weekly reward of_ **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
                 `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
