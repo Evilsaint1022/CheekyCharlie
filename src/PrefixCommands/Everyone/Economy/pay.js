@@ -100,7 +100,7 @@ module.exports = {
       await db.wallet.set(userNewKey, { balance: userBalance + amount });
 
       await message.reply(
-        `✅ **Payment Successful!**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
+        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
       );
 
       // ------------------------------------------------------

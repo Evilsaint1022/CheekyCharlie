@@ -18,16 +18,18 @@ module.exports = {
       });
     }
 
+    // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
     const ferns = "<:Ferns:1395219665638391818>";
+
     const { author, guild } = message;
 
     const username = author.username;
     const newKey = `${author.id}`;
     const space = "ㅤ";
 
-    const top = `**────── 🌿${username}'s Monthly ──────**`;
-    const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`;
-    const bottom = `**────── Come back next month! ──────**`;
+    const top = `**🌿 __${username}'s Monthly!__ 🌿**`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const bottom = `🌿・Come back next month!`;
 
     // ------------------------------------------------------
     // 1️⃣ MIGRATION — username-based → ID-only keys
@@ -86,11 +88,12 @@ module.exports = {
       .setTitle(top)
       .setDescription(
         `You have claimed your monthly reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
-        `ㅤㅤㅤㅤ${middle}\n` +
-        `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-        `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
-        `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
+        `${middle}\n` +
+        `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+        `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+        `${middle}`
       )
+      .setFooter({ text: bottom })
       .setThumbnail(author.displayAvatarURL({ dynamic: true }))
       .setColor(0x207e37);
 

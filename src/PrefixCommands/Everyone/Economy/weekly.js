@@ -17,16 +17,18 @@ module.exports = {
             });
         }
 
+        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
         const ferns = '<:Ferns:1395219665638391818>';
+
         const { author, guild, member } = message;
         const username = author.username;
         const userId = author.id;
 
         const space = 'ㅤ';
 
-        const top = `**────── 🌿${username}'s Weekly ──────**`;
-        const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`;
-        const bottom = `**────── Come back next week for more! ──────**`;
+        const top = `**🌿 __${username}'s Weekly!__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Come Back Next Week for More!`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -100,11 +102,12 @@ module.exports = {
             .setTitle(top)
             .setDescription(
                 `You have claimed your weekly reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
-                `ㅤㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `${middle}`
             )
+            .setFooter({ text: bottom })
             .setThumbnail(author.displayAvatarURL({ dynamic: true }))
             .setColor(0x207e37);
 

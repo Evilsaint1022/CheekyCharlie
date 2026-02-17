@@ -17,10 +17,14 @@ module.exports = {
     }
 
         const { guild, author } = message;
+
+        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
         const ferns = '<:Ferns:1395219665638391818>';
 
-        const top = `**──── 🌿${author.username}'s Withdrawal ────**`;
-        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+        const top = `**🌿 __${author.username}'s Withdrawal!__  🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Thanks for using Bank-NZ`;
+
         const space = 'ㅤ';
 
         const safeUsername = author.username.replace(/\./g, '_');
@@ -87,15 +91,12 @@ module.exports = {
             .setTitle(top)
             .setDescription(
                 `_Successfully withdrew **${ferns}・${withdrawAmount.toLocaleString()}**_\n` +
-                `ㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤ${ferns}・${walletBalance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bankBalance.toLocaleString()}\n` +
-                `ㅤㅤㅤ${middle}`
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${walletBalance.toLocaleString()}     ${ferns}・${bankBalance.toLocaleString()}\n` +
+                `${middle}`
             )
-            .setThumbnail(author.displayAvatarURL({ dynamic: true }))
-            .setFooter({ text: '🌿Thanks for using Bank-NZ' })
-            .setTimestamp();
-
+            .setFooter({ text: bottom })
         await message.reply({ embeds: [embed] });
 
         console.log(

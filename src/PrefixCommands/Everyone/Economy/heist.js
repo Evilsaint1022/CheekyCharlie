@@ -73,8 +73,11 @@ module.exports = {
       );
     }
 
-    const top = `**──── 🌿 Heist Successful 🌿 ────**`;
-    const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+    const top = `**🌿 __Heist Successful__ 🌿 **`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const bottom = `🌿・Banks are not Safe!`;
+
+    // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
     const ferns = '<:Ferns:1395219665638391818>';
 
     // Get banks
@@ -118,13 +121,12 @@ module.exports = {
       .setTitle(top)
       .setDescription(
         `You Heisted **${target.username}** for **${stealAmount}** Ferns!\n` +
-          `ㅤㅤㅤ${middle}\n` +
-          `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-          `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
-          `ㅤㅤㅤ${middle}`
-      )
-      .setFooter({ text: '🌿 Banks aren’t as safe as they seem...' })
-      .setTimestamp()
+            `${middle}\n` +
+            `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+            `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+            `${middle}`
+          )
+      .setFooter({ text: bottom })
       .setThumbnail(robber.displayAvatarURL({ dynamic: true }));
 
     return message.reply({ embeds: [embed] });

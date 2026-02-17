@@ -95,7 +95,6 @@ module.exports = {
             )
             .setFooter({ text: bottom })
             .setThumbnail(author.displayAvatarURL({ dynamic: true }))
-            .setFooter({ text: '🌿Thanks for using Bank-NZ' })
 
         await message.reply({ embeds: [embed] });
 

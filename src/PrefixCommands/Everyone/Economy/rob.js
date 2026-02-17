@@ -65,9 +65,13 @@ module.exports = {
 
     if (target.id === robber.id) return message.reply('You cannot rob yourself!');
 
-    const top = `**──── 🌿 Robbery Successful 🌿 ────**`;
-    const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
-    const bottom = `**──────── Use Your Ferns Wisely! ────────**`;
+    const top = `**🌿 __Robbery Successful__ 🌿**`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const bottom = `🌿・You better hope no one robs you!`;
+
+    const space = 'ㅤ';
+
+    // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
     const ferns = '<:Ferns:1395219665638391818>';
 
     // Get wallets
@@ -111,13 +115,12 @@ module.exports = {
       .setTitle(top)
       .setDescription(
           `You Robbed **${target.username}** for **${stealAmount}** Ferns!\n` +
-          `ㅤㅤㅤ${middle}\n` +
-          `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-          `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
-          `ㅤㅤㅤ${middle}`
-        )
-      .setFooter({ text: '🌿 You better hope no one robs you!' })
-      .setTimestamp()
+            `${middle}\n` +
+            `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+            `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+            `${middle}`
+          )
+      .setFooter({ text: bottom })
       .setThumbnail(robber.displayAvatarURL({ dynamic: true }));
 
     return message.reply({ embeds: [embed] });
