@@ -18,8 +18,10 @@ module.exports = {
 
         const { guild, author } = message;
 
-        const top = `**──── 🌿${author.username}'s Deposit ────**`;
-        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+        const top = `**🌿 __${author.username}'s Deposit!__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Thanks for using Bank-NZ`;
+
         const space = 'ㅤ';
         const ferns = '<:Ferns:1395219665638391818>';
 
@@ -84,14 +86,14 @@ module.exports = {
             .setTitle(top)
             .setDescription(
                 `_Successfully deposited **${ferns}・${depositAmount.toLocaleString()}**_\n` +
-                `ㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤ  ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤ${middle}\n`
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `${middle}`
             )
+            .setFooter({ text: bottom })
             .setThumbnail(author.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: '🌿Thanks for using Bank-NZ' })
-            .setTimestamp();
 
         await message.reply({ embeds: [embed] });
 

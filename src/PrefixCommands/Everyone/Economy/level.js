@@ -31,9 +31,9 @@ module.exports = {
         const guildKey = `${guild.id}`;
         const userKey = `${targetUser.id}`;
 
-        const top = `**──── 🌿${targetUser.username}'s Level ────**`;
-        const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
-        const bottom = `**───────────────────────────────**`;
+        const top = `**🌿 __${targetUser.username}'s Level__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Keep up the Good Work!`;
 
         console.log(
             `[🌿] [LEVEL] [${new Date().toLocaleDateString('en-GB')}] ` +
@@ -59,14 +59,13 @@ module.exports = {
                 .setTitle(top)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .setDescription(
-                `_You are viewing ${targetUser.username}'s level._\n` +
-                `ㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ✦ **Level:** ${level.toLocaleString()}\n` +
-                `ㅤㅤㅤ✦ **XP:** ${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()}\n` +
-                `ㅤㅤㅤ${middle}\n`
+                `_You are viewing_ **${targetUser.username}'s** _level._\n` +
+                `${middle}\n` +
+                `ㅤ 🌿・**Level: ${level.toLocaleString()}**\n` +
+                `ㅤ 🌿・**XP:**  ${xp.toLocaleString()} / _${nextLevelXp.toLocaleString()}_\n` +
+                `${middle}\n`
             )
-            .setFooter({ text: '🌿Keep up the good work!' })
-            .setTimestamp()
+            .setFooter({ text: '🌿・Keep up the good work!' })
 
             return message.reply({ embeds: [embed] });
 
