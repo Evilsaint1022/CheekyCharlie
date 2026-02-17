@@ -37,9 +37,9 @@ module.exports = {
         const ferns = '<:Ferns:1395219665638391818>';
 
         const space = 'ㅤ';
-        const top = `**────── ${username} Begs ──────**`;
-        const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`;
-        const bottom = `**────── Come back for more! ──────**`;
+        const top = `**🌿 __${username} Begs!__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Come Back for More!`;
 
         // Cooldown check
         const lastBeg = await db.lastclaim.get(`${userId}.beg`) || 0;
@@ -74,12 +74,13 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `${phrase} **${ferns}・${reward}**\n` +
-                `ㅤㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
+                `_${phrase}_ **${ferns}・${reward}**\n` +
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `${middle}`
             )
+            .setFooter({ text: bottom })
             .setThumbnail(author.displayAvatarURL({ dynamic: true }))
             .setColor(0x207e37);
 

@@ -24,11 +24,11 @@ module.exports = {
         const userId = author.id;
 
         const timestamp = new Date().toLocaleTimeString();
-        const space = 'ㅤ';
 
-        const top = `**────── 🌿${username}'s Daily ──────**`;
-        const middle = `**· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·**`;
-        const bottom = `**────── Come back tomorrow for more! ──────**`;
+        const space = 'ㅤ';
+        const top = `**🌿 __${username} Daily!__ 🌿**`;
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bottom = `🌿・Come Back Tomorrow for More!`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -98,11 +98,12 @@ module.exports = {
             .setTitle(top)
             .setDescription(
                 `You have claimed your daily reward of **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
-                `ㅤㅤㅤㅤ${middle}\n` +
-                `ㅤㅤㅤ**💰__Wallet__**ㅤㅤㅤ **🏦 __Bank__**\n` +
-                `ㅤㅤㅤㅤ${ferns}・${balance.toLocaleString()}ㅤㅤㅤㅤ${ferns}・${bank.toLocaleString()}\n` +
-                `ㅤㅤㅤㅤ${middle}\n${space}\n${bottom}`
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `${middle}`
             )
+            .setFooter({ text: bottom })
             .setThumbnail(author.displayAvatarURL({ dynamic: true }))
             .setColor(0x207e37);
 
