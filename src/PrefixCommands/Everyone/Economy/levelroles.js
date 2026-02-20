@@ -27,14 +27,14 @@ module.exports = {
             for (const level of sortedLevels) {
                 const data = levelRoles[level];
                 const role = message.guild.roles.cache.get(data.roleId);
-                description += `🌿**・__Level ${level}__**: ${role ? role : `Role not found`}  \nㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤㅤ** ╰─ Sticky:** ${data.sticky ? `\`TRUE\`` : `\`FALSE\``}\n\n`;
+                description += `🌿**・Level ${level}** \`->\` ${role ? role : `Role not found`} ㅤ ㅤㅤ ㅤㅤ ㅤㅤ ㅤㅤ**Sticky:** ${data.sticky ? `\`YES\`` : `\`NO\``}\n`;
             }
 
             console.log(`[🌿] [LEVEL ROLES] [${new Date().toLocaleDateString('en-GB')}] ` + `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` + `${message.guild.name} ${message.guild.id} ` + `${message.author.username} used the levelroles command.`);
 
             const embed = new EmbedBuilder()
                 .setTitle(`**🌿 __${message.guild.name} Level Roles!__ 🌿**\n\n**__Current Level Roles:__**`)
-                .setDescription(`${middle}\n\n` + `${description}` + middle)
+                .setDescription(`${middle}\n` + `${description}` + middle)
                 .setThumbnail(message.guild.iconURL())
                 .setColor(0x207e37)
                 .setFooter({ text: `🌿 Level Roles For ${message.guild.name} 🌿` });
