@@ -30,6 +30,8 @@ module.exports = {
                 description += `🌿**・__Level ${level}__**: ${role ? role : `Role not found`}  \nㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤㅤ** ╰─ Sticky:** ${data.sticky ? `\`TRUE\`` : `\`FALSE\``}\n\n`;
             }
 
+            console.log(`[🌿] [LEVEL ROLES] [${new Date().toLocaleDateString('en-GB')}] ` + `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` + `${message.guild.name} ${message.guild.id} ` + `${message.author.username} used the levelroles command.`);
+
             const embed = new EmbedBuilder()
                 .setTitle(`**🌿 __${message.guild.name} Level Roles!__ 🌿**\n\n**__Current Level Roles:__**`)
                 .setDescription(`${middle}\n\n` + `${description}` + middle)
