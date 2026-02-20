@@ -61,7 +61,7 @@ module.exports = {
           const roleDisplay = role ? role : "`Role not found`";
           const sticky = data.sticky ? "`\`Yes\``" : "`\`No\``";
 
-          return `🌿**・${base} - ${roleDisplay}**\n- **Sticky:** ${sticky}`;
+          return `🌿・${base}\n- **Role:** ${roleDisplay}\n- **Sticky:** ${sticky}`;
         })
         .join('\n\n');
 
