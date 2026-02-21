@@ -62,14 +62,14 @@ module.exports = {
 
     if (now - lastClaim < monthlyCooldown) {
       const timeLeft = monthlyCooldown - (now - lastClaim);
+
       const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
 
       return message.reply(
         `⏳ You have already claimed your monthly reward!\n` +
-        `Please wait **${days}d ${hours}h** before claiming again.`
+        `Please wait **${days}d ${hours}h ${minutes}m** before claiming again.`
       );
     }
 
