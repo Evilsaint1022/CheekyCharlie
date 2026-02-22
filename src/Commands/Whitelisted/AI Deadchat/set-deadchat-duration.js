@@ -46,6 +46,14 @@ module.exports = {
             })
         }
 
+        // duration has to be more than 5 mintues
+        if ( durationInMS <= 300000 ) {
+            return interaction.reply({
+                content: "❌ Duration cant be less than 5 minutes.",
+                flags: 64
+            })
+        }
+
         const currentSettings = await db.settings.get(`${guildId}`) || {};
 
         currentSettings.deadchatDuration = durationInMS;
