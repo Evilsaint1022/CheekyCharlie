@@ -3,8 +3,8 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-const time = "*/5 * * * * *"; // every 5 seconds for testing purposes only.
-// const time = "0 */5 * * * *"; // every 5 minutes
+// const time = "*/5 * * * * *"; // every 5 seconds for testing purposes only.
+const time = "0 */5 * * * *"; // every 5 minutes
 
 let isRunning = false;
 let isScheduled = false;
