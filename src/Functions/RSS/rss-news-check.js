@@ -47,7 +47,6 @@ async function runRSSNews(client) {
                         const channel = client.channels.cache.get(rssChannel);
 
                         if (!channel) {
-                            console.error(`[RSS] Invalid channel for server: ${serverName} (${serverId})`);
                             continue;
                         }
 

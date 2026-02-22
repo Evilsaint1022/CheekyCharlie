@@ -3,8 +3,8 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
-// const time = "*/5 * * * * *"; // every 5 seconds for testing.
-const time = "0 */5 * * * *"; // every 5 minutes
+const time = "*/5 * * * * *"; // every 5 seconds for testing purposes only.
+// const time = "0 */5 * * * *"; // every 5 minutes
 
 let isRunning = false;
 let isScheduled = false;
@@ -131,7 +131,7 @@ async function checkAIDeadchat(client) {
                 await db.ai_deadchat.set(`${guildId}`, ai_deadchat);
 
                 } catch (err) {
-                    console.error(`[💭] [AI Deadchat] Timeout Error in ${guildId}:`, err);
+                    return[];
                 } finally {
                     GuildTimeoutMap.delete(guildId);
                 }
@@ -158,8 +158,8 @@ function messageHandler(message) {
             clearTimeout(GuildTimeoutMap.get(guildId));
             GuildTimeoutMap.delete(guildId);
         }
-    } catch (e) {
-        return;
+    } catch (err) {
+        return[];
     }
     
 }
@@ -178,7 +178,7 @@ function startDeadchat(client) {
             try {
                 await checkAIDeadchat(client);
             } catch (err) {
-                console.error('[💭] [AI Deadchat] Error in scheduled task: ', err);
+              return[];
             }
         })();
     }, {
