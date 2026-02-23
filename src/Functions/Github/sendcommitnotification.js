@@ -28,17 +28,17 @@ const repoImage = await loadImage(repoImagePath);
       'Unknown';
 
     const top =    `**─────────────────────────────────────**`;
-    const middle = `ㅤㅤㅤ· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·ㅤㅤㅤ`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bottom = `**─────────────────────────────────────**`;
 
     const centeredmessage = `ㅤㅤㅤ**${message}**`;
-    const centeredauthor =  `ㅤㅤㅤ🌿**${authorName}**🌿`;
+    const centeredauthor =  `ㅤㅤㅤ🌿・**Author: \`${authorName}\`**`;
 
     if (!sha || !message || !htmlUrl) {
       return;
     }
 
-    const commitlink = `ㅤㅤㅤ[_🔗・COMMIT LINK HERE_](${htmlUrl})`;
+    const commitlink = `ㅤㅤㅤ[_🔗・Commit Link Here_](${htmlUrl})`;
 
     // Load previously saved commits
     let previousCommits = await db.github.get(repoKey);
@@ -72,7 +72,7 @@ const repoImage = await loadImage(repoImagePath);
             );
 
     const embed = new EmbedBuilder()
-      .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n${centeredmessage}\nㅤ\n${centeredauthor}\n${bottom}`)
+      .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n\n${centeredmessage}\nㅤ\n${centeredauthor}\n\n${middle}`)
       .setImage(repoImageUrl)
       .setColor(0x207e37)
       .setTimestamp(new Date());
