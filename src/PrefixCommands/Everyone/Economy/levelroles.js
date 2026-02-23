@@ -69,7 +69,7 @@ module.exports = {
 
       return new EmbedBuilder()
         .setTitle(`**╭─── 🌿 ${message.guild.name} Level Roles 🌿 ───╮**`)
-        .setDescription(`\n_current level roles for ${message.guild.name}_\n` + `${middle}\n` + content + `\n${bottommessage}\n\n${bottom}` || "*No level roles found.*")
+        .setDescription(`\n_current level roles for ${message.guild.name}_\n` + `${middle}\n` + content + `\n\n${bottommessage}\n\n${bottom}` || "*No level roles found.*")
         .setColor(0x207e37)
         .setThumbnail(message.guild.iconURL())
         .setFooter({
