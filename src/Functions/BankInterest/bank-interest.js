@@ -8,8 +8,6 @@ const time = "0 0 * * *";
 // Testing Timer ( Keeping in for future use )
 // const time = "*/10 * * * * *"; // Every 10 seconds
 
-
-
 async function runDailyBankInterest(client) {
     if (!client) {
         console.warn("[Bank Interest] Client not defined. Skipping run.");
@@ -34,37 +32,30 @@ async function runDailyBankInterest(client) {
 
         let userId = key;
 
-        // --- Detect old format: username_userid / safeusername_userid ---
         if (key.includes("_")) {
             const underscoreIndex = key.lastIndexOf("_");
             const extracted = key.substring(underscoreIndex + 1);
-
             if (!isNaN(extracted)) userId = extracted;
         }
 
-        // --- MIGRATE if key != userId ---
         if (userId !== key) {
             console.log(`[MIGRATION] Converting key "${key}" → "${userId}"`);
-
-            // Save migrated data
             await db.bank.set(userId, entry);
-
-            // Remove old key
             await db.bank.delete(key);
         }
 
         migratedEntries[userId] = entry;
     }
 
-    // From here on, ONLY userId keys exist.
     const bankEntries = migratedEntries;
 
     // ============
     // 💰 Interest
     // ============
     const ferns = '<:Ferns:1395219665638391818>';
-    const top =    `**─────────────────────────────────**`;
-    const bottom = `**─────────────────────────────────**`;
+    const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const bottom = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const footer = `🌿・Thanks for using Bank-NZ`;
 
     for (const guild of client.guilds.cache.values()) {
         const guildKey = `${guild.id}`;
@@ -80,11 +71,15 @@ async function runDailyBankInterest(client) {
             continue;
         }
 
-        // Loop through migrated entries
+        // ✅ CHANGED: Build ONE description instead of sending per user
+        let descriptionText = `${top}\n`;
+        let hasUsers = false;
+
         for (const [userId, entry] of Object.entries(bankEntries)) {
             if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
 
-            // Try to fetch the member (for avatar)
+            hasUsers = true;
+
             let member = guild.members.cache.get(userId);
             if (!member) {
                 try {
@@ -92,44 +87,45 @@ async function runDailyBankInterest(client) {
                 } catch { member = null; }
             }
 
-            // Fetch username directly from user ID
             let username = "Unknown User";
             try {
                 const user = await client.users.fetch(userId);
                 username = user.username;
-                avatar = user.displayAvatarURL();
             } catch {}
 
             const amount = entry.bank;
             const interest = Math.round((1 / 100) * amount);
             const newBalance = amount + interest;
 
-            // Save updated amount using CLEAN userId key
             await db.bank.set(userId, { bank: newBalance });
 
-            const embed = new EmbedBuilder()
-                .setColor(0x207e37)
-                .setTitle(`💰・Bank Interest for ${username}`)
-                .setDescription(
-                    `${top}\n` +
-                    `- **__Old Bank__** ${ferns} \`${amount}\`\n` +
-                    `- **__Interest Gained__** ${ferns} \`${interest}\`\n` +
-                    `- **__New Balance__** ${ferns} \`${newBalance}\`\n` +
-                    `${bottom}`
-                )
-                .setThumbnail(avatar || member.displayAvatarURL())
-                .setTimestamp();
-
-            try {
-                await channel.send({
-                    embeds: [embed],
-                    allowedMentions: { parse: [] } // 🚫 NO PINGS
-                });
-            } catch (err) {
-                console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
-            }
+            descriptionText +=
+                `\n### 🌿・**__${username}__**\n` +
+                `- **Old Bank** ${ferns} \`${amount}\`\n` +
+                `- **Interest Gained** ${ferns} \`${interest}\`\n` +
+                `- **New Balance** ${ferns} \`${newBalance}\`\n`;
 
             console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
+        }
+
+        if (!hasUsers) continue;
+
+        descriptionText += `\n${bottom}`;
+
+        const embed = new EmbedBuilder()
+            .setColor(0x207e37)
+            .setTitle(`**💰・Daily Bank Interest**`)
+            .setDescription(descriptionText)
+            .setFooter({ text: footer })
+            .setThumbnail(guild.iconURL())
+
+        try {
+            await channel.send({
+                embeds: [embed],
+                allowedMentions: { parse: [] }
+            });
+        } catch (err) {
+            console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
         }
     }
 }
