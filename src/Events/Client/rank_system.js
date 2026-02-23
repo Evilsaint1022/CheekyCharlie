@@ -117,10 +117,17 @@ module.exports = {
       const userRoles = member.roles.cache;
 
       for (const role of userRoles.values()) {
-        if (
-          Object.values(levelRoles).some(lr => lr.roleId === role.id) &&
-          !rolesToKeep.has(role.id)
-        ) {
+        const levelRoleEntry = Object.entries(levelRoles)
+          .find(([_, config]) => config.roleId === role.id);
+
+        if (!levelRoleEntry) continue;
+
+        const [, config] = levelRoleEntry;
+
+        // 🔥 Do NOT remove if the role is sticky
+        if (config.sticky) continue;
+
+        if (!rolesToKeep.has(role.id)) {
           await member.roles.remove(role.id).catch(console.error);
         }
       }
