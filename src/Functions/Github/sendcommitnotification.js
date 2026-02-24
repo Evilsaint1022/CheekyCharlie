@@ -83,7 +83,8 @@ const repoImage = await loadImage(repoImagePath);
     previousCommits.push(sha);
     await db.github.set(repoKey, previousCommits);
 
-  } catch {
+  } catch (err) {
+    return[];
   }
 }
 
