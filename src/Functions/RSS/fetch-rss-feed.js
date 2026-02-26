@@ -58,6 +58,7 @@ async function fetchRSSforServer(serverId, serverName, rssUrl) {
     return totalItems;
 
   } catch (err) {
+    console.error(`❌ [RSS] [${serverId}] Error:`, err.message);
     return [];
   }
 }
