@@ -131,7 +131,7 @@ async function checkAIDeadchat(client) {
                 await db.ai_deadchat.set(`${guildId}`, ai_deadchat);
 
                 } catch (err) {
-                    return[];
+                    return;
                 } finally {
                     GuildTimeoutMap.delete(guildId);
                 }
@@ -159,7 +159,7 @@ function messageHandler(message) {
             GuildTimeoutMap.delete(guildId);
         }
     } catch (err) {
-        return[];
+        return;
     }
     
 }
