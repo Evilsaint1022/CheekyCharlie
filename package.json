@@ -21,7 +21,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.13.1",
     "@discordjs/rest": "^2.6.0",
-    "@napi-rs/canvas": "^0.1.94",
+    "@napi-rs/canvas": "^0.1.95",
     "axios": "^1.13.5",
     "cheerio": "^1.2.0",
     "child_process": "^1.0.2",
@@ -32,17 +32,17 @@
     "dotenv": "^17.3.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.3",
-    "node": "^25.6.1",
+    "node": "^25.7.0",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
-    "openai": "^6.22.0",
+    "openai": "^6.25.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
     "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
-    "eslint": "^10.0.1",
+    "eslint": "^10.0.2",
     "nodemon": "^3.1.14"
   },
   "overrides": {
