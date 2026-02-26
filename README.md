@@ -76,6 +76,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
 - `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
 - `?level` - Check your current level or check another users by using `?level @user`.
+- `?levelroles` - Displays all level roles set for guild.
 - `?pick` - Picks ferns when the drop party's drops.
 - `?pay` - Pay other users ferns by using `?pay @user`.
 - `?rob` - Rob other users wallets by using `?rob @user`.
