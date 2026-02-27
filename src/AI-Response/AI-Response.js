@@ -73,8 +73,6 @@ async function handleAIMessage(client, message) {
 
     const systemPrompt = systemPrompt_raw.replaceAll("{USER_INFO}", userInfo).replaceAll("{NZ_DATE_TIME}", nzTime)
 
-    console.log(systemPrompt)
-
     console.log('🧠 Sending message to Groq...');
     const response = await openai.chat.completions.create({
 
