@@ -28,7 +28,7 @@ function encrypt(text) {
 
 async function handleAIMessage(client, message) {
 
-const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
+  const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
   if (DiscordPings.length > 0) return;
   if (message.author.bot) return;
@@ -37,7 +37,9 @@ const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
   const ignoredChannels = await db.settings.get(`${message.guild.id}.ignoredAIChannels`) || [];
 
   if ( ignoredChannels.includes(message.channel.id) ) return;
-  if ( ignoredChannels.includes(message.channel.parent.id) ) return;
+  if ( message.channel.parent ) {
+    if ( ignoredChannels.includes(message.channel.parent.id) ) return;
+  }
 
   const userContent = message.content.replace(`<@${client.user.id}>`, '').trim();
   const encryptedUsername = encrypt(message.author.tag);
@@ -60,7 +62,18 @@ const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
     memory.push({ role: 'user', content: userContent });
 
-    const systemPrompt = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
+    const systemPrompt_raw = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
+
+    const userInfo = `
+    Display Name (Use this to adress to the user): ${await message.author.displayName}
+    Username: ${await message.author.username}
+    `
+
+    const nzTime = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
+
+    const systemPrompt = systemPrompt_raw.replaceAll("{USER_INFO}", userInfo).replaceAll("{NZ_DATE_TIME}", nzTime)
+
+    console.log(systemPrompt)
 
     console.log('🧠 Sending message to Groq...');
     const response = await openai.chat.completions.create({
