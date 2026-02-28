@@ -8,8 +8,6 @@ const time = "0 0 * * *";
 // Testing Timer ( Keeping in for future use )
 // const time = "*/10 * * * * *"; // Every 10 seconds
 
-
-
 async function runDailyBankInterest(client) {
     if (!client) {
         console.warn("[Bank Interest] Client not defined. Skipping run.");
@@ -18,9 +16,6 @@ async function runDailyBankInterest(client) {
 
     console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
 
-    // =============================
-    // 🔧 DATABASE MIGRATION SECTION
-    // =============================
     const rawEntries = await db.bank.all();
     if (!rawEntries || typeof rawEntries !== "object") {
         console.warn("[Bank Interest] No bank data found.");
@@ -34,45 +29,34 @@ async function runDailyBankInterest(client) {
 
         let userId = key;
 
-        // --- Detect old format: username_userid / safeusername_userid ---
         if (key.includes("_")) {
             const underscoreIndex = key.lastIndexOf("_");
             const extracted = key.substring(underscoreIndex + 1);
-
             if (!isNaN(extracted)) userId = extracted;
         }
 
-        // --- MIGRATE if key != userId ---
         if (userId !== key) {
             console.log(`[MIGRATION] Converting key "${key}" → "${userId}"`);
-
-            // Save migrated data
             await db.bank.set(userId, entry);
-
-            // Remove old key
             await db.bank.delete(key);
         }
 
         migratedEntries[userId] = entry;
     }
 
-    // From here on, ONLY userId keys exist.
     const bankEntries = migratedEntries;
 
-    // ============
-    // 💰 Interest
-    // ============
     const ferns = '<:Ferns:1395219665638391818>';
-    const top =    `**─────────────────────────────────**`;
-    const bottom = `**─────────────────────────────────**`;
+    const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const bottom = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const splitter = `**─────────────────────────────────**`;
+    const footer = `🌿・Thanks for using Bank-NZ`;
 
     for (const guild of client.guilds.cache.values()) {
         const guildKey = `${guild.id}`;
         const settings = await db.settings.get(guildKey);
 
-        if (!settings || !settings.bankinterest) {
-            continue;
-        }
+        if (!settings || !settings.bankinterest) continue;
 
         const channel = guild.channels.cache.get(settings.bankinterest);
         if (!channel) {
@@ -80,56 +64,68 @@ async function runDailyBankInterest(client) {
             continue;
         }
 
-        // Loop through migrated entries
+        let embedsToSend = [];
+        let currentDescription = ``;
+        let hasUsers = false;
+
         for (const [userId, entry] of Object.entries(bankEntries)) {
             if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
 
-            // Try to fetch the member (for avatar)
-            let member = guild.members.cache.get(userId);
-            if (!member) {
-                try {
-                    member = await guild.members.fetch(userId);
-                } catch { member = null; }
-            }
+            hasUsers = true;
 
-            // Fetch username directly from user ID
             let username = "Unknown User";
             try {
                 const user = await client.users.fetch(userId);
                 username = user.username;
-                avatar = user.displayAvatarURL();
             } catch {}
 
             const amount = entry.bank;
             const interest = Math.round((1 / 100) * amount);
             const newBalance = amount + interest;
 
-            // Save updated amount using CLEAN userId key
             await db.bank.set(userId, { bank: newBalance });
 
-            const embed = new EmbedBuilder()
-                .setColor(0x207e37)
-                .setTitle(`💰・Bank Interest for ${username}`)
-                .setDescription(
-                    `${top}\n` +
-                    `- **__Old Bank__** ${ferns} \`${amount}\`\n` +
-                    `- **__Interest Gained__** ${ferns} \`${interest}\`\n` +
-                    `- **__New Balance__** ${ferns} \`${newBalance}\`\n` +
-                    `${bottom}`
-                )
-                .setThumbnail(avatar || member.displayAvatarURL())
-                .setTimestamp();
+            const userBlock =
+                `${splitter}\n### 🌿・**__${username}__**\n` +
+                `- **__Old Bank__** ${ferns}・\`${amount}\`\n` +
+                `- **__Interest Gained__** ${ferns}・\`${interest}\`\n` +
+                `- **__New Balance__** ${ferns}・\`${newBalance}\`\n`;
 
-            try {
-                await channel.send({
-                    embeds: [embed],
-                    allowedMentions: { parse: [] } // 🚫 NO PINGS
-                });
-            } catch (err) {
-                console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
+            // ✅ Check if adding this block would exceed 4096
+            if ((currentDescription + userBlock + bottom).length > 4096) {
+                currentDescription += ``;
+                embedsToSend.push(currentDescription);
+
+                // Start new embed cleanly
+                currentDescription = `` + userBlock;
+            } else {
+                currentDescription += userBlock;
             }
 
             console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
+        }
+
+        if (!hasUsers) continue;
+
+        currentDescription += `${splitter}`;
+        embedsToSend.push(currentDescription);
+
+        try {
+            for (let i = 0; i < embedsToSend.length; i++) {
+                const embed = new EmbedBuilder()
+                    .setColor(0x207e37)
+                    .setTitle(i === 0 ? `**💰・__Daily Bank Interest__**` : null)
+                    .setDescription(embedsToSend[i])
+                    .setFooter({ text: footer })
+                    .setThumbnail(guild.iconURL());
+
+                await channel.send({
+                    embeds: [embed],
+                    allowedMentions: { parse: [] }
+                });
+            }
+        } catch (err) {
+            console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
         }
     }
 }
