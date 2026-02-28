@@ -95,6 +95,13 @@ module.exports = {
         await db.wallet.set(`${newKey}.balance`, balance);
         await db.lastclaim.set(`${newKey}.daily`, currentTime);
 
+        // Console Log
+        console.log(
+            `[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+            `${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`
+        );
+
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(top)
@@ -110,11 +117,5 @@ module.exports = {
             .setColor(0x207e37);
 
         await message.reply({ embeds: [embed] });
-
-        console.log(
-            `[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] ` +
-            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount} Ferns.`
-        );
     }
 };
