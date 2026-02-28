@@ -37,7 +37,7 @@ module.exports = {
 
     const guildName = message.guild.name;
     const guildId = message.guild.id;
-    const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 
     // ===================== PERMISSIONS =====================
 
@@ -60,12 +60,13 @@ module.exports = {
     // ===================== COMMAND LISTS =====================
 
     const publicCommands = [
-      '### 🌿 **__Economy__** 🌿',
+      '**🌿・__Economy__**',
       '- `?leaderboard`・Check the wallet/bank/money/level leaderboard',
       '- `?balance`・Check your ferns balance or check another users balance',
       '- `?deposit`・Deposit ferns into your bank',
       '- `?withdraw`・Withdraw ferns from your bank',
       '- `?level`・Check your current level or other users level',
+      '- `?levelroles`・View all level roles for this server',
       '- `?pick`・Picks ferns when the drop party`s drops',
       '- `?pay`・Pay other members Ferns',
       '- `?rob`・Rob another user`s wallet',
@@ -74,32 +75,42 @@ module.exports = {
       '- `?daily`・Daily ferns collect',
       '- `?weekly`・Weekly ferns collect',
       '- `?monthly`・Monthly ferns collect',
-      '### 🌿 **__Economy Games__** 🌿',
+      ``,
+      '**🌿・__Economy Games__**',
       '- `blackjack-singleplayer`・Starts a game of blackjack`',
       '- `?blackjack-duels`・Starts a game of blackjack duels`',
       '- `?slots`・Starts a game of slots using `?slots bet`',
-      '### 🌿 **__Passive Mode__** 🌿',
+      ``,
+      '**🌿・__Passive Mode__**',
       '- `?passive`・Toggle passive mode',
-      '### 🌿 **__Shop__** 🌿',
+      ``,
+      '**🌿・__Shop__**',
       '- `?shop`・View the shop',
       '- `?buy`・Buy items from the shop',
       '- `?use`・Use items.',
       '- `?refund`・refund items bought from the shop',
       '- `?inventory`・View your inventory',
-      '### 🌿 **__Join-to-Create VC__** 🌿',
+      ``,
+      '**🌿・__Join-to-Create VC__**',
       '- `?lock-vc`・Locks the join-to-create vc channel',
       '- `?unlock-vc`・Unlocks the join-to-create vc channel',
-      '### 🌿 **__One-Word-Story__** 🌿',
+      ``,
+      '**🌿・__One-Word-Story__**',
       '- `?view-one-word-story`・Views the current story in the server',
-      '### 🌿 **__Staff Applications__** 🌿',
+      ``,
+      '**🌿・__Staff Applications__**',
       '- `?staff-apply`・Start a new staff application',
-      '### 🌿 **__Venting__** 🌿',
+      ``,
+      '**🌿・__Venting__**',
       '- `?venting`・Vent anonymously to the vent channel',
-      '### 🌿 **__Counting__** 🌿',
+      ``,
+      '**🌿・__Counting__**',
       '- `?counting`・View the current, next expected and record number for the guilds counting.',
-      '### 🌿 **__Birthdays__** 🌿',
+      ``,
+      '**🌿・__Birthdays__**',
       '- `?birthday set`・Set your birthday. Format:`dd/mm/yyyy`',
-      '### 🌿 **__Fun__** 🌿',
+      ``,
+      '**🌿・__Fun__**',
       '- `?avatar`・View yours or someone elses avatar',
       '- `?ai-search`・Use AI search',
       '- `?emoji`・Show a custom emoji',
@@ -111,17 +122,19 @@ module.exports = {
       '- `?kiss`・Kiss a user',
       '- `?tickle`・Tickle a user',
       '- `?punch`・Punch a user',
-      '### 🌿 **__Others__** 🌿',
+      ``,
+      '**🌿・__Others__**',
       '- `?ping`・Check the bot`s latency',
       '- `?invite`・Generate a server invite',
     ];
 
     const whitelistedCommands = [
-      '### 🌿 **__Others__** 🌿',
+      '**🌿・__Others__**',
       '- `?echo`・Repeats what ever you say',
       '- `?stop`・Staff command to use during heated moments in chat',
       '- `?steal`・teal emojis from other guilds',
-      '### 🌿 **__Birthdays__** 🌿',
+      ``,
+      '**🌿・__Birthdays__**',
       '- `?birthdaychannel`・Sets a birthday channel for the birthday messages',
       '- `?birthdaypingrole`・Sets a role to be pinged for the birthday messages',
       '- `?birthdaygivenrole`・Sets a role to be given for birthdays',
@@ -130,7 +143,7 @@ module.exports = {
     // ===================== EMBEDS =====================
 
     const embeds = [];
-    const publicPages = chunkByItems(publicCommands, 19);
+    const publicPages = chunkByItems(publicCommands, 30);
 
     publicPages.forEach((content, index) => {
       embeds.push(
@@ -149,7 +162,7 @@ module.exports = {
     });
 
     if (hasPermission) {
-      const staffPages = chunkByItems(whitelistedCommands, 19);
+      const staffPages = chunkByItems(whitelistedCommands, 30);
 
       staffPages.forEach((content, index) => {
         embeds.push(
