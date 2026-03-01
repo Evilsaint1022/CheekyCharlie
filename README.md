@@ -146,10 +146,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </summary>
 
-### **🌿<ins>Other</ins>**
-- `?echo` - Echo's messages by using `?echo messagecontent`
-- `?stop` - Staff command to use during heated moments in chat.
-- `?steal` - Steal emojis from other guilds by using `?steal emoji emojiname` or just `?steal emoji`.
+### **🌿<ins>Prefix</ins>**
+- `?prefix-set` - Sets a prefix for your guild.
+- `?prefix-reset` - Resets the prefix for prefix commands.
 
 ### **🌿<ins>Birthdays</ins>**
 - `?birthdaychannel` - Sets a birthday channel for the birthday messages.
@@ -158,6 +157,11 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
+
+### **🌿<ins>Other</ins>**
+- `?echo` - Echo's messages by using `?echo messagecontent`
+- `?stop` - Staff command to use during heated moments in chat.
+- `?steal` - Steal emojis from other guilds by using `?steal emoji emojiname` or just `?steal emoji`.
 
 </details>
 
