@@ -146,6 +146,10 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </summary>
 
+### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
+- `?set-whitelisted-roles` - Set whitelisted Roles.
+- `?remove-whitelisted-roles` - Remove whitelisted Roles.
+
 ### **🌿<ins>Prefix</ins>**
 - `?prefix-set` - Sets a prefix for your guild.
 - `?prefix-reset` - Resets the prefix for prefix commands.
