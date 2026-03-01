@@ -30,6 +30,19 @@ async function handleAIMessage(client, message) {
 
   const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
+  // Get @everyone / @here mentions
+const everyonePing = message.mentions.everyone;
+
+// Get role mentions (we will ignore these)
+const roleMentions = message.mentions.roles;
+
+// Get user mentions (we will ignore the bot)
+const userMentions = message.mentions.users.filter(
+  user => user.id !== message.client.user.id
+);
+  if (everyonePing) return;
+  if (roleMentions.size > 0) return;
+  if (userMentions.size > 0) return;
   if (DiscordPings.length > 0) return;
   if (message.author.bot) return;
   if (!message.mentions.has(client.user)) return;
