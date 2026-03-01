@@ -17,13 +17,15 @@ https://github.com/NZ-Linix/dotdatabase
 - **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-# **🌿<ins>CheekyCharlie Support Server</ins>🌿**
+<h2>🌿<ins>CheekyCharlie Support Server</ins>🌿</h2>
+
 <img src="./src/Utilities/Github/icons/discordicon.png" width="18"/> [Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
 
-# **🌿<ins>API Keys</ins>🌿**
+<h2>🌿<ins>API Keys</ins>🌿</h2>
+
 - 🌿[OPENAI](https://openai.com/api/)
 - 🌿[GROQ](https://groq.com/)
 - 🌿[TENOR](https://tenor.com/developer/keyregistration)
@@ -31,7 +33,8 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿[DOG API](https://thedogapi.com/)
 - 🌿[SIMPSONS API](https://thesimpsonsapi.com/)
 
-# **🌿<ins>Features</ins>🌿**
+<h2>🌿<ins>Features</ins>🌿</h2>
+
 - 🌿Full Economy System
 - 🌿Economy Games
 - 🌿Leaderboards
