@@ -28,10 +28,13 @@ function encrypt(text) {
 
 async function handleAIMessage(client, message) {
 
-  const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
+const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
   // Get @everyone / @here mentions
 const everyonePing = message.mentions.everyone;
+
+// Get @here mentions
+const herePing = message.mentions.here;
 
 // Get role mentions (we will ignore these)
 const roleMentions = message.mentions.roles;
@@ -41,6 +44,7 @@ const userMentions = message.mentions.users.filter(
   user => user.id !== message.client.user.id
 );
   if (everyonePing) return;
+  if (herePing) return;
   if (roleMentions.size > 0) return;
   if (userMentions.size > 0) return;
   if (DiscordPings.length > 0) return;
