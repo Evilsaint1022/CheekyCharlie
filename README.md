@@ -147,8 +147,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 </summary>
 
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
-- `?set-whitelisted-roles` - Set whitelisted Roles.
-- `?remove-whitelisted-roles` - Remove whitelisted Roles.
+- `?set-whitelisted-roles` - Sets a whitelisted Role.
+- `?remove-whitelisted-roles` - Removes a whitelisted Role.
 
 ### **🌿<ins>Prefix</ins>**
 - `?prefix-set` - Sets a prefix for your guild.
@@ -174,8 +174,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 </summary>
 
 ### **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
-- `/set-whitelisted-roles` - Set whitelisted Roles.
-- `/remove-whitelisted-roles` - Remove whitelisted Roles.
+- `/set-whitelisted-roles` - Sets a whitelisted Role.
+- `/remove-whitelisted-roles` - Removes a whitelisted Role.
 
 ### **🌿<ins>Counting Setup</ins>**
 - `/set-counting-channel` - Sets the counting entertainment channel.
