@@ -57,7 +57,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
 <detials>
   
-**Commands are `Slash` & `Prefix` commands, so type `/help` in chat to see them.**  
+**Commands are `Application` & `Prefix` commands, so type `/help` in chat to see them.**  
 
 **Type `/set-whitelisted-roles` to set the whitelisted role.**  
 _Setting the whitelisted role gives that role access to the whitelisted commands._
