@@ -14,6 +14,9 @@ const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
 
+// Database -------------------------------------------------------------------------------------------------------------------------
+const db = require('../src/Handlers/database');
+
 // Show Guilds ----------------------------------------------------------------------------------------------------------------------
 const showGuilds = require('./ShowGuilds/showguilds');
 
@@ -118,20 +121,29 @@ client.on('interactionCreate', async interaction => {
 
 // Prefix Command Handler -----------------------------------------------------------------------------------------------------------
 
-client.prefix = "?"; // 👈 PREFIX DEFINED HERE
+client.defaultPrefix = "?"; // 👈 default fallback prefix
 
 client.on("messageCreate", async (message) => {
-  if (message.author.bot) return;
-  if (!message.content.startsWith(client.prefix)) return;
+  if (message.author.bot || !message.guild) return;
+
+  const guildId = message.guild.id;
+
+  // 👇 GET SETTINGS FROM DB
+  const settings = await db.settings.get(guildId);
+
+  // 👇 USE DB PREFIX OR FALLBACK
+  const prefix = settings?.prefix || client.defaultPrefix;
+
+  if (!message.content.startsWith(prefix)) return;
 
   const args = message.content
-    .slice(client.prefix.length)
+    .slice(prefix.length)
     .trim()
     .split(/ +/);
 
   const commandName = args.shift().toLowerCase();
   
-    const command =
+  const command =
     client.prefixCommands.get(commandName) ||
     client.prefixCommands.find(cmd => cmd.aliases?.includes(commandName));
 
