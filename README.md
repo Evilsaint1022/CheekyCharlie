@@ -137,6 +137,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?characters` - Displays all characters that you can roleplay as.
 
 ### **🌿<ins>Other</ins>**
+- `?help` - Help command that displays commands.
+- `?ping` - Check Bots Latency.
 - `?github` - Github link to CheeckyCharlies Repo.
 - `?invite` - Generates a temporary invite link for server you are in.
 
