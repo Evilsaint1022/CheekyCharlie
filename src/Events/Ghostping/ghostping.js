@@ -22,6 +22,9 @@ module.exports = {
                 const pingedUsers = message.mentions.users.map(u => `<@${u.id}>`).join(', ');
 
                 const username = message.mentions.users.map(u => `${u.username}`).join(`, `);
+            
+                if (message.mentions.users.map(u => `${u.username}`).join(`, `) === message.author.username) return;
+                if (message.mentions.users.some(user => user.bot)) return;
 
                 //console logs
                 console.log(`[👻] [GHOST PING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} Ghost ping detected in ${message.channel.name} ${message.channel.id} - ${message.author.username} pinged ${username}` )
