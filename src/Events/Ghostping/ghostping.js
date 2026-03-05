@@ -25,6 +25,7 @@ module.exports = {
                 const username = message.mentions.users.map(u => `${u.username}`).join(`, `);
 
                 const settings = await db.settings.get(guildId);
+                if (!settings.ghostping) return;
                 if (settings?.ghostping === false) return;
             
                 if (message.mentions.users.map(u => `${u.username}`).join(`, `) === message.author.username) return;
