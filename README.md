@@ -42,7 +42,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Roleplay
 - 🌿Venting
 - 🌿AI Deadchat
-- 🌿Ghost Ping
+- 🌿GhostPing
 - 🌿RSS Feed News
 - 🌿Bump Reminder
 - 🌿Giveaway System
@@ -166,6 +166,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
+
+### **🌿<ins>Ghostping</ins>**
+- `?ghostping-toggle` - Toggles ghostping from off and on.
 
 ### **🌿<ins>Other</ins>**
 - `?echo` - Echo's messages by using `?echo messagecontent`
