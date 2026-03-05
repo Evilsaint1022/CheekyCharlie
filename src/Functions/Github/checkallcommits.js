@@ -35,9 +35,9 @@ async function checkAllCommits() {
 
     return newCommits;
   } catch (err) {
-    if ( err.message === "fetch is not a function" ) {
-        return[];
-    }
+    if ( err.message === "fetch is not a function" ) return [];
+    console.error(`[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${err.message}`);
+    return[];
   }
 }
 
