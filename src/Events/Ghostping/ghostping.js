@@ -1,4 +1,5 @@
 const { Events, userMention } = require('discord.js');
+const db = require('../../Handlers/database');
 
 module.exports = {
     name: Events.MessageDelete,
@@ -22,6 +23,9 @@ module.exports = {
                 const pingedUsers = message.mentions.users.map(u => `<@${u.id}>`).join(', ');
 
                 const username = message.mentions.users.map(u => `${u.username}`).join(`, `);
+
+                const settings = await db.settings.get(guildId);
+                if (settings?.ghostping === false) return;
             
                 if (message.mentions.users.map(u => `${u.username}`).join(`, `) === message.author.username) return;
                 if (message.mentions.users.some(user => user.bot)) return;
