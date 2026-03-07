@@ -7,7 +7,7 @@ module.exports = async (client) => {
 
     const commandFolders = ["Everyone", "Whitelisted"]; // Folders to load commands from
     const table = new Table({
-        head: ['Commands', 'Status'],
+        head: ['Application Commands', 'Status'],
         style: { head: ['cyan'], border: ['grey'] },
         wordWrap: true,
         colWidths: [50, 20], // You can adjust these values if needed
