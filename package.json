@@ -35,14 +35,14 @@
     "node": "^25.8.0",
     "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
-    "openai": "^6.26.0",
+    "openai": "^6.27.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
     "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "nodemon": "^3.1.14"
   },
   "overrides": {
