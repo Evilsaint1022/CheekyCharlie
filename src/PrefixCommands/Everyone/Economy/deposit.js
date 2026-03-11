@@ -72,7 +72,7 @@ module.exports = {
 
         if (!depositAmount || depositAmount <= 0 || balance < depositAmount) {
             return message.reply(
-                '❌ You do not have enough points to deposit or you entered an invalid amount.'
+                '❌ You do not have enough Ferns to deposit or you might of entered an invalid amount.'
             );
         }
 
