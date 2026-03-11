@@ -86,7 +86,7 @@ module.exports = {
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
 
-      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${message.channel.name} ${message.channel.id}`);
+      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Scheduled for 2 hours in ${message.channel.name} ${message.channel.id}`);
       await message.channel.send({ embeds: [bumped] });
 
       const now = Date.now();
@@ -133,7 +133,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       await channel.send({ content: mention, embeds: [bumpreminder] });
 
-      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Its Time to Bump again in ${channel.name} ${channel.id}`);
+      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder has been sent in ${channel.name} ${channel.id}`);
     } catch (err) {
       console.error(`[⬆️] [BUMP REMINDER] Failed to send reminder:`, err);
     } finally {
