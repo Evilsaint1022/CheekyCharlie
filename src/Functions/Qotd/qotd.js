@@ -50,7 +50,7 @@ async function sendQuestionOfTheDay(client) {
 
       const response = await openai.chat.completions.create({
         messages: [{ role: 'system', content: prompt }],
-        model: "meta-llama/llama-4-maverick-17b-128e-instruct",
+        model: "openai/gpt-oss-120b",
         temperature: 1.5
       });
 
