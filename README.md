@@ -39,10 +39,11 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Economy Games
 - 🌿Leaderboards
 - 🌿Level System
+- 🌿Level Roles
 - 🌿Roleplay
 - 🌿Venting
 - 🌿AI Deadchat
-- 🌿GhostPing
+- 🌿Ghost-Ping
 - 🌿RSS Feed News
 - 🌿Bump Reminder
 - 🌿Giveaway System
