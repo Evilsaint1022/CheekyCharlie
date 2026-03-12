@@ -32,7 +32,7 @@ const repoImage = await loadImage(repoImagePath);
     const bottom = `**─────────────────────────────────────**`;
 
     const centeredmessage = `ㅤㅤㅤ**${message}**`;
-    const centeredauthor =  `ㅤㅤㅤ🌿・**Author: \`${authorName}\`**`;
+    const centeredauthor =  `**The Author: \`${authorName}\`**`;
 
     if (!sha || !message || !htmlUrl) {
       return;
