@@ -445,10 +445,6 @@ const commands = [
         description: 'Remove the currently set story channel.',
     },
     {
-        name: 'view-one-word-story',
-        description: 'View the current one-word story.',
-    },
-    {
         name: 'reset-one-word-story',
         description: 'Reset the current one-word story.',
     },
