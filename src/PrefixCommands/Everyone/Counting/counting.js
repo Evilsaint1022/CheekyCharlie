@@ -30,7 +30,7 @@ module.exports = {
             const countingData = await db.counting.get(guildKey);
 
             if (!countingData) {
-                return message.reply('⚠️ No counting data found for this server yet.');
+                return message.reply(`⚠️ No Counting data found for ${guildName}.`);
             }
 
             let lastUser = 'Unknown User';
@@ -48,9 +48,9 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`🌿 ${guildName} 🌿`)
                 .addFields(
-                    { name: 'Current Number', value: `${countingData.current}`, inline: true },
-                    { name: 'Next Number', value: `${countingData.expected}`, inline: true },
-                    { name: 'Record', value: `${countingData.record}`, inline: true },
+                    { name: '**__Current Number__**', value: `${countingData.current}`, inline: true },
+                    { name: '**__Next Number__**', value: `${countingData.expected}`, inline: true },
+                    { name: '**__Highest Record__**', value: `${countingData.record}`, inline: true },
                 )
                 .setFooter({ text: `Last counted by ${lastUser}` })
                 .setColor(0x207e37);

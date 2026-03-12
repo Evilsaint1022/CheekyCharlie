@@ -14,7 +14,37 @@ const begPhrases = [
     "A passerby feels bad and gives you",
     "You hold out your hands and receive",
     "A hooded figure quietly gives you",
-    "Someone flips you"
+    "Someone flips you",
+    "A stranger quietly gives you",
+    "A kind passerby hands you",
+    "A traveler spares you",
+    "A wandering merchant gives you",
+    "A friendly soul drops",
+    "A mysterious stranger leaves you",
+    "A generous traveler offers you",
+    "A quiet benefactor gives you",
+    "A passerby tosses you",
+    "A hooded traveler hands you",
+    "A stranger slips you",
+    "A friendly face gives you",
+    "A wandering soul spares you",
+    "A traveler kindly gives you",
+    "A generous stranger drops",
+    "A quiet stranger leaves you",
+    "A passing traveler hands you",
+    "A kind soul tosses you",
+    "A helpful stranger gives you",
+    "A wandering stranger offers you",
+    "A passerby quietly leaves you",
+    "A traveler takes pity and gives you",
+    "A stranger nods and gives you",
+    "A friendly passerby drops",
+    "A quiet traveler spares you",
+    "Someone walking by tosses you",
+    "A traveler shares",
+    "A quiet benefactor drops",
+    "A mysterious traveler hands you",
+    "A kind wanderer gives you"
 ];
 
 module.exports = {
@@ -51,7 +81,7 @@ module.exports = {
             const timeLeft = Math.ceil((begCooldown - (now - lastBeg)) / 1000);
 
             return message.reply(
-                `⏳ Hold up! You can beg again in **${timeLeft}s**.`
+                `⏳ Begging too fast! You can beg again in **${timeLeft}s**.`
             );
         }
 
