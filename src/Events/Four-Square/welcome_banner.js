@@ -40,9 +40,9 @@ module.exports = {
       ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
       // Draw the member's avatar as a circle onto the canvas
-      const avatarSize = 250; // Set avatar size
-      const avatarX = canvas.width / 2; // Center of the canvas width
-      const avatarY = 100 + avatarSize / 2; // Adjust as needed and center the avatar
+      const avatarSize = 305; // Set avatar size
+      const avatarX = canvas.width / 1.96; // Center of the canvas width
+      const avatarY = 120 + avatarSize / 1.5; // Adjust as needed and center the avatar
 
       // Draw circular avatar
       ctx.save();
