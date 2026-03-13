@@ -25,6 +25,9 @@ module.exports = {
         const guildKey = `${message.guild.id}`;
         const guildName = message.guild.name;
 
+        const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const space = 'ㅤ';
+
         try {
             // Get the saved counting data
             const countingData = await db.counting.get(guildKey);
@@ -44,15 +47,24 @@ module.exports = {
                 }
             }
 
+          
+
             // Build embed
             const embed = new EmbedBuilder()
-                .setTitle(`🌿 ${guildName} 🌿`)
-                .addFields(
-                    { name: '**__Current Number__**', value: `${countingData.current}`, inline: true },
-                    { name: '**__Next Number__**', value: `${countingData.expected}`, inline: true },
-                    { name: '**__Highest Record__**', value: `${countingData.record}`, inline: true },
+                .setTitle(`🌿 **__${guildName} Counting!__** 🌿`)
+                .setDescription(
+                    `_This is the current counting data for ${guildName}._\n` +
+                    `${middle}\n` +
+                    `⭐**__Highest Record__**\n` +
+                    `- \`${countingData.record}\`\n` +
+                    `🌿**__Current Number__**\n` +
+                    `- \`${countingData.current}\`\n` +
+                    `🌿**__Next Number__**\n` +
+                    `- \`${countingData.expected}\`\n` +
+                    `${middle}\n`
                 )
-                .setFooter({ text: `Last counted by ${lastUser}` })
+                .setThumbnail(message.guild.iconURL())
+                .setFooter({ text: `Last Counter: ${lastUser}` })
                 .setColor(0x207e37);
 
             await message.reply({ embeds: [embed] });
