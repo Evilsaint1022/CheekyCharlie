@@ -26,6 +26,7 @@ module.exports = {
 
     const ferns = '<:Ferns:1395219665638391818>';
     const sender = message.author;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 
     // --------------------
     // Argument parsing
@@ -105,6 +106,17 @@ module.exports = {
       );
 
       // ------------------------------------------------------
+      // Logging
+      // ------------------------------------------------------
+
+      console.log(
+        `[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+        `${message.guild.name} ${message.guild.id} ${sender.username} paid ` +
+        `${amount.toLocaleString()} Ferns to ${user.username}`
+      );
+
+      // ------------------------------------------------------
       // 4️⃣ Log transaction
       // ------------------------------------------------------
       const channelId = '1481927633678762084';
@@ -120,23 +132,12 @@ module.exports = {
       }
 
       const embedlog = new EmbedBuilder()
-          .setTitle('🌿 **__Payment Logs__** 🌿')
-          .setDescription(`\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
+          .setTitle('💰・**__Transaction Logs__**')
+          .setDescription(`${middle}\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${middle}\n\n- 🌿・Thanks for using Bank-NZ!`)
           .setColor(0x207e37)
           .setThumbnail(message.guild.iconURL())
 
       await channel.send({ embeds: [embedlog] });
-
-      // ------------------------------------------------------
-      // Logging
-      // ------------------------------------------------------
-
-      console.log(
-        `[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] ` +
-        `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-        `${message.guild.name} ${message.guild.id} ${sender.username} paid ` +
-        `${amount.toLocaleString()} Ferns to ${user.username}`
-      );
 
     } catch (error) {
       console.error(error);

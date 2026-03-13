@@ -5,6 +5,7 @@ const db = require('../../../Handlers/database');
 
 const pickedUsers = new Set();
 const ferns = '<:Ferns:1395219665638391818>';
+const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 
 module.exports = {
     name: "pick",
@@ -106,29 +107,6 @@ module.exports = {
 
             balance += coinsEarned;
 
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
-      const channelId = '1481927633678762084';
-
-      let channel = message.guild.channels.cache.get(channelId);
-
-      if (!channel) {
-          channel = await message.guild.channels.fetch(channelId).catch(() => null);
-      }
-
-      if (!channel) {
-          return;
-      }
-
-      const embedlog = new EmbedBuilder()
-          .setTitle('🌿 **__Pick Logs__** 🌿')
-          .setDescription(`\n**${author.username}** used  the **Pick** command and received **${ferns}${coinsEarned.toLocaleString()}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setThumbnail(message.guild.iconURL())
-
-      await channel.send({ embeds: [embedlog] });
-
             console.log(
                 `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
@@ -161,6 +139,29 @@ module.exports = {
                     console.error('Error deleting pick message:', err);
                 }
             }, 20000);
+
+            // ------------------------------------------------------
+            // 4️⃣ Log transaction
+            // ------------------------------------------------------
+            const channelId = '1481927633678762084';
+
+            let channel = message.guild.channels.cache.get(channelId);
+
+            if (!channel) {
+                channel = await message.guild.channels.fetch(channelId).catch(() => null);
+            }
+
+            if (!channel) {
+                return;
+            }
+
+            const embedlog = new EmbedBuilder()
+                .setTitle('💰・**__Transaction Logs__**')
+                .setDescription(`${middle}\n**${author.username}** used  the **Pick** command and received **${ferns}${coinsEarned.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${middle}\n\n- 🌿・Thanks for using Bank-NZ!`)
+                .setColor(0x207e37)
+                .setThumbnail(message.guild.iconURL())
+
+            await channel.send({ embeds: [embedlog] });
 
         } catch (error) {
             console.error('Error in pick command execution:', error);

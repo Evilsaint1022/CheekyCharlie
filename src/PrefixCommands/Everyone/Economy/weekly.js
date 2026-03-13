@@ -97,29 +97,6 @@ module.exports = {
         await db.wallet.set(`${newKey}.balance`, balance);
         await db.lastclaim.set(`${newKey}.weekly`, currentTime);
 
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
-      const channelId = '1481927633678762084';
-
-      let channel = message.guild.channels.cache.get(channelId);
-
-      if (!channel) {
-          channel = await message.guild.channels.fetch(channelId).catch(() => null);
-      }
-
-      if (!channel) {
-          return;
-      }
-
-      const embedlog = new EmbedBuilder()
-          .setTitle('🌿 **__Weekly Logs__** 🌿')
-          .setDescription(`\n**${author.username}** used  the **Weekly** command and received **${ferns}${rewardAmount.toLocaleString()}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setThumbnail(message.guild.iconURL())
-
-      await channel.send({ embeds: [embedlog] });
-
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(top)
@@ -141,5 +118,29 @@ module.exports = {
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount} Ferns.`
         );
+
+      // ------------------------------------------------------
+      // 4️⃣ Log transaction
+      // ------------------------------------------------------
+      const channelId = '1481927633678762084';
+
+      let channel = message.guild.channels.cache.get(channelId);
+
+      if (!channel) {
+          channel = await message.guild.channels.fetch(channelId).catch(() => null);
+      }
+
+      if (!channel) {
+          return;
+      }
+
+      const embedlog = new EmbedBuilder()
+          .setTitle('💰・**__Transaction Logs__**')
+          .setDescription(`${middle}\n**${author.username}** used  the **Weekly** command and received **${ferns}${rewardAmount.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${middle}\n\n- 🌿・Thanks for using Bank-NZ!`)
+          .setColor(0x207e37)
+          .setThumbnail(message.guild.iconURL())
+
+      await channel.send({ embeds: [embedlog] });
+
     }
 };
