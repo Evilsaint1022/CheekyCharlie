@@ -83,6 +83,29 @@ module.exports = {
         await db.wallet.set(`${newKey}.balance`, balance);
         await db.bank.set(`${newKey}.bank`, bank);
 
+      // ------------------------------------------------------
+      // 4️⃣ Log transaction
+      // ------------------------------------------------------
+      const channelId = '1481927633678762084';
+
+      let channel = message.guild.channels.cache.get(channelId);
+
+      if (!channel) {
+          channel = await message.guild.channels.fetch(channelId).catch(() => null);
+      }
+
+      if (!channel) {
+          return;
+      }
+
+      const embedlog = new EmbedBuilder()
+          .setTitle('🌿 **__Deposit Logs__** 🌿')
+          .setDescription(`\n**${author.username}** Deposited **${ferns}${depositAmount.toLocaleString()}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
+          .setColor(0x207e37)
+          .setThumbnail(message.guild.iconURL())
+
+      await channel.send({ embeds: [embedlog] });
+
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setTitle(top)

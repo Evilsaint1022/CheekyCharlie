@@ -1,3 +1,4 @@
+const { EmbedBuilder } = require("discord.js");
 const db = require("../../../Handlers/database");
 
 // Replace /\./g with _ when saving (legacy)
@@ -102,6 +103,29 @@ module.exports = {
       await message.reply(
         `✅ **__Payment Successful!__**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
       );
+
+      // ------------------------------------------------------
+      // 4️⃣ Log transaction
+      // ------------------------------------------------------
+      const channelId = '1481927633678762084';
+
+      let channel = message.guild.channels.cache.get(channelId);
+
+      if (!channel) {
+          channel = await message.guild.channels.fetch(channelId).catch(() => null);
+      }
+
+      if (!channel) {
+          return;
+      }
+
+      const embedlog = new EmbedBuilder()
+          .setTitle('🌿 **__Payment Logs__** 🌿')
+          .setDescription(`\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
+          .setColor(0x207e37)
+          .setThumbnail(message.guild.iconURL())
+
+      await channel.send({ embeds: [embedlog] });
 
       // ------------------------------------------------------
       // Logging

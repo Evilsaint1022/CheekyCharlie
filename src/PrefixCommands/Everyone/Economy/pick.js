@@ -20,6 +20,7 @@ module.exports = {
     }
 
         try {
+            const author = message.author;
             const guild = message.guild;
             const user = message.author;
             const member = message.member;
@@ -104,6 +105,29 @@ module.exports = {
             }
 
             balance += coinsEarned;
+
+      // ------------------------------------------------------
+      // 4️⃣ Log transaction
+      // ------------------------------------------------------
+      const channelId = '1481927633678762084';
+
+      let channel = message.guild.channels.cache.get(channelId);
+
+      if (!channel) {
+          channel = await message.guild.channels.fetch(channelId).catch(() => null);
+      }
+
+      if (!channel) {
+          return;
+      }
+
+      const embedlog = new EmbedBuilder()
+          .setTitle('🌿 **__Pick Logs__** 🌿')
+          .setDescription(`\n**${author.username}** used  the **Pick** command and received **${ferns}${coinsEarned.toLocaleString()}**.\n\n- **ServerName:** \`${message.guild.name}\`\n- **ServerID:** \`${message.guild.id}\`\n\n 🌿Thanks for using Bank-NZ!`)
+          .setColor(0x207e37)
+          .setThumbnail(message.guild.iconURL())
+
+      await channel.send({ embeds: [embedlog] });
 
             console.log(
                 `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
