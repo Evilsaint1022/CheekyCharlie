@@ -116,7 +116,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?staff-apply` - Start a new staff application.
 
 ### **🌿<ins>Confessions</ins>**
-- `?confession` - Send a anonymously confession to the servers venting set channel.
+- `?confession` - Send a anonymously confession to the servers set confession channel.
 
 ### **🌿<ins>Counting</ins>**
 - `?counting` - View the current, next expected and record number for the guilds counting.
