@@ -1,5 +1,6 @@
 // confession.js
 const {
+    EmbedBuilder,
     ContainerBuilder,
     TextDisplayBuilder,
     MessageFlags
@@ -50,18 +51,14 @@ module.exports = {
 
 
         // 🫰🏻 Anonymous vent container (Components v2)
-        const confessionContainer = new ContainerBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder()
-                    .setContent('🌿 **__Anonymous Confession!__** 🌿'),
-                new TextDisplayBuilder()
-                    .setContent(confession)
-            );
+            const confessionembed = new EmbedBuilder()
+            .setTitle('🌿 **__Anonymous Confession__** 🌿')
+            .setDescription(confession)
+            .setThumbnail(message.guild.iconURL())
+            .setColor(0x207e37)
+            
 
-        const confessionMessage = await ConfessionChannel.send({
-            components: [confessionContainer],
-            flags: [MessageFlags.IsComponentsV2]
-        });
+        const confessionMessage = await ConfessionChannel.send({embeds: [confessionembed]});
 
         console.log(
             `[🌿] [CONFESSIONS] [${new Date().toLocaleDateString('en-GB')}] ` +
