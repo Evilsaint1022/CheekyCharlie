@@ -28,6 +28,7 @@ module.exports = {
 
         const top = `**🌿 __${username}'s Weekly!__ 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+        const bar = `**─────────────────────────────────**`;
         const bottom = `🌿・Come Back Next Week for More!`;
 
         // ------------------------------------------------------
@@ -124,23 +125,23 @@ module.exports = {
       // ------------------------------------------------------
       const channelId = '1481927633678762084';
 
-      let channel = message.guild.channels.cache.get(channelId);
+      for (const guild of message.client.guilds.cache.values()) {
 
-      if (!channel) {
-          channel = await message.guild.channels.fetch(channelId).catch(() => null);
-      }
+          let channel = guild.channels.cache.get(channelId);
 
-      if (!channel) {
-          return;
-      }
+          if (!channel) {
+              channel = await guild.channels.fetch(channelId).catch(() => null);
+          }
+
+          if (!channel) continue;
 
       const embedlog = new EmbedBuilder()
           .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${middle}\n**${author.username}** used  the **Weekly** command and received **${ferns}${rewardAmount.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${middle}\n\n- 🌿・Thanks for using Bank-NZ!`)
+          .setDescription(`${bar}\n**${author.username}** used  the **Weekly** command and received **${ferns}${rewardAmount.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${bar}\n\n- 🌿・Thanks for using Bank-NZ!`)
           .setColor(0x207e37)
-          .setThumbnail(message.guild.iconURL())
+          .setThumbnail(guild.iconURL())
 
       await channel.send({ embeds: [embedlog] });
-
+      }
     }
 };
