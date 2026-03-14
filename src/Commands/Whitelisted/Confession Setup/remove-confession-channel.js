@@ -3,8 +3,8 @@ const db = require('../../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('remove-vent-channel')
-        .setDescription('Remove the current vent channel'),
+        .setName('remove-confession-channel')
+        .setDescription('Remove the current confession channel'),
 
     async execute(interaction) {
         
@@ -29,18 +29,18 @@ module.exports = {
         // Fetch current settings or default to empty object
         const currentSettings = await db.settings.get(`${guildId}`) || {};
 
-        // Check if a vent channel is set
-        if (!currentSettings.ventChannelId) {
-            return interaction.reply({ content: 'No vent channel is currently set.', flags: 64 });
+        // Check if a Confession channel is set
+        if (!currentSettings.confessionChannelId) {
+            return interaction.reply({ content: 'No confession channel is currently set.', flags: 64 });
         }
 
-        delete currentSettings.ventChannelId;
+        delete currentSettings.confessionChannelId;
 
         db.settings.set(`${guildId}`, currentSettings);
 
         const timestamp = new Date().toISOString();
-        console.log(`[⭐] [REMOVE-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-vent-channel command to remove the vent channel.`);
+        console.log(`[⭐] [REMOVE-CONFESSION-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-confession-channel command to remove the set confession channel. .`);
 
-        return interaction.reply({ content: '✅ The vent channel has been removed.', flags: 64 });
+        return interaction.reply({ content: '✅ The confession channel has been removed.', flags: 64 });
     },
 };

@@ -1,4 +1,4 @@
-// venting.js
+// confession.js
 const {
     ContainerBuilder,
     TextDisplayBuilder,
@@ -8,8 +8,8 @@ const {
 const db = require('../../../Handlers/database');
 
 module.exports = {
-    name: 'venting',
-    aliases: ['vent'],
+    name: 'confession',
+    aliases: ['confess'],
 
     async execute(message, args) {
 
@@ -22,20 +22,20 @@ module.exports = {
 
         const confession = args.join(' ');
         if (!confession) {
-            return channel.send('❌ Please provide a message to vent.\nExample: `?venting I feel overwhelmed today`');
+            return channel.send('❌ Please provide a message to confess.\nExample: `?confession I feel overwhelmed today`');
         }
 
-        const ventChannelId = await db.settings.get(`${message.guild.id}.ventChannelId`);
+        const ConfessionChannelId = await db.settings.get(`${message.guild.id}.confessionChannelId`);
 
-        let ventChannel;
+        let ConfessionChannel;
         try {
-            ventChannel = await message.guild.channels.fetch(ventChannelId);
+            ConfessionChannel = await message.guild.channels.fetch(ConfessionChannelId);
         } catch (err) {
-            ventChannel = null;
+            ConfessionChannel = null;
         }
 
-        if (!ventChannelId || !ventChannel) {
-            return message.reply('❌ **There is currently no vent channel set!**');
+        if (!ConfessionChannelId || !ConfessionChannel) {
+            return message.reply('❌ **There is currently no confession channel set!**');
             
         }
 
@@ -44,7 +44,7 @@ module.exports = {
         if (message.deletable) await message.delete();
         } catch (err) {
         if (err.code === 10008) return;
-        console.error('Error deleting vent message:', err);
+        console.error('Error deleting confession message:', err);
                 }
         }, 1000);
 
@@ -53,24 +53,24 @@ module.exports = {
         const confessionContainer = new ContainerBuilder()
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent('**🫰🏻 __New Anonymous Vent!__**'),
+                    .setContent('🌿 **__Anonymous Confession!__** 🌿'),
                 new TextDisplayBuilder()
                     .setContent(confession)
             );
 
-        const confessionMessage = await ventChannel.send({
+        const confessionMessage = await ConfessionChannel.send({
             components: [confessionContainer],
             flags: [MessageFlags.IsComponentsV2]
         });
 
         console.log(
-            `[🌿] [VENTING] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [CONFESSIONS] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
-            `${message.guild.name} ${message.guild.id} ${message.author.username} used the venting command.`
+            `${message.guild.name} ${message.guild.id} ${message.author.username} used the confession command.`
         );
 
         return channel.send(
-            '✅ **Vent message successfully sent! Check it out:** ' + confessionMessage.url
+            '✅ **Confession message successfully sent! Check it out:** ' + confessionMessage.url
         );
     }
 };

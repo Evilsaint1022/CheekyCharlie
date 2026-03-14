@@ -3,11 +3,11 @@ const db = require('../../../Handlers/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('set-vent-channel')
-        .setDescription('Set the channel where vent confessions will be sent')
+        .setName('set-confession-channel')
+        .setDescription('Set the channel where confessions will be sent')
         .addChannelOption(option =>
             option.setName('channel')
-                .setDescription('The channel to set for vent confessions')
+                .setDescription('The channel to set for confessions')
                 .setRequired(true)
         ),
 
@@ -39,14 +39,14 @@ module.exports = {
 
         const existingData = await db.settings.get(guildKey) || {};
 
-        existingData.ventChannelId = channel.id;
+        existingData.confessionChannelId = channel.id;
 
         await db.settings.set(guildKey, existingData);
 
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
-        console.log(`[⭐] [SET-VENT-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] [${datestamp}] ${guildName} ${guildId} ${interaction.user.tag} used the set-vent-channel command to set the channel ID "${channel.id}"`);
+        console.log(`[⭐] [SET-CONFESSION-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-confession-channel command to set the channel ${channel.name} ${channel.id}`);
 
-        await interaction.reply({ content: `✅ Vent channel set to ${channel.url}.`, flags: 64 });
+        await interaction.reply({ content: `✅ Confession channel set to ${channel.url}.`, flags: 64 });
     },
 };

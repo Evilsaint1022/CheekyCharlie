@@ -41,7 +41,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Level System
 - 🌿Level Roles
 - 🌿Roleplay
-- 🌿Venting
+- 🌿Confessions
 - 🌿AI Deadchat
 - 🌿Ghost-Ping
 - 🌿RSS Feed News
@@ -115,8 +115,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-apply` - Start a new staff application.
 
-### **🌿<ins>Venting</ins>**
-- `?venting` - Vent anonymously to the vent channel.
+### **🌿<ins>Confessions</ins>**
+- `?confession` - Send a anonymously confession to the servers venting set channel.
 
 ### **🌿<ins>Counting</ins>**
 - `?counting` - View the current, next expected and record number for the guilds counting.
@@ -269,9 +269,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `/set-deadchat-duration` - The time after the chat goes dead to the message being sent.
 - `/toggle-deadchat` - Toggle the AI deadchat on or off.
 
-### **🌿<ins>Venting Setup</ins>**
-- `/set-vent-channel` - Set the vent channel where confessions will go.
-- `/remove-vent-channel` - Remove the vent channel (Disables confessions).
+### **🌿<ins>Confession Setup</ins>**
+- `/set-confession-channel` - Set the confession channel where confessions will go.
+- `/remove-confession-channel` - Remove the confession channel (Disables confessions).
 
 ### **🌿<ins>Giveaway Setup</ins>**
 - `/giveaway` - Create a giveaway with a prize, duration, and number of winners.
