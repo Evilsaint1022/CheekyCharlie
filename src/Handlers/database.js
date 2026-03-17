@@ -52,7 +52,8 @@ const db = {
     birthdaysettings: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdaysettings.json"),
     birthdays_sent: new DotDB("./src/Utilities/Storage/Settings/Birthdays/birthdayssent.json"),
     passive: new DotDB("./src/Utilities/Storage/Settings/Passive/passive.json"),
-    stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json")
+    stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json"),
+    lives: new DotDB("./src/Utilities/Storage/Settings/Lives/lives.json")
 }
 
 module.exports = db;
