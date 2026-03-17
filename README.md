@@ -122,7 +122,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?counting` - View the current, next expected and record number for the guilds counting.
 
 ### **🌿<ins>Birthdays</ins>**
-- `?birthday set` - Sets a birthday using `?birthday set dd/mm/yyyy`.
+- `?birthday-set` - Sets a birthday using `?birthday-set dd/mm/yyyy`.
+- `?birthday` - Views other users birthdays.
 
 ### **🌿<ins>Fun</ins>**
 - `?avatar` - View your's or someone elses avatar using `?pfp @user`.
