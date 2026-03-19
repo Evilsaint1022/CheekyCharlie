@@ -94,15 +94,16 @@ module.exports = {
           allowedMentions: { repliedUser: true }
         }).catch(() => null);
 
-        await db.counting.set(guildKey, {
-          current: 0,
-          expected: 1,
-          lastUserId: null,
-          record: currentRecord
-        });
-
-        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): counted twice in a row. Last user was ${countData.lastUserId}, this time it was ${message.author.id}.`)
-
+        // ✅ ONLY reset if lives are 0
+        if (countingLives === 0) {
+          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Restarting at 1.`)
+          await db.counting.set(guildKey, {
+            current: 0,
+            expected: 1,
+            lastUserId: null,
+            record: currentRecord
+          });
+        }
         return;
       }
 
@@ -126,15 +127,16 @@ module.exports = {
           allowedMentions: { repliedUser: true }
         }).catch(() => null);
 
-        await db.counting.set(guildKey, {
-          current: 0,
-          expected: 1,
-          lastUserId: null,
-          record: currentRecord
-        });
-
-        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Runined: start at 1.`)
-
+        // ✅ ONLY reset if lives are 0
+        if (countingLives === 0) {
+          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Restarting at 1.`)
+          await db.counting.set(guildKey, {
+            current: 0,
+            expected: 1,
+            lastUserId: null,
+            record: currentRecord
+          });
+        }
       } else {
 
         const newRecord = userNumber > currentRecord ? userNumber : currentRecord;
@@ -164,6 +166,11 @@ module.exports = {
           message.react("💯");
           message.react("🎉");
         }
+
+        let countingLives = (await db.lives.get(`${guildKey}.lives`));
+
+        countingLives += 1;
+        await db.lives.set(`${guildKey}.lives`, countingLives);
 
         await db.counting.set(guildKey, {
           current: userNumber,
