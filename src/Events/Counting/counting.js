@@ -15,6 +15,9 @@ module.exports = {
     const guildKey = `${guild.id}`;
     const currentChannelId = message.channel.id;
 
+    // Get Counting Lives for servers
+    let countingLives = (await db.lives.get(`${guildKey}.lives`)) ?? 3;
+
     // Exit early if already processing
     if (processingLocks.has(guildKey)) return;
     processingLocks.add(guildKey);
@@ -61,7 +64,7 @@ module.exports = {
       const userMsg_not_IsNumber = isNaN(userMessage)
 
       if (userMsg_not_IsNumber) {
-        
+
         try {
           const mathResult = eval(userMessage);
           userNumber = mathResult;
@@ -77,8 +80,17 @@ module.exports = {
       if (message.author.id === countData.lastUserId) {
         await message.react(WRONG_EMOJI).catch(() => null);
 
+        // Get lives
+        let countingLives = (await db.lives.get(`${guildKey}.lives`)) ?? 3;
+
+        // Decrease only if > 0
+        if (countingLives > 0) {
+          countingLives -= 1;
+          await db.lives.set(`${guildKey}.lives`, countingLives);
+        }
+
         await message.reply({
-          content: `${WRONG_EMOJI} **${message.author.username}** counted twice in a row and ruined the count at **${countData.current}**! Start again from **1**.`,
+          content: `${WRONG_EMOJI} **${message.author.username}** counted twice in a row and lost a life! ${message.guild.name} has **${countingLives}** lives left.`,
           allowedMentions: { repliedUser: true }
         }).catch(() => null);
 
@@ -100,8 +112,17 @@ module.exports = {
       if (!isCorrect) {
         await message.react(WRONG_EMOJI).catch(() => null);
 
+        // Get lives
+        let countingLives = (await db.lives.get(`${guildKey}.lives`)) ?? 3;
+
+        // Decrease only if > 0
+        if (countingLives > 0) {
+          countingLives -= 1;
+          await db.lives.set(`${guildKey}.lives`, countingLives);
+        }
+
         await message.reply({
-          content: `${WRONG_EMOJI} **${message.author.username}** ruined the count at **${countData.current}**! Start again from **1**.`,
+          content: `${WRONG_EMOJI} **${message.author.username}** ruined the count at **${countData.current}**! ${message.guild.name} has **${countingLives}** lives left.`,
           allowedMentions: { repliedUser: true }
         }).catch(() => null);
 
@@ -139,7 +160,7 @@ module.exports = {
 
         }
 
-        if ( userNumber == 100 ) {
+        if ( userNumber == 100 ) {
           message.react("💯");
           message.react("🎉");
         }
