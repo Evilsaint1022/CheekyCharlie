@@ -31,7 +31,6 @@ module.exports = {
     if (Date.now() - lastreset >= ONE_WEEK) {
       countingLives = 3;
       lastreset = Date.now();
-      console.log(`Counting lives reset for ${guildKey}`);
       await db.lives.set(`${guildKey}.lives`, countingLives);
       await db.lives.set(`${guildKey}.lastreset`, lastreset);
     }
