@@ -47,6 +47,7 @@ module.exports = {
                 }
             }
 
+            const CountingLives = await db.lives.get(`${guildKey}.lives`);
           
 
             // Build embed
@@ -56,11 +57,12 @@ module.exports = {
                     `_This is the current counting data for ${guildName}._\n` +
                     `${middle}\n` +
                     `⭐**__Highest Record__**\n` +
-                    `- \`${countingData.record}\`\n` +
+                    `- ㅤㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.record}\`\n` +
                     `🌿**__Current Number__**\n` +
-                    `- \`${countingData.current}\`\n` +
+                    `- ㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.current}\`\n` +
                     `🌿**__Next Number__**\n` +
-                    `- \`${countingData.expected}\`\n` +
+                    `- ㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.expected}\`\n\n` +
+                    `❤️ **__Lives:__** \`${CountingLives}\`\n` +
                     `${middle}\n`
                 )
                 .setThumbnail(message.guild.iconURL())
