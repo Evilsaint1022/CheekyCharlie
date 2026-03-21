@@ -14,11 +14,26 @@ module.exports = {
     const guild = message.guild;
     const guildKey = `${guild.id}`;
     const currentChannelId = message.channel.id;
+    const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
 
     // Get Counting Lives for servers
-    let countingLives = (await db.lives.get(`${guildKey}.lives`));
-    if (countingLives === undefined) {
-      await db.lives.set(`${guildKey}.lives`, 3);
+    let countingLives = await db.lives.get(`${guildKey}.lives`);
+    let lastreset = await db.lives.get(`${guildKey}.lastreset`);
+
+    if (countingLives === undefined || lastreset === undefined) {
+      countingLives = 3;
+      lastreset = Date.now();
+
+      await db.lives.set(`${guildKey}.lives`, countingLives);
+      await db.lives.set(`${guildKey}.lastreset`, lastreset);
+    }
+
+    if (Date.now() - lastreset >= ONE_WEEK) {
+      countingLives = 3;
+      lastreset = Date.now();
+      console.log(`Counting lives reset for ${guildKey}`);
+      await db.lives.set(`${guildKey}.lives`, countingLives);
+      await db.lives.set(`${guildKey}.lastreset`, lastreset);
     }
 
     // Exit early if already processing
