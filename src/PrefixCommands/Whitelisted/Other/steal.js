@@ -30,7 +30,7 @@ module.exports = {
         }
 
         // Check Discord permission
-        if (!message.member.permissions.has(PermissionFlagsBits.ManageEmojisAndStickers)) {
+        if (!message.member.permissions.has(PermissionFlagsBits.ManageGuildExpressions)) {
             return message.reply("❌ You need **Manage Emojis and Stickers** permission.");
         }
 
@@ -69,14 +69,20 @@ module.exports = {
             await message.reply(`✅ Emoji added! ${emoji} **:${emoji.name}:**`);
 
             console.log(
-                `[⭐] [STEAL] [${new Date().toLocaleDateString('en-GB')}] ` +
+                `[⭐] [STEAL] [${new Date().toLocaleDateString('en-NZ')}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
                 `${guildName} ${guildId} ${message.author.tag} used the steal command ` +
                 `to steal ${emojiName} ${emojiId}`
             );
 
         } catch (error) {
-            console.error(error);
+            
+            console.log(
+                `[⭐] [STEAL] [${new Date().toLocaleDateString('en-NZ')}] ` +
+                `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+                `${guildName} ${guildId} Steal of Emoji failed. ${error.message}`
+            );
+
             message.reply(
                 "❌ Failed to add emoji. Make sure I have permission and the server has space."
             );
