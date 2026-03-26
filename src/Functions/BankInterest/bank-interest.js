@@ -87,13 +87,13 @@ async function runDailyBankInterest(client) {
             await db.bank.set(userId, { bank: newBalance });
 
             const userBlock =
-                `${splitter}\n### 🌿・**__${username}__**\n` +
+                `### 🌿・**__${username}__**\n${splitter}\n` +
                 `- **__Old Bank__** ${ferns}・\`${amount}\`\n` +
                 `- **__Interest Gained__** ${ferns}・\`${interest}\`\n` +
-                `- **__New Balance__** ${ferns}・\`${newBalance}\`\n`;
+                `- **__New Balance__** ${ferns}・\`${newBalance}\`\n${splitter}\n\n`;
 
-            // ✅ Check if adding this block would exceed 4096
-            if ((currentDescription + userBlock + bottom).length > 4096) {
+            // ✅ Check if adding this block would exceed 3800
+            if ((currentDescription + userBlock + bottom).length > 3800) {
                 currentDescription += ``;
                 embedsToSend.push(currentDescription);
 
@@ -108,8 +108,9 @@ async function runDailyBankInterest(client) {
 
         if (!hasUsers) continue;
 
-        currentDescription += `${splitter}`;
-        embedsToSend.push(currentDescription);
+        if (currentDescription.length > 0) {
+            embedsToSend.push(currentDescription);
+        }
 
         try {
             for (let i = 0; i < embedsToSend.length; i++) {
