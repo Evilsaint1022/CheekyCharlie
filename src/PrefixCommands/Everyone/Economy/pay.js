@@ -105,40 +105,13 @@ module.exports = {
         `✅ **__Payment Successful!__**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
       );
 
-      // ------------------------------------------------------
-      // Logging
-      // ------------------------------------------------------
-
+      // Console Logs
       console.log(
         `[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] ` +
         `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
         `${message.guild.name} ${message.guild.id} ${sender.username} paid ` +
         `${amount.toLocaleString()} Ferns to ${user.username}`
       );
-
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
-      const channelId = '1481927633678762084';
-
-      for (const guild of message.client.guilds.cache.values()) {
-
-          let channel = guild.channels.cache.get(channelId);
-
-          if (!channel) {
-              channel = await guild.channels.fetch(channelId).catch(() => null);
-          }
-
-          if (!channel) continue;
-
-          const embedlog = new EmbedBuilder()
-          .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${bar}\n\n- 🌿・Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setThumbnail(guild.iconURL())
-
-          await channel.send({ embeds: [embedlog] }).catch(() => {});
-      }
 
     } catch (error) {
       console.error(error);

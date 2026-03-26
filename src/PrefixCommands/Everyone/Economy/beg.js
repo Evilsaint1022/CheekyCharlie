@@ -124,29 +124,5 @@ module.exports = {
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${username} used the beg command and got ${reward} Ferns.`
         );
-
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
-      const channelId = '1481927633678762084';
-
-      for (const guild of message.client.guilds.cache.values()) {
-
-          let channel = guild.channels.cache.get(channelId);
-
-          if (!channel) {
-              channel = await guild.channels.fetch(channelId).catch(() => null);
-          }
-
-          if (!channel) continue;
-
-      const embedlog = new EmbedBuilder()
-          .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**${username}** begged and got **${ferns}${reward.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${bar}\n\n- 🌿・Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setThumbnail(guild.iconURL())
-
-      await channel.send({ embeds: [embedlog] });
-      }
     }
 };

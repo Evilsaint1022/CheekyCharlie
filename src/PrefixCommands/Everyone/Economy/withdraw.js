@@ -123,8 +123,9 @@ module.exports = {
 
       const embedlog = new EmbedBuilder()
           .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**${author.username}** Withdrew **${ferns}${withdrawAmount.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${bar}\n\n- 🌿・Thanks for using Bank-NZ!`)
+          .setDescription(`${bar}\n🌿 **__Username:__** \`${author.username}\`\n🌿 **__UserID:__** \`${author.id}\`\n\n🌿 **__Bank Withdraw:__** ${ferns}\`${withdrawAmount.toLocaleString()}\`\n${bar}\n🇳🇿 Thanks for using Bank-NZ!`)
           .setColor(0x207e37)
+          .setTimestamp()
           .setThumbnail(guild.iconURL())
 
       await channel.send({ embeds: [embedlog] });

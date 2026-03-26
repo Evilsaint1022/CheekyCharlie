@@ -118,29 +118,5 @@ module.exports = {
             .setColor(0x207e37);
 
         await message.reply({ embeds: [embed] });
-
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
-      const channelId = '1481927633678762084';
-
-      for (const guild of message.client.guilds.cache.values()) {
-
-          let channel = guild.channels.cache.get(channelId);
-
-          if (!channel) {
-              channel = await guild.channels.fetch(channelId).catch(() => null);
-          }
-
-          if (!channel) continue;
-
-      const embedlog = new EmbedBuilder()
-          .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**${username}** used the **Daily** command and got **${ferns}${rewardAmount.toLocaleString()}**.\n\n- **__ServerName:__** \`${message.guild.name}\`\n- **__ServerID:__** \`${message.guild.id}\`\n${bar}\n\n- 🌿・Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setThumbnail(guild.iconURL())
-
-      await channel.send({ embeds: [embedlog] });
-      }
     }
 };
