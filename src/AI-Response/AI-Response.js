@@ -3,7 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const OpenAI = require("openai");
 const db = require('../Handlers/database');
-const { Client, Message } = require('discord.js');
+const { Client, Message, AttachmentBuilder } = require('discord.js');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
 const IV = Buffer.alloc(16, 0);
@@ -28,21 +28,22 @@ function encrypt(text) {
 
 async function handleAIMessage(client, message) {
 
-const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
+  const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
   // Get @everyone / @here mentions
-const everyonePing = message.mentions.everyone;
+  const everyonePing = message.mentions.everyone;
 
 // Get @here mentions
-const herePing = message.mentions.here;
+  const herePing = message.mentions.here;
 
 // Get role mentions (we will ignore these)
-const roleMentions = message.mentions.roles;
+  const roleMentions = message.mentions.roles;
 
 // Get user mentions (we will ignore the bot)
-const userMentions = message.mentions.users.filter(
-  user => user.id !== message.client.user.id
-);
+  const userMentions = message.mentions.users.filter(
+    user => user.id !== message.client.user.id
+  );
+
   if (everyonePing) return;
   if (herePing) return;
   if (roleMentions.size > 0) return;
@@ -59,6 +60,61 @@ const userMentions = message.mentions.users.filter(
   }
 
   const userContent = message.content.replace(`<@${client.user.id}>`, '').trim();
+
+  if (userContent.toLowerCase().startsWith("imagine") || userContent.toLowerCase().startsWith("create an image") || userContent.toLowerCase().startsWith("create a image") || userContent.toLowerCase().startsWith("generate a image") || userContent.toLowerCase().startsWith("generate an image")) {
+
+    await message.channel.sendTyping();
+
+    const safetyCheck = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: 'Detect any NSFW content. Reply EXACTLY with: {"nsfw_content": true/false, "reason": <string / leave this field out if no NSFW content detected>}',
+        },
+        {
+          role: "user",
+          content: userContent,
+        }
+      ],
+      model: "openai/gpt-oss-safeguard-20b",
+    });
+
+    const safetyCheckResult = JSON.parse(safetyCheck.choices[0]?.message?.content || '{}');
+
+    if ( safetyCheckResult.nsfw_content ) {
+      await message.reply("⚠️ Sorry, I can't generate that type of content.")
+      return;
+    }
+
+    const IMAGE_API_RESULT = await fetch('https://gen.pollinations.ai/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + process.env.IMAGE_API_KEY
+      },
+      body: JSON.stringify({
+        prompt: userContent,
+        model: 'flux',
+        n: 1,
+        size: '1024x1024',
+        quality: 'medium',
+        response_format: 'b64_json'
+      })
+    })
+
+    const IMAGE_DATA = await IMAGE_API_RESULT.json();
+    
+    const base64Image = IMAGE_DATA.data[0].b64_json;
+    
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+    const attachment = new AttachmentBuilder(imageBuffer, { name: 'image.png' });
+    
+    await message.channel.send({ files: [attachment] });
+
+    return;
+
+  }
+
   const encryptedUsername = encrypt(message.author.tag);
 
   console.log(`📨 Message from ${message.author.tag} (Encrypted: ${encryptedUsername}): ${userContent}`);
@@ -82,9 +138,9 @@ const userMentions = message.mentions.users.filter(
     const systemPrompt_raw = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
 
     const userInfo = `
-    Display Name (Use this to adress to the user): ${await message.author.displayName}
-    Username: ${await message.author.username}
-    `
+Display Name (Use this to adress to the user): ${await message.author.displayName}
+Username: ${await message.author.username}
+      `
 
     const nzTime = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
 
