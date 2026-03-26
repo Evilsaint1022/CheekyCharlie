@@ -2,8 +2,8 @@ const cron = require('node-cron');
 const db = require("./../../Handlers/database");
 const { EmbedBuilder } = require('discord.js');
 
-// Daily Bank Interest UTC Correct Timer --> (DO NOT REMOVE!)
-const time = "0 0 * * *";
+// Daily Bank Interest Pacific/Auckland Correct Timer --> (DO NOT REMOVE!)
+const time = '0 12 * * *'; // every day at 12:00 PM
 
 // Testing Timer ( Keeping in for future use )
 // const time = "*/10 * * * * *"; // Every 10 seconds
@@ -134,7 +134,7 @@ async function runDailyBankInterest(client) {
 function startInterest(client) {
     cron.schedule(time, () => runDailyBankInterest(client), {
         scheduled: true,
-        timezone: 'UTC'
+        timezone: 'Pacific/Auckland'
     });
 }
 
