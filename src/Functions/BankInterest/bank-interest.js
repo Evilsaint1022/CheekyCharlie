@@ -58,7 +58,7 @@ async function runDailyBankInterest(client) {
 
         if (!settings || !settings.bankinterest) continue;
 
-        const channel = guild.channels.cache.get(settings.bankinterest);
+        let channel = guild.channels.cache.get(settings.bankinterest);
         if (!channel) {
             channel = await guild.channels.fetch(settings.bankinterest).catch(() => null);
             console.warn(`[Bank Interest] Channel ID ${settings.bankinterest} not found in guild ${guild.name}`);
@@ -92,13 +92,16 @@ async function runDailyBankInterest(client) {
                 `- **__Interest Gained__** ${ferns}・\`${interest}\`\n` +
                 `- **__New Balance__** ${ferns}・\`${newBalance}\`\n${splitter}\n\n`;
 
-            // ✅ Check if adding this block would exceed 3800
-            if ((currentDescription + userBlock + bottom).length > 3800) {
-                currentDescription += ``;
+            // ✅ Ensure embed starts cleanly with top
+            if (!currentDescription) currentDescription = top + "\n";
+
+            // ✅ Split if exceeding limit
+            if ((currentDescription + userBlock + bottom).length > 3500) {
+                currentDescription += bottom;
                 embedsToSend.push(currentDescription);
 
-                // Start new embed cleanly
-                currentDescription = `` + userBlock;
+                // Start new embed
+                currentDescription = top + "\n" + userBlock;
             } else {
                 currentDescription += userBlock;
             }
@@ -108,7 +111,9 @@ async function runDailyBankInterest(client) {
 
         if (!hasUsers) continue;
 
-        if (currentDescription.length > 0) {
+        // ✅ Push final embed chunk
+        if (currentDescription) {
+            currentDescription += bottom;
             embedsToSend.push(currentDescription);
         }
 
