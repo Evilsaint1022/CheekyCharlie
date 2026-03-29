@@ -94,7 +94,7 @@ async function handleAIMessage(client, message) {
       },
       body: JSON.stringify({
         prompt: userContent,
-        model: 'flux',
+        model: 'klein',
         n: 1,
         size: '1024x1024',
         quality: 'medium',
