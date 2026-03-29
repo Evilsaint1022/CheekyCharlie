@@ -65,26 +65,33 @@ async function handleAIMessage(client, message) {
 
     await message.channel.sendTyping();
 
-    const safetyCheck = await openai.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: 'Detect any NSFW content. Reply EXACTLY with: {"nsfw_content": true/false, "reason": <string / leave this field out if no NSFW content detected>}',
-        },
-        {
-          role: "user",
-          content: userContent,
-        }
-      ],
-      model: "openai/gpt-oss-safeguard-20b",
-    });
+    try {
+      const safetyCheck = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: 'Detect any NSFW content. Reply EXACTLY with: {"nsfw_content": true/false}. If you are unsure, reply with false.',
+          },
+          {
+            role: "user",
+            content: userContent,
+          }
+        ],
+        model: "openai/gpt-oss-safeguard-20b",
+     });
 
-    const safetyCheckResult = JSON.parse(safetyCheck.choices[0]?.message?.content || '{}');
+      const safetyCheckResult = JSON.parse(safetyCheck.choices[0]?.message?.content || '{}');
 
-    if ( safetyCheckResult.nsfw_content ) {
-      await message.reply("⚠️ Sorry, I can't generate that type of content.")
-      return;
-    }
+      if ( safetyCheckResult.nsfw_content ) {
+        await message.reply("⚠️ Sorry, I can't generate that type of content.")
+        return;
+      }
+    } catch (e) { 
+       if ( safetyCheckResult.nsfw_content ) {
+         await message.reply("⚠️ Sorry, I can't generate that type of content.")
+         return;
+       }
+     }
 
     const IMAGE_API_RESULT = await fetch('https://gen.pollinations.ai/v1/images/generations', {
       method: 'POST',
