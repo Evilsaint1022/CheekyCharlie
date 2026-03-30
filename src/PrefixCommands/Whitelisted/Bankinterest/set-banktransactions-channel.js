@@ -2,8 +2,8 @@ const { PermissionFlagsBits } = require("discord.js");
 const db = require("../../../Handlers/database");
 
 module.exports = {
-  name: "set-bankinterest-channel",
-  aliases: ["setbankichannel"],
+  name: "set-banktransactions-channel",
+  aliases: ["setbanktchannel"],
   
   async execute(message, args) {
 
@@ -36,16 +36,16 @@ module.exports = {
       }
       
       // console logs
-      console.log(`[💰] [SET-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-bankinterest-channel command to set ${channel.name} - ${channel.id}`);
+      console.log(`[💰] [SET-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-banktransactions-channel command to set ${channel.name} - ${channel.id}`);
 
       const key = `${guildId}`;
 
       const existing = await db.settings.get(key) || {};
-      existing.bankinterest = channel.id;
+      existing.banktransactions = channel.id;
 
       await db.settings.set(key, existing);
 
-      await message.reply(`✅ Bank Interest channel has been set to <#${channel.id}>`);
+      await message.reply(`✅ Bank Transactions channel has been set to <#${channel.id}>`);
 
     } catch (error) {
       console.error("Error setting Bank channel:", error);

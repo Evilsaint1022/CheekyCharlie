@@ -2,8 +2,8 @@ const { PermissionsBitField, PermissionFlagsBits } = require("discord.js");
 const db = require("../../../Handlers/database");
 
 module.exports = {
-  name: "remove-bankinterest-channel",
-  aliases: ["removebankichannel"],
+  name: "remove-banktransactions-channel",
+  aliases: ["removebanktchannel"],
 
   async execute(message, args) {
 
@@ -31,7 +31,7 @@ module.exports = {
       const userId = user.id;
       
       // console logs
-      console.log(`[💰] [REMOVE-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-bank-channel command.`);
+      console.log(`[💰] [REMOVE-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-banktransactions-channel command.`);
 
       const whitelistedRoles = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
       const member = guild.members.cache.get(userId);
@@ -40,22 +40,22 @@ module.exports = {
         !message.member.permissions.has(PermissionsBitField.Flags.Administrator) &&
         !member.roles.cache.some(role => whitelistedRoles.includes(role.id))
       ) {
-        return message.reply('❌ You do not have permission to set the bank channel!');
+        return message.reply('❌ You do not have permission to set the bank transactions channel!');
       }
       
       // Fetch current settings or default to empty object
       const currentSettings = await db.settings.get(`${guildId}`) || {};
 
       // Check if a Bank channel is set
-      if (!currentSettings.bankinterest) {
-        return message.reply('No Bank Interest channel is currently set.');
+      if (!currentSettings.banktransactions) {
+        return message.reply('No Bank Transactions channel is currently set.');
       }
 
-      delete currentSettings.bankinterest;
+      delete currentSettings.banktransactions;
 
       db.settings.set(`${guildId}`, currentSettings);
 
-      await message.reply(`✅ Bank Interest channel has been removed.`);
+      await message.reply(`✅ Bank Transactions channel has been removed.`);
 
     } catch (error) {
       console.error("Error setting Bank channel:", error);
