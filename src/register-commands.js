@@ -654,22 +654,6 @@ const commands = [
         ],
     },
     {
-        name: 'set-bankinterest-channel',
-        description: 'Set the bank interest channel for this server.',
-        options: [
-            {
-                name: 'channel',
-                description: 'The channel to set for bank interest messages.',
-                type: 7,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: 'remove-bankinterest-channel',
-        description: 'Removes the bank interest channel for this server.',
-    },
-    {
         name: 'set-qotd-channel',
         description: 'Set the channel where the Question of the Day will be sent.',
         options: [
