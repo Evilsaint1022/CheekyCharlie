@@ -166,6 +166,10 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
 - `?birthdaygivenrole` - Sets a role that will be given to the birthday user.
 
+### **🌿<ins>Bank-Interest</ins>**
+- `?set-bankinterest-channel` - Sets a Bank Interest channel where the bank interest messages will be sent.
+- `?remove-bankinterest-channel` - Removes the Bank Interest Channel that has been set.
+
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
 
@@ -283,10 +287,6 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `/giveaway-setup blacklist-add-role` - Add a role to the giveaway participation blacklist.
 - `/giveaway-setup blacklist-remove-role` - Remove a role from the giveaway participation blacklist.
 - `/giveaway-setup view` - View current giveaway settings.
-
-### **🌿<ins>Bank Interest Setup</ins>**
-- `/set-bankinterest-channel` - Sets a Bank Interest channel where the bank interest messages will be sent.
-- `/remove-bankinterest-channel` - Removes the Bank Interest Channel that has been set.
 
 ### **🌿<ins>Question-of-the-day Setup</ins>**
 - `/set-qotd-channel` - sets a question of the day channel.
