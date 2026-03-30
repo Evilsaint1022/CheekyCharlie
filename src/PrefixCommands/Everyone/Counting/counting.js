@@ -54,7 +54,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`🌿 **__${guildName} Counting!__** 🌿`)
                 .setDescription(
-                    `_This is the current counting data for ${guildName}._\n` +
+                    `_This is the current counting info for ${guildName}._\n` +
                     `${middle}\n` +
                     `⭐**__Highest Record__**\n` +
                     `- ㅤㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.record}\`\n` +

@@ -59,10 +59,10 @@ module.exports = {
                 .setTitle(top)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .setDescription(
-                `_You are viewing_ **${targetUser.username}'s** _level._\n` +
+                `_You are viewing **${targetUser.username}'s** level._\n` +
                 `${middle}\n` +
-                `ㅤ 🌿・**Level: ${level.toLocaleString()}**\n` +
-                `ㅤ 🌿・**XP:**  ${xp.toLocaleString()} / _${nextLevelXp.toLocaleString()}_\n` +
+                ` 🌿・**Level: \`${level.toLocaleString()}\`**\n` +
+                `ㅤ 🌿・**XP:  \`${xp.toLocaleString()}\` / \`${nextLevelXp.toLocaleString()}\`**\n` +
                 `${middle}\n`
             )
             .setFooter({ text: '🌿・Keep up the good work!' })
