@@ -32,6 +32,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿[CAT API](https://thecatapi.com/)
 - 🌿[DOG API](https://thedogapi.com/)
 - 🌿[SIMPSONS API](https://thesimpsonsapi.com/)
+- 🌿[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)
 
 <h2>🌿<ins>Features</ins>🌿</h2>
 
