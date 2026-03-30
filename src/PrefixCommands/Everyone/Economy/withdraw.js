@@ -109,7 +109,7 @@ module.exports = {
       // ------------------------------------------------------
       // 4️⃣ Log transaction
       // ------------------------------------------------------
-      const channelId = '1481927633678762084';
+      const channelId = (await db.settings.get(guild.id)).banktransactions;
 
       for (const guild of message.client.guilds.cache.values()) {
 
