@@ -70,8 +70,9 @@ client.once("clientReady", async () => {
     "Stocking the Fridges",
     "message me if you have any issues.",
     "Helping a Customer",
-    "Bisechosting",
-    "Greeting Customers at the Door"
+    "Been here since 2025",
+    "Greeting Customers at the Door",
+    "Made by the people for the people!"
 ];
 
 const downstatus = [
