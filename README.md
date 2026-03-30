@@ -166,9 +166,11 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
 - `?birthdaygivenrole` - Sets a role that will be given to the birthday user.
 
-### **🌿<ins>Bank-Interest</ins>**
+### **🌿<ins>Bank-System</ins>**
 - `?set-bankinterest-channel` - Sets a Bank Interest channel where the bank interest messages will be sent.
-- `?remove-bankinterest-channel` - Removes the Bank Interest Channel that has been set.
+- `?remove-bankinterest-channel` - Removes the Bank Interest channel that has been set.
+- `?set-banktransactions-channel` - Sets a Bank transactions channel where the deposit and withdraw messages will be sent.
+- `?remove-banktransactions-channel` - Removes the Bank transactions channel that has been set.
 
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
