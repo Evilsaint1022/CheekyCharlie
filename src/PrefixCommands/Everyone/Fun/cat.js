@@ -19,6 +19,10 @@ module.exports = {
     const guildId = message.guild.id;
     const username = message.author.username;
 
+    if (!catApiKey) {
+      return message.reply('Please set the CAT_API_KEY environment variable.');
+    }
+
     const { data } = await axios.get('https://api.thecatapi.com/v1/images/search', {
       headers: {
         'x-api-key': catApiKey,

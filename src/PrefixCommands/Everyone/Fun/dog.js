@@ -20,6 +20,10 @@ module.exports = {
     const guildId = message.guild.id;
     const username = message.author.username;
 
+        if (!dogApiKey) {
+      return message.reply('Please set the DOG_API_KEY environment variable.');
+    }
+
     try {
       const { data } = await axios.get('https://api.thedogapi.com/v1/images/search', {
         headers: { 'x-api-key': dogApiKey },
