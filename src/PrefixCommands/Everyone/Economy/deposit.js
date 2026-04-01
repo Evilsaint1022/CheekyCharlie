@@ -108,30 +108,34 @@ module.exports = {
       // ------------------------------------------------------
 
         for (const guild of message.client.guilds.cache.values()) {
+            try {
+                const guildKey = `${guild.id}`;
+                const settings = await db.settings.get(guildKey).catch(() => null);
 
-            const guildKey = `${guild.id}`;
-            const settings = await db.settings.get(guildKey);
+                if (!settings || !settings.banktransactions) continue;
 
-            if (!settings || !settings.banktransactions) continue;
+                let channel = guild.channels.cache.get(settings.banktransactions);
 
-            let channel = guild.channels.cache.get(settings.banktransactions);
+                if (!channel) {
+                    channel = await guild.channels.fetch(settings.banktransactions).catch(() => null);
+                }
 
-            if (!channel) {
-                channel = await guild.channels.fetch(settings.banktransactions).catch(() => null);
+                if (!channel) continue;
+
+                const embedlog = new EmbedBuilder()
+                    .setTitle('💰・**__Transaction Logs__**')
+                    .setDescription(
+                        `${bar}\n- **__Username:__** \`${author.username}\`\n- **__UserID:__** \`${author.id}\`\n\n- **__Bank Deposit:__** ${ferns}\`${depositAmount.toLocaleString()}\`\n${bar}\n🌿 Thanks for using Bank-NZ!`
+                    )
+                    .setColor(0x207e37)
+                    .setTimestamp()
+                    .setThumbnail(guild.iconURL());
+
+                await channel.send({ embeds: [embedlog] }).catch(() => null);
+
+            } catch (err) {
+                console.error(`[BANK TRANSACTION ERROR] Guild: ${guild.id}`, err);
             }
-
-            if (!channel) continue;
-
-            const embedlog = new EmbedBuilder()
-                .setTitle('💰・**__Transaction Logs__**')
-                .setDescription(
-                    `${bar}\n- **__Username:__** \`${author.username}\`\n- **__UserID:__** \`${author.id}\`\n\n- **__Bank Deposit:__** ${ferns}\`${depositAmount.toLocaleString()}\`\n${bar}\n🌿 Thanks for using Bank-NZ!`
-                )
-                .setColor(0x207e37)
-                .setTimestamp()
-                .setThumbnail(guild.iconURL());
-
-            await channel.send({ embeds: [embedlog] });
         }
     }
 };
