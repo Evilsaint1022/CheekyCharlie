@@ -106,26 +106,32 @@ module.exports = {
       // ------------------------------------------------------
       // 4️⃣ Log transaction
       // ------------------------------------------------------
-       const channelId = '1481927633678762084';
 
-      for (const guild of message.client.guilds.cache.values()) {
+        for (const guild of message.client.guilds.cache.values()) {
 
-          let channel = guild.channels.cache.get(channelId);
+            const guildKey = `${guild.id}`;
+            const settings = await db.settings.get(guildKey);
 
-          if (!channel) {
-              channel = await guild.channels.fetch(channelId).catch(() => null);
-          }
+            if (!settings || !settings.banktransactions) continue;
 
-          if (!channel) continue;
+            let channel = guild.channels.cache.get(settings.banktransactions);
 
-      const embedlog = new EmbedBuilder()
-          .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**__Username:__** \`${author.username}\`\n**__UserID:__** \`${author.id}\`\n\n**__Bank Deposit:__** ${ferns}\`${depositAmount.toLocaleString()}\`\n${bar}\n🌿 Thanks for using Bank-NZ!`)
-          .setColor(0x207e37)
-          .setTimestamp()
-          .setThumbnail(guild.iconURL())
+            if (!channel) {
+                channel = await guild.channels.fetch(settings.banktransactions).catch(() => null);
+            }
 
-      await channel.send({ embeds: [embedlog] });
-      }
+            if (!channel) continue;
+
+            const embedlog = new EmbedBuilder()
+                .setTitle('💰・**__Transaction Logs__**')
+                .setDescription(
+                    `${bar}\n- **__Username:__** \`${author.username}\`\n- **__UserID:__** \`${author.id}\`\n\n- **__Bank Deposit:__** ${ferns}\`${depositAmount.toLocaleString()}\`\n${bar}\n🌿 Thanks for using Bank-NZ!`
+                )
+                .setColor(0x207e37)
+                .setTimestamp()
+                .setThumbnail(guild.iconURL());
+
+            await channel.send({ embeds: [embedlog] });
+        }
     }
 };
