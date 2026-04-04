@@ -17,8 +17,21 @@ let scheduledTask = null;
 
 const openai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1"
+  baseURL: "https://api.groq.com/openai/v1",
+  timeout: 15000
 });
+
+const API_TIMEOUT_MS = 20000;
+
+function withTimeout(promise, ms, label) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    })
+  ]).finally(() => clearTimeout(timer));
+}
 
 /**
  * Sends the Question of the Day (QOTD) message.
@@ -26,7 +39,10 @@ const openai = new OpenAI({
  */
 async function sendQuestionOfTheDay(client) {
 
-  if (isRunning) return;
+  if (isRunning) {
+    console.log('[❓] [QOTD] is already Running... skipping this tick.');
+    return;
+  }
 
   isRunning = true;
 
@@ -48,11 +64,15 @@ async function sendQuestionOfTheDay(client) {
       const prompt = `You are a creative and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
       console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} Generating question of the day...`);
 
-      const response = await openai.chat.completions.create({
-        messages: [{ role: 'system', content: prompt }],
-        model: "openai/gpt-oss-120b",
-        temperature: 1.5
-      });
+      const response = await withTimeout(
+        openai.chat.completions.create({
+          messages: [{ role: 'system', content: prompt }],
+          model: "openai/gpt-oss-120b",
+          temperature: 1.5
+        }),
+        API_TIMEOUT_MS,
+        'Groq API (QOTD)'
+      );
 
       const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about" || "What’s your morning" || "What’s your afternoon"  || "What’s your night";
       const messageContent = roleId

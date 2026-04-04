@@ -14,7 +14,16 @@ async function runDailyBankInterest(client) {
         return;
     }
 
-    console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
+    if (runDailyBankInterest._isRunning) {
+        console.log('[💰] [Bank Interest] is already Running... skipping this tick.');
+        return;
+    }
+
+    runDailyBankInterest._isRunning = true;
+
+    try {
+
+    console.log(`[���] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
 
     const rawEntries = await db.bank.all();
     if (!rawEntries || typeof rawEntries !== "object") {
@@ -134,6 +143,12 @@ async function runDailyBankInterest(client) {
         } catch (err) {
             console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
         }
+    }
+
+    } catch (err) {
+        console.error('[💰] [Bank Interest] Unhandled error:', err);
+    } finally {
+        runDailyBankInterest._isRunning = false;
     }
 }
 

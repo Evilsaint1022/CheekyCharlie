@@ -59,10 +59,9 @@ async function runRSSNews(client) {
 
             }
 
-            working = false;
-
         } catch (error) {
             console.error('Error checking RSS feeds:', error);
+        } finally {
             working = false;
         }
 

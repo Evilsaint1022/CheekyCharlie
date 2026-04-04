@@ -3,7 +3,16 @@ const db = require('../../Handlers/database');
 
 module.exports = async (client) => {
 
+  let isRunning = false;
+
   cron.schedule('0 */5 * * * *', async () => {
+
+    if (isRunning) {
+      console.log('[🎂] [Birthdays] is already Running... skipping this tick.');
+      return;
+    }
+
+    isRunning = true;
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -130,5 +139,10 @@ module.exports = async (client) => {
         }
       }
     }
+  } catch (err) {
+    console.error('[🎂] [Birthdays] Unhandled error:', err);
+  } finally {
+    isRunning = false;
+  }
   });
 };
