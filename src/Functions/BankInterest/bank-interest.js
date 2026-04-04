@@ -61,7 +61,6 @@ async function runDailyBankInterest(client) {
         let channel = guild.channels.cache.get(settings.bankinterest);
         if (!channel) {
             channel = await guild.channels.fetch(settings.bankinterest).catch(() => null);
-            console.warn(`[Bank Interest] Channel ID ${settings.bankinterest} not found in guild ${guild.name}`);
             continue;
         }
 
