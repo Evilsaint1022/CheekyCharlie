@@ -25,7 +25,6 @@ async function checkAIDeadchat(client) {
     }
 
     if (isRunning) {
-        console.log(`[💭] [AI Deadchat] is already Running...`);
         return;
     }
 
