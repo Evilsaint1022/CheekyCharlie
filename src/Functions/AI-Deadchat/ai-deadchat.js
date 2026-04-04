@@ -9,10 +9,29 @@ const time = "0 */5 * * * *"; // every 5 minutes
 let isRunning = false;
 let isScheduled = false;
 let scheduledTask = null;
+let runningSince = null;
 
 const GuildTimeoutMap = new Map();
 
-const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
+const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1", timeout: 15000 });
+
+const API_TIMEOUT_MS = 20000;
+
+/**
+ * @param {Promise} promise
+ * @param {number} ms
+ * @param {string} label
+ * @returns {Promise}
+ */
+function withTimeout(promise, ms, label) {
+    let timer;
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+            timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+        })
+    ]).finally(() => clearTimeout(timer));
+}
 
 /**
  * @param {Client} client
@@ -25,10 +44,13 @@ async function checkAIDeadchat(client) {
     }
 
     if (isRunning) {
+        const elapsed = runningSince ? Math.round((Date.now() - runningSince) / 1000) : '?';
+        console.log(`[💭] [AI Deadchat] is already Running... (stuck for ~${elapsed}s)`);
         return;
     }
 
     isRunning = true;
+    runningSince = Date.now();
 
     try {
         const clientGuilds = await client.guilds.cache.map(guild => (guild));
@@ -100,13 +122,17 @@ async function checkAIDeadchat(client) {
 
                 const finalPrompt = randomPrompt + " Reply ONLY with the question / topic etc."
                 
-                const response = await openai.chat.completions.create({
-                    messages: [
-                        { role: 'system', content: finalPrompt },
-                    ],
-                    model: "openai/gpt-oss-120b",
-                    temperature: 1.5,
-                });
+                const response = await withTimeout(
+                    openai.chat.completions.create({
+                        messages: [
+                            { role: 'system', content: finalPrompt },
+                        ],
+                        model: "openai/gpt-oss-120b",
+                        temperature: 1.5,
+                    }),
+                    API_TIMEOUT_MS,
+                    'Groq API'
+                );
 
                 const reply = response.choices[0].message.content;
 
@@ -130,7 +156,7 @@ async function checkAIDeadchat(client) {
                 await db.ai_deadchat.set(`${guildId}`, ai_deadchat);
 
                 } catch (err) {
-                    return;
+                    console.error(`[💭] [AI Deadchat] Error in guild ${guildId}:`, err.message || err);
                 } finally {
                     GuildTimeoutMap.delete(guildId);
                 }
@@ -143,6 +169,7 @@ async function checkAIDeadchat(client) {
 
     } finally {
         isRunning = false;
+        runningSince = null;
     }
 
 }
@@ -158,7 +185,7 @@ function messageHandler(message) {
             GuildTimeoutMap.delete(guildId);
         }
     } catch (err) {
-        return;
+        console.error('[💭] [AI Deadchat] messageHandler error:', err.message || err);
     }
     
 }
@@ -177,7 +204,7 @@ function startDeadchat(client) {
             try {
                 await checkAIDeadchat(client);
             } catch (err) {
-              return[];
+                console.error('[💭] [AI Deadchat] Cron tick error:', err.message || err);
             }
         })();
     }, {
