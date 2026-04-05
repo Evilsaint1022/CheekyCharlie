@@ -1,6 +1,6 @@
 # 🌿<ins>**The CheekyCharlie Discord Bot**</ins>🌿
 
-![Status](https://img.shields.io/badge/%20Status-%20Active-brightgreen)
+![Status](https://img.shields.io/badge/%20Status-%20Discontinued-red)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hosted By](https://img.shields.io/badge/Hosted%20By-Bisecthosting.com-blue)](https://bisecthosting.com)
