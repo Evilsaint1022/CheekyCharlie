@@ -14,6 +14,8 @@ module.exports = async (client) => {
 
     isRunning = true;
 
+    try {
+
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = String(today.getMonth() + 1).padStart(2, '0');
@@ -27,6 +29,11 @@ module.exports = async (client) => {
 
       // ✅ load ONCE — preserves existing entries
       const sentData = await db.birthdays_sent.get(guild.id) || {};
+
+      const birthdaysettings = await db.birthdaysettings.get(guild.id) || {};
+      const channelId = birthdaysettings.birthdaychannel;
+      const roleId = birthdaysettings.birthdaypingrole;
+      const givenRoleId = birthdaysettings.birthdaygivenrole;
 
       for (const userId in guildBirthdays) {
         const bday = guildBirthdays[userId];
@@ -48,11 +55,6 @@ module.exports = async (client) => {
           console.log(`[🎂] [Birthdays] Failed to fetch member ${userId} in guild ${guild.id}`)
           continue;
         }
-
-        const birthdaysettings = await db.birthdaysettings.get(guild.id) || {};
-        const channelId = birthdaysettings.birthdaychannel;
-        const roleId = birthdaysettings.birthdaypingrole;
-        const givenRoleId = birthdaysettings.birthdaygivenrole;
 
         if (!channelId) continue;
 
@@ -101,11 +103,6 @@ module.exports = async (client) => {
         // ✅ ONLY touch this user’s entry
         sentData[userId] = todayKey + "-" + bday.year;
       }
-
-        const birthdaysettings = await db.birthdaysettings.get(guild.id) || {};
-        const channelId = birthdaysettings.birthdaychannel;
-        const roleId = birthdaysettings.birthdaypingrole;
-        const givenRoleId = birthdaysettings.birthdaygivenrole;
 
       // 💾 save once per guild (more efficient & safer)
       if (Object.keys(sentData).length > 0) {
