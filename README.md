@@ -1,6 +1,6 @@
 # 🌿<ins>**The CheekyCharlie Discord Bot**</ins>🌿
 
-![Status](https://img.shields.io/badge/%20Status-%20Discontinued-red)
+![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hosted By](https://img.shields.io/badge/Hosted%20By-Bisecthosting.com-blue)](https://bisecthosting.com)
@@ -14,12 +14,8 @@ I got tired of relying on bots that constantly went offline or became unusable, 
 https://github.com/NZ-Linix/dotdatabase
 
 - **This code is free to use.**  
-- **Hosted by [Bisecthosting.com](https://bisecthosting.com)**
+- **Hosted by Locally**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
-
-<h2>🌿<ins>CheekyCharlie Support Server</ins>🌿</h2>
-
-<img src="./src/Utilities/Github/icons/discordicon.png" width="18"/> [Join our Support and Community Server here!](https://discord.gg/W3ZRZukZmS)
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
