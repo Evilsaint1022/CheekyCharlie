@@ -1,7 +1,5 @@
 /node_modules
 .env
-start.sh
-start.bat
 /src/Utilities/Storage/Settings/VoiceChannels/vc.json
 /src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json
 /src/Utilities/Storage/Settings/Whitelisted/whitelisted.json
