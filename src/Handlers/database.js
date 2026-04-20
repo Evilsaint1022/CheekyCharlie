@@ -6,6 +6,7 @@ const db = {
     owners: new DotDB("./src/Utilities/Storage/Settings/Owners/owners.json"),
     
     // -----------------------------------------------------------------------------------------
+    default: new DotDB("./src/Utilities/Storage/Settings/Default/default.json"),
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     vcmembers: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
