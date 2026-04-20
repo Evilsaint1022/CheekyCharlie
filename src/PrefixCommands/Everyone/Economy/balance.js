@@ -16,8 +16,7 @@ module.exports = {
       });
     }
 
-       // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-       const ferns = '<:Ferns:1395219665638391818>';
+        const ferns = await db.default.get("Default.ferns");
 
         const { guild, author } = message;
 
