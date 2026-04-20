@@ -16,9 +16,10 @@ module.exports = {
       });
     }
 
-        const ferns = await db.default.get("Default.ferns");
-
         const { guild, author } = message;
+
+        const custom = await db.settings.get(`${guild.id}.ferns`)
+        const ferns = await db.default.get("Default.ferns");
 
         // Resolve target user:
         // !balance           -> self
@@ -68,7 +69,7 @@ module.exports = {
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
