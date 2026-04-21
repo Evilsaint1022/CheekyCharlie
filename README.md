@@ -161,6 +161,12 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
 - `?birthdaygivenrole` - Sets a role that will be given to the birthday user.
 
+### **🌿<ins>Currency</ins>**
+- `?set-currency-icon` - Sets a custom currency icon for the economy system.
+- `?set-currency-name` - Sets a custom currency name for the economy system.
+- `?remove-currency-icon` - Removes the set Custom currency icon.
+- `?remove-currency-name` - Removes the set Custom currency name.
+
 ### **🌿<ins>Bank-System</ins>**
 - `?set-bankinterest-channel` - Sets a Bank Interest channel where the bank interest messages will be sent.
 - `?remove-bankinterest-channel` - Removes the Bank Interest channel that has been set.
