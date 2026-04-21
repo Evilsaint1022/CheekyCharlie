@@ -74,6 +74,9 @@ module.exports = {
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     // Get wallets
     const robberData = await db.wallet.get(robber.id) ?? { balance: 0 };
     const targetData = await db.wallet.get(target.id) ?? { balance: 0 };
@@ -107,14 +110,14 @@ module.exports = {
     console.log(
             `[🌿] [ROB] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${message.guild.name} ${message.guild.id} ${robber.username} used the rob command to rob ${target.username} for ${stealAmount} ferns.`
+            `${message.guild.name} ${message.guild.id} ${robber.username} used the rob command to rob ${target.username} for ${stealAmount} ${customname || fernsname}.`
         );
 
     const embed = new EmbedBuilder()
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Robbed_ **${target.username}** _for_ **${stealAmount}** _Ferns!_\n` +
+        `_You Robbed_ **${target.username}** _for_ **${stealAmount}** _${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
         `ㅤ ${ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +

@@ -80,6 +80,9 @@ module.exports = {
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     // Get banks
     const robberData = await db.bank.get(robber.id) ?? { bank: 0 };
     const targetData = await db.bank.get(target.id) ?? { bank: 0 };
@@ -113,14 +116,14 @@ module.exports = {
     console.log(
       `[🌿] [HEIST] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount} ferns.`
+      `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount} ${customname || fernsname}.`
     );
 
     const embed = new EmbedBuilder()
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Heisted_ **${target.username}** _for_ **${stealAmount}** _Ferns!_\n` +
+        `_You Heisted_ **${target.username}** _for_ **${stealAmount}** _${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
         `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +

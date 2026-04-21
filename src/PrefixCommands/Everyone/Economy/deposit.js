@@ -28,6 +28,9 @@ module.exports = {
         const custom = await db.settings.get(`${guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
+        const customname = await db.settings.get(`${guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         const safeUsername = author.username.replace(/\./g, '_');
 
         // Old key format
@@ -73,7 +76,7 @@ module.exports = {
 
         if (!depositAmount || depositAmount <= 0 || balance < depositAmount) {
             return message.reply(
-                '❌ You do not have enough Ferns to deposit or you might of entered an invalid amount.'
+                `❌ You do not have enough ${customname || fernsname} to deposit or you might of entered an invalid amount.`
             );
         }
 
@@ -100,7 +103,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount} Ferns.`
+            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount} ${customname || fernsname}`
         );
 
       // ------------------------------------------------------

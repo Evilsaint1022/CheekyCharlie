@@ -30,6 +30,9 @@ module.exports = {
             const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
             const ferns = await db.default.get("Default.ferns");
 
+            const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+            const fernsname = await db.default.get("Default.name");
+
             const userId = user.id;
             const safeUsername = user.username.replace(/\./g, '_');
 
@@ -57,7 +60,7 @@ module.exports = {
 
             if (!dropMessage || dropMessage.channel.id !== message.channel.id) {
                 
-            const reply = await message.reply(`**No Ferns to pick up right now!**`);
+            const reply = await message.reply(`**No ${customname || fernsname} to pick up right now!**`);
 
             setTimeout(async () => {
                 try {
@@ -73,7 +76,7 @@ module.exports = {
 
             if (pickedUsers.has(userId)) {
 
-            const reply = await message.reply(`**You have already picked these ferns!**`);
+            const reply = await message.reply(`**You have already picked these ${customname || fernsname}!**`);
 
             setTimeout(async () => {
                 try {
@@ -114,7 +117,7 @@ module.exports = {
             console.log(
                 `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-                `${guild.name} ${guild.id} ${user.username} picked ${coinsEarned.toLocaleString()} Ferns`
+                `${guild.name} ${guild.id} ${user.username} picked ${coinsEarned.toLocaleString()} ${customname || fernsname}`
             );
 
             // Save new balance using ID-only key
@@ -127,7 +130,7 @@ module.exports = {
             const reply = await message.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setTitle(`${custom || ferns} Ferns Picked!`)
+                        .setTitle(`${custom || ferns} ${customname || fernsname} Picked!`)
                         .setDescription(`You picked **${custom || ferns}・${coinsEarned.toLocaleString()}**`)
                         .setColor(0xDE4949)
                 ]
@@ -146,7 +149,7 @@ module.exports = {
 
         } catch (error) {
             console.error('Error in pick command execution:', error);
-            await message.reply(`**${custom || ferns} Something went wrong while picking up the Ferns.**`);
+            await message.reply(`**Something went wrong while picking.**`);
         }
     },
 };

@@ -23,6 +23,9 @@ module.exports = {
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     const username = author.username;
     const newKey = `${author.id}`;
     const space = "ㅤ";
@@ -105,7 +108,7 @@ module.exports = {
       `[${new Date().toLocaleTimeString("en-NZ", {
         timeZone: "Pacific/Auckland",
       })}] ` +
-      `${guild.name} ${guild.id} ${username} claimed ${rewardAmount} Ferns.`
+      `${guild.name} ${guild.id} ${username} claimed ${rewardAmount} ${customname || fernsname}.`
     );
   }
 };

@@ -20,6 +20,9 @@ module.exports = {
         const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
+        const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         const { author, guild, member } = message;
         const username = author.username;
         const userId = author.id;
@@ -117,7 +120,7 @@ module.exports = {
         console.log(
             `[🌿] [WEEKLY] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount} Ferns.`
+            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount} ${customname || fernsname}.`
         );
     }
 };

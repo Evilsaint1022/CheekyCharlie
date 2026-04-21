@@ -21,6 +21,9 @@ module.exports = {
         const custom = await db.settings.get(`${guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
+        const customname = await db.settings.get(`${guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         // Resolve target user:
         // !balance           -> self
         // !balance @user     -> mentioned user

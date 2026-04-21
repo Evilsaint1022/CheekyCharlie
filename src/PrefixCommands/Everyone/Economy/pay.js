@@ -27,6 +27,9 @@ module.exports = {
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     const sender = message.author;
     const bar = `**─────────────────────────────────**`;
 
@@ -49,7 +52,7 @@ module.exports = {
     }
 
     if (user.bot) {
-      return message.reply(`❌ You cannot transfer ${ferns}'s to bots!`);
+      return message.reply(`❌ You cannot transfer ${custom || ferns}'s to bots!`);
     }
 
     if (!amount || amount <= 0) {
@@ -112,7 +115,7 @@ module.exports = {
         `[🌿] [PAY] [${new Date().toLocaleDateString('en-GB')}] ` +
         `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
         `${message.guild.name} ${message.guild.id} ${sender.username} paid ` +
-        `${amount.toLocaleString()} Ferns to ${user.username}`
+        `${amount.toLocaleString()} ${customname || fernsname} to ${user.username}`
       );
 
     } catch (error) {

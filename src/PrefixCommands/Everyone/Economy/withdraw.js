@@ -21,6 +21,9 @@ module.exports = {
         const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
+        const customname = await db.settings.get(`${message.guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         const top = `**🌿 __${author.username}'s Withdrawal!__  🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
@@ -76,7 +79,7 @@ module.exports = {
 
         if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > bankBalance) {
             return message.reply(
-                '❌ You do not have enough Ferns in your Bank to withdraw or you entered an invalid amount.'
+                `❌ You do not have enough ${customname || fernsname} in your Bank to withdraw or you entered an invalid amount.`
             );
         }
 
@@ -103,7 +106,7 @@ module.exports = {
         console.log(
             `[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} Ferns.`
+            `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
 
       // ------------------------------------------------------
