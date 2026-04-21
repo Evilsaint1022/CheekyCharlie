@@ -18,7 +18,7 @@ module.exports = {
 
         const { guild, author } = message;
 
-        const custom = await db.settings.get(`${guild.id}.ferns`)
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
         // Resolve target user:
