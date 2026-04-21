@@ -77,8 +77,8 @@ module.exports = {
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bottom = `🌿・Banks are not Safe!`;
 
-    // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-    const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
 
     // Get banks
     const robberData = await db.bank.get(robber.id) ?? { bank: 0 };
@@ -123,7 +123,7 @@ module.exports = {
         `_You Heisted_ **${target.username}** _for_ **${stealAmount}** _Ferns!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+        `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

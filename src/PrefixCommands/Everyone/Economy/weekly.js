@@ -17,8 +17,8 @@ module.exports = {
             });
         }
 
-        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-        const ferns = '<:Ferns:1395219665638391818>';
+        const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
 
         const { author, guild, member } = message;
         const username = author.username;
@@ -102,10 +102,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_You have claimed your weekly reward of_ **${ferns}・${rewardAmount.toLocaleString()}**!\n` +
+                `_You have claimed your weekly reward of_ **${custom || ferns}・${rewardAmount.toLocaleString()}**!\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

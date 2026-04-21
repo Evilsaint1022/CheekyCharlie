@@ -25,8 +25,8 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-        const ferns = '<:Ferns:1395219665638391818>';
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
 
         const safeUsername = author.username.replace(/\./g, '_');
 
@@ -88,10 +88,10 @@ module.exports = {
             .setColor(0x207e37)
             .setTitle(top)
             .setDescription(
-                `_Successfully deposited **${ferns}・${depositAmount.toLocaleString()}**_\n` +
+                `_Successfully deposited **${custom || ferns}・${depositAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}     ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

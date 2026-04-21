@@ -71,8 +71,8 @@ module.exports = {
 
     const space = 'ㅤ';
 
-    // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-    const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
 
     // Get wallets
     const robberData = await db.wallet.get(robber.id) ?? { balance: 0 };
@@ -117,7 +117,7 @@ module.exports = {
         `_You Robbed_ **${target.username}** _for_ **${stealAmount}** _Ferns!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+        `ㅤ ${ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

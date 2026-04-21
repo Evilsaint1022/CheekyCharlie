@@ -4,7 +4,7 @@ const { dropPartyEvent } = require('../../../Events/Client/drop_party');
 const db = require('../../../Handlers/database');
 
 const pickedUsers = new Set();
-const ferns = '<:Ferns:1395219665638391818>';
+
 const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 const bar = `**─────────────────────────────────**`;
 
@@ -26,6 +26,9 @@ module.exports = {
             const guild = message.guild;
             const user = message.author;
             const member = message.member;
+
+            const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+            const ferns = await db.default.get("Default.ferns");
 
             const userId = user.id;
             const safeUsername = user.username.replace(/\./g, '_');
@@ -124,8 +127,8 @@ module.exports = {
             const reply = await message.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setTitle(`${ferns} Ferns Picked!`)
-                        .setDescription(`You picked **${ferns}・${coinsEarned.toLocaleString()}**`)
+                        .setTitle(`${custom || ferns} Ferns Picked!`)
+                        .setDescription(`You picked **${custom || ferns}・${coinsEarned.toLocaleString()}**`)
                         .setColor(0xDE4949)
                 ]
             });
@@ -143,7 +146,7 @@ module.exports = {
 
         } catch (error) {
             console.error('Error in pick command execution:', error);
-            await message.reply(`**${ferns} Something went wrong while picking up the Ferns.**`);
+            await message.reply(`**${custom || ferns} Something went wrong while picking up the Ferns.**`);
         }
     },
 };

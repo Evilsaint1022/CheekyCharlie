@@ -24,7 +24,9 @@ module.exports = {
       });
     }
 
-    const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
     const sender = message.author;
     const bar = `**─────────────────────────────────**`;
 
@@ -102,7 +104,7 @@ module.exports = {
       await db.wallet.set(userNewKey, { balance: userBalance + amount });
 
       await message.reply(
-        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${ferns}${amount.toLocaleString()}** to **${user.username}**.`
+        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${custom || ferns}${amount.toLocaleString()}** to **${user.username}**.`
       );
 
       // Console Logs

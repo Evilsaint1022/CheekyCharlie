@@ -65,8 +65,8 @@ module.exports = {
         const userId = author.id;
         const username = author.username;
 
-        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-        const ferns = '<:Ferns:1395219665638391818>';
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
 
         const space = 'ㅤ';
         const top = `**🌿 __${username} Begs!__ 🌿**`;
@@ -107,10 +107,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_${phrase}_ **${ferns}・${reward}**\n` +
+                `_${phrase}_ **${custom || ferns}・${reward}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${balance.toLocaleString()}      ${ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

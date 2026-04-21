@@ -18,8 +18,8 @@ module.exports = {
 
         const { guild, author } = message;
 
-        // const ferns = '<:Ferns:1473337406659891252>'; // For Testing Formatting.
-        const ferns = '<:Ferns:1395219665638391818>';
+        const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
 
         const top = `**🌿 __${author.username}'s Withdrawal!__  🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
@@ -91,10 +91,10 @@ module.exports = {
             .setColor(0x207e37)
             .setTitle(top)
             .setDescription(
-                `_Successfully withdrew **${ferns}・${withdrawAmount.toLocaleString()}**_\n` +
+                `_Successfully withdrew **${custom || ferns}・${withdrawAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${ferns}・${walletBalance.toLocaleString()}     ${ferns}・${bankBalance.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns}・${walletBalance.toLocaleString()}     ${custom || ferns}・${bankBalance.toLocaleString()}\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
