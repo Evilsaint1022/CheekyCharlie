@@ -36,6 +36,18 @@ module.exports = {
         .setColor(0xF9E547)
         .setFooter({ text: '💛 The Simpsons Roleplay' });
 
+      // 🔎 Check permissions FIRST
+      if (
+        !message.guild.members.me.permissions.has(
+          PermissionsBitField.Flags.ManageWebhooks
+        )
+      ) {
+        return message.reply({
+          content: "❌ I need the **Manage Webhooks** permission to do this.",
+          allowedMentions: { repliedUser: false }
+        });
+      }
+
       // 🔎 Find or create webhook
       let webhook;
       const webhooks = await message.channel.fetchWebhooks();
