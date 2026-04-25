@@ -19,7 +19,15 @@ module.exports = {
     }
 
     const { guild, author } = message;
-    const ferns = '<:Ferns:1395219665638391818>';
+
+
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
+
     const balanceKey = `${author.id}.balance`;
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.slots`;
 
@@ -64,7 +72,7 @@ module.exports = {
     console.log(
       `[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} bet ${bet.toLocaleString()}`
+      `${guild.name} ${guild.id} ${author.username} bet ${customname || fernsname}${bet.toLocaleString()}`
     );
 
     // 🎰 Slot setup
@@ -81,7 +89,7 @@ module.exports = {
       .setTitle('🎰 **__Spinning the Slots__**')
       .setColor(0x207e37)
       .setThumbnail(author.displayAvatarURL())
-      .setDescription(`Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Spinning...\``)
+      .setDescription(`Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Spinning...\``)
       .addFields({ name: 'Slots', value: '⬛ | ⬛ | ⬛' });
 
     const slotMessage = await message.reply({ embeds: [baseEmbed] });
@@ -123,15 +131,15 @@ module.exports = {
       balance += winnings;
       await db.wallet.set(balanceKey, balance);
 
-      resultText = `🎉 You **won** ${ferns}${winnings.toLocaleString()}!`;
+      resultText = `🎉 You **won** ${custom || ferns}${winnings.toLocaleString()}!`;
       resultColor = 0x00FF00;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings}`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings} ${customname || fernsname}.`);
     } else {
-      resultText = `😢 You lost your bet of ${ferns}${bet.toLocaleString()}.`;
+      resultText = `😢 You lost your bet of ${custom || ferns}${bet.toLocaleString()}.`;
       resultColor = 0xFF0000;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet}`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet} ${customname || fernsname}.`);
     }
 
     // 🏁 Final result embed
@@ -142,7 +150,7 @@ module.exports = {
       .setDescription(resultText)
       .addFields(
         { name: 'Final Slots', value: final.join(' | ') },
-        { name: 'New Balance', value: `${ferns}${balance.toLocaleString()}` }
+        { name: 'New Balance', value: `${custom || ferns}${balance.toLocaleString()}` }
       );
 
     await slotMessage.edit({ embeds: [resultEmbed] });

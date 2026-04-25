@@ -15,7 +15,12 @@ module.exports = {
     const { guild, author, channel } = message;
     const opponent = message.mentions.users.first();
     const bet = parseInt(args[1]);
-    const ferns = '<:Ferns:1395219665638391818>';
+
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
 
     if (!opponent) return message.reply('❌ You must mention a user to challenge.');
     if (opponent.bot || opponent.id === author.id)
@@ -41,11 +46,11 @@ module.exports = {
     let opponentBalance = parseInt(await db.wallet.get(balanceKeyOpponent) ?? 0);
 
     if (challengerBalance < bet)
-      return message.reply(`❌ You don’t have enough balance to bet ${ferns}${bet}.`);
+      return message.reply(`❌ You don’t have enough balance to bet ${custom || ferns}${bet}.`);
     if (opponentBalance < bet)
       return message.reply(`❌ ${opponent.username} doesn’t have enough balance.`);
 
-    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet} ferns`);
+    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet} ${customname || fernsname}.`);
 
     const inviteRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
@@ -53,7 +58,7 @@ module.exports = {
     );
 
     const inviteMsg = await channel.send({
-      content: `${opponent}, you’ve been challenged by ${author} for ${ferns}${bet}!`,
+      content: `${opponent}, you’ve been challenged by ${author} for ${custom ||ferns}${bet}!`,
       components: [inviteRow]
     });
 
@@ -90,7 +95,7 @@ module.exports = {
       const makeEmbed = () => ({
         color: 0xffffff,
         title: '**__♦️ Blackjack Duel ♦️__**',
-        description: `${author.username} vs ${opponent.username}\n\nBet: ${ferns}${bet}`,
+        description: `${author.username} vs ${opponent.username}\n\nBet: ${custom || ferns}${bet}`,
         fields: [
           {
             name: `${author.username}'s Cards`,
@@ -151,7 +156,7 @@ module.exports = {
             embeds: [{
               color: 0x00ff00,
               title: '**__♠️ Blackjack Results ♠️__**',
-              description: `${winner.username} wins ${ferns}${bet}!`
+              description: `${winner.username} wins ${custom || ferns}${bet}!`
             }],
             components: []
           });
@@ -186,7 +191,7 @@ module.exports = {
               color: 0x00ff00,
               title: '**__♠️ Blackjack Results ♠️__**',
               description: winner
-                ? `${winner.username} wins ${ferns}${bet}!`
+                ? `${winner.username} wins ${custom || ferns}${bet}!`
                 : '🤝 It’s a tie!'
             }],
             components: []

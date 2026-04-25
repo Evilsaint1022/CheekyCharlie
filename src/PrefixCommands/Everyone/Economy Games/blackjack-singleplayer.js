@@ -21,7 +21,12 @@ module.exports = {
     }
 
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.blackjack-singleplayer`;
-    const ferns = '<:Ferns:1395219665638391818>';
+
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
 
     // 🌐 GLOBAL COOLDOWN
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
@@ -75,7 +80,7 @@ module.exports = {
     console.log(
       `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ferns.`
+      `${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ${customname || fernsname}.`
     );
 
     // 🎴 Blackjack Logic
@@ -107,7 +112,7 @@ module.exports = {
     const gameEmbed = {
       color: 0xFFFFFF,
       title: '**__♦️ Blackjack ♦️__**',
-      description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
+      description: `Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
       thumbnail: { url: author.displayAvatarURL() },
       fields: [
         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -147,7 +152,7 @@ module.exports = {
       const updatedEmbed = {
         color: 0xFFFFFF,
         title: '**__♣️ Blackjack ♣️__**',
-        description: `Placed Bet: ${ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
+        description: `Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
         thumbnail: { url: author.displayAvatarURL() },
         fields: [
           { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -173,7 +178,7 @@ module.exports = {
         console.log(
           `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-          `${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ferns`
+          `${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ${customname || fernsname}`
         );
       }
 
@@ -182,7 +187,7 @@ module.exports = {
         console.log(
           `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-          `${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ferns`
+          `${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ${customname || fernsname}`
         );
       }
 
@@ -190,7 +195,7 @@ module.exports = {
         console.log(
           `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-          `${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ferns back!`
+          `${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ${customname || fernsname} back!`
         );
       }
 
@@ -200,14 +205,14 @@ module.exports = {
       const resultEmbed = {
         color: finalResult === 'win' ? 0x00FF00 : finalResult === 'lose' ? 0xFF0000 : 0xFFFF00,
         title: '**__♠️ Blackjack Results ♠️__**',
-        description: `You **${finalResult.toUpperCase()}** ${ferns}${bet.toLocaleString()}`,
+        description: `You **${finalResult.toUpperCase()}** ${custom || ferns}${bet.toLocaleString()}`,
         thumbnail: { url: author.displayAvatarURL() },
         fields: [
           { name: 'Your Cards', value: playerCards.join(', '), inline: true },
           { name: 'Your Total', value: playerTotal.toString(), inline: true },
           { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
           { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-          { name: '**__New Balance__**', value: `${ferns}${balance.toLocaleString()}`, inline: false }
+          { name: '**__New Balance__**', value: `${custom || ferns}${balance.toLocaleString()}`, inline: false }
         ]
       };
 
