@@ -28,7 +28,12 @@ module.exports = {
     const top =    `**─────────────────────────────────**`;
     const middle = `· · - ┈┈━━ ˚ . 🌿 . ˚ ━━┈┈ - · ·`;
 
-    const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
 
     try {
       const lastBumpData = await db.lastbump.get(guildKey);
@@ -81,7 +86,7 @@ module.exports = {
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
       const bumped = new EmbedBuilder()
-        .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
+        .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${custom || ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
         .setFooter({ text: `Bumper: #${currentbumpcount}` })
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
