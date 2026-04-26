@@ -49,6 +49,7 @@ If you need help with the bot or the code or want to report a bug, feel free to 
 - 🌿Question Of The Day
 - 🌿Temporary Voice Channels
 - 🌿AI NSFW Content Filtering
+- 🌿Button Verification
 
 <h2>🌿<ins>Getting Started</ins>🌿</h2>
 <detials>
@@ -156,6 +157,11 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?prefix-set` - Sets a prefix for your guild.
 - `?prefix-reset` - Resets the prefix for prefix commands.
 
+### **🌿<ins>Verified Role Setup</ins>**
+- `?set-verified-role <role_id or role_mention>` - Sets the verified role for the guild.
+- `?remove-verified-role` - Removes the verified role for auto-kick and button verification.
+- `?send-verification-button <button-label>` - Sends a verification button in the current channel. A verified role must be set first. If no label is provided, it uses `Verify ->`.
+
 ### **🌿<ins>Birthdays</ins>**
 - `?birthdaychannel` - Sets a birthday channel for the birthday messages.
 - `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
@@ -245,7 +251,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
 ### **🌿<ins>Verified Role Setup</ins>**
-- `/set-verified-role` - Sets a verified role for the auto_kick event.
+- `/set-verified-role` - Sets a verified role for the auto_kick event and verification button system.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
 ### **🌿<ins>Drop Party Setup</ins>**

@@ -27,12 +27,18 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-    const guildKey = `${guild.id}_verifiedRoleId`;
-    
     console.log(`[⭐] [REMOVED-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} removed verified role`);
     try {
-      db.settings.delete(guildKey);
-      await interaction.reply({ content: '✅ Verified role setting has been removed.', flags: 64 });
+      const currentSettings = await db.settings.get(guildId) || {};
+
+      if (!currentSettings.VerifiedRole) {
+        return interaction.reply({ content: 'No verified role is currently set for this server.', flags: 64 });
+      }
+
+      delete currentSettings.VerifiedRole;
+      await db.settings.set(guildId, currentSettings);
+
+      await interaction.reply({ content: '✅ Verified role has been removed. Auto-kick and button verification are now disabled until a new verified role is set.', flags: 64 });
     } catch (error) {
       console.error(error);
       await interaction.reply({ content: '❌ Failed to remove the verified role setting.', flags: 64 });
