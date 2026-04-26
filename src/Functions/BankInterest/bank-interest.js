@@ -60,61 +60,66 @@ async function runDailyBankInterest(client) {
     const splitter = `**─────────────────────────────────**`;
     const footer = `🌿・Thanks for using Bank-NZ`;
 
-    for (const guild of client.guilds.cache.values()) {
-        const guildKey = `${guild.id}`;
-        const settings = await db.settings.get(guildKey);
+    // Apply interest once to all users and collect results
+    const interestResults = [];
 
-        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    for (const [userId, entry] of Object.entries(bankEntries)) {
+        if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
+
+        let username = "Unknown User";
+        try {
+            const user = await client.users.fetch(userId);
+            username = user.username;
+        } catch {}
+
+        const amount = entry.bank;
+        const interest = Math.round((1 / 100) * amount);
+        const newBalance = amount + interest;
+
+        await db.bank.set(userId, { bank: newBalance });
+        interestResults.push({ userId, username, amount, interest, newBalance });
+    }
+
+    if (interestResults.length === 0) return;
+
+    // Per-guild: send to channel if configured, otherwise just log
+    for (const guild of client.guilds.cache.values()) {
+        const settings = await db.settings.get(`${guild.id}`);
+        const custom = await db.settings.get(`${guild.id}.currencyicon`);
         const ferns = await db.default.get("Default.ferns");
 
-        const customname = await db.settings.get(`${guild.id}.currencyname`)
-        const fernsname = await db.default.get("Default.name");
+        const hasChannel = settings && settings.bankinterest;
+        let channel = null;
 
-        if (!settings || !settings.bankinterest) continue;
+        if (hasChannel) {
+            channel = guild.channels.cache.get(settings.bankinterest)
+                || await guild.channels.fetch(settings.bankinterest).catch(() => null);
 
-        let channel = guild.channels.cache.get(settings.bankinterest);
+            if (!channel) {
+                console.warn(`[Bank Interest] Channel ID ${settings.bankinterest} not found in guild ${guild.name}, running silently.`);
+            }
+        }
+
         if (!channel) {
-            channel = await guild.channels.fetch(settings.bankinterest).catch(() => null);
-            console.warn(`[Bank Interest] Channel ID ${settings.bankinterest} not found in guild ${guild.name}`);
+            console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
 
         let embedsToSend = [];
         let currentDescription = ``;
-        let hasUsers = false;
 
-        for (const [userId, entry] of Object.entries(bankEntries)) {
-            if (!entry || typeof entry !== "object" || entry.bank <= 0) continue;
-
-            hasUsers = true;
-
-            let username = "Unknown User";
-            try {
-                const user = await client.users.fetch(userId);
-                username = user.username;
-            } catch {}
-
-            const amount = entry.bank;
-            const interest = Math.round((1 / 100) * amount);
-            const newBalance = amount + interest;
-
-            await db.bank.set(userId, { bank: newBalance });
-
+        for (const { username, amount, interest, newBalance } of interestResults) {
             const userBlock =
                 `### 🌿・**__${username}__**\n${splitter}\n` +
                 `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
                 `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
                 `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n${splitter}\n\n`;
 
-            // ✅ Ensure embed starts cleanly with top
             if (!currentDescription) currentDescription = top + "\n";
 
-            // ✅ Split if exceeding limit
             if ((currentDescription + userBlock + bottom).length > 3500) {
                 currentDescription += bottom;
                 embedsToSend.push(currentDescription);
-
-                // Start new embed
                 currentDescription = top + "\n" + userBlock;
             } else {
                 currentDescription += userBlock;
@@ -123,9 +128,6 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
         }
 
-        if (!hasUsers) continue;
-
-        // ✅ Push final embed chunk
         if (currentDescription) {
             currentDescription += bottom;
             embedsToSend.push(currentDescription);
