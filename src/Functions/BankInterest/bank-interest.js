@@ -23,7 +23,7 @@ async function runDailyBankInterest(client) {
 
     try {
 
-    console.log(`[���] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
+    console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
 
     const rawEntries = await db.bank.all();
     if (!rawEntries || typeof rawEntries !== "object") {
@@ -55,7 +55,6 @@ async function runDailyBankInterest(client) {
 
     const bankEntries = migratedEntries;
 
-    const ferns = '<:Ferns:1395219665638391818>';
     const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bottom = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const splitter = `**─────────────────────────────────**`;
@@ -64,6 +63,12 @@ async function runDailyBankInterest(client) {
     for (const guild of client.guilds.cache.values()) {
         const guildKey = `${guild.id}`;
         const settings = await db.settings.get(guildKey);
+
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
+
+        const customname = await db.settings.get(`${guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
 
         if (!settings || !settings.bankinterest) continue;
 
@@ -97,9 +102,9 @@ async function runDailyBankInterest(client) {
 
             const userBlock =
                 `### 🌿・**__${username}__**\n${splitter}\n` +
-                `- **__Old Bank__** ${ferns}・\`${amount}\`\n` +
-                `- **__Interest Gained__** ${ferns}・\`${interest}\`\n` +
-                `- **__New Balance__** ${ferns}・\`${newBalance}\`\n${splitter}\n\n`;
+                `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
+                `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
+                `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n${splitter}\n\n`;
 
             // ✅ Ensure embed starts cleanly with top
             if (!currentDescription) currentDescription = top + "\n";
