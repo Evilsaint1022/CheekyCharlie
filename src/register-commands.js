@@ -136,6 +136,12 @@ const commands = [
                 description: "The role to assign to verified members.",
                 type: 8,
                 required: true,
+            },
+            {
+                name: "role_to_remove",
+                description: "Optional role to remove after a member verifies.",
+                type: 8,
+                required: false,
             }
         ]
     },

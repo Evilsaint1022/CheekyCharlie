@@ -27,10 +27,11 @@ module.exports = {
     }
 
     delete currentSettings.VerifiedRole;
+    delete currentSettings.UnverifiedRole;
     await db.settings.set(guildId, currentSettings);
 
     console.log(`[⭐] [REMOVED-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.tag} removed verified role`);
 
-    return message.reply('✅ Verified role has been removed. Auto-kick and button verification are now disabled until a new verified role is set.');
+    return message.reply('✅ Verified role has been removed. The optional role-to-remove setting has also been cleared. Auto-kick and button verification are now disabled until a new verified role is set.');
   }
 };

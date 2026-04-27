@@ -158,7 +158,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?prefix-reset` - Resets the prefix for prefix commands.
 
 ### **🌿<ins>Verified Role Setup</ins>**
-- `?set-verified-role <role_id or role_mention>` - Sets the verified role for the guild.
+- `?set-verified-role <role_id or role_mention> [role_to_remove_id or role_mention]` - Sets the verified role for the guild and optionally a role to remove after verification.
 - `?remove-verified-role` - Removes the verified role for auto-kick and button verification.
 - `?send-verification-button <button-label>` - Sends a verification button in the current channel. A verified role must be set first. If no label is provided, it uses `Verify ->`.
 
@@ -251,7 +251,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `/remove-boosters-role` - Removes the servers boosters role Id.
 
 ### **🌿<ins>Verified Role Setup</ins>**
-- `/set-verified-role` - Sets a verified role for the auto_kick event and verification button system.
+- `/set-verified-role` - Sets a verified role for the auto_kick event and verification button system. Optional `role_to_remove` removes an old role after verification.
 - `/remove-verified-role` - Removes the verified role that has been set.
 
 ### **🌿<ins>Drop Party Setup</ins>**

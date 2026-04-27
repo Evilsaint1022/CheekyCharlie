@@ -25,9 +25,14 @@ module.exports = {
     }
 
     const roleId = getRoleId(args[0]);
+    const roleToRemoveId = getRoleId(args[1]);
 
     if (!roleId) {
-      return message.reply('Please provide a role ID or role mention.');
+      return message.reply('Please provide a role ID or role mention. Optional: add a second role to remove after verification.');
+    }
+
+    if (roleToRemoveId && roleToRemoveId === roleId) {
+      return message.reply('The verified role and the role to remove cannot be the same role.');
     }
 
     const role = await message.guild.roles.fetch(roleId).catch(() => null);
@@ -36,13 +41,29 @@ module.exports = {
       return message.reply('I could not find that role in this server.');
     }
 
+    let roleToRemove = null;
+
+    if (roleToRemoveId) {
+      roleToRemove = await message.guild.roles.fetch(roleToRemoveId).catch(() => null);
+
+      if (!roleToRemove) {
+        return message.reply('I could not find the role to remove in this server.');
+      }
+    }
+
     const currentSettings = await db.settings.get(guildId) || {};
     currentSettings.VerifiedRole = role.id;
 
+    if (roleToRemove) {
+      currentSettings.UnverifiedRole = roleToRemove.id;
+    } else {
+      delete currentSettings.UnverifiedRole;
+    }
+
     await db.settings.set(guildId, currentSettings);
 
-    console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.tag} Set the Verified Role to ${role.name}`);
+    console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.tag} Set the Verified Role to ${role.name}${roleToRemove ? ` and Unverified Role to ${roleToRemove.name}` : ''}`);
 
-    return message.reply(`✅ Verified role has been set to **${role.name}**.`);
+    return message.reply(`✅ Verified role has been set to **${role.name}**.${roleToRemove ? ` Members will also have **${roleToRemove.name}** removed after verification.` : ''}`);
   }
 };

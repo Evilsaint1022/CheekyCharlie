@@ -115,6 +115,9 @@ module.exports = {
       }
 
       const member = await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
+      const roleToRemove = settings.UnverifiedRole
+        ? await interaction.guild.roles.fetch(settings.UnverifiedRole).catch(() => null)
+        : null;
 
       if (!member) {
         return interaction.reply({
@@ -123,7 +126,20 @@ module.exports = {
         });
       }
 
+      if (roleToRemove && member.roles.cache.has(roleToRemove.id) && !roleToRemove.editable) {
+        return interaction.reply({
+          content: 'I cannot remove the configured old role. Please check my role permissions and hierarchy.',
+          flags: 64
+        });
+      }
+
       if (member.roles.cache.has(role.id)) {
+        if (roleToRemove && member.roles.cache.has(roleToRemove.id)) {
+          await member.roles.remove(roleToRemove, 'Already verified; removing old verification role').catch(error => {
+            console.error('Failed to remove old verification role from already verified member:', error);
+          });
+        }
+
         return interaction.reply({
           content: 'You are already verified.',
           flags: 64
@@ -144,6 +160,7 @@ module.exports = {
         guildId: interaction.guild.id,
         userId: interaction.user.id,
         roleId: role.id,
+        roleToRemoveId: settings.UnverifiedRole || null,
         equation: equation.text,
         answer: equation.answer,
         input: ''
@@ -204,35 +221,50 @@ module.exports = {
       });
     }
 
+    await interaction.deferUpdate();
+
     const member = await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
     const role = await interaction.guild.roles.fetch(session.roleId).catch(() => null);
+    const roleToRemove = session.roleToRemoveId
+      ? await interaction.guild.roles.fetch(session.roleToRemoveId).catch(() => null)
+      : null;
 
     if (!member || !role) {
-      return interaction.update({
+      return interaction.editReply({
         components: [buildStatusContainer('❌ Verification failed because the member or role could not be found.')],
         flags: MessageFlags.IsComponentsV2
       });
     }
 
     if (!role.editable) {
-      return interaction.update({
+      return interaction.editReply({
         components: [buildStatusContainer('❌ I cannot assign the verified role. Please ask staff to check my permissions and role hierarchy.')],
+        flags: MessageFlags.IsComponentsV2
+      });
+    }
+
+    if (roleToRemove && member.roles.cache.has(roleToRemove.id) && !roleToRemove.editable) {
+      return interaction.editReply({
+        components: [buildStatusContainer('❌ I cannot remove the old role. Please ask staff to check my permissions and role hierarchy.')],
         flags: MessageFlags.IsComponentsV2
       });
     }
 
     try {
       await member.roles.add(role, 'Completed verification challenge');
+      if (roleToRemove && member.roles.cache.has(roleToRemove.id)) {
+        await member.roles.remove(roleToRemove, 'Completed verification challenge');
+      }
     } catch (error) {
-      console.error('Failed to assign verified role:', error);
+      console.error('Failed to update verification roles:', error);
 
-      return interaction.update({
-        components: [buildStatusContainer('❌ I could not assign the verified role. Please ask staff to check my permissions and role hierarchy.')],
+      return interaction.editReply({
+        components: [buildStatusContainer('❌ I could not update your verification roles. Please ask staff to check my permissions and role hierarchy.')],
         flags: MessageFlags.IsComponentsV2
       });
     }
 
-    return interaction.update({
+    return interaction.editReply({
       components: [buildStatusContainer(`✅ Correct. You have been given the **${role.name}** role.`)],
       flags: MessageFlags.IsComponentsV2
     });

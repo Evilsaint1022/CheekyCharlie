@@ -9,6 +9,11 @@ module.exports = {
       option.setName('role')
         .setDescription('The role to assign to verified members.')
         .setRequired(true)
+    )
+    .addRoleOption(option =>
+      option.setName('role_to_remove')
+        .setDescription('Optional role to remove after a member verifies.')
+        .setRequired(false)
     ),
 
   async execute(interaction) {
@@ -21,6 +26,11 @@ module.exports = {
     });
   }
     const targetRole = interaction.options.getRole('role');
+    const roleToRemove = interaction.options.getRole('role_to_remove');
+
+    if (roleToRemove && roleToRemove.id === targetRole.id) {
+      return interaction.reply({ content: 'The verified role and the role to remove cannot be the same role.', flags: 64 });
+    }
 
         const guildId = interaction.guild.id;
         const guildName = interaction.guild.name;
@@ -41,12 +51,17 @@ module.exports = {
 
       // Update only the VerifiedRole field
       currentSettings.VerifiedRole = targetRole.id;
+      if (roleToRemove) {
+        currentSettings.UnverifiedRole = roleToRemove.id;
+      } else {
+        delete currentSettings.UnverifiedRole;
+      }
 
       // Save updated settings
-      db.settings.set(guildKey, currentSettings);
-      console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Set the Verified Role to ${targetRole.name}`);
+      await db.settings.set(guildKey, currentSettings);
+      console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Set the Verified Role to ${targetRole.name}${roleToRemove ? ` and Unverified Role to ${roleToRemove.name}` : ''}`);
 
-      await interaction.reply({ content: `✅ Verified role has been set to **${targetRole.name}**.`, flags: 64 });
+      await interaction.reply({ content: `✅ Verified role has been set to **${targetRole.name}**.${roleToRemove ? ` Members will also have **${roleToRemove.name}** removed after verification.` : ''}`, flags: 64 });
     } catch (error) {
       console.error(error);
       await interaction.reply({ content: '❌ Failed to set the verified role.', flags: 64 });

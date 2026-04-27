@@ -36,9 +36,10 @@ module.exports = {
       }
 
       delete currentSettings.VerifiedRole;
+      delete currentSettings.UnverifiedRole;
       await db.settings.set(guildId, currentSettings);
 
-      await interaction.reply({ content: '✅ Verified role has been removed. Auto-kick and button verification are now disabled until a new verified role is set.', flags: 64 });
+      await interaction.reply({ content: '✅ Verified role has been removed. The optional role-to-remove setting has also been cleared. Auto-kick and button verification are now disabled until a new verified role is set.', flags: 64 });
     } catch (error) {
       console.error(error);
       await interaction.reply({ content: '❌ Failed to remove the verified role setting.', flags: 64 });
