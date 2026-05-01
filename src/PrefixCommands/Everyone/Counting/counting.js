@@ -57,11 +57,11 @@ module.exports = {
                     `_This is the current counting info for ${guildName}._\n` +
                     `${middle}\n` +
                     `⭐**__Highest Record__**\n` +
-                    `- ㅤㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.record}\`\n` +
+                    `- \`${countingData.record}\`\n` +
                     `🌿**__Current Number__**\n` +
-                    `- ㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.current}\`\n` +
+                    `- \`${countingData.current}\`\n` +
                     `🌿**__Next Number__**\n` +
-                    `- ㅤㅤㅤ ㅤㅤㅤ ㅤㅤㅤ\`${countingData.expected}\`\n\n` +
+                    `- \`${countingData.expected}\`\n\n` +
                     `❤️ **__Lives:__** \`${CountingLives}\`\n` +
                     `${middle}\n`
                 )
