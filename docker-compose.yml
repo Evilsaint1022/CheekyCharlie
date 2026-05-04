@@ -1,0 +1,19 @@
+services:
+  cheekycharlie:
+    build: .
+    container_name: cheekycharlie
+    restart: unless-stopped
+    environment:
+      TOKEN: ${TOKEN}
+      CLIENT_ID: ${CLIENT_ID}
+      GUILD_ID: ${GUILD_ID}
+      ENCRYPT_KEY: ${ENCRYPT_KEY}
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      CAT_API_KEY: ${CAT_API_KEY}
+      DOG_API_KEY: ${DOG_API_KEY}
+      TENORKEY: ${TENORKEY}
+      GITHUB_KEY: ${GITHUB_KEY}
+      IMAGE_API_KEY: ${IMAGE_API_KEY}
+    volumes:
+      - /srv/cheekycharlie/storage:/app/src/Utilities/Storage
