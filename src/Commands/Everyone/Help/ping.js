@@ -26,8 +26,8 @@ module.exports = {
         const latency = Date.now() - start;
         const pingEmbed = {
             color: 0x207e37,
-            title: '**Pong!**',
-            description: `**Latency: ${latency}ms.**`,
+            title: '**Pong! 🏓**',
+            description: `**Latency: ${latency}ms.**`
         };
 
         if (interaction.guild?.iconURL()) {

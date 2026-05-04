@@ -23,8 +23,8 @@ module.exports = {
 
     const pingEmbed = {
       color: 0x207e37,
-      title: '**Pong!**',
-      description: `**Latency: ${latency}ms.**`,
+      title: '**Pong! 🏓**',
+      description: `**Latency: ${latency}ms.**`
     };
 
     // Add guild icon thumbnail if available
