@@ -7,7 +7,7 @@ const { loadImage } = require('@napi-rs/canvas');
 
 const owner = 'Evilsaint1022';
 const repo = 'CheekyCharlie';
-const discordChannelId = '1347795697369350244';
+const discordChannelId = '1500835312912564294';
 const repoKey = `${owner}_${repo}`;
 
 const space = 'ㅤ'
