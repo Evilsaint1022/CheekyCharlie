@@ -41,6 +41,9 @@ client.events = new Collection();
 client.commands = new Collection();
 client.prefixCommands = new Collection();
 
+// Deployment timestamp (Unix seconds) — set once at process start
+client.startupTime = Math.floor(Date.now() / 1000);
+
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
