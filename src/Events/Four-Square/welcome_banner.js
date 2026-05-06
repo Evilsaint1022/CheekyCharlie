@@ -7,7 +7,7 @@ module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
     // Channel ID where the welcome message will be sent
-    const channelId = '1346995573596622928';
+    const channelId = '1500763626422796288';
     const channel = member.guild.channels.cache.get(channelId);
 
     // Makes sure it only sends for the Four-Square Server.
@@ -63,9 +63,9 @@ module.exports = {
         content: `**🌿Kia ora <@${member.id}>, Welcome to the New Zealand family!**\n` +
                  `*Welcome to the Four-Square Server.*\n` +
                  `# **__Getting started__**\n` +
-                 `**• Verify in <#1346995633776754768>**\n` +
+                 `**• Verify in <#1500763684375629894>**\n` +
                  `**• Get some roles in ⁠<id:customize>**\n` +
-                 `**• Chat with us in ⁠<#1346955022461829162>**\n\n` +
+                 `**• Chat with us in ⁠<#1500763511448539307>**\n\n` +
                  `**🌿Member #${member.guild.memberCount}**`,
         files: [attachment],
       });
