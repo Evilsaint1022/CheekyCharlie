@@ -29,7 +29,7 @@ module.exports = {
         `**🌿・<#1500763626422796288>**\n` +  // Mentions the welcome channel
         `**🌿・<#1500763684375629894>**\n` +
         `**🌿・<id:customize>**\n\n` +
-        `**Invite Link: www.discord.gg/invite/3gtJ33cZDH**\n\n` +
+        `**Invite Link: https://www.discord.gg/invite/3gtJ33cZDH**\n\n` +
         `**Hope you enjoy your stay in the server! ❤️**\n`
       )
       .setImage("https://cdn.discordapp.com/attachments/1346998014115578010/1365543472076947456/Untitled371_20250319131308.png?ex=680db0f6&is=680c5f76&hm=56ba655e67bb5c9268f6fa68a177a9890567779bf53dc830be78039888c7aadc&width=450&height=89")
