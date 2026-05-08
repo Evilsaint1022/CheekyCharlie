@@ -28,7 +28,7 @@ module.exports = {
 
     try {
       // Load the welcome template and member avatar
-      const templatePath = path.join(__dirname, '../../Utilities/Banners/welcome.png');
+      const templatePath = path.join(__dirname, '../../Utilities/Cheekycharlie/welcome_banner.png');
       const template = await loadImage(templatePath);
       const avatar = await loadImage(member.user.displayAvatarURL({ format: 'png' }));
 
@@ -40,9 +40,9 @@ module.exports = {
       ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
       // Draw the member's avatar as a circle onto the canvas
-      const avatarSize = 305; // Set avatar size
-      const avatarX = canvas.width / 1.96; // Center of the canvas width
-      const avatarY = 120 + avatarSize / 1.5; // Adjust as needed and center the avatar
+      const avatarSize = 424; // Set avatar size
+      const avatarX = canvas.width / 1.99; // Center of the canvas width
+      const avatarY = 146 + avatarSize / 1.5; // Adjust as needed and center the avatar
 
       // Draw circular avatar
       ctx.save();
