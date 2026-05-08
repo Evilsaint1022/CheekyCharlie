@@ -11,7 +11,7 @@ module.exports = {
   async execute(message, client) {
     if (message.author.bot) return;
 
-    const modMailChannelId = await db.settings.get("modmailChannelId");
+    const modMailChannelId = `1502163708854665226`;
     if (!modMailChannelId) return;
 
     const modMailChannel = client.channels.cache.get(modMailChannelId);

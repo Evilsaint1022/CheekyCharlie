@@ -12,7 +12,7 @@ module.exports = {
   async execute(oldThread, newThread, client) {
     // Only care if the thread just got locked
     if (!oldThread.locked && newThread.locked) {
-      const modMailChannelId = await db.settings.get("modmailChannelId");
+      const modMailChannelId = `1502163708854665226`;
       if (newThread.parentId !== modMailChannelId) return;
 
       const match = newThread.name.match(/\((\d+)\)$/); // Extract user ID from thread name
