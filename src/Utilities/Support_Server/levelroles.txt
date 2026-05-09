@@ -1,0 +1,45 @@
+Level Roles:
+3・Permissions
+5・Kiwi Explorer
+10・Hobbiton Traveler
+15・Southern Scout
+20・Pohutukawa Guardian
+25・Auckland Adventurer
+30・Milford Voyager
+35 ・Taniwha Hunter
+40・Alpine Ranger
+45・ Silver Fern Warrior
+50・Tongariro Champion
+55・Kea Commander
+60・Southern Lights Keeper
+65・Aoraki Conqueror
+70・Tasman Legend
+75・Maori Guardian
+80・Pacific Overlord
+85・Kiwi Emperor
+90・Eternal Fern
+95・Spirit of Aotearoa
+100・Legend of New Zealand
+
+Color for Roles
+| 3     | `#d8ffe1`
+| 5     | `#c8ffd4`
+| 10    | `#b7ffc6`
+| 15    | `#a5ffb7`
+| 20    | `#93ffa7`
+| 25    | `#80ff96`
+| 30    | `#6df184`
+| 35    | `#5ee173`
+| 40    | `#4fd162`
+| 45    | `#40c152`
+| 50    | `#34b447`
+| 55    | `#2ca33f`
+| 60    | `#259338`
+| 65    | `#1e8331`
+| 70    | `#18742a`
+| 75    | `#136624`
+| 80    | `#0f581f`
+| 85    | `#0b4b1a`
+| 90    | `#083e15`
+| 95    | `#052f10`
+| 100   | `#021f0a`
