@@ -1,5 +1,6 @@
 const db = require('../../Handlers/database');
 const { execSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 const { REST, Routes, EmbedBuilder } = require('discord.js');
@@ -8,6 +9,8 @@ const { owner, repo } = require('../../Functions/Github/github-state');
 const STATUS_EMBED_COLOR = 0x2b9348;
 const STATUS_EMBED_COLOR_OFFLINE = 0xc1121f;
 const REPO_ROOT = path.resolve(__dirname, '../../..');
+const BUILD_COMMIT_FULL_PATH = path.join(REPO_ROOT, '.build-commit-full');
+const BUILD_COMMIT_SHORT_PATH = path.join(REPO_ROOT, '.build-commit-short');
 
 function statusLog(message, error) {
   const prefix =
@@ -59,18 +62,38 @@ async function getConfiguredStatusChannelsFromSettings() {
     }));
 }
 
-function getRuntimeCommitFooter() {
-  try {
-    const shortSha = execSync('git rev-parse --short HEAD', {
-      cwd: REPO_ROOT,
-      encoding: 'utf8'
-    }).trim();
+function normalizeCommitSha(sha) {
+  return typeof sha === 'string' ? sha.trim() : '';
+}
 
-    if (!shortSha) {
+function buildRuntimeCommitFromBuildFiles() {
+  try {
+    const fullSha = normalizeCommitSha(fs.readFileSync(BUILD_COMMIT_FULL_PATH, 'utf8'));
+    const shortSha = normalizeCommitSha(fs.readFileSync(BUILD_COMMIT_SHORT_PATH, 'utf8'));
+
+    if (!fullSha || !shortSha) {
       return null;
     }
 
-    return `Commit ${shortSha}`;
+    return {
+      source: 'build-file',
+      fullSha,
+      shortSha
+    };
+  } catch {
+    return null;
+  }
+}
+
+function getRuntimeCommitFooter(runtimeCommit = null) {
+  try {
+    const resolvedCommit = runtimeCommit || getRuntimeCommitShas();
+
+    if (!resolvedCommit?.shortSha) {
+      return null;
+    }
+
+    return `Commit ${resolvedCommit.shortSha}`;
   } catch (error) {
     statusLog('Failed to read runtime git commit for status footer.', error);
     return null;
@@ -78,6 +101,12 @@ function getRuntimeCommitFooter() {
 }
 
 function getRuntimeCommitShas() {
+  const buildFileCommit = buildRuntimeCommitFromBuildFiles();
+
+  if (buildFileCommit) {
+    return buildFileCommit;
+  }
+
   try {
     const fullSha = execSync('git rev-parse HEAD', {
       cwd: REPO_ROOT,
@@ -92,9 +121,16 @@ function getRuntimeCommitShas() {
       return null;
     }
 
-    return { fullSha, shortSha };
+    return {
+      source: 'git',
+      fullSha,
+      shortSha
+    };
   } catch (error) {
-    statusLog('Failed to read runtime git commit for status footer.', error);
+    statusLog(
+      'Failed to read runtime git commit for status footer. Checked build commit files and local git metadata.',
+      error
+    );
     return null;
   }
 }
@@ -141,10 +177,12 @@ async function buildStatusEmbed(content, options = {}) {
     const isLatest = await isRuntimeCommitLatestOnGithub(runtimeCommit);
     const footerText = runtimeCommit
       ? `Commit ${runtimeCommit.shortSha}${isLatest ? ' ✅' : ''}`
-      : getRuntimeCommitFooter();
+      : getRuntimeCommitFooter(runtimeCommit);
 
     if (footerText) {
       embed.setFooter({ text: footerText });
+    } else {
+      statusLog('Runtime commit footer was skipped because no runtime commit could be resolved.');
     }
   }
 

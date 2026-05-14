@@ -16,6 +16,14 @@ RUN npm install --omit=dev
 
 COPY . .
 
+RUN if [ -d .git ]; then \
+      git rev-parse HEAD > /app/.build-commit-full && \
+      git rev-parse --short HEAD > /app/.build-commit-short; \
+    else \
+      printf '' > /app/.build-commit-full && \
+      printf '' > /app/.build-commit-short; \
+    fi
+
 RUN mkdir -p /app/storage-seed && \
     if [ -d /app/src/Utilities/Storage ]; then \
       cp -a /app/src/Utilities/Storage/. /app/storage-seed/; \
