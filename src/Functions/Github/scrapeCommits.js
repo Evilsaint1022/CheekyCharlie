@@ -2,7 +2,12 @@ const checkAllCommits = require('./checkallcommits');
 const sendCommitNotification = require('./sendcommitnotification');
 const { logGithub } = require('./github-state');
 
-const GITHUB_POLL_INTERVAL_MS = 60000;
+const DEFAULT_GITHUB_POLL_INTERVAL_MS = 10000;
+const MIN_GITHUB_POLL_INTERVAL_MS = 5000;
+const parsedPollInterval = Number(process.env.GITHUB_POLL_INTERVAL_MS);
+const GITHUB_POLL_INTERVAL_MS = Number.isFinite(parsedPollInterval) && parsedPollInterval >= MIN_GITHUB_POLL_INTERVAL_MS
+  ? parsedPollInterval
+  : DEFAULT_GITHUB_POLL_INTERVAL_MS;
 
 async function scrapeCommits(client) {
   let pollCount = 0;

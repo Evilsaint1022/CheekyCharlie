@@ -63,11 +63,31 @@ async function checkAllCommits() {
       throw new Error('GitHub API returned a non-array commits payload.');
     }
 
-    nextState.lastHeadSha = commits[0]?.sha || state.lastHeadSha;
+    const newestCommitSha = commits[0]?.sha || null;
+    const knownHeadIndex = state.lastHeadSha
+      ? commits.findIndex((commit) => commit?.sha === state.lastHeadSha)
+      : -1;
+
+    nextState.lastHeadSha = newestCommitSha || state.lastHeadSha;
     await saveGithubState(nextState);
 
-    const sentShaSet = new Set(state.sentShas);
-    const newCommits = commits.filter((commit) => commit?.sha && !sentShaSet.has(commit.sha));
+    if (!state.lastHeadSha && state.sentShas.length === 0) {
+      return {
+        newCommits: [],
+        status: 'bootstrapped',
+        rateLimitRemaining,
+        rateLimitResetAt: rateLimitReset ? new Date(Number(rateLimitReset) * 1000).toISOString() : null
+      };
+    }
+
+    let newCommits;
+
+    if (knownHeadIndex >= 0) {
+      newCommits = commits.slice(0, knownHeadIndex);
+    } else {
+      const sentShaSet = new Set(state.sentShas);
+      newCommits = commits.filter((commit) => commit?.sha && !sentShaSet.has(commit.sha));
+    }
 
     return {
       newCommits,
