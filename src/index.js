@@ -16,6 +16,7 @@ const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
 
 // Database -------------------------------------------------------------------------------------------------------------------------
 const db = require('../src/Handlers/database');
+const { sendEarlyStatusMessage, sendStatusMessage, shutdownBot } = require('./Utilities/StatusChannel/statusNotifier');
 
 // Show Guilds ----------------------------------------------------------------------------------------------------------------------
 const showGuilds = require('./ShowGuilds/showguilds');
@@ -47,6 +48,9 @@ client.startupTime = Math.floor(Date.now() / 1000);
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
+    await sendStatusMessage(client, 'Cheeky Charlie is back online.', {
+      includeCommitFooter: true
+    });
 
     // Registers Application Commands
     registerCommands(client);
@@ -165,5 +169,24 @@ client.on("messageCreate", async (message) => {
   await command.execute(message, args, client);
 });
 
+const handleTerminationSignal = async (signal) => {
+  await shutdownBot(client, {
+    exitCode: 0,
+    reason: signal
+  });
+};
+
+process.once('SIGTERM', () => {
+  handleTerminationSignal('SIGTERM');
+});
+
+process.once('SIGINT', () => {
+  handleTerminationSignal('SIGINT');
+});
+
 // Client Login ---------------------------------------------------------------------------------------------------------------------
+sendEarlyStatusMessage('Starting...').catch((error) => {
+  console.error('Failed to send early startup status message:', error);
+});
+
 client.login(process.env.TOKEN);

@@ -1,4 +1,5 @@
 const db = require('../../Handlers/database');
+const { shutdownBot } = require('../../Utilities/StatusChannel/statusNotifier');
 
 module.exports = {
     name: "shutdown",
@@ -32,12 +33,10 @@ module.exports = {
 
         try {
             await message.reply("Shutting down...");
-
-            // Destroy Discord client (graceful)
-            await message.client.destroy();
-
-            // Exit process
-            process.exit(0);
+            await shutdownBot(message.client, {
+                exitCode: 0,
+                reason: `owner command by ${message.author.tag}`
+            });
 
         } catch (err) {
             console.error("Shutdown Error:", err);

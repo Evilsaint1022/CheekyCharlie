@@ -21,7 +21,6 @@ async function scrapeCommits(client) {
     try {
       const {
         newCommits,
-        status,
         rateLimitRemaining,
         rateLimitResetAt
       } = await checkAllCommits();
@@ -30,19 +29,14 @@ async function scrapeCommits(client) {
         await sendCommitNotification(client, commit);
       }
 
-      const durationMs = Date.now() - pollStartedAt;
-      const rateLimitText = rateLimitRemaining ?? 'unknown';
-      const resetText = rateLimitResetAt ? `, resets at ${rateLimitResetAt}` : '';
-
       if (newCommits.length > 0) {
+        const durationMs = Date.now() - pollStartedAt;
+        const rateLimitText = rateLimitRemaining ?? 'unknown';
+        const resetText = rateLimitResetAt ? `, resets at ${rateLimitResetAt}` : '';
+
         logGithub(
           'log',
           `Poll #${pollCount} completed in ${durationMs}ms. Found ${newCommits.length} new commit(s). Rate limit remaining: ${rateLimitText}${resetText}`
-        );
-      } else {
-        logGithub(
-          'log',
-          `Poll #${pollCount} completed in ${durationMs}ms with status=${status}. No new commits. Rate limit remaining: ${rateLimitText}${resetText}`
         );
       }
     } catch (err) {
