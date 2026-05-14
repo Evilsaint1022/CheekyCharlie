@@ -28,6 +28,7 @@ const db = {
     counting: new DotDB("./src/Utilities/Storage/Settings/Counting/counting.json"),
     countingemojis: new DotDB("./src/Utilities/Storage/Settings/Counting/countingemojis.json"),
     github: new DotDB("./src/Utilities/Storage/Settings/Github/github.json"),
+    stickyMessages: new DotDB("./src/Utilities/Storage/Settings/StickyMessages/stickymessages.json"),
     coloroftheweek: new DotDB("./src/Utilities/Storage/Settings/ColoroftheWeek/cotw.json"),
     cooldowns: new DotDB("./src/Utilities/Storage/Settings/Cooldowns/cooldowns.json"),
     lastban: new DotDB("./src/Utilities/Storage/Settings/BanCount/lastban.json"),

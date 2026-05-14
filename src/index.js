@@ -140,12 +140,21 @@ client.on("messageCreate", async (message) => {
 
   if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content
-    .slice(prefix.length)
-    .trim()
-    .split(/ +/);
+  const trimmedContent = message.content.slice(prefix.length).trimStart();
+  if (!trimmedContent) return;
 
-  const commandName = args.shift().toLowerCase();
+  const firstWhitespaceIndex = trimmedContent.search(/\s/);
+  const commandName = (
+    firstWhitespaceIndex === -1
+      ? trimmedContent
+      : trimmedContent.slice(0, firstWhitespaceIndex)
+  ).toLowerCase();
+  const rawArgs = firstWhitespaceIndex === -1
+    ? ''
+    : trimmedContent.slice(firstWhitespaceIndex).trimStart();
+  const args = rawArgs ? rawArgs.trim().split(/\s+/) : [];
+
+  message.rawArgs = rawArgs;
   
   const command =
     client.prefixCommands.get(commandName) ||
