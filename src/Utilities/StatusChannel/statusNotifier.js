@@ -126,20 +126,12 @@ function getRuntimeCommitShas() {
       fullSha,
       shortSha
     };
-  } catch (error) {
-    statusLog(
-      'Failed to read runtime git commit for status footer. Checked build commit files and local git metadata.',
-      error
-    );
+  } catch {
     return null;
   }
 }
 
-async function isRuntimeCommitLatestOnGithub(runtimeCommit) {
-  if (!runtimeCommit) {
-    return false;
-  }
-
+async function fetchLatestGithubHeadSha() {
   const headers = {
     'Accept': 'application/vnd.github+json',
     'User-Agent': 'CheekyCharlie'
@@ -155,15 +147,14 @@ async function isRuntimeCommitLatestOnGithub(runtimeCommit) {
     });
 
     if (!response.ok) {
-      return false;
+      return null;
     }
 
     const commits = await response.json();
-    const latestGithubSha = Array.isArray(commits) ? commits[0]?.sha : null;
-    return Boolean(latestGithubSha && latestGithubSha === runtimeCommit.fullSha);
+    return Array.isArray(commits) ? commits[0]?.sha || null : null;
   } catch (error) {
-    statusLog('Failed to compare runtime commit against GitHub head.', error);
-    return false;
+    statusLog('Failed to fetch latest GitHub commit for status footer.', error);
+    return null;
   }
 }
 
@@ -174,10 +165,12 @@ async function buildStatusEmbed(content, options = {}) {
 
   if (options.includeCommitFooter) {
     const runtimeCommit = getRuntimeCommitShas();
-    const isLatest = await isRuntimeCommitLatestOnGithub(runtimeCommit);
+    const latestGithubSha = await fetchLatestGithubHeadSha();
     const footerText = runtimeCommit
-      ? `Commit ${runtimeCommit.shortSha}${isLatest ? ' ✅' : ''}`
-      : getRuntimeCommitFooter(runtimeCommit);
+      ? `Commit ${runtimeCommit.shortSha}${latestGithubSha === runtimeCommit.fullSha ? ' ✅' : ''}`
+      : latestGithubSha
+        ? `Commit ${latestGithubSha.slice(0, 7)} ✅`
+        : getRuntimeCommitFooter(runtimeCommit);
 
     if (footerText) {
       embed.setFooter({ text: footerText });
