@@ -1,93 +1,70 @@
 require('dotenv').config({ quiet: true });
-const fetch = require('node-fetch');
-const db = require('../../Handlers/database');
 const { EmbedBuilder } = require('discord.js');
-const path = require('path');
-const { loadImage } = require('@napi-rs/canvas');
+const {
+  owner,
+  repo,
+  MAX_STORED_SHAS,
+  getGithubState,
+  saveGithubState,
+  logGithub
+} = require('./github-state');
 
-const owner = 'Evilsaint1022';
-const repo = 'CheekyCharlie';
 const discordChannelId = '1500835312912564294';
-const repoKey = `${owner}_${repo}`;
-
-const space = 'ㅤ'
 
 async function sendCommitNotification(client, commit) {
-
-// Load the welcome template and member avatar
-const repoImagePath = path.join(__dirname, '../../Utilities/Github/repostoredimage.png');
-const repoImage = await loadImage(repoImagePath);
-
   try {
     const sha = commit?.sha;
-    const message = commit?.commit?.message;
+    const message = commit?.commit?.message?.trim();
     const htmlUrl = commit?.html_url;
     const authorName =
       commit?.commit?.author?.name ||
       commit?.author?.login ||
       'Unknown';
 
-    const top =    `**─────────────────────────────────────**`;
-    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `**─────────────────────────────────────**`;
-
-    const centeredmessage = `ㅤㅤㅤ**${message}**`;
-    const centeredauthor =  `**The Author: \`${authorName}\`**`;
-
     if (!sha || !message || !htmlUrl) {
+      logGithub('warn', 'Skipping commit notification because required commit fields were missing.', { sha, htmlUrl });
       return;
     }
 
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const formattedMessage = message.length > 1200
+      ? `${message.slice(0, 1197)}...`
+      : message;
+    const centeredmessage = `ㅤㅤㅤ**${formattedMessage}**`;
+    const centeredauthor = `**The Author: \`${authorName}\`**`;
     const commitlink = `ㅤㅤㅤ[_🔗・Commit Link Here_](${htmlUrl})`;
 
-    // Load previously saved commits
-    let previousCommits = await db.github.get(repoKey);
-    if (!Array.isArray(previousCommits)) {
-      previousCommits = previousCommits ? [previousCommits] : [];
-    }
+    const state = await getGithubState();
 
-    // Skip if already sent
-    if (previousCommits.includes(sha)) {
-      console.warn(`[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}]  Commit ${sha} already posted. Skipping.`);
+    if (state.sentShas.includes(sha)) {
+      logGithub('log', `Commit ${sha.slice(0, 7)} was already posted. Skipping duplicate send.`);
       return;
     }
 
-    // Fetch the Discord channel
     const channel = await client.channels.fetch(discordChannelId);
-    if (!channel) {
-      console.warn(
-        `[⭐] [Github] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Discord channel with ID ${discordChannelId} not found.`);
+    if (!channel || !channel.isTextBased()) {
+      logGithub('warn', `Discord channel ${discordChannelId} was not found or is not text-based.`);
       return;
     }
-
-    let repoImageUrl;
-
-    if (owner && repo) {
-      repoImageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}`;
-    } else {
-      repoImageUrl = repoImage;
-    }
-
-    console.log(
-                `[⭐] [GITHUB] [${new Date().toLocaleDateString('en-GB')}] ` +
-                `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-                `Sending a new commit message in ${discordChannelId} - ${repoKey}: ${htmlUrl} `
-            );
 
     const embed = new EmbedBuilder()
       .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n\n${centeredmessage}\nㅤ\n${centeredauthor}\n\n${middle}`)
-      .setImage(repoImageUrl)
+      .setImage(`https://opengraph.githubassets.com/1/${owner}/${repo}`)
       .setColor(0x207e37)
       .setTimestamp(new Date());
 
     await channel.send({ embeds: [embed] });
 
-    // Save SHA to DB
-    previousCommits.push(sha);
-    await db.github.set(repoKey, previousCommits);
+    const nextSentShas = [...state.sentShas.filter((savedSha) => savedSha !== sha), sha].slice(-MAX_STORED_SHAS);
+    await saveGithubState({
+      ...state,
+      sentShas: nextSentShas,
+      lastDeliveredAt: new Date().toISOString()
+    });
 
+    logGithub('log', `Delivered commit ${sha.slice(0, 7)} to channel ${discordChannelId}: ${htmlUrl}`);
   } catch (err) {
-    return;
+    logGithub('error', `Failed to send commit notification for ${commit?.sha || 'unknown commit'}.`, err);
   }
 }
 
