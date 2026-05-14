@@ -33,7 +33,13 @@ module.exports = {
       return message.reply('The configured verified role no longer exists. Please set a new one with `?set-verified-role <role_id or role_mention>`.');
     }
 
-    const label = args.join(' ').trim() || 'Verify ->';
+    const mode = args[0]?.toLowerCase();
+
+    if (!mode || !['math', 'puzzle'].includes(mode)) {
+      return message.reply('Please choose a verification mode: `?send-verification-button math` or `?send-verification-button puzzle`.');
+    }
+
+    const label = args.slice(1).join(' ').trim() || 'Verify ->';
 
     if (label.length > 80) {
       return message.reply('Button label cannot be longer than 80 characters.');
@@ -41,7 +47,7 @@ module.exports = {
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId('verification_start')
+        .setCustomId(`verification_start_${mode}`)
         .setLabel(label)
         .setStyle(ButtonStyle.Secondary)
     );
@@ -50,6 +56,6 @@ module.exports = {
       components: [row]
     });
 
-    return message.reply('✅ Verification button sent.');
+    return message.reply(`✅ Verification button sent in **${mode}** mode.`);
   }
 };
