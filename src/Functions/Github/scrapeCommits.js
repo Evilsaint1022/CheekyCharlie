@@ -9,6 +9,11 @@ const GITHUB_POLL_INTERVAL_MS = Number.isFinite(parsedPollInterval) && parsedPol
   ? parsedPollInterval
   : DEFAULT_GITHUB_POLL_INTERVAL_MS;
 
+function isIgnorableGithubError(err) {
+  return err?.message?.toLowerCase().includes('socket hang up') ||
+    err?.code === 'ECONNRESET';
+}
+
 async function scrapeCommits(client) {
   let pollCount = 0;
 
@@ -24,6 +29,10 @@ async function scrapeCommits(client) {
         await sendCommitNotification(client, commit);
       }
     } catch (err) {
+      if (isIgnorableGithubError(err)) {
+        return;
+      }
+
       logGithub('error', `Poll #${pollCount} failed. Retrying in ${GITHUB_POLL_INTERVAL_MS / 1000} seconds.`, err);
     } finally {
       setTimeout(runPoll, GITHUB_POLL_INTERVAL_MS);
