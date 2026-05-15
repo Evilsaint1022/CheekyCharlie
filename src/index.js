@@ -79,7 +79,8 @@ client.once("clientReady", async () => {
     "Helping a Customer",
     "Been here since 2025",
     "Greeting Customers at the Door",
-    "Made by the people for the people!"
+    "Made by the people for the people!",
+    "Fuck you mee6"
 ];
 
 const downstatus = [
