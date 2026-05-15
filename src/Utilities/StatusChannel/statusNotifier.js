@@ -1,5 +1,6 @@
 const db = require('../../Handlers/database');
 const { execSync } = require('child_process');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -11,6 +12,8 @@ const STATUS_EMBED_COLOR_OFFLINE = 0xc1121f;
 const REPO_ROOT = path.resolve(__dirname, '../../..');
 const BUILD_COMMIT_FULL_PATH = path.join(REPO_ROOT, '.build-commit-full');
 const BUILD_COMMIT_SHORT_PATH = path.join(REPO_ROOT, '.build-commit-short');
+const STATUS_DEDUPE_WINDOW_MS = 2 * 60 * 1000;
+const sentStatusMessages = new Map();
 
 function statusLog(message, error) {
   const prefix =
@@ -23,6 +26,56 @@ function statusLog(message, error) {
   }
 
   console.log(prefix);
+}
+
+function getStatusDedupeKey(channelId, content) {
+  return crypto.createHash('sha256').update(`${channelId}:${content}`).digest('hex');
+}
+
+async function cleanupExpiredStatusDedupeEntries(now) {
+  const storedMessages = await db.status_channel.all();
+
+  if (!storedMessages || typeof storedMessages !== 'object') {
+    return;
+  }
+
+  for (const [key, entry] of Object.entries(storedMessages)) {
+    const sentAt = entry?.sentAt;
+
+    if (typeof sentAt !== 'number' || now - sentAt >= STATUS_DEDUPE_WINDOW_MS) {
+      sentStatusMessages.delete(key);
+      await db.status_channel.delete(key);
+    }
+  }
+}
+
+async function shouldSkipDuplicateStatusMessage(channelId, content) {
+  const now = Date.now();
+  const dedupeKey = getStatusDedupeKey(channelId, content);
+  const memorySentAt = sentStatusMessages.get(dedupeKey);
+
+  if (memorySentAt && now - memorySentAt < STATUS_DEDUPE_WINDOW_MS) {
+    return true;
+  }
+
+  const storedMessage = await db.status_channel.get(dedupeKey);
+  const storedSentAt = storedMessage?.sentAt;
+
+  if (typeof storedSentAt === 'number' && now - storedSentAt < STATUS_DEDUPE_WINDOW_MS) {
+    sentStatusMessages.set(dedupeKey, storedSentAt);
+    return true;
+  }
+
+  await cleanupExpiredStatusDedupeEntries(now);
+
+  sentStatusMessages.set(dedupeKey, now);
+  await db.status_channel.set(dedupeKey, {
+    channelId,
+    content,
+    sentAt: now
+  });
+
+  return false;
 }
 
 async function getConfiguredStatusChannels(client) {
@@ -195,6 +248,11 @@ async function sendStatusMessage(client, content, options = {}) {
         continue;
       }
 
+      if (await shouldSkipDuplicateStatusMessage(channelId, content)) {
+        statusLog(`${guildName} ${guildId} skipped duplicate status update to ${channelId}: ${content}`);
+        continue;
+      }
+
       await channel.send({ embeds: [embed] });
       statusLog(`${guildName} ${guildId} sent status update to ${channelId}: ${content}`);
     } catch (error) {
@@ -220,6 +278,11 @@ async function sendEarlyStatusMessage(content, options = {}) {
 
   for (const { guildId, guildName, channelId } of configuredChannels) {
     try {
+      if (await shouldSkipDuplicateStatusMessage(channelId, content)) {
+        statusLog(`${guildName} ${guildId} skipped duplicate early status update to ${channelId}: ${content}`);
+        continue;
+      }
+
       await rest.post(Routes.channelMessages(channelId), {
         body: { embeds: [embed.toJSON()] }
       });

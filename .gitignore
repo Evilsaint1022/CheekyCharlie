@@ -22,6 +22,7 @@
 /src/Utilities/Storage/Settings/Counting/counting.json
 /src/Utilities/Storage/Settings/Counting/countingemojis.json
 /src/Utilities/Storage/Settings/Github/github.json
+/src/Utilities/Storage/Settings/StatusChannel/statuschannel.json
 /src/Utilities/Storage/Settings/StickyMessages/stickymessages.json
 /src/Utilities/Storage/Settings/ColoroftheWeek/cotw.json
 /src/Utilities/Storage/Settings/Cooldowns/cooldowns.json
