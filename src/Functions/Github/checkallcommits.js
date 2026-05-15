@@ -1,3 +1,4 @@
+// EXCLUDE
 require('dotenv').config({ quiet: true });
 const fetch = require('node-fetch');
 const {

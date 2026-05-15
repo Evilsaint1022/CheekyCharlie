@@ -1,3 +1,4 @@
+// EXCLUDE
 require('dotenv').config({ quiet: true });
 const { EmbedBuilder } = require('discord.js');
 const {
@@ -22,7 +23,7 @@ async function sendCommitNotification(client, commit) {
       'Unknown';
 
     if (!sha || !message || !htmlUrl) {
-      logGithub('warn', 'Skipping commit notification because required commit fields were missing.', { sha, htmlUrl });
+      logGithub('warn', 'Skipping commit notification because required commit fields were missing.');
       return;
     }
 
@@ -37,7 +38,6 @@ async function sendCommitNotification(client, commit) {
     const state = await getGithubState();
 
     if (state.sentShas.includes(sha)) {
-      logGithub('log', `Commit ${sha.slice(0, 7)} was already posted. Skipping duplicate send.`);
       return;
     }
 
@@ -61,8 +61,6 @@ async function sendCommitNotification(client, commit) {
       sentShas: nextSentShas,
       lastDeliveredAt: new Date().toISOString()
     });
-
-    logGithub('log', `Delivered commit ${sha.slice(0, 7)} to channel ${discordChannelId}: ${htmlUrl}`);
   } catch (err) {
     logGithub('error', `Failed to send commit notification for ${commit?.sha || 'unknown commit'}.`, err);
   }

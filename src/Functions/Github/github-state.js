@@ -1,3 +1,4 @@
+// EXCLUDE
 const db = require('../../Handlers/database');
 
 const owner = 'Evilsaint1022';
@@ -15,7 +16,11 @@ function logGithub(level, message, details) {
   const prefix = `[⭐] [GITHUB] ${formatGithubTimestamp()}`;
 
   if (details !== undefined) {
-    console[method](`${prefix} ${message}`, details);
+    const detailMessage = details instanceof Error
+      ? details.message
+      : String(details);
+
+    console[method](`${prefix} ${message} ${detailMessage}`);
     return;
   }
 
