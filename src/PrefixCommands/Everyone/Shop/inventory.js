@@ -19,7 +19,12 @@ module.exports = {
       (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null) ||
       message.author;
 
-    const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+    
     const guildKey = `${guild.id}`;
 
     // OLD → NEW migration keys
@@ -109,7 +114,7 @@ module.exports = {
 
     const inventoryText = userData.inventory
       .map((item, index) => {
-        return `**${index + 1}.** **__${item.title}__** - **${ferns}${item.price.toLocaleString()}**`;
+        return `**${index + 1}.** **__${item.title}__** - **${custom || ferns} ${item.price.toLocaleString()}**`;
       })
       .join('\n');
 

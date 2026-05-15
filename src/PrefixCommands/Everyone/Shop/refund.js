@@ -125,7 +125,13 @@ module.exports = {
         });
       }
 
-      const ferns = '<:Ferns:1395219665638391818>';
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
+
       const refundAmount = selectedItem.price || 0;
 
       // Remove item from inventory
@@ -141,7 +147,7 @@ module.exports = {
       await db.wallet.set(userKey, balanceData);
 
       return selectInteraction.update({
-        content: `You refunded **${selectedItem.title}** for **${ferns}${refundAmount.toLocaleString()}!**`,
+        content: `You refunded **${selectedItem.title}** for **${custom || ferns} ${refundAmount.toLocaleString()}!**`,
         components: []
       });
     });

@@ -22,6 +22,12 @@ module.exports = {
         const guildKey = `${guild.id}`;
         let shopItems = [];
 
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
+
+        const customname = await db.settings.get(`${guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         try {
             const items = await db.shop.get(guildKey);
             shopItems = Array.isArray(items) ? items : [];
@@ -73,7 +79,7 @@ module.exports = {
                     value:
                         `${item.description}\n` +
                         `> • **Role Reward:** <@&${item.roleId}>\n` +
-                        `> • **Price:** <:Ferns:1395219665638391818> ${item.price.toLocaleString()}\n` +
+                        `> • **Price:** ${custom || ferns} ${item.price.toLocaleString()}\n` +
                         `> • **Stock:** ${displayStock}`
                 });
             });

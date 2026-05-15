@@ -20,7 +20,12 @@ module.exports = {
         const guild = message.guild;
         const user = message.author;
 
-        const ferns = '<:Ferns:1395219665638391818>';
+        const custom = await db.settings.get(`${guild.id}.currencyicon`)
+        const ferns = await db.default.get("Default.ferns");
+
+        const customname = await db.settings.get(`${guild.id}.currencyname`)
+        const fernsname = await db.default.get("Default.name");
+
         const safeUsername = user.username.replace(/\./g, '_');
 
         // OLD + NEW KEYS
@@ -88,7 +93,7 @@ module.exports = {
             .setPlaceholder('Select an item to buy')
             .addOptions(
                 shopItems.map((item, index) => ({
-                    label: `${item.title.slice(0, 75)} - 🌿${item.price.toLocaleString()}`,
+                    label: `${item.title.slice(0, 75)} - ${custom || ferns} ${item.price.toLocaleString()}`,
                     description: item.description.slice(0, 100),
                     value: index.toString()
                 }))
@@ -126,7 +131,7 @@ module.exports = {
 
             if (balance < selectedItem.price) {
                 return select.update({
-                    content: `You need ${ferns}${selectedItem.price.toLocaleString()} to buy **${selectedItem.title}**.`,
+                    content: `You need ${custom || ferns} ${selectedItem.price.toLocaleString()} to buy **${selectedItem.title}**.`,
                     components: []
                 });
             }
@@ -182,7 +187,7 @@ module.exports = {
             }
 
             return select.update({
-                content: `You bought **${selectedItem.title}** for ${ferns}${selectedItem.price.toLocaleString()}!`,
+                content: `You bought **${selectedItem.title}** for ${custom || ferns} ${selectedItem.price.toLocaleString()}!`,
                 components: []
             });
         });
