@@ -109,17 +109,18 @@ module.exports = {
       // ------------------------------------------------------
       // 4️⃣ Log transaction
       // ------------------------------------------------------
-       const channelId = await db.settings.get(`${guild.id}.banktransactions`)
 
-      for (const guild of message.client.guilds.cache.values()) {
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
 
-          let channel = guild.channels.cache.get(channelId);
+        if (!channelId) return;
 
-          if (!channel) {
-              channel = await guild.channels.fetch(channelId).catch(() => null);
-          }
+        let channel = guild.channels.cache.get(channelId);
 
-          if (!channel) continue;
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
 
       const embedlog = new EmbedBuilder()
           .setTitle('💰・**__Transaction Logs__**')
@@ -128,7 +129,6 @@ module.exports = {
           .setTimestamp()
           .setThumbnail(guild.iconURL())
 
-      await channel.send({ embeds: [embedlog] });
+        await channel.send({embeds: [embedlog]}).catch(console.error);
       }
-    }
-};
+    };
