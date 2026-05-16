@@ -17,7 +17,7 @@ function isIgnorableGithubError(err) {
 async function scrapeCommits(client) {
   let pollCount = 0;
 
-  logGithub('log', `GitHub Commit watcher started. Polling GitHub every ${GITHUB_POLL_INTERVAL_MS / 1000} seconds.`);
+  // logGithub('log', `GitHub Commit watcher started. Polling GitHub every ${GITHUB_POLL_INTERVAL_MS / 1000} seconds.`);
 
   const runPoll = async () => {
     pollCount += 1;

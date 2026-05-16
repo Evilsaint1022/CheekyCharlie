@@ -62,7 +62,7 @@ async function sendCommitNotification(client, commit) {
       lastDeliveredAt: new Date().toISOString()
     });
   } catch (err) {
-    logGithub('error', `Failed to send commit notification for ${commit?.sha || 'unknown commit'}.`, err);
+  //  logGithub('error', `Failed to send commit notification for ${commit?.sha || 'unknown commit'}.`, err);
   }
 }
 
