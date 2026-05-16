@@ -18,6 +18,11 @@ https://github.com/NZ-Linix/dotdatabase
 
 If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:  
 `@evilsaint1022` `@nz_linix`
+<h2>🌿<ins>Discord Support Server</ins>🌿</h2>
+
+**For more help & support, Join the discord support server.**
+
+🔗 https://discord.com/invite/3gtJ33cZDH
 
 <h2>🌿<ins>API Keys</ins>🌿</h2>
 
