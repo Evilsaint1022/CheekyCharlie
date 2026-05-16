@@ -3,6 +3,7 @@
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?logo=raspberrypi&logoColor=white)
 
 Welcome to **CheekyCharlie** - a modular Discord bot built as a fun hobby project!  
 This bot is completely open-source to promote transparency and inspire others to create their own bots.
