@@ -91,7 +91,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(top)
       .setDescription(
-        `You have claimed your monthly reward of **${custom || ferns}・${rewardAmount.toLocaleString()}**!\n` +
+        `You have claimed your monthly reward of **${custom || ferns} ${rewardAmount.toLocaleString()}**!\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
         `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
@@ -108,7 +108,7 @@ module.exports = {
       `[${new Date().toLocaleTimeString("en-NZ", {
         timeZone: "Pacific/Auckland",
       })}] ` +
-      `${guild.name} ${guild.id} ${username} claimed ${rewardAmount} ${customname || fernsname}.`
+      `${guild.name} ${guild.id} ${username} claimed ${rewardAmount.toLocaleString()} ${customname || fernsname}.`
     );
   }
 };

@@ -116,14 +116,14 @@ module.exports = {
     console.log(
       `[🌿] [HEIST] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount} ${customname || fernsname}.`
+      `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount.toLocaleString()} ${customname || fernsname}.`
     );
 
     const embed = new EmbedBuilder()
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Heisted_ **${target.username}** _for_ **${stealAmount}** _${customname || fernsname}!_\n` +
+        `_You Heisted_ **${target.username}** _for_ ${custom || ferns} **${stealAmount.toLocaleString()}** _${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
         `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +

@@ -91,7 +91,7 @@ module.exports = {
             .setColor(0x207e37)
             .setTitle(top)
             .setDescription(
-                `_Successfully deposited **${custom || ferns}・${depositAmount.toLocaleString()}**_\n` +
+                `_Successfully deposited **${custom || ferns} ${depositAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
                 `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
@@ -103,7 +103,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount} ${customname || fernsname}`
+            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount.toLocaleString()} ${customname || fernsname}`
         );
 
       // ------------------------------------------------------

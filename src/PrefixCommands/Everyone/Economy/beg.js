@@ -110,7 +110,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_${phrase}_ **${custom || ferns}・${reward}**\n` +
+                `_${phrase}_ **${custom || ferns} ${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
                 `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
@@ -125,7 +125,7 @@ module.exports = {
         console.log(
             `[🌿] [BEG] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the beg command and got ${reward} ${customname || fernsname}!`
+            `${guild.name} ${guild.id} ${username} used the beg command and got ${reward.toLocaleString()} ${customname || fernsname}!`
         );
     }
 };

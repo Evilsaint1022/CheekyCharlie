@@ -44,7 +44,7 @@ module.exports = {
     const amount = parseInt(args[1], 10);
 
     if (!user) {
-      return message.reply("❌ Please mention a valid user.\nUsage: `!pay @user <amount>`");
+      return message.reply("❌ Please mention a valid user.\nUsage: `?pay @user <amount>`");
     }
 
     if (sender.id === user.id) {
@@ -52,7 +52,7 @@ module.exports = {
     }
 
     if (user.bot) {
-      return message.reply(`❌ You cannot transfer ${custom || ferns}'s to bots!`);
+      return message.reply(`❌ You cannot transfer ${customname || fernsname}'s to bots!`);
     }
 
     if (!amount || amount <= 0) {
@@ -95,7 +95,7 @@ module.exports = {
 
       if (senderBalance < amount) {
         return message.reply(
-          `❌ You do not have enough points to transfer **${amount.toLocaleString()}${ferns}**.`
+          `❌ You do not have enough ${customname || fernsname} to transfer ${custom || ferns} **${amount.toLocaleString()}**.`
         );
       }
 
@@ -107,7 +107,7 @@ module.exports = {
       await db.wallet.set(userNewKey, { balance: userBalance + amount });
 
       await message.reply(
-        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${custom || ferns}${amount.toLocaleString()}** to **${user.username}**.`
+        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${custom || ferns} ${amount.toLocaleString()}** to **${user.username}**.`
       );
 
       // Console Logs

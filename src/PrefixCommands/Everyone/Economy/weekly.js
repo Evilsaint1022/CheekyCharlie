@@ -105,7 +105,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_You have claimed your weekly reward of_ **${custom || ferns}・${rewardAmount.toLocaleString()}**!\n` +
+                `_You have claimed your weekly reward of_ **${custom || ferns} ${rewardAmount.toLocaleString()}**!\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
                 `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
@@ -120,7 +120,7 @@ module.exports = {
         console.log(
             `[🌿] [WEEKLY] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount} ${customname || fernsname}.`
+            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}.`
         );
     }
 };
