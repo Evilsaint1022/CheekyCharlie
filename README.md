@@ -183,6 +183,16 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?set-banktransactions-channel` - Sets a Bank transactions channel where the deposit and withdraw messages will be sent.
 - `?remove-banktransactions-channel` - Removes the Bank transactions channel that has been set.
 
+### **🌿<ins>Sticky Messages</ins>**
+- `?sticky-message` - Lets you send a sticky message into the current channel.  
+                    -> Command followed by your message, e.g.:
+
+```
+?sticky-message
+
+This is the message. Supports any Discord-native **markdown**.
+```
+
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
 
