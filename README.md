@@ -204,6 +204,10 @@ This is the message. Supports any Discord-native **markdown**.
 - `?stop` - Staff command to use during heated moments in chat.
 - `?steal` - Steal emojis from other guilds by using `?steal emoji emojiname` or just `?steal emoji`.
 
+### **🌿<ins>Welcome Banner Setup</ins>**
+- `?set-welcome-channel` - Sets the welcome channel.
+- `?remove-welcome-channel` - Removes the set welcome channel.
+
 </details>
 
 <details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
