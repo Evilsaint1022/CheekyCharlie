@@ -92,10 +92,10 @@ module.exports = {
     // Empty inventory
     if (!userData || !Array.isArray(userData.inventory) || userData.inventory.length === 0) {
       const emptyEmbed = new EmbedBuilder()
-        .setTitle(`${user.username}'s Inventory`)
+        .setTitle(`🌿 ${user.username}'s Inventory 🌿`)
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-        .setDescription('Inventory is empty.')
-        .setColor(0xFF0000)
+        .setDescription('〉_Inventory is empty._')
+        .setColor(0x207e37)
         .setFooter({ text: `Requested by ${message.author.username}` })
         .setTimestamp();
 
@@ -106,15 +106,15 @@ module.exports = {
     // Build Inventory Embed
     // --------------------------
     const embed = new EmbedBuilder()
-      .setTitle(`${user.username}'s Inventory`)
+      .setTitle(`🌿 **__${user.username}'s Inventory__** 🌿`)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-      .setColor('#de4949')
+      .setColor(0x207e37)
       .setFooter({ text: `Requested by ${message.author.username}` })
       .setTimestamp();
 
     const inventoryText = userData.inventory
       .map((item, index) => {
-        return `**${index + 1}.** **__${item.title}__** - **${custom || ferns} ${item.price.toLocaleString()}**`;
+        return `〉**${index + 1}.** **__${item.title}__** - **${custom || ferns} ${item.price.toLocaleString()}**`;
       })
       .join('\n');
 

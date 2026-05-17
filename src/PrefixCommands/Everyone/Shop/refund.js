@@ -83,12 +83,18 @@ module.exports = {
       return message.reply('You have no items in your inventory to refund.');
     }
 
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     // --------------------------
     // Build select menu options
     // --------------------------
     const options = inventory.map((item, index) => ({
-      label: item.title.length > 25 ? item.title.slice(0, 22) + '...' : item.title,
-      description: item.description?.slice(0, 50) || 'No description.',
+      label: `〉${item.title.slice(0, 75)}`  +  ` - ` + `${custom || `🌿`}` + `${item.price.toLocaleString()}`,
+      description: item.description?.slice(0, 100) || 'No description.',
       value: String(index)
     }));
 
@@ -124,13 +130,6 @@ module.exports = {
           components: []
         });
       }
-
-    const custom = await db.settings.get(`${guild.id}.currencyicon`)
-    const ferns = await db.default.get("Default.ferns");
-
-    const customname = await db.settings.get(`${guild.id}.currencyname`)
-    const fernsname = await db.default.get("Default.name");
-
 
       const refundAmount = selectedItem.price || 0;
 

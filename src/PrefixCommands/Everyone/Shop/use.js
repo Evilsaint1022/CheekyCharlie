@@ -21,6 +21,12 @@ module.exports = {
     const member = message.member;
     const user = message.author;
 
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     const guildKey = `${guild.id}`;
     const userIdKey = user.id; // ✅ clean ID-only key
 
@@ -90,7 +96,7 @@ module.exports = {
       .setPlaceholder('Select an item to use')
       .addOptions(
         userData.inventory.map((item, index) => ({
-          label: item.title.slice(0, 100),
+          label: `〉${item.title.slice(0, 75)} - ${custom || '🌿'} ${item.price.toLocaleString()}`,
           description: item.description?.slice(0, 100) || 'No description',
           value: index.toString()
         }))
@@ -138,6 +144,15 @@ module.exports = {
       if (member.roles.cache.has(role.id)) {
         return select.update({
           content: `You already have the **${role.name}** role!`,
+          components: []
+        });
+      }
+
+      const botMember = guild.members.me;
+
+      if (role.position >= botMember.roles.highest.position) {
+        return select.update({
+          content: `I cannot assign that role because it is above my highest role.`,
           components: []
         });
       }

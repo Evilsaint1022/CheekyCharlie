@@ -93,7 +93,7 @@ module.exports = {
             .setPlaceholder('Select an item to buy')
             .addOptions(
                 shopItems.map((item, index) => ({
-                    label: `${item.title.slice(0, 75)}・${custom || `🌿`} ${item.price.toLocaleString()}`,
+                    label: `〉${item.title.slice(0, 75)} - ${custom || `🌿`} ${item.price.toLocaleString()}`,
                     description: item.description.slice(0, 100),
                     value: index.toString()
                 }))
@@ -195,7 +195,7 @@ module.exports = {
         collector.on('end', collected => {
             if (collected.size === 0) {
                 replyMessage.edit({
-                    content: 'No selection made. Command expired.',
+                    content: 'You did not select an item in time... try again!',
                     components: []
                 }).catch(() => {});
             }
