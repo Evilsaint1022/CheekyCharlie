@@ -8,8 +8,6 @@ const { Client, Message, AttachmentBuilder } = require('discord.js');
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
 const IV = Buffer.alloc(16, 0);
 
-const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
-
 function encrypt(text) {
   const cipher = crypto.createCipheriv('aes-256-cbc', ENCRYPTION_KEY, IV);
   let encrypted = cipher.update(text, 'utf8', 'hex');
@@ -25,6 +23,15 @@ function encrypt(text) {
  */
 
 async function handleAIMessage(client, message) {
+
+  const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+  if (!GROQ_API_KEY) {
+    console.warn('🟥・The GROQ_API_KEY Token is not set.')
+    return;
+  };
+
+  const openai = new OpenAI({ apiKey: GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
 
   const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
@@ -91,11 +98,18 @@ async function handleAIMessage(client, message) {
        }
      }
 
+    const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
+
+    if (!IMAGE_API_KEY) {
+      console.warn('🟥・The IMAGE_API_KEY Token is not set.')
+      return;
+    };
+
     const IMAGE_API_RESULT = await fetch('https://gen.pollinations.ai/v1/images/generations', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + process.env.IMAGE_API_KEY
+        Authorization: 'Bearer ' + IMAGE_API_KEY
       },
       body: JSON.stringify({
         prompt: userContent,
