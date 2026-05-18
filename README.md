@@ -99,6 +99,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 ### **🌿<ins>Passive Mode</ins>**
 - `?passive` - Toggles passive mode on and off.
 
+### **🌿<ins>Jobs</ins>**
+- `?jobs` - Views all available jobs.
+
 ### **🌿<ins>Shop</ins>**
 - `?shop` - checks the server shop.
 - `?buy` - buys a item from the shop.
