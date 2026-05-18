@@ -21,6 +21,11 @@ module.exports = {
 
         const targetName = target.username;
         const tenorKey = process.env.TENORKEY;
+        if (!tenorKey) {
+         console.warn("🟥・The TENORKEY is not set.")
+         return;
+        };
+
         const kissgiflist = 'giflist';
         let randomGif = null;
 

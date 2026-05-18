@@ -1,7 +1,5 @@
 const axios = require('axios');
 
-const dogApiKey = process.env.DOG_API_KEY;
-
 module.exports = {
     name: 'dog',
     description: 'Get a random dog image from The Dog API',
@@ -20,9 +18,11 @@ module.exports = {
     const guildId = message.guild.id;
     const username = message.author.username;
 
+    const dogApiKey = process.env.DOG_API_KEY;
         if (!dogApiKey) {
-      return message.reply('Please set the DOG_API_KEY environment variable.');
-    }
+      console.warn('🟥・The DOG_API_KEY is not set.')
+      return;
+    };
 
     try {
       const { data } = await axios.get('https://api.thedogapi.com/v1/images/search', {

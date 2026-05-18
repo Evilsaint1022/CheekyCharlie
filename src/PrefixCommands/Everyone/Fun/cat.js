@@ -1,7 +1,5 @@
 const axios = require('axios');
 
-const catApiKey = process.env.CAT_API_KEY;
-
 module.exports = {
     name: 'cat',
     description: 'Get a random cat image from The Cat API',
@@ -15,13 +13,15 @@ module.exports = {
     });
 }
 
+    const catApiKey = process.env.CAT_API_KEY;
+    if (!catApiKey) {
+      console.warn('🟥・The CAT_API_KEY is not set.')
+      return;
+    };
+
     const guildName = message.guild.name;
     const guildId = message.guild.id;
     const username = message.author.username;
-
-    if (!catApiKey) {
-      return message.reply('Please set the CAT_API_KEY environment variable.');
-    }
 
     const { data } = await axios.get('https://api.thecatapi.com/v1/images/search', {
       headers: {

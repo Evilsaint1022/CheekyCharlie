@@ -27,7 +27,7 @@ async function handleAIMessage(client, message) {
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
   if (!GROQ_API_KEY) {
-    console.warn('🟥・The GROQ_API_KEY Token is not set.')
+    console.warn('🟥・The GROQ_API_KEY is not set.')
     return;
   };
 

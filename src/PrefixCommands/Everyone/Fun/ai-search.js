@@ -3,10 +3,6 @@ require('dotenv').config({ quiet: true });
 const OpenAI = require('openai');
 const db = require('../../../Handlers/database');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
 
 module.exports = {
@@ -17,6 +13,17 @@ module.exports = {
     if (!message.guild) {
       return message.reply('This command cannot be used in DMs.');
     }
+
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+    if (!OPENAI_API_KEY) {
+      console.warn('🟥・The OPENAI_API_KEY is not set.')
+      return;
+    };
+
+        const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
+
 
     const query = args.join(' ');
     if (!query) {
