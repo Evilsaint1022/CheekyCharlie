@@ -1,0 +1,122 @@
+[
+  {
+    "id": "beggar",
+    "name": "Beggar",
+    "emoji": "🪙",
+    "min": 5,
+    "max": 20,
+    "cooldown": 60000
+  },
+  {
+    "id": "farmer",
+    "name": "Farmer",
+    "emoji": "🌾",
+    "min": 20,
+    "max": 50,
+    "cooldown": 300000
+  },
+  {
+    "id": "fisherman",
+    "name": "Fisherman",
+    "emoji": "🎣",
+    "min": 30,
+    "max": 80,
+    "cooldown": 300000
+  },
+  {
+    "id": "lumberjack",
+    "name": "Lumberjack",
+    "emoji": "🪓",
+    "min": 40,
+    "max": 90,
+    "cooldown": 300000
+  },
+  {
+    "id": "miner",
+    "name": "Miner",
+    "emoji": "⛏️",
+    "min": 50,
+    "max": 120,
+    "cooldown": 300000
+  },
+  {
+    "id": "chef",
+    "name": "Chef",
+    "emoji": "👨‍🍳",
+    "min": 60,
+    "max": 130,
+    "cooldown": 360000
+  },
+  {
+    "id": "mechanic",
+    "name": "Mechanic",
+    "emoji": "🔧",
+    "min": 80,
+    "max": 180,
+    "cooldown": 360000
+  },
+  {
+    "id": "delivery_driver",
+    "name": "Delivery Driver",
+    "emoji": "🚚",
+    "min": 70,
+    "max": 160,
+    "cooldown": 360000
+  },
+  {
+    "id": "security_guard",
+    "name": "Security Guard",
+    "emoji": "🛡️",
+    "min": 90,
+    "max": 200,
+    "cooldown": 420000
+  },
+  {
+    "id": "teacher",
+    "name": "Teacher",
+    "emoji": "📚",
+    "min": 100,
+    "max": 220,
+    "cooldown": 420000
+  },
+  {
+    "id": "programmer",
+    "name": "Programmer",
+    "emoji": "💻",
+    "min": 120,
+    "max": 300,
+    "cooldown": 480000
+  },
+  {
+    "id": "doctor",
+    "name": "Doctor",
+    "emoji": "🩺",
+    "min": 180,
+    "max": 400,
+    "cooldown": 600000
+  },
+  {
+    "id": "scientist",
+    "name": "Scientist",
+    "emoji": "🔬",
+    "min": 200,
+    "max": 450,
+    "cooldown": 600000
+  },
+  {
+    "id": "pilot",
+    "name": "Pilot",
+    "emoji": "✈️",
+    "min": 250,
+    "max": 550,
+    "cooldown": 720000
+  },
+  {
+    "id": "ceo",
+    "name": "CEO",
+    "emoji": "🏢",
+    "min": 400,
+    "max": 1000,
+    "cooldown": 900000
+  }
+]
