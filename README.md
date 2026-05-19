@@ -37,6 +37,7 @@ https://github.com/NZ-Linix/dotdatabase
 - 🌿Full Economy System
 - 🌿Welcome Banner
 - 🌿Economy Games
+- 🌿Economy Jobs
 - 🌿Leaderboards
 - 🌿Level System
 - 🌿Level Roles
