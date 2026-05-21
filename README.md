@@ -100,7 +100,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Economy Jobs</ins>**
 - `?jobs` - Views all available jobs.
-- `?job-apply` - Apply for a available job by using `?job-apply` `jobid`.
+- `?job-apply` - Apply for a available job by using `?job-apply` `jobname`.
 - `?work` - Start working and earning currency.
 
 ### **🌿<ins>Passive Mode</ins>**
