@@ -33,7 +33,7 @@ async function sendCommitNotification(client, commit) {
       : message;
     const centeredmessage = `ㅤㅤㅤ**${formattedMessage}**`;
     const centeredauthor = `**The Author: \`${authorName}\`**`;
-    const commitlink = `ㅤㅤㅤ[_🔗・Commit Link Here_](${htmlUrl})`;
+    const commitlink = `ㅤㅤㅤ[🔗・_Commit_](${htmlUrl})`;
 
     const state = await getGithubState();
 
@@ -48,7 +48,7 @@ async function sendCommitNotification(client, commit) {
     }
 
     const embed = new EmbedBuilder()
-      .setDescription(`# 🌿**__${repo} Repo Updates__**🌿\nㅤ\n${commitlink}\nㅤ\n${middle}\n\n${centeredmessage}\nㅤ\n${centeredauthor}\n\n${middle}`)
+      .setDescription(`# 🌿**__${repo} Commit Updates__**🌿\n${commitlink}\n${middle}\n${centeredmessage}\n${centeredauthor}\n${middle}`)
       .setImage(`https://opengraph.githubassets.com/1/${owner}/${repo}`)
       .setColor(0x207e37)
       .setTimestamp(new Date());
