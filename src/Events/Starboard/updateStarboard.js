@@ -87,8 +87,8 @@ module.exports = async function updateStarboard(reaction) {
     const lines = [
       `${middle}`,
       `${starboardEmoji} | **${currentCount}** | ${message.url}`,
-      `**Author:** ${authorName}`,
-      `**Content:** ${messageContent}`,
+      `〉**Author:** ${authorName}`,
+      `〉**Content:** ${messageContent}`,
     ];
 
     if (message.attachments.size > 0) {
