@@ -194,12 +194,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 ### **🌿<ins>Sticky Messages</ins>**
 - `?sticky-message` - Lets you send a sticky message into the current channel.  
                     -> Command followed by your message, e.g.:
-
-```
 ?sticky-message
 
 This is the message. Supports any Discord-native **markdown**.
-```
 
 ### **🌿<ins>Staff Applications</ins>**
 - `?staff-toggle` - Toggles staff applications from open and closed.
