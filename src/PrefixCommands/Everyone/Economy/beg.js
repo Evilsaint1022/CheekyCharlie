@@ -49,6 +49,7 @@ const begPhrases = [
 
 module.exports = {
     name: "beg",
+    aliases: ['bg'],
     description: "Beg for a few Ferns... if you're lucky.",
 
     async execute(message, args) {
