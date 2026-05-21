@@ -13,6 +13,7 @@ I got tired of relying on bots that constantly went offline or became unusable, 
 (This project uses dotdatabase made by NZ-Linix)  
 https://github.com/NZ-Linix/dotdatabase
 
+- **Currently Running on a Rasberry Pi**
 - **This code is free to use.**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
@@ -97,13 +98,13 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
 
-### **🌿<ins>Passive Mode</ins>**
-- `?passive` - Toggles passive mode on and off.
-
 ### **🌿<ins>Economy Jobs</ins>**
 - `?jobs` - Views all available jobs.
 - `?job-apply` - Apply for a available job by using `?job-apply` `jobid`.
 - `?work` - Start working and earning currency.
+
+### **🌿<ins>Passive Mode</ins>**
+- `?passive` - Toggles passive mode on and off.
 
 ### **🌿<ins>Shop</ins>**
 - `?shop` - checks the server shop.
