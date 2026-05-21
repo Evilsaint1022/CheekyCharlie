@@ -13,8 +13,8 @@ I got tired of relying on bots that constantly went offline or became unusable, 
 (This project uses dotdatabase made by NZ-Linix)  
 https://github.com/NZ-Linix/dotdatabase
 
-- **Currently Running on a Rasberry Pi**
 - **This code is free to use.**
+- **Currently Running on a Rasberry Pi**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
 <h2>🌿<ins>Discord Support Server</ins>🌿</h2>
