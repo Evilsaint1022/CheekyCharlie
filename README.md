@@ -79,19 +79,19 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Economy</ins>**
 - `?leaderboard` - Check the `wallet`/`bank`/`money`/`level` leaderboard. `?leaderboard money`.
-- `?balance` - Check your ferns balance or check another users by using `?balance @user`.
-- `?deposit` - Deposit ferns into your bank using `?deposit all` or `?deposit 100`.
-- `?withdraw` - Withdraw ferns from your bank using `?withdraw all` or `?withdraw 100`.
+- `?balance` - Check your Currency balance or check another users by using `?balance @user`.
+- `?deposit` - Deposit Currency into your bank using `?deposit all` or `?deposit 100`.
+- `?withdraw` - Withdraw Currency from your bank using `?withdraw all` or `?withdraw 100`.
 - `?level` - Check your current level or check another users by using `?level @user`.
 - `?levelroles` - Displays all level roles set for guild.
-- `?pick` - Picks ferns when the drop party's drops.
-- `?pay` - Pay other users ferns by using `?pay @user`.
+- `?pick` - Picks Currency when the drop party's drops.
+- `?pay` - Pay other users Currency by using `?pay @user`.
 - `?rob` - Rob other users wallets by using `?rob @user`.
 - `?heist` - Rob other users banks by using `?heist @user`.
-- `?beg` - Begs for ferns.
-- `?daily` - Daily ferns collect.
-- `?weekly` - Weekly ferns collect.
-- `?monthly` - Monthly ferns collect.
+- `?beg` - Begs for Currency by using `?beg` or `?bg`.
+- `?daily` - Daily Currency collect.
+- `?weekly` - Weekly Currency collect.
+- `?monthly` - Monthly Currency collect.
 
 ### **🌿<ins>Economy Games</ins>**
 - `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
