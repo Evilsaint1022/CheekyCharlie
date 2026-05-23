@@ -85,7 +85,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?level` - Check your current level or check another users by using `?level @user`.
 - `?levelroles` - Displays all level roles set for guild.
 - `?pick` - Picks Currency when the drop party's drops.
-- `?pay` - Pay other users Currency by using `?pay @user`.
+- `?pay` - Pay other users Currency by using `?pay @user` & `?pay tax <amount>`
 - `?rob` - Rob other users wallets by using `?rob @user`.
 - `?heist` - Rob other users banks by using `?heist @user`.
 - `?beg` - Begs for Currency by using `?beg` or `?bg`.
