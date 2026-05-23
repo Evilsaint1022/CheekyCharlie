@@ -1,6 +1,8 @@
 {
-"Default": {
-  "ferns": "<:fern:1495671973974507650>",
-  "name": "Ferns"
-    }
+  "Default": {
+    "ferns": "<:fern:1495671973974507650>",
+    "name": "Ferns",
+    "bot_updates_channel": "1500780379982794752",
+    "four_square_server": "1495254374971084961"
+  }
 }
