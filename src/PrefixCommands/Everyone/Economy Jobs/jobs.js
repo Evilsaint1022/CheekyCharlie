@@ -52,8 +52,9 @@ module.exports = {
                 const cooldownMinutes = Math.floor(job.cooldown / 60000);
 
                 return (
-                    `\n${job.emoji} **${job.name}**\n` +
+                    `\n${job.emoji}・**__${job.name}__**\n` +
                     `〉**ID:** \`${job.id}\`\n` +
+                    `〉**Tax:** \`${job.tax === 0 ? 'No tax' : `${job.tax}%`}\`\n` +
                     `〉**Earnings:** ${custom || ferns} ${job.min.toLocaleString()} - ${job.max.toLocaleString()}\n` +
                     `〉**Cooldown:** ${cooldownMinutes} minute(s)`
                 );

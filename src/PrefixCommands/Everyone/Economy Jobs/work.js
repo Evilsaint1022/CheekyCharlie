@@ -29,6 +29,26 @@ module.exports = {
 
         const currency = custom || ferns;
 
+        const Taxlastpayed = await db.tax.get(`${userId}.lastpayed`) || 0;
+
+        const now = Date.now();
+
+        // 1 week
+        const week = 7 * 24 * 60 * 60 * 1000;
+
+        if (now - Taxlastpayed >= week) {
+
+            const timePassed = now - Taxlastpayed;
+
+            const days = Math.floor(timePassed / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            return message.reply(
+                `💰 You must pay your taxes before working again.\n` +
+                `Last paid: **${days}d ${hours}h ago**.`
+            );
+        }
+
         // Get selected job
         const selectedJobId = await db.workers.get(`${userId}.job`);
 
@@ -62,8 +82,6 @@ module.exports = {
         // Cooldown check
         const lastWork = await db.lastclaim.get(`${userId}.work`) || 0;
 
-        const now = Date.now();
-
         if (now - lastWork < selectedJob.cooldown) {
 
             const timeLeft = selectedJob.cooldown - (now - lastWork);
@@ -77,12 +95,30 @@ module.exports = {
             );
         }
 
+        // Get user tax
+        const userTax = await db.tax.get(`${userId}.tax`) || 0;
+
+        // Check if tax already exists
+        if (!userTax) {
+            await db.tax.set(`${userId}.lastpayed`, now);
+        };
+
         // Random reward
         const reward =
             Math.floor(
                 Math.random() *
                 (selectedJob.max - selectedJob.min + 1)
             ) + selectedJob.min;
+        
+        // Get The Job Tax
+        const jobTax = selectedJob.tax;
+
+        // Calculate the tax
+        const tax = Math.floor(reward * (jobTax / 100));
+        db.tax.set(`${userId}.tax`, userTax + tax);
+
+
+
 
         // Get balance
         let balance = await db.wallet.get(`${userId}.balance`) || 0;
