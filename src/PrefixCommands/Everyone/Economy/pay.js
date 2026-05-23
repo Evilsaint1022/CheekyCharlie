@@ -9,7 +9,7 @@ function escapeUsername(username) {
 module.exports = {
   name: "pay",
   aliases: [],
-  description: "Transfer points to another member.",
+  description: "Transfer currency to another member.",
 
   /**
    * @param {import("discord.js").Message} message
@@ -36,12 +36,62 @@ module.exports = {
     // --------------------
     // Argument parsing
     // --------------------
+    const isTaxPay = args.includes("tax");
+    const filteredArgs = args.filter(a => a !== "tax");
 
+    // IMPORTANT: use filteredArgs from here onward
     const user =
       message.mentions.users.first() ||
-      message.guild.members.cache.get(args[0])?.user;
+      message.guild.members.cache.get(filteredArgs[0])?.user;
 
-    const amount = parseInt(args[1], 10);
+    const amount = parseInt(filteredArgs[1], 10);
+
+    // ------------------------------------------------------
+    // 🧾 TAX MODE HANDLER
+    // ------------------------------------------------------
+
+    if (isTaxPay) {
+
+      const senderNewKey = `${sender.id}.wallet`;
+      const senderBalance = (await db.wallet.get(senderNewKey)) || 0;
+
+      const taxDebt = Number(await db.tax.get(`${sender.id}.tax`) || 0);
+      const amount = Number(args[1]);
+
+      if (!amount || isNaN(amount)) {
+        return message.reply("❌ Please provide a valid amount.\nExample: `?pay tax 100`");
+      }
+
+      if (taxDebt <= 0) {
+        return message.reply("✅ You do not have any tax to pay.");
+      }
+
+      if (senderBalance < amount) {
+        return message.reply(
+          `❌ You don't have enough funds.\n🧾 Tax Due: ${custom || ferns} ${taxDebt.toLocaleString()}`
+        );
+      }
+
+      const payAmount = Math.min(amount, taxDebt);
+
+      const newBalance = senderBalance - payAmount;
+      const newTax = taxDebt - payAmount;
+
+      await db.wallet.set(senderNewKey, { balance: newBalance });
+      await db.tax.set(`${sender.id}.tax`, newTax);
+      await db.tax.set(`${sender.id}.lastpayed`, Date.now());
+
+      // Console Logs
+      console.log(`[🌿] [TAX] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} ${sender.username} paid ${payAmount.toLocaleString()} ${customname || fernsname} towards their tax's`);
+
+      return message.reply(
+        `🧾 **__Tax Payment Successful!__**\n` +
+        `${bar}\n` +
+        `💰 Paid Amount: **${custom || ferns} ${payAmount.toLocaleString()}**\n` +
+        `⚠️ Remaining Tax: **${custom || ferns} ${newTax.toLocaleString()}**\n` +
+        `${bar}\n`
+      );
+    }
 
     if (!user) {
       return message.reply("❌ Please mention a valid user.\nUsage: `?pay @user <amount>`");

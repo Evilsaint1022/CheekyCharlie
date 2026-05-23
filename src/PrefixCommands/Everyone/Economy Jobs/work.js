@@ -29,7 +29,7 @@ module.exports = {
 
         const currency = custom || ferns;
 
-        const Taxlastpayed = await db.tax.get(`${userId}.lastpayed`) || 0;
+        const Taxlastpayed = await db.tax.get(`${userId}.lastpayed`);
 
         const now = Date.now();
 
