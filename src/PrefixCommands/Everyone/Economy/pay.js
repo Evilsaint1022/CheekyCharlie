@@ -77,7 +77,7 @@ module.exports = {
       const newBalance = senderBalance - payAmount;
       const newTax = taxDebt - payAmount;
 
-      await db.wallet.set(senderNewKey, { balance: newBalance });
+      await db.wallet.set(senderNewKey, newBalance );
       await db.tax.set(`${sender.id}.tax`, newTax);
       await db.tax.set(`${sender.id}.lastpayed`, Date.now());
 
