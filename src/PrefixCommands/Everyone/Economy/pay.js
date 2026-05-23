@@ -52,7 +52,7 @@ module.exports = {
 
     if (isTaxPay) {
 
-      const senderNewKey = `${sender.id}.wallet`;
+      const senderNewKey = `${sender.id}.balance`;
       const senderBalance = (await db.wallet.get(senderNewKey)) || 0;
 
       const taxDebt = Number(await db.tax.get(`${sender.id}.tax`) || 0);
