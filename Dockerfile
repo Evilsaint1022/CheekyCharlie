@@ -24,11 +24,6 @@ RUN if [ -d .git ]; then \
       printf '' > /app/.build-commit-short; \
     fi
 
-RUN mkdir -p /app/storage-seed && \
-    if [ -d /app/src/Utilities/Storage ]; then \
-      cp -a /app/src/Utilities/Storage/. /app/storage-seed/; \
-    fi
-
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
