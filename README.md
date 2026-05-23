@@ -99,6 +99,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?slots` - Starts a game of slots using `?slots bet`.
 
 ### **🌿<ins>Economy Jobs</ins>**
+- `?tax` - Views how much tax you owe and when the last payment was made.
 - `?jobs` - Views all available jobs.
 - `?job-apply` - Apply for a available job by using `?job-apply` `jobname`.
 - `?work` - Start working and earning currency.
