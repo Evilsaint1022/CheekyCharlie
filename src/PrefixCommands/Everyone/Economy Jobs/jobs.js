@@ -63,7 +63,7 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle('**╭─── 🌿__Available Jobs__🌿 ───╮**')
-                .setDescription(description + `\n\n**╰───────── Page ${pages.length + 1}/${Math.ceil(jobs.length / JOBS_PER_PAGE)} ──────────╯**`)
+                .setDescription(`_You can use the \`?job-apply\` command to apply for a job!_\n` + description + `\n\n**╰───────── Page ${pages.length + 1}/${Math.ceil(jobs.length / JOBS_PER_PAGE)} ──────────╯**`)
                 .setColor(0x207e37)
                 .setThumbnail(message.guild.iconURL())
 
