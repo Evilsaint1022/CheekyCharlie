@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 
 const db = require('../../../Handlers/database');
+const stockEmojis = require('../../../Utilities/Stocks/stocks_ui');
 
 module.exports = {
   name: "leaderboard",
@@ -27,12 +28,12 @@ module.exports = {
     }
 
     const type = args[0]?.toLowerCase();
-    const validTypes = ["wallet", "bank", "money", "level"];
+    const validTypes = ["wallet", "bank", "money", "level", "stocks"];
 
     if (!validTypes.includes(type)) {
       return message.reply(
         "❌ Invalid leaderboard type.\n" +
-        "**Usage:** `?leaderboard wallet | bank | money | level`"
+        "**Usage:** `?leaderboard wallet | bank | money | level | stocks`"
       );
     }
 
@@ -146,6 +147,32 @@ module.exports = {
     }
 
     // ------------------------------
+    // STOCKS (portfolio value)
+    // ------------------------------
+    else if (type === 'stocks') {
+      const stockData = await db.stock.get('global');
+      const currentPrice = stockData?.price ?? 3000;
+
+      const allStock = await db.stock.all();
+      for (const [userId, data] of Object.entries(allStock)) {
+        if (userId === 'global' || !data || typeof data !== 'object') continue;
+        const holdings = data.holdings || 0;
+        if (holdings <= 0) continue;
+        const totalSpent  = data.totalSpent  || 0;
+        const totalEarned = data.totalEarned || 0;
+        const portfolioValue = holdings * currentPrice;
+        entries.push({
+          userId,
+          username: `<@${userId}>`,
+          stat: portfolioValue,
+          holdings,
+          netPnL: totalEarned + portfolioValue - totalSpent
+        });
+      }
+      entries.sort((a, b) => b.stat - a.stat);
+    }
+
+    // ------------------------------
     // USER RANK
     // ------------------------------
     const userEntry = entries.find(e => e.userId === message.author.id);
@@ -162,7 +189,8 @@ module.exports = {
       wallet: "Wallet",
       bank: "Bank",
       money: "Money",
-      level: "Level"
+      level: "Level",
+      stocks: "FernCoin"
     };
 
     const generateEmbed = (page) => {
@@ -175,6 +203,12 @@ module.exports = {
 
           if (type === 'level') {
             return `${base}\n✦  🎉・Level ${entry.stat}・\`${entry.xp} XP\``;
+          }
+
+          if (type === 'stocks') {
+            const pnlSign = entry.netPnL >= 0 ? '+' : '';
+            const pnlIcon = entry.netPnL >= 0 ? '📈' : '📉';
+            return `${base}\n✦  ${stockEmojis.ferncoin}・\`${entry.holdings.toLocaleString()} FERN\`  ·  💼 \`${entry.stat.toLocaleString()} Ferns\`  ·  ${pnlIcon} \`${pnlSign}${entry.netPnL.toLocaleString()}\``;
           }
 
           return `${base}\n✦  💰・${entry.stat.toLocaleString()}`;
