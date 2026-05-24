@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, ChannelType, TextDisplayBuilder, ContainerBuilder, SectionBuilder, ButtonBuilder, ButtonStyle, SeparatorBuilder, SeparatorSpacingSize } = require('discord.js');
 const db = require('../../../Handlers/database');
-const availableTopics = require("../../../../src/Utilities/Storage/Rss/rssconfig");
+const availableTopics = require("../../../../src/Utilities/Storage_Static/Rss/rssconfig");
 
 module.exports = {
     data: new SlashCommandBuilder()

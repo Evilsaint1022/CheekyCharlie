@@ -3,10 +3,10 @@ const DotDB = require("dotdatabase").default;
 const db = {
 
     // Owners ID's DataBase -------------------------------------------------------------------------
-    owners: new DotDB("./src/Utilities/Storage/Settings/Owners/owners.json"),
+    owners: new DotDB("./src/Utilities/Storage_Static/Settings/Owners/owners.json"),
     
     // -----------------------------------------------------------------------------------------
-    default: new DotDB("./src/Utilities/Storage/Settings/Default/default.json"),
+    default: new DotDB("./src/Utilities/Storage_Static/Settings/Default/default.json"),
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     vcmembers: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
@@ -57,8 +57,9 @@ const db = {
     passive: new DotDB("./src/Utilities/Storage/Settings/Passive/passive.json"),
     stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json"),
     lives: new DotDB("./src/Utilities/Storage/Settings/Lives/lives.json"),
-    joblist: new DotDB("./src/Utilities/Storage/JobList/joblist.json"),
-    workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json")
+    joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
+    workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json"),
+    tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json")
 }
 
 module.exports = db;
