@@ -81,16 +81,21 @@ module.exports = {
       await db.tax.set(`${sender.id}.tax`, newTax);
       await db.tax.set(`${sender.id}.lastpayed`, Date.now());
 
+      const taxembed = new EmbedBuilder()
+        .setTitle(`**🧾・__Tax Payment Successful!__**`)
+        .setDescription(
+          `${bar}\n` +
+          `〉💰 **__Paid Amount:__ ${custom || ferns} \`${payAmount.toLocaleString()}\`**\n` +
+          `〉⚠️ **__Remaining Tax:__ ${custom || ferns} \`${newTax.toLocaleString()}\`**\n` +
+          `${bar}\n`
+        )
+        .setFooter({ text: `🌿 Inland Revenue Department` })
+        .setTimestamp();
+
       // Console Logs
       console.log(`[🌿] [TAX] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} ${sender.username} paid ${payAmount.toLocaleString()} ${customname || fernsname} towards their tax's`);
 
-      return message.reply(
-        `🧾 **__Tax Payment Successful!__**\n` +
-        `${bar}\n` +
-        `💰 Paid Amount: **${custom || ferns} ${payAmount.toLocaleString()}**\n` +
-        `⚠️ Remaining Tax: **${custom || ferns} ${newTax.toLocaleString()}**\n` +
-        `${bar}\n`
-      );
+      return message.reply({ embeds: [taxembed] });
     }
 
     if (!user) {
@@ -149,6 +154,17 @@ module.exports = {
         );
       }
 
+      const paymentembed = new EmbedBuilder()
+        .setTitle(`**🌿・__Payment Successful!__**`)
+        .setDescription(
+          `${bar}\n` +
+          `〉💰 **__Paid:__**     💰 **__Receiver:__**\n` +
+          `〉${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
+          `${bar}\n`
+        )
+        .setFooter({ text: `🌿 ${message.guild.name}` })
+        .setTimestamp();
+
       // ------------------------------------------------------
       // 3️⃣ Apply transaction
       // ------------------------------------------------------
@@ -156,9 +172,7 @@ module.exports = {
       await db.wallet.set(senderNewKey, { balance: senderBalance - amount });
       await db.wallet.set(userNewKey, { balance: userBalance + amount });
 
-      await message.reply(
-        `✅ **__Payment Successful!__**\n**${sender.username}** paid **${custom || ferns} ${amount.toLocaleString()}** to **${user.username}**.`
-      );
+      await message.reply({ embeds: [paymentembed] });
 
       // Console Logs
       console.log(
