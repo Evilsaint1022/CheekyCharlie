@@ -52,5 +52,7 @@
 /src/Utilities/Storage/Economy/Stolen/stolen.json
 /src/Utilities/Storage/Settings/Lives/lives.json
 /src/Utilities/Storage/Economy/Jobs/workers.json
+/src/Utilities/Storage/Economy/Tax/tax.json
+/src/Utilities/Storage/Economy/Stock/stock.json
 CLAUDE.md
 AGENTS.md

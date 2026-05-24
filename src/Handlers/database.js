@@ -58,8 +58,9 @@ const db = {
     stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json"),
     lives: new DotDB("./src/Utilities/Storage/Settings/Lives/lives.json"),
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
-    joblist: new DotDB("./src/Utilities/Storage/JobList/joblist.json"),
-    workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json")
+    workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json"),
+    tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
+    stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json")
 }
 
 module.exports = db;
