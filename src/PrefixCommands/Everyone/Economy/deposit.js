@@ -123,18 +123,17 @@ module.exports = {
         if (!channel || !channel.isTextBased()) return;
 
       const embedlog = new EmbedBuilder()
-          .setTitle('╭─── 🌿 **__Transaction Logs__** 🌿 ───╮\n')
+          .setTitle('🏦・**__Transaction Logs__**')
           .setDescription(
-                `\n` +
+                `${bar}\n` +
                 `〉**__Username:__** \`${author.username}\`\n` +
                 `〉**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Deposit:__** ${custom || ferns}\`${depositAmount.toLocaleString()}\`\n\n` +
-                `〉***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n\n` +
-                `╰─────────────────────────────╯`
+                `💰・**__Bank Deposit:__** ${custom || ferns}\`${depositAmount.toLocaleString()}\` ${customname || fernsname}\n\n` +
+                `〉***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `${bar}`
             )
           .setColor(0x207e37)
-          .setFooter({ text: `🌿 Thanks for using Bank-NZ` })
-          .setTimestamp()
+          .setFooter({ text: `🌿 Bank of New Zealand` })
           .setThumbnail(author.displayAvatarURL({ dynamic: true }));
 
         await channel.send({embeds: [embedlog]}).catch(console.error);
