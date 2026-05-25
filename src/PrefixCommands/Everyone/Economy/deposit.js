@@ -123,11 +123,19 @@ module.exports = {
         if (!channel || !channel.isTextBased()) return;
 
       const embedlog = new EmbedBuilder()
-          .setTitle('💰・**__Transaction Logs__**')
-          .setDescription(`${bar}\n**__Username:__** \`${author.username}\`\n**__UserID:__** \`${author.id}\`\n\n**__Bank Deposit:__** ${ferns}\`${depositAmount.toLocaleString()}\`\n${bar}\n🌿 Thanks for using Bank-NZ!`)
+          .setTitle('╭─── 🌿 **__Transaction Logs__** 🌿 ───╮\n')
+          .setDescription(
+                `\n` +
+                `〉**__Username:__** \`${author.username}\`\n` +
+                `〉**__UserID:__** \`${author.id}\`\n\n` +
+                `💰・**__Bank Deposit:__** ${custom || ferns}\`${depositAmount.toLocaleString()}\`\n\n` +
+                `〉***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n\n` +
+                `╰─────────────────────────────╯`
+            )
           .setColor(0x207e37)
+          .setFooter({ text: `🌿 Thanks for using Bank-NZ` })
           .setTimestamp()
-          .setThumbnail(guild.iconURL())
+          .setThumbnail(author.displayAvatarURL({ dynamic: true }));
 
         await channel.send({embeds: [embedlog]}).catch(console.error);
       }
