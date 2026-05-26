@@ -32,17 +32,22 @@ function loadEvents(client) {
                 try {
                     const event = require(path.join(folderPath, file)); // Load the event file
 
+                    const safeExecute = (...args) =>
+                        Promise.resolve(event.execute(...args, client)).catch(err =>
+                            console.error(`[Event Error] ${folder}/${file}:`, err)
+                        );
+
                     // Register event based on whether it uses REST or not
                     if (event.rest) {
                         if (event.once)
-                            client.rest.once(event.name, (...args) => event.execute(...args, client));
+                            client.rest.once(event.name, safeExecute);
                         else
-                            client.rest.on(event.name, (...args) => event.execute(...args, client));
+                            client.rest.on(event.name, safeExecute);
                     } else {
                         if (event.once)
-                            client.once(event.name, (...args) => event.execute(...args, client));
+                            client.once(event.name, safeExecute);
                         else
-                            client.on(event.name, (...args) => event.execute(...args, client));
+                            client.on(event.name, safeExecute);
                     }
 
                     table.push([`└── ${file}`, '✅ Loaded']);

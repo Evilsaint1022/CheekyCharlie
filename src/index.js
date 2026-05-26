@@ -123,8 +123,14 @@ client.on('interactionCreate', async interaction => {
     try {
         await command.execute(interaction);
     } catch (error) {
-        console.error(error);
-        await interaction.reply({ content: 'There was an error while executing this command!', flags: 64 });
+        console.error(`[Slash Command Error] /${interaction.commandName}:`, error);
+        const reply = { content: 'There was an error while executing this command!', flags: 64 };
+        try {
+            if (interaction.replied || interaction.deferred)
+                await interaction.followUp(reply);
+            else
+                await interaction.reply(reply);
+        } catch { /* interaction expired or already cleaned up */ }
     }
 });
 
@@ -167,7 +173,11 @@ client.on("messageCreate", async (message) => {
 
   if (!command) return;
 
-  await command.execute(message, args, client);
+  try {
+    await command.execute(message, args, client);
+  } catch (error) {
+    console.error(`[Prefix Command Error] ${commandName}:`, error);
+  }
 });
 
 const handleTerminationSignal = async (signal) => {
