@@ -150,7 +150,7 @@ module.exports = {
     // STOCKS (portfolio value)
     // ------------------------------
     else if (type === 'stocks') {
-      const stockData = await db.stock.get('global');
+      const stockData = await db.stock.get('global') || `No Data Found`;
       const currentPrice = stockData?.price ?? 3000;
 
       const allStock = await db.stock.all();
