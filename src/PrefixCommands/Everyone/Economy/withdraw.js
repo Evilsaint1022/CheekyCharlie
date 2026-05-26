@@ -127,17 +127,17 @@ module.exports = {
 
         const embedlog = new EmbedBuilder()
           .setDescription(
-                `### 🏦・**__Transaction Logs__**\n` +
+                `### 🏦・**__Bank Transaction__**\n` +
                 `${bar}\n` +
-                `〉**__Username:__** \`${author.username}\`\n` +
-                `〉**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Withdraw:__**\n〉${custom || ferns}\`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}\n\n` +
+                `🌿・**__Username:__** \`${author.username}\`\n` +
+                `🌿・**__UserID:__** \`${author.id}\`\n\n` +
+                `💰・**__Bank Withdraw:__**\n  ${custom || ferns} \`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}\n\n` +
                 `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
                 `${bar}`
             )
             .setColor(0x207e37)
             .setFooter({ text: `🌿 Bank of New Zealand` })
-          .setThumbnail(author.displayAvatarURL({ dynamic: true }));
+          .setThumbnail(guild.iconURL());
 
         await channel.send({embeds: [embedlog]}).catch(console.error);
       }
