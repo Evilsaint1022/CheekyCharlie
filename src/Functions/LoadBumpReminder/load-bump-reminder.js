@@ -7,7 +7,7 @@ const db = require('../../Handlers/database');
  */
 async function loadBumpReminder(client) {
 
-    const testtimer = 10 * 1000; // --> 10 seconds for testing
+    // const reminderDelay = 10 * 1000; // --> 20 seconds for testing
     const reminderDelay = 2 * 60 * 60 * 1000;
     
     const guildIds = Array.from(await client.guilds.cache.keys());
@@ -29,7 +29,13 @@ async function loadBumpReminder(client) {
 
                 const mention = bumpSettings.roleId ? `<@&${bumpSettings.roleId}>` : `<@${bumpInfo.userId}>`;
 
-                const guildName = guild?.name || "Unknown Guild";    
+                const guildName = guild?.name || "Unknown Guild";
+                
+                const bumpmessage = await db.lastbump.get(guildId + ".bumpmessage");
+                if (bumpmessage === true) { return; 
+                } else {
+                 await db.lastbump.set(guildId + ".bumpmessage", true);
+                }
 
                 console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${channel.name} ${channel.id}`);
                 

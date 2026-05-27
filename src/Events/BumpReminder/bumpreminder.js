@@ -2,7 +2,7 @@ const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-// const reminderDelay = 10 * 1000; // --> 10 seconds for testing
+// const reminderDelay = 20 * 1000; // --> 20 seconds for testing
 
 const targetBotId = '302050872383242240'; // Disboard bot ID
 // const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
@@ -38,6 +38,12 @@ module.exports = {
     try {
       const lastBumpData = await db.lastbump.get(guildKey);
       const lastBumpTimestamp = lastBumpData?.timestamp || 0;
+
+      // Bump Message Reset
+      const lastbumpmessge = lastBumpData.bumpmessage
+      if (lastbumpmessge === false) {
+        await db.lastbump.set(`${guildKey}.bumpmessage`, true);
+      }
 
       const currentTimestamp = Date.now();
       const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
@@ -98,7 +104,8 @@ module.exports = {
 
       await db.lastbump.set(cooldownKey, {
         timestamp: now,
-        userId: bumpuser
+        userId: bumpuser,
+        bumpmessage: false
       });
 
       // 🔒 Prevent duplicate scheduling
