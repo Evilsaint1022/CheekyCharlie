@@ -1,4 +1,4 @@
-# 🌿<ins>**The CheekyCharlie Discord Bot**</ins>🌿
+# 🌿 <ins>**The CheekyCharlie Discord Bot**</ins> 🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -17,48 +17,48 @@ https://github.com/NZ-Linix/dotdatabase
 - **Currently Running on a Rasberry Pi**
 - **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-<h2>🌿<ins>Discord Support Server</ins>🌿</h2>
+<h2>🌿 <ins>Discord Support Server</ins> 🌿</h2>
 
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
 `@evilsaint1022` & `@nz_linix`
 ### 🔗・[Discord Invite Link](https://discord.com/invite/3gtJ33cZDH)
 
-<h2>🌿<ins>API Keys</ins>🌿</h2>
+<h2>🌿 <ins>API Keys</ins> 🌿</h2>
 
-- 🌿[OPENAI](https://openai.com/api/)
-- 🌿[GROQ](https://groq.com/)
-- 🌿[TENOR](https://tenor.com/developer/keyregistration)
-- 🌿[CAT API](https://thecatapi.com/)
-- 🌿[DOG API](https://thedogapi.com/)
-- 🌿[SIMPSONS API](https://thesimpsonsapi.com/)
-- 🌿[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)
+🌿・[OPENAI](https://openai.com/api/)  
+🌿・[GROQ](https://groq.com/)  
+🌿・[TENOR](https://tenor.com/developer/keyregistration)  
+🌿・[CAT API](https://thecatapi.com/)  
+🌿・[DOG API](https://thedogapi.com/)  
+🌿・[SIMPSONS API](https://thesimpsonsapi.com/)  
+🌿・[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)  
 
-<h2>🌿<ins>Features</ins>🌿</h2>
+<h2>🌿 <ins>Features</ins> 🌿</h2>
 
-- 🌿Full Economy System
-- 🌿Welcome Banner
-- 🌿Economy Games
-- 🌿Economy Jobs
-- 🌿Leaderboards
-- 🌿Level System
-- 🌿Level Roles
-- 🌿Roleplay
-- 🌿Confessions
-- 🌿AI Deadchat
-- 🌿Ghost-Ping
-- 🌿RSS Feed News
-- 🌿Bump Reminder
-- 🌿Giveaway System
-- 🌿Custom Starboard
-- 🌿Color Of The Week
-- 🌿Custom AI Response
-- 🌿Staff Applications
-- 🌿Question Of The Day
-- 🌿Temporary Voice Channels
-- 🌿AI NSFW Content Filtering
-- 🌿Button Verification
+〉🌿・Full Economy System  
+〉🌿・Welcome Banner  
+〉🌿・Economy Games  
+〉🌿・Economy Jobs  
+〉🌿・Leaderboards  
+〉🌿・Level System  
+〉🌿・Level Roles  
+〉🌿・Roleplay  
+〉🌿・GhostPing  
+〉🌿・Confessions  
+〉🌿・AI Deadchat  
+〉🌿・RSS Feed News  
+〉🌿・Bump-Reminder  
+〉🌿・Giveaway System  
+〉🌿・Custom Starboard  
+〉🌿・Color Of The Week  
+〉🌿・Custom AI Response  
+〉🌿・Staff Applications  
+〉🌿・Question Of The Day  
+〉🌿・Button Verification  
+〉🌿・Temporary Voice Channels  
+〉🌿・AI NSFW Content Filtering  
 
-<h2>🌿<ins>Getting Started</ins>🌿</h2>
+<h2>🌿 <ins>Getting Started</ins> 🌿</h2>
 <detials>
   
 _**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
