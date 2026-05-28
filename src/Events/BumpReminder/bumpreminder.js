@@ -43,15 +43,15 @@ module.exports = {
       const lastbumpmessge = lastBumpData?.bumpmessage;
       if (!lastbumpmessge) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
 
-      if (lastbumpmessge === false) {
-        await db.lastbump.set(`${guildKey}.bumpmessage`, true);
-      }
-
       const currentTimestamp = Date.now();
       const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
 
       // If it’s NOT time yet, ignore the message
       if (timeSinceLastBump < reminderDelay) return;
+
+      if (lastbumpmessge === false) {
+        await db.lastbump.set(`${guildKey}.bumpmessage`, true);
+      }
 
       if ( guildBumpedLastMinute.has(guildId) ) { // <- The guild was already bumped in the last minute
         if ( message.author.id == targetBotId ) {await message.delete();}
