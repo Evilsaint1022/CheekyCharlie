@@ -13,15 +13,16 @@ I got tired of relying on bots that constantly went offline or became unusable, 
 (This project uses dotdatabase made by NZ-Linix)  
 https://github.com/NZ-Linix/dotdatabase
 
-- **This code is free to use.**
-- **Currently Running on a Rasberry Pi**
-- **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
+〉**This code is free to use.**  
+〉**Currently Running on a Rasberry Pi**  
+〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
 <h2>🌿 <ins>Discord Support Server</ins> 🌿</h2>
 
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
-`@evilsaint1022` & `@nz_linix`
-### 🔗・[Discord Invite Link](https://discord.com/invite/3gtJ33cZDH)
+`@evilsaint1022` & `@nz_linix`  
+
+🔗・[DISCORD INVITE LINK](https://discord.com/invite/3gtJ33cZDH)
 
 <h2>🌿 <ins>API Keys</ins> 🌿</h2>
 
@@ -73,7 +74,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </detials>
 
-<details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Everyone - Prefix Commands</ins> 🌿</h2>
   
 </summary>
 
@@ -158,7 +159,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </details>
 
-<details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Whitelisted - Prefix Commands</ins> 🌿</h2>
 
 </summary>
 
@@ -216,7 +217,7 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Whitelisted - Application Commands</ins> 🌿</h2>
   
 </summary>
 
