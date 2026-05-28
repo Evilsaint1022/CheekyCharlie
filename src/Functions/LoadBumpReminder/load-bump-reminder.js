@@ -7,9 +7,9 @@ const db = require('../../Handlers/database');
  */
 async function loadBumpReminder(client) {
 
-     // const reminderDelay = 10 * 1000; // --> 20 seconds for testing
-     
-     const reminderDelay = 2 * 60 * 60 * 1000; // 2 Hour Timer
+    const reminderDelay = 2 * 60 * 60 * 1000; // 2 Hour Timer
+
+    // const reminderDelay =  1 * 60 * 1000; // --> 1 minute for testing
     
     const guildIds = Array.from(await client.guilds.cache.keys());
 
