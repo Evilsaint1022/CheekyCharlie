@@ -136,7 +136,10 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
 
-      await db.lastbump.set(`${cooldownKey}.bumpmessage`, true);
+      if (db.lastbump.get(`${guildId}.bumpmessage` === true)) { return;
+      } else {
+        db.lastbump.set(`${guildId}.bumpmessage`, true);
+      }
 
       const bumpreminder = new EmbedBuilder()
         .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
@@ -157,6 +160,6 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
   if (timeLeft <= 0 && bumpInfo.bumpmessage === false) {
     await runReminder();
   } else {
-    setTimeout(runReminder, timeLeft);
+    setInterval(runReminder, timeLeft);
   }
 }
