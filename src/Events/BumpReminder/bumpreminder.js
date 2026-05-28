@@ -40,7 +40,9 @@ module.exports = {
       const lastBumpTimestamp = lastBumpData?.timestamp || 0;
 
       // Bump Message Reset
-      const lastbumpmessge = lastBumpData.bumpmessage
+      const lastbumpmessge = lastBumpData?.bumpmessage;
+      if (!lastbumpmessge) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
+
       if (lastbumpmessge === false) {
         await db.lastbump.set(`${guildKey}.bumpmessage`, true);
       }
