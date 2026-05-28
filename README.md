@@ -35,28 +35,28 @@ https://github.com/NZ-Linix/dotdatabase
 
 <h2>🌿 <ins>Features</ins> 🌿</h2>
 
-〉🌿・Full Economy System  
-〉🌿・Welcome Banner  
-〉🌿・Economy Games  
-〉🌿・Economy Jobs  
-〉🌿・Leaderboards  
-〉🌿・Level System  
-〉🌿・Level Roles  
-〉🌿・Roleplay  
-〉🌿・GhostPing  
-〉🌿・Confessions  
-〉🌿・AI Deadchat  
-〉🌿・RSS Feed News  
-〉🌿・Bump-Reminder  
-〉🌿・Giveaway System  
-〉🌿・Custom Starboard  
-〉🌿・Color Of The Week  
-〉🌿・Custom AI Response  
-〉🌿・Staff Applications  
-〉🌿・Question Of The Day  
-〉🌿・Button Verification  
-〉🌿・Temporary Voice Channels  
-〉🌿・AI NSFW Content Filtering  
+🌿・Full Economy System  
+🌿・Welcome Banner  
+🌿・Economy Games  
+🌿・Economy Jobs  
+🌿・Leaderboards  
+🌿・Level System  
+🌿・Level Roles  
+🌿・Roleplay  
+🌿・GhostPing  
+🌿・Confessions  
+🌿・AI Deadchat  
+🌿・RSS Feed News  
+🌿・Bump-Reminder  
+🌿・Giveaway System  
+🌿・Custom Starboard  
+🌿・Color Of The Week  
+🌿・Custom AI Response  
+🌿・Staff Applications  
+🌿・Question Of The Day  
+🌿・Button Verification  
+🌿・Temporary Voice Channels  
+🌿・AI NSFW Content Filtering  
 
 <h2>🌿 <ins>Getting Started</ins> 🌿</h2>
 <detials>
