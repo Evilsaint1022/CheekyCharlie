@@ -39,7 +39,7 @@ module.exports = {
       const lastBumpData = await db.lastbump.get(guildKey);
       const lastBumpTimestamp = lastBumpData?.timestamp || 0;
 
-      // Bump Message Reset
+      // Bump Message Set If It Doesn't Exist
       const lastbumpmessge = lastBumpData?.bumpmessage;
       if (!lastbumpmessge) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
 
@@ -48,10 +48,6 @@ module.exports = {
 
       // If it’s NOT time yet, ignore the message
       if (timeSinceLastBump < reminderDelay) return;
-
-      if (lastbumpmessge === false) {
-        await db.lastbump.set(`${guildKey}.bumpmessage`, true);
-      }
 
       if ( guildBumpedLastMinute.has(guildId) ) { // <- The guild was already bumped in the last minute
         if ( message.author.id == targetBotId ) {await message.delete();}
@@ -140,6 +136,8 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
 
+      await db.lastbump.set(`${cooldownKey}.bumpmessage`, true);
+
       const bumpreminder = new EmbedBuilder()
         .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
         .setColor(0x207e37)
@@ -156,7 +154,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
     }
   };
 
-  if (timeLeft <= 0) {
+  if (timeLeft <= 0 && bumpInfo.bumpmessage === false) {
     await runReminder();
   } else {
     setTimeout(runReminder, timeLeft);

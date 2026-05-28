@@ -65,6 +65,6 @@ module.exports = async (client) => {
     // Then keep looping
     setInterval(() => {
         loadBumpReminder(client);
-    }, 1500);
+    }, 60000);
 
 };
