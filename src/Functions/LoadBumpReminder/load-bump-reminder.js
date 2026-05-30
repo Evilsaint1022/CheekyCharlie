@@ -9,12 +9,12 @@ async function loadBumpReminder(client) {
 
     const reminderDelay = 2 * 60 * 60 * 1000; // 2 Hour Timer
 
-     // const reminderDelay =  1 * 60 * 1000; // --> 1 minute for testing
+    // const reminderDelay =  1 * 60 * 1000; // --> 1 minute for testing
     
     const guildIds = Array.from(await client.guilds.cache.keys());
 
     for ( const guildId of guildIds ) {
-        const bumpSettings = await db.bump.get(guildId)
+        const bumpSettings = await db.bump.get(guildId);
         if ( !bumpSettings || !bumpSettings.channelId ) return;
 
         const lastBumpTimestamp = await db.lastbump.get(guildId + ".timestamp");
@@ -33,11 +33,10 @@ async function loadBumpReminder(client) {
                 const guildName = guild?.name || "Unknown Guild";
                 
                 const bumpmessage = bumpInfo?.bumpmessage;
-                if (!bumpmessage) { await db.lastbump.set(guildId + ".bumpmessage", false); }
+                if (!bumpmessage) { await db.lastbump.set(`${guildId}.bumpmessage`, false); }
                 if (bumpmessage === true) { return; 
                 } else {
-                 bumpInfo.bumpmessage = undefined;
-                 await db.lastbump.set(guildId + ".bumpmessage", true);
+                 await db.lastbump.set(`${guildId}.bumpmessage`, true);
                 }
 
                 console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Bump Has been Sent in ${channel.name} ${channel.id}`);

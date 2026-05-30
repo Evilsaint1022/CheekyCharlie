@@ -2,7 +2,7 @@ const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-//const reminderDelay = 1 * 60 * 1000; // --> 1 minute for testing
+// const reminderDelay = 1 * 60 * 1000; // --> 1 minute for testing
 
 const targetBotId = '302050872383242240'; // Disboard bot ID
 // const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
@@ -102,9 +102,10 @@ module.exports = {
 
       await db.lastbump.set(cooldownKey, {
         timestamp: now,
-        userId: bumpuser,
-        bumpmessage: false
+        userId: bumpuser
       });
+
+      await db.lastbump.set(`${cooldownKey}.bumpmessage`, false);
 
       // 🔒 Prevent duplicate scheduling
       if (activeReminders.has(guildKey)) return;
@@ -136,9 +137,10 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
 
-      if (db.lastbump.get(`${guildId}.bumpmessage` === true)) { return;
+      if (await db.lastbump.get(`${guildId}.bumpmessage`) === true) {
+          return;
       } else {
-        db.lastbump.set(`${guildId}.bumpmessage`, true);
+          await db.lastbump.set(`${guildId}.bumpmessage`, true);
       }
 
       const bumpreminder = new EmbedBuilder()
