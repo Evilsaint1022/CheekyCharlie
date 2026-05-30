@@ -9,7 +9,7 @@ async function loadBumpReminder(client) {
 
     const reminderDelay = 2 * 60 * 60 * 1000; // 2 Hour Timer
 
-    // const reminderDelay =  1 * 60 * 1000; // --> 1 minute for testing
+     // const reminderDelay =  1 * 60 * 1000; // --> 1 minute for testing
     
     const guildIds = Array.from(await client.guilds.cache.keys());
 
@@ -26,16 +26,17 @@ async function loadBumpReminder(client) {
             if (channel && channel.type === ChannelType.GuildText) {
 
                 const guild = await client.guilds.fetch(guildId);
-                const bumpInfo = await db.lastbump.get(guildId);
+                const bumpInfo = await db.lastbump.get(guildId) || {};
 
                 const mention = bumpSettings.roleId ? `<@&${bumpSettings.roleId}>` : `<@${bumpInfo.userId}>`;
 
                 const guildName = guild?.name || "Unknown Guild";
                 
-                const bumpmessage = await db.lastbump.get(guildId + ".bumpmessage");
+                const bumpmessage = bumpInfo?.bumpmessage;
                 if (!bumpmessage) { await db.lastbump.set(guildId + ".bumpmessage", false); }
                 if (bumpmessage === true) { return; 
                 } else {
+                 bumpInfo.bumpmessage = undefined;
                  await db.lastbump.set(guildId + ".bumpmessage", true);
                 }
 

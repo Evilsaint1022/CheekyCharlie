@@ -2,7 +2,7 @@ const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-// const reminderDelay = 1 * 60 * 1000; // --> 1 minute for testing
+//const reminderDelay = 1 * 60 * 1000; // --> 1 minute for testing
 
 const targetBotId = '302050872383242240'; // Disboard bot ID
 // const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
@@ -40,8 +40,8 @@ module.exports = {
       const lastBumpTimestamp = lastBumpData?.timestamp || 0;
 
       // Bump Message Set If It Doesn't Exist
-      const lastbumpmessge = lastBumpData?.bumpmessage;
-      if (!lastbumpmessge) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
+      const lastbumpmessage = lastBumpData?.bumpmessage;
+      if (!lastbumpmessage) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
 
       const currentTimestamp = Date.now();
       const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
@@ -157,9 +157,9 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
     }
   };
 
-  if (timeLeft <= 0 && bumpInfo.bumpmessage === false) {
+  if (timeLeft <= 0) {
     await runReminder();
   } else {
-    setInterval(runReminder, timeLeft);
+   setTimeout(runReminder, timeLeft);
   }
 }
