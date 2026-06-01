@@ -159,6 +159,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?ping` - Check Bots Latency.
 - `?github` - Github link to CheeckyCharlies Repo.
 - `?invite` - Generates a temporary invite link for server you are in.
+- `?support` - Sends a invite link to the support server.
+- `?vote` - Sends the top.gg vote URL.
 
 </details>
 
