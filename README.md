@@ -13,9 +13,11 @@ I got tired of relying on bots that constantly went offline or became unusable, 
 We are hoping to find more devolopers as passionate about the project as we are.
 
 (This project uses dotdatabase made by NZ-Linix)  
-https://github.com/NZ-Linix/dotdatabase
+https://github.com/NZ-Linix/dotdatabase  
 
-〉**[Top.gg Advertisement](https://top.gg/bot/1495254230787817564)**  
+(This project is advertised on Top.gg)  
+https://top.gg/bot/1495254230787817564  
+
 〉**This code is free to use.**  
 〉**Currently Running on a Rasberry Pi**  
 〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
