@@ -10,11 +10,14 @@ This bot is completely open-source to promote transparency and inspire others to
 
 I got tired of relying on bots that constantly went offline or became unusable, so I decided to build a single, reliable Discord bot that combines many of the best features from popular free bots into one solution.
 
+We are hoping to find more devolopers as passionate about the project as we are.
+
 (This project uses dotdatabase made by NZ-Linix)  
 https://github.com/NZ-Linix/dotdatabase
 
 〉**This code is free to use.**  
 〉**Currently Running on a Rasberry Pi**  
+〉**Advertised on [Top.gg](https://top.gg/bot/1495254230787817564)**  
 〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
 <h2>🌿 <ins>Discord Support Server</ins> 🌿</h2>
@@ -28,7 +31,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 🌿・[OPENAI](https://openai.com/api/)  
 🌿・[GROQ](https://groq.com/)  
-🌿・[TENOR](https://tenor.com/developer/keyregistration)  
+🌿・[TENOR](https://tenor.com/gifapi)  
 🌿・[CAT API](https://thecatapi.com/)  
 🌿・[DOG API](https://thedogapi.com/)  
 🌿・[SIMPSONS API](https://thesimpsonsapi.com/)  
