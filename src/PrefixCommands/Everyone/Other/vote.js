@@ -7,11 +7,13 @@ module.exports = {
     async execute(message) {
 
         const embed = new EmbedBuilder()
-            .setTitle('🌿 **__Vote For The CheekyCharlie__** 🌿')
+            .setTitle('**__Vote For CheekyCharlie__**')
             .setDescription(
-                '***Support the bot by voting on Top.gg!***\n\n' +
-                '🔗 _[Vote Here!](https://top.gg/bot/1495254230787817564/vote)_'
+                '_Support the \`cheekycharlie\` by voting on [Top.gg](https://top.gg/)_.\n\n' +
+                '🔗・[Vote Here!](https://top.gg/bot/1495254230787817564/vote)' +
+                `ㅤ 🔗・[Bots Page](https://top.gg/bot/1495254230787817564/)`
             )
+            .setImage(`https://top.gg/api/widget/1495254230787817564.svg`)
             .setThumbnail(message.guild.iconURL())
             .setColor(0x207e37)
 
