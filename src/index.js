@@ -75,12 +75,19 @@ client.once("clientReady", async () => {
     "Stocking Shelves",
     "Packing up the boxes",
     "Stocking the Fridges",
-    "message me if you have any issues.",
     "Helping a Customer",
-    "Been here since 2025",
     "Greeting Customers at the Door",
     "Made by the people for the people!",
-    "Fuck you mee6"
+    "mee6 who? I'm CheekyCharlie!",
+    "Serving up some cheeky vibes",
+    "Here to brighten your day!",
+    "Your friendly neighborhood bot",
+    "Spreading smiles and good vibes",
+    "CheekyCharlie at your service!",
+    "Bringing the fun to your server",
+    "Making your day a little cheekier",
+    "Here to make you smile",
+    "Your daily dose of cheekiness"
 ];
 
 const downstatus = [
