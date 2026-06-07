@@ -1,11 +1,13 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
+//-----------------------------------------------------------------------
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-// const reminderDelay = 1 * 60 * 1000; // --> 1 minute for testing
-
 const targetBotId = '302050872383242240'; // Disboard bot ID
-// const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+//-----------------------------------------------------------------------
+//const reminderDelay = 2 * 60 * 1000; // --> 2 minute [ TESTING ONLY ]
+//const targetBotId = '235148962103951360'; // Carlbot's ID [ TESTING ONLY ]
+//-----------------------------------------------------------------------
 
 // 🔒 Tracks active reminders so they only run once
 const activeReminders = new Set();
@@ -75,7 +77,7 @@ module.exports = {
 
       // Add Rewards to the Bump User
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
-      const rewardAmount = 100;
+      const rewardAmount = 500; // Set your desired reward amount here
 
       let balance = await db.wallet.get(`${newKey}.balance`) || 0;
 
