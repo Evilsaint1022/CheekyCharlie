@@ -101,7 +101,7 @@ module.exports = {
                 console.error('Error fetching user balance:', error);
             }
 
-            let coinsEarned = Math.floor(Math.random() * 41) + 10; // 10–50
+            let coinsEarned = Math.floor(Math.random() * 100) + 150; // 150–250
 
             // Booster role check
             const guildKey = `${guild.id}`;
