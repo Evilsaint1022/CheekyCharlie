@@ -10,7 +10,9 @@ const {
   logGithub
 } = require('./github-state');
 
-const discordChannelId = '1500835312912564294';
+const discordChannelId = '1500835312912564294'; // Real channel for commit notifications.
+
+// const discordChannelId = '1512940416167710862'; // This is for testing purposes.
 
 async function sendCommitNotification(client, commit) {
   try {
@@ -47,9 +49,14 @@ async function sendCommitNotification(client, commit) {
       return;
     }
 
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    const imageUrl =
+  `https://opengraph.githubassets.com/1/${owner}/${repo}/commit/${sha}?t=${Date.now()}`;
+
     const embed = new EmbedBuilder()
       .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n### ${commitlink}\n${middle}\n‎\n${centeredmessage}\n‎\n${centeredauthor}\n${middle}`)
-      .setImage(`https://opengraph.githubassets.com/1/${owner}/${repo}`)
+      .setImage(imageUrl)
       .setColor(0x207e37)
       .setTimestamp(new Date());
 

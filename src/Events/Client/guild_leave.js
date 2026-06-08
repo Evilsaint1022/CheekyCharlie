@@ -2,22 +2,22 @@ const { Events } = require('discord.js');
 const db = require('../../Handlers/database');
 
 module.exports = {
-  name: Events.GuildCreate,
+  name: Events.GuildDelete,
   async execute(guild, client) {
 
-    console.log("[+]");
-    console.log("[+] Cheeky Charlie joined a new server!");
-    console.log("[+] -> Server name: " + guild.name);
-    console.log("[+] -> ID: " + guild.id);
-    console.log("[+]");
+    console.log("[-]");
+    console.log("[-] Cheeky Charlie left a server!");
+    console.log("[-] -> Server name: " + guild.name);
+    console.log("[-] -> ID: " + guild.id);
+    console.log("[-]");
 
     const bot_channel_ID = await db.default.get("Default.bot_updates_channel");
 
     if (!bot_channel_ID) return;
 
-    const joinedEmbed = {
-      color: 0x759eff,
-      title: '**Cheeky Charlie joined a new server!**',
+    const leftEmbed = {
+      color: 0xff4d4d,
+      title: '**Cheeky Charlie left a server!**',
       description: `**Server: ${guild.name}**\nID: \`${guild.id}\``
     };
 
@@ -43,9 +43,9 @@ module.exports = {
 
     const channel = FourSquareServer.channels.cache.get(bot_channel_ID);
 
-    if (!channel || !FourSquareServer || !bot_channel_ID) return;
+    if (!channel || !bot_channel_ID) return;
 
-    channel.send({ embeds: [joinedEmbed] });
+    channel.send({ embeds: [leftEmbed] });
 
   },
 };

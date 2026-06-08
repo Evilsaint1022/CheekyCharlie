@@ -1,11 +1,13 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
+//-----------------------------------------------------------------------
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-// const reminderDelay = 10 * 1000; // --> 10 seconds for testing
-
 const targetBotId = '302050872383242240'; // Disboard bot ID
-// const targetBotId = '235148962103951360'; // Testing using Carlbot --> ( DO NOT REMOVE! )
+//-----------------------------------------------------------------------
+// const reminderDelay = 2 * 60 * 1000; // --> 2 minute [ TESTING ONLY ]
+// const targetBotId = '235148962103951360'; // Carlbot's ID [ TESTING ONLY ]
+//-----------------------------------------------------------------------
 
 // 🔒 Tracks active reminders so they only run once
 const activeReminders = new Set();
@@ -39,6 +41,10 @@ module.exports = {
       const lastBumpData = await db.lastbump.get(guildKey);
       const lastBumpTimestamp = lastBumpData?.timestamp || 0;
 
+      // Bump Message Set If It Doesn't Exist
+      const lastbumpmessage = lastBumpData?.bumpmessage;
+      if (!lastbumpmessage) {await db.lastbump.set(`${guildKey}.bumpmessage`, false);}
+
       const currentTimestamp = Date.now();
       const timeSinceLastBump = currentTimestamp - lastBumpTimestamp;
 
@@ -69,9 +75,21 @@ module.exports = {
         guildBumpedLastMinute.delete(guildId);
       }, 60000);
 
+      // Booster role fetch for reward multiplier
+      const settings = await db.settings.get(guildId);
+      const boostersRoleId = settings?.boostersRoleId;
+
       // Add Rewards to the Bump User
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
-      const rewardAmount = 100;
+
+      let rewardAmount = 200; // Set your desired reward amount here
+
+      // Fetch member
+      const member = await message.guild.members.fetch(newKey);
+
+      if (boostersRoleId && member.roles.cache.has(boostersRoleId)) {
+        rewardAmount *= 2;
+      }
 
       let balance = await db.wallet.get(`${newKey}.balance`) || 0;
 
@@ -100,6 +118,8 @@ module.exports = {
         timestamp: now,
         userId: bumpuser
       });
+
+      await db.lastbump.set(`${cooldownKey}.bumpmessage`, false);
 
       // 🔒 Prevent duplicate scheduling
       if (activeReminders.has(guildKey)) return;
@@ -131,6 +151,12 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
 
       const mention = roleId ? `<@&${roleId}>` : `<@${bumpInfo.userId}>`;
 
+      if (await db.lastbump.get(`${guildId}.bumpmessage`) === true) {
+          return;
+      } else {
+          await db.lastbump.set(`${guildId}.bumpmessage`, true);
+      }
+
       const bumpreminder = new EmbedBuilder()
         .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
         .setColor(0x207e37)
@@ -150,6 +176,6 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
   if (timeLeft <= 0) {
     await runReminder();
   } else {
-    setTimeout(runReminder, timeLeft);
+   setTimeout(runReminder, timeLeft);
   }
 }

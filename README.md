@@ -1,4 +1,4 @@
-# 🌿<ins>**The CheekyCharlie Discord Bot**</ins>🌿
+# 🌿 <ins>**The CheekyCharlie Discord Bot**</ins> 🌿
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -10,55 +10,61 @@ This bot is completely open-source to promote transparency and inspire others to
 
 I got tired of relying on bots that constantly went offline or became unusable, so I decided to build a single, reliable Discord bot that combines many of the best features from popular free bots into one solution.
 
+We are hoping to find more devolopers as passionate about the project as we are.
+
 (This project uses dotdatabase made by NZ-Linix)  
-https://github.com/NZ-Linix/dotdatabase
+https://github.com/NZ-Linix/dotdatabase  
 
-- **This code is free to use.**
-- **Currently Running on a Rasberry Pi**
-- **Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
+(This project is advertised on Top.gg)  
+https://top.gg/bot/1495254230787817564  
 
-<h2>🌿<ins>Discord Support Server</ins>🌿</h2>
+〉**This code is free to use.**  
+〉**Currently Running on a Rasberry Pi**  
+〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
+
+<h2>🌿 <ins>Discord Support Server</ins> 🌿</h2>
 
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
-`@evilsaint1022` & `@nz_linix`
-### 🔗・[Discord Invite Link](https://discord.com/invite/3gtJ33cZDH)
+`@evilsaint1022` & `@nz_linix`  
 
-<h2>🌿<ins>API Keys</ins>🌿</h2>
+🔗・[DISCORD INVITE LINK](https://discord.com/invite/3gtJ33cZDH)
 
-- 🌿[OPENAI](https://openai.com/api/)
-- 🌿[GROQ](https://groq.com/)
-- 🌿[TENOR](https://tenor.com/developer/keyregistration)
-- 🌿[CAT API](https://thecatapi.com/)
-- 🌿[DOG API](https://thedogapi.com/)
-- 🌿[SIMPSONS API](https://thesimpsonsapi.com/)
-- 🌿[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)
+<h2>🌿 <ins>API Keys</ins> 🌿</h2>
 
-<h2>🌿<ins>Features</ins>🌿</h2>
+🌿・[OPENAI](https://openai.com/api/)  
+🌿・[GROQ](https://groq.com/)  
+🌿・[TENOR](https://tenor.com/gifapi)  
+🌿・[CAT API](https://thecatapi.com/)  
+🌿・[DOG API](https://thedogapi.com/)  
+🌿・[SIMPSONS API](https://thesimpsonsapi.com/)  
+🌿・[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)  
 
-- 🌿Full Economy System
-- 🌿Welcome Banner
-- 🌿Economy Games
-- 🌿Economy Jobs
-- 🌿Leaderboards
-- 🌿Level System
-- 🌿Level Roles
-- 🌿Roleplay
-- 🌿Confessions
-- 🌿AI Deadchat
-- 🌿Ghost-Ping
-- 🌿RSS Feed News
-- 🌿Bump Reminder
-- 🌿Giveaway System
-- 🌿Custom Starboard
-- 🌿Color Of The Week
-- 🌿Custom AI Response
-- 🌿Staff Applications
-- 🌿Question Of The Day
-- 🌿Temporary Voice Channels
-- 🌿AI NSFW Content Filtering
-- 🌿Button Verification
+<h2>🌿 <ins>Features</ins> 🌿</h2>
 
-<h2>🌿<ins>Getting Started</ins>🌿</h2>
+🌿・Full Economy System  
+🌿・Welcome Banner  
+🌿・Economy Games  
+🌿・Economy Jobs  
+🌿・Leaderboards  
+🌿・Level System  
+🌿・Level Roles  
+🌿・Roleplay  
+🌿・GhostPing  
+🌿・Confessions  
+🌿・AI Deadchat  
+🌿・RSS Feed News  
+🌿・Bump-Reminder  
+🌿・Giveaway System  
+🌿・Custom Starboard  
+🌿・Color Of The Week  
+🌿・Custom AI Response  
+🌿・Staff Applications  
+🌿・Question Of The Day  
+🌿・Button Verification  
+🌿・Temporary Voice Channels  
+🌿・AI NSFW Content Filtering  
+
+<h2>🌿 <ins>Getting Started</ins> 🌿</h2>
 <detials>
   
 _**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
@@ -73,7 +79,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </detials>
 
-<details><summary><h2>🌿<ins>Everyone - Prefix Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Everyone - Prefix Commands</ins> 🌿</h2>
   
 </summary>
 
@@ -156,10 +162,12 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?ping` - Check Bots Latency.
 - `?github` - Github link to CheeckyCharlies Repo.
 - `?invite` - Generates a temporary invite link for server you are in.
+- `?support` - Sends a invite link to the support server.
+- `?vote` - Sends the top.gg vote URL.
 
 </details>
 
-<details><summary><h2>🌿<ins>Whitelisted - Prefix Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Whitelisted - Prefix Commands</ins> 🌿</h2>
 
 </summary>
 
@@ -221,7 +229,7 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary><h2>🌿<ins>Whitelisted - Application Commands</ins>🌿</h2>
+<details><summary><h2>🌿 <ins>Whitelisted - Application Commands</ins> 🌿</h2>
   
 </summary>
 

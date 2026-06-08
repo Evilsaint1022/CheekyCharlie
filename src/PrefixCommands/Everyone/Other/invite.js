@@ -1,3 +1,5 @@
+const { PermissionFlagsBits } = require('discord.js');
+
 module.exports = {
   name: 'invite',
   aliases: [`i`],
@@ -7,6 +9,10 @@ module.exports = {
     // Prevent command usage in DMs
     if (!message.guild) {
       return message.reply('This command cannot be used in DMs.');
+    }
+
+    if (!message.guild.members.me.permissions.has(PermissionFlagsBits.CreateInstantInvite)) {
+      return message.reply('I do not have permission to create invite links.');
     }
 
     const { guild, channel, author } = message;
