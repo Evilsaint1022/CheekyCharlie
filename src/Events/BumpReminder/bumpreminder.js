@@ -5,8 +5,8 @@ const db = require("../../Handlers/database");
 const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
 const targetBotId = '302050872383242240'; // Disboard bot ID
 //-----------------------------------------------------------------------
-//const reminderDelay = 2 * 60 * 1000; // --> 2 minute [ TESTING ONLY ]
-//const targetBotId = '235148962103951360'; // Carlbot's ID [ TESTING ONLY ]
+// const reminderDelay = 2 * 60 * 1000; // --> 2 minute [ TESTING ONLY ]
+// const targetBotId = '235148962103951360'; // Carlbot's ID [ TESTING ONLY ]
 //-----------------------------------------------------------------------
 
 // 🔒 Tracks active reminders so they only run once
@@ -75,9 +75,21 @@ module.exports = {
         guildBumpedLastMinute.delete(guildId);
       }, 60000);
 
+      // Booster role fetch for reward multiplier
+      const settings = await db.settings.get(guildId);
+      const boostersRoleId = settings?.boostersRoleId;
+
       // Add Rewards to the Bump User
       const newKey = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
-      const rewardAmount = 500; // Set your desired reward amount here
+
+      let rewardAmount = 200; // Set your desired reward amount here
+
+      // Fetch member
+      const member = await message.guild.members.fetch(newKey);
+
+      if (boostersRoleId && member.roles.cache.has(boostersRoleId)) {
+        rewardAmount *= 2;
+      }
 
       let balance = await db.wallet.get(`${newKey}.balance`) || 0;
 
