@@ -159,7 +159,7 @@ module.exports = {
         .setDescription(
           `${bar}\n` +
           `〉💰 **__Paid:__**     💰 **__Receiver:__**\n` +
-          `〉${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
+          `〉**${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
           `${bar}\n`
         )
         .setFooter({ text: `🌿 ${message.guild.name}` })
