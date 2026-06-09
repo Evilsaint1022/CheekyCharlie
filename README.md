@@ -78,7 +78,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 **That’s it — you’re ready to use CheekyCharlie!**
 
 </detials>
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 <details><summary><h2>🌿 <ins>Everyone - Prefix Commands</ins> 🌿</h2>
   
 </summary>
@@ -337,7 +337,7 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 <h2>🌿 <ins>Owner Commands</ins> 🌿</h2>
 <detials>
   
