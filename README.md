@@ -340,10 +340,11 @@ This is the message. Supports any Discord-native **markdown**.
 
 <details><summary><h2>🌿 <ins>Owners - Application Commands</ins> 🌿</h2>
   
+</summary>
+
 - `?servers` - Views all the servers that `cheekycharlie` is currently in.
 - `?shutdown ` - Shuts down `cheekycharlie`.
 - `?invitebot` - Gets the invite link for `cheekycharlie`.
 - `?leaveguild` - Removes `cheekycharlie` from a server.
 - `?last-deployment` - Views when `cheekycharlie` was last restarted.
-
-</summary>
+</details>
