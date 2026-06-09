@@ -337,3 +337,13 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
+
+<details><summary><h2>🌿 <ins>Owners - Application Commands</ins> 🌿</h2>
+  
+- `?servers` - Views all the servers that `cheekycharlie` is currently in.
+- `?shutdown ` - Shuts down `cheekycharlie`.
+- `?invitebot` - Gets the invite link for `cheekycharlie`.
+- `?leaveguild` - Removes `cheekycharlie` from a server.
+- `?last-deployment` - Views when `cheekycharlie` was last restarted.
+
+</summary>
