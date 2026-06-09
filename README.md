@@ -338,13 +338,14 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary><h2>🌿 <ins>Owners - Application Commands</ins> 🌿</h2>
+<h2>🌿 <ins>Owner Commands</ins> 🌿</h2>
+<detials>
   
-</summary>
+Yes we do have owner commands but they are nothing to be worried about.
 
-- `?servers` - Views all the servers that `cheekycharlie` is currently in.
-- `?shutdown ` - Shuts down `cheekycharlie`.
-- `?invitebot` - Gets the invite link for `cheekycharlie`.
-- `?leaveguild` - Removes `cheekycharlie` from a server.
-- `?last-deployment` - Views when `cheekycharlie` was last restarted.
+- [?servers](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/servers.js) - Views all the servers that `cheekycharlie` is currently in.
+- [?shutdown](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/shutdown.js) - Shuts down `cheekycharlie`.
+- [?invitebot](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/invitebot.js) - Gets the invite link for `cheekycharlie`.
+- [?leaveguild](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/leaveguild.js) - Removes `cheekycharlie` from a server.
+- [?last-deployment](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/last-deployment.js) - Views when `cheekycharlie` was last restarted.
 </details>
