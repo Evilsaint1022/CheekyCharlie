@@ -341,7 +341,7 @@ This is the message. Supports any Discord-native **markdown**.
 <h2>🌿 <ins>Owner Commands</ins> 🌿</h2>
 <detials>
   
-Yes we do have owner commands but they are nothing to be worried about.
+***We do have*** `Owner Commands` ***but they are nothing to be worried about.***
 
 - [?servers](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/servers.js) - Views all the servers that `cheekycharlie` is currently in.
 - [?shutdown](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/shutdown.js) - Shuts down `cheekycharlie`.
