@@ -55,6 +55,7 @@ module.exports = {
                     `\n${job.emoji}・**__${job.name}__**\n` +
                     `〉**ID:** \`${job.id}\`\n` +
                     `〉**Tax:** \`${job.tax === 0 ? 'No tax' : `${job.tax}%`}\`\n` +
+                    `〉**Level:** \`${job.level}\`\n` +
                     `〉**Earnings:** ${custom || ferns} ${job.min.toLocaleString()} - ${job.max.toLocaleString()}\n` +
                     `〉**Cooldown:** ${cooldownMinutes} minute(s)`
                 );

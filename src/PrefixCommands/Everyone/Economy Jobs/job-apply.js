@@ -17,6 +17,7 @@ module.exports = {
         }
 
         const userId = message.author.id;
+        const guildKey = `${message.guild.id}`;
 
         // No job provided
         if (!args[0]) {
@@ -65,6 +66,24 @@ module.exports = {
 
             return message.reply(
                 `❌ Invalid job ID.\n\nAvailable jobs:\n${availableJobs}`
+            );
+        }
+
+        // Leve Data Fetch
+        const levelsData = await db.levels.get(guildKey);
+        const userLevels = levelsData?.[userId];
+
+        if (!userLevels) {
+            return message.reply("❌ You don't have any level data yet.");
+        }
+
+        const { xp, level } = levelsData[userId];
+
+        // Level requirement check
+        if (level < selectedJob.level) {
+            return message.reply(
+                `❌ You need to be **Level ${selectedJob.level}** to apply for **${selectedJob.name}**.\n` +
+                `_You are currently level:_ **${level}**`
             );
         }
 
