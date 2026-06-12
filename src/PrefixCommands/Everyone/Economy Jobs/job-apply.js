@@ -69,7 +69,7 @@ module.exports = {
             );
         }
 
-        // Leve Data Fetch
+        // Level Data Fetch
         const levelsData = await db.levels.get(guildKey);
         const userLevels = levelsData?.[userId];
 

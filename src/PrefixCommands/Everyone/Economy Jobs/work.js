@@ -72,6 +72,29 @@ module.exports = {
             job => job.id === selectedJobId
         );
 
+        // Check job level requirement (and fix invalid jobs automatically)
+        if (selectedJob && selectedJob.level) {
+            const levelsData = await db.levels.get(message.guild.id);
+            const userLevels = levelsData?.[userId];
+
+            if (!userLevels) {
+                return message.reply("❌ You don't have any level data yet.");
+            }
+
+            const { level } = userLevels;
+
+            if (level < selectedJob.level) {
+                await db.workers.delete(`${userId}.job`);
+
+                return message.reply(
+                    `❌ Your current job (**${selectedJob.name}**)\n` + 
+                    `- Requires **Level ${selectedJob.level}**.\n` +
+                    `- You are currently **Level ${level}**.\n\n` +
+                    `Your job has now been Removed.`
+                );
+            }
+        }
+
         // Job missing
         if (!selectedJob) {
             return message.reply(
