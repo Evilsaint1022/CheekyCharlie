@@ -12,6 +12,8 @@ const STARTING_PRICE = 3000;
 const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward this
 const EVENT_CHANCE = 0.02;
 
+let pendingPressureMemory = 0;
+
 const groq = new OpenAI({
     apiKey: process.env.GROQ_API_KEY,
     baseURL: 'https://api.groq.com/openai/v1',
@@ -111,8 +113,8 @@ async function initStockData() {
     return initial;
 }
 
-async function tickStock(stockData) {
-    const { price, history, trend, pendingPressure } = stockData;
+async function tickStock(stockData, pendingPressure) {
+    const { price, history, trend } = stockData;
 
     // Random volatility each tick: 1% – 8%
     const volatility = 0.01 + Math.random() * 0.07;
@@ -180,7 +182,10 @@ async function runStockTick(client) {
         const stockData = await initStockData();
         const prev = stockData.price;
 
-        const updated = await tickStock(stockData);
+        const pressureToApply = pendingPressureMemory;
+        pendingPressureMemory = 0;
+
+        const updated = await tickStock(stockData, pressureToApply);
 
         const event = await tryFireMarketEvent();
         let eventEmbed = null;
@@ -325,8 +330,5 @@ module.exports = async (client) => {
 };
 
 module.exports.applyPressure = async (amount) => {
-    const stockData = await db.stock.get('global');
-    if (!stockData) return;
-    stockData.pendingPressure = (stockData.pendingPressure || 0) + amount;
-    await db.stock.set('global', stockData);
+    pendingPressureMemory += amount;
 };

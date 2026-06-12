@@ -100,6 +100,13 @@ module.exports = {
             const bankBalance = await db.bank.get(`${userId}.bank`) || 0;
             const holdings = await db.stock.get(`${userId}.holdings`) || 0;
 
+            // Clear any existing session for this user to ensure only one keypad is active at a time
+            for (const [sid, sess] of sessions.entries()) {
+                if (sess.userId === userId) {
+                    sessions.delete(sid);
+                }
+            }
+
             const sessionId = crypto.randomBytes(8).toString('hex');
             const session = { action, userId, guildId: interaction.guild?.id, input: '', price, walletBalance, bankBalance, holdings };
             sessions.set(sessionId, session);
