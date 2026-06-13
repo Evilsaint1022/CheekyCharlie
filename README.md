@@ -84,7 +84,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 </summary>
 
 ### **🌿<ins>Economy</ins>**
-- `?leaderboard` - Check the `wallet`/`bank`/`money`/`level` leaderboard. `?leaderboard money`.
+- `?leaderboard` - Check the `wallet`/`bank`/`money`/`level`/`stocks` leaderboard. `?leaderboard money`.
+- `?stocks` - View your FernCoin portfolio. `?stocks portfolio [@user]` or `?stocks leaderboard`.
 - `?balance` - Check your Currency balance or check another users by using `?balance @user`.
 - `?deposit` - Deposit Currency into your bank using `?deposit all` or `?deposit 100`.
 - `?withdraw` - Withdraw Currency from your bank using `?withdraw all` or `?withdraw 100`.
@@ -199,6 +200,10 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?remove-bankinterest-channel` - Removes the Bank Interest channel that has been set.
 - `?set-banktransactions-channel` - Sets a Bank transactions channel where the deposit and withdraw messages will be sent.
 - `?remove-banktransactions-channel` - Removes the Bank transactions channel that has been set.
+
+### **🌿<ins>FernCoin Stock Market</ins>** *(in progress)*
+- `?set-stock-channel` - Sets the channel where FernCoin stock updates will be posted (every 10 minutes).
+- `?remove-stock-channel` - Removes the FernCoin stock channel.
 
 ### **🌿<ins>Sticky Messages</ins>**
 - `?sticky-message` - Lets you send a sticky message into the current channel.  
