@@ -208,7 +208,7 @@ module.exports = {
           if (type === 'stocks') {
             const pnlSign = entry.netPnL >= 0 ? '+' : '';
             const pnlIcon = entry.netPnL >= 0 ? '📈' : '📉';
-            return `${base}\n✦  ${stockEmojis.ferncoin}・\`${entry.holdings.toLocaleString()}\`\n✦  💼 \`${entry.stat.toLocaleString()}\`・${pnlIcon} \`${pnlSign}${entry.netPnL.toLocaleString()}\``;
+            return `${base}\n✦  ${stockEmojis.ferncoin}・\`${entry.holdings.toLocaleString()}\`\n✦  💼 \`${Math.round(entry.stat).toLocaleString()}\`・${pnlIcon} \`${pnlSign}${Math.round(entry.netPnL).toLocaleString()}\``;
           }
 
           return `${base}\n✦  💰・${entry.stat.toLocaleString()}`;

@@ -65,7 +65,7 @@ async function showPortfolio(message) {
         : [...trades].reverse().slice(0, 5).map(t => {
             const icon   = t.type === 'buy' ? '🟢' : '🔴';
             const action = t.type === 'buy' ? 'Bought' : 'Sold';
-            return `${icon} ${action} **${t.amount.toLocaleString()} FERN** @ \`${t.pricePerFern.toLocaleString()}\` · **${t.total.toLocaleString()} Ferns** · *${timeAgo(t.timestamp)}*`;
+            return `${icon} ${action} **${t.amount.toLocaleString()} FERN** @ \`${Math.round(t.pricePerFern).toLocaleString()}\` · **${t.total.toLocaleString()} Ferns** · *${timeAgo(t.timestamp)}*`;
         }).join('\n');
 
     const neverTraded = holdings === 0 && totalSpent === 0 && totalEarned === 0;
@@ -82,12 +82,12 @@ async function showPortfolio(message) {
             },
             {
                 name: '💱 Current Price',
-                value: `\`${currentPrice.toLocaleString()} Ferns\``,
+                value: `\`${Math.round(currentPrice).toLocaleString()} Ferns\``,
                 inline: true
             },
             {
                 name: '💼 Portfolio Value',
-                value: `\`${portfolioValue.toLocaleString()} Ferns\``,
+                value: `\`${Math.round(portfolioValue).toLocaleString()} Ferns\``,
                 inline: true
             },
             {
@@ -102,7 +102,7 @@ async function showPortfolio(message) {
             },
             {
                 name: `${pnlEmoji} Net P&L`,
-                value: `\`${pnlSign}${netPnL.toLocaleString()} Ferns\``,
+                value: `\`${pnlSign}${Math.round(netPnL).toLocaleString()} Ferns\``,
                 inline: true
             },
             {
@@ -162,7 +162,7 @@ async function showLeaderboard(message) {
                 const pnlIcon = e.netPnL >= 0 ? '📈' : '📉';
                 return (
                     `${medal} <@${e.userId}>\n` +
-                    `✦ ${emojis.ferncoin} \`${e.holdings.toLocaleString()} FERN\`  ·  💼 \`${e.portfolioValue.toLocaleString()} Ferns\`  ·  ${pnlIcon} \`${pnlSign}${e.netPnL.toLocaleString()}\``
+                    `✦ ${emojis.ferncoin} \`${e.holdings.toLocaleString()} FERN\`  ·  💼 \`${Math.round(e.portfolioValue).toLocaleString()} Ferns\`  ·  ${pnlIcon} \`${pnlSign}${Math.round(e.netPnL).toLocaleString()}\``
                 );
             }).join('\n\n');
 
@@ -172,7 +172,7 @@ async function showLeaderboard(message) {
             .setColor(0x207e37)
             .addFields({
                 name: '💱 Current Price',
-                value: `\`${currentPrice.toLocaleString()} Ferns\` per FERN`,
+                value: `\`${Math.round(currentPrice).toLocaleString()} Ferns\` per FERN`,
                 inline: true
             })
             .setThumbnail(message.guild.iconURL())

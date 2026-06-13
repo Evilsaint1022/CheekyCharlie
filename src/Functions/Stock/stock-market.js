@@ -137,8 +137,11 @@ async function tickStock(stockData, pendingPressure) {
 
     // Buy/sell pressure — direct price impact + trend bias
     // Positive pressure (buys) pushes price up and trend bullish; negative (sells) does the opposite
-    const pressureEffect = pendingPressure * price * 0.001;
-    const pressureTrendBias = Math.tanh(pendingPressure / 15) * 0.30;
+    // Sub-linear scaling using square root to prevent instant doubling by large whale buys
+    const pressureDirection = Math.sign(pendingPressure);
+    const pressureMagnitude = Math.sqrt(Math.abs(pendingPressure));
+    const pressureEffect = pressureDirection * pressureMagnitude * price * 0.003;
+    const pressureTrendBias = Math.tanh(pendingPressure / 200) * 0.30;
 
     // Two-sided market shock (replaces old downward-only dip)
     // Can spike up or down — direction weighted by current trend
@@ -150,8 +153,10 @@ async function tickStock(stockData, pendingPressure) {
         ? (shockUp ? 1 + shockMagnitude : 1 - shockMagnitude)
         : 1;
 
-    // Integer price — rounds >= 0.5 up, < 0.5 down (standard Math.round behaviour)
-    const newPrice = Math.max(1, Math.round((price + baseChange + pressureEffect) * shockMult));
+    // Keep price as float in database to prevent rounding stall at low values, but clamp non-shock movement to +/- 30% per tick
+    const preShockPrice = Math.max(0.1, price + baseChange + pressureEffect);
+    const clampedPreShockPrice = Math.min(price * 1.30, Math.max(price * 0.70, preShockPrice));
+    const newPrice = Math.max(0.1, clampedPreShockPrice * shockMult);
 
     // Trend decays faster (0.80) so bull runs need sustained buy pressure to continue
     const newTrend = Math.max(-0.9, Math.min(0.9,
@@ -192,7 +197,7 @@ async function runStockTick(client) {
 
         if (event) {
             const multiplier = event.isPositive ? (1 + event.magnitude) : (1 - event.magnitude);
-            const eventPrice = Math.max(1, Math.round(updated.price * multiplier));
+            const eventPrice = Math.max(0.1, updated.price * multiplier);
 
             updated.price = eventPrice;
             updated.history[updated.history.length - 1] = eventPrice;
@@ -210,12 +215,12 @@ async function runStockTick(client) {
                 .setTitle(`${eventIcon} MARKET EVENT: ${event.title}`)
                 .setDescription(
                     `${event.description}\n\n` +
-                    `**Impact:** \`${pctDisplay}\`  ·  **New Price:** \`${eventPrice.toLocaleString()} Ferns\``
+                    `**Impact:** \`${pctDisplay}\`  ·  **New Price:** \`${Math.round(eventPrice).toLocaleString()} Ferns\``
                 )
                 .setFooter({ text: 'FernCoin Exchange · Market Event' })
                 .setTimestamp();
 
-            console.log(`[📈] [MARKET EVENT] ${event.isPositive ? 'BULL' : 'BEAR'} — "${event.title}" | ${prev} → ${eventPrice} (${pctDisplay})`);
+            console.log(`[📈] [MARKET EVENT] ${event.isPositive ? 'BULL' : 'BEAR'} — "${event.title}" | ${prev.toFixed(2)} → ${eventPrice.toFixed(2)} (${pctDisplay})`);
         }
 
         await db.stock.set('global', updated);
@@ -245,7 +250,7 @@ async function runStockTick(client) {
             .setColor(embedColor)
             .setTitle(`${emojis.ferncoin} FernCoin · FERN`)
             .setDescription(
-                `### ${trendEmoji} **${price.toLocaleString()} Ferns**\n` +
+                `### ${trendEmoji} **${Math.round(price).toLocaleString()} Ferns**\n` +
                 `${changeSign} \`${Math.abs(change).toFixed(2)}\` | \`${Math.abs(changePct).toFixed(2)}%\` ${pctSign}`
             )
             .addFields(
@@ -303,7 +308,7 @@ async function runStockTick(client) {
             }
         }
 
-        console.log(`[📈] [Stock Market] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev} → ${price} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
+        console.log(`[📈] [Stock Market] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
 
     } catch (err) {
         console.error('[📈] [Stock Market] Unhandled error:', err);
@@ -323,8 +328,12 @@ module.exports = async (client) => {
         timezone: 'Pacific/Auckland'
     });
 
-    // On restart: delete the stale message and post a fresh one as soon as guilds are ready
-    client.once('ready', () => runStockTick(client));
+    // On restart: delete the stale message and post a fresh one immediately if ready, or wait
+    if (client.isReady()) {
+        runStockTick(client);
+    } else {
+        client.once('ready', () => runStockTick(client));
+    }
 
     console.log('[📈] [Stock Market] Scheduler started.');
 };
