@@ -201,7 +201,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?set-banktransactions-channel` - Sets a Bank transactions channel where the deposit and withdraw messages will be sent.
 - `?remove-banktransactions-channel` - Removes the Bank transactions channel that has been set.
 
-### **🌿<ins>FernCoin Stock Market</ins>** *(in progress)*
+### **🌿<ins>FernCoin Stock Market</ins>**
 - `?set-stock-channel` - Sets the channel where FernCoin stock updates will be posted (every 10 minutes).
 - `?remove-stock-channel` - Removes the FernCoin stock channel.
 
