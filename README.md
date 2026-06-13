@@ -85,7 +85,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 ### **🌿<ins>Economy</ins>**
 - `?leaderboard` - Check the `wallet`/`bank`/`money`/`level`/`stocks` leaderboard. `?leaderboard money`.
-- `?stocks` - View your FernCoin portfolio. `?stocks portfolio [@user]` or `?stocks leaderboard`.
+- `?stocks` - View your FernCoin portfolio. `?stocks portfolio [@user]` views another user's portfolio.
 - `?balance` - Check your Currency balance or check another users by using `?balance @user`.
 - `?deposit` - Deposit Currency into your bank using `?deposit all` or `?deposit 100`.
 - `?withdraw` - Withdraw Currency from your bank using `?withdraw all` or `?withdraw 100`.
