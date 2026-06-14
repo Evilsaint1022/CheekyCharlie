@@ -93,7 +93,7 @@ module.exports = async (client) => {
       }
 
       if (!directJsFiles.length && !topicDirs.length) {
-        table.push(["(No commands found)", "⚠️ Empty"]);
+        table.push(["(No commands found)", "✅ Empty"]);
       }
     } catch (err) {
       console.error(`Error reading ${folder} folder:`, err);

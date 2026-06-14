@@ -21,7 +21,7 @@ function loadFunctions(client) {
             const files = fs.readdirSync(folderPath).filter((file) => file.endsWith(".js"));
 
             if (files.length === 0) {
-                table.push(['(No .js files found)', '⚠️ Empty']);
+                table.push(['(No functions found)', '✅ Empty']);
                 continue;
             }
 

@@ -95,7 +95,7 @@ module.exports = async (client) => {
 
             // If no files or directories found
             if (directJsFiles.length === 0 && topicDirs.length === 0) {
-                table.push(['(No commands found)', '⚠️ Empty']);
+                table.push(['(No commands found)', '✅ Empty']);
             }
 
         } catch (error) {
