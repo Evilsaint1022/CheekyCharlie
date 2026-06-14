@@ -65,7 +65,6 @@ https://top.gg/bot/1495254230787817564
 🌿・AI NSFW Content Filtering  
 
 <h2>🌿 <ins>Getting Started</ins> 🌿</h2>
-<detials>
   
 _**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
 
@@ -77,9 +76,9 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 **That’s it — you’re ready to use CheekyCharlie!**
 
-</detials>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-<details><summary><h2>🌿 <ins>Everyone - Prefix Commands</ins> 🌿</h2>
+<h2>🌿 <ins>Commands Documentation</ins> 🌿</h2>
+
+<details><summary> [ 🌿 ] <ins>Everyone Prefix Commands </ins>
   
 </summary>
 
@@ -167,7 +166,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </details>
 
-<details><summary><h2>🌿 <ins>Whitelisted - Prefix Commands</ins> 🌿</h2>
+<details><summary> [ 🌿 ] <ins>Whitelisted Prefix Commands</ins>
 
 </summary>
 
@@ -229,7 +228,7 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary><h2>🌿 <ins>Whitelisted - Application Commands</ins> 🌿</h2>
+<details><summary> [ 🌿 ] <ins>Whitelisted Application Commands</ins>
   
 </summary>
 
@@ -342,7 +341,7 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 <h2>🌿 <ins>Owner Commands</ins> 🌿</h2>
 <detials>
   
