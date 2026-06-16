@@ -1,4 +1,4 @@
-# <ins>🌿 **The CheekyCharlie Discord Bot** 🌿</ins>
+<h1> 🌿 <ins>The CheekyCharlie Discord Bot</ins> 🌿 </h1>
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -27,7 +27,7 @@ https://top.gg/bot/1495254230787817564
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
 `@evilsaint1022` & `@nz_linix`  
 
-🔗・[DISCORD INVITE LINK](https://discord.com/invite/3gtJ33cZDH)
+🔗・[Support Invite Link](https://discord.com/invite/3gtJ33cZDH)
 
 <h2> 🌿 <ins>API Keys</ins> 🌿 </h2>
 
