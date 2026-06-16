@@ -1,5 +1,7 @@
+const { Events, PermissionFlagsBits } = require('discord.js');
+
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
 
     async execute(message) {
         // Ignore bot messages
@@ -8,6 +10,12 @@ module.exports = {
        if (message.content.includes(':')) return;
 
         const content = message.content.toLowerCase();
+
+        const permissions = message.channel.permissionsFor(message.guild.members.me);
+
+        if (!permissions?.has(PermissionFlagsBits.SendMessages)) {
+            return;
+        }
 
     try {
 
@@ -24,9 +32,9 @@ module.exports = {
         }
             } catch (error) {
             // Ignore Error: Unknown Emoji
-            if (err.code !== 10014) return;
-            if (err.code !== 30010) return;
-            if (err.code !== 98881) return;
+            if (error.code === 10014) return;
+            if (error.code === 30010) return;
+            if (error.code === 98881) return;
           console.error('Failed to send message:', error);
         }
     }

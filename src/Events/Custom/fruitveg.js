@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, PermissionFlagsBits } = require('discord.js');
 
 // Map produce names to Discord default emojis
 const produceEmojiMap = {
@@ -35,6 +35,12 @@ module.exports = {
         if (message.webhookId) return;
         if (message.content.includes(':')) return;
 
+        const permissions = message.channel.permissionsFor(message.guild.members.me);
+
+        if (!permissions?.has(PermissionFlagsBits.AddReactions)) {
+            return;
+        }
+
         const words = message.content.toLowerCase().split(/\s+/);
         let reactionCount = 0;
 
@@ -61,9 +67,9 @@ module.exports = {
 
                 } catch (error) {
                 // Ignore Error: Unknown Emoji
-                if (error.code !== 10014) return;
-                if (error.code !== 30010) return;
-                if (error.code !== 98881) return;
+                if (error.code === 10014) return;
+                if (error.code === 30010) return;
+                if (error.code === 98881) return;
                 console.error(`Failed to react with ${emoji} to message:`, error);
                 }
             }

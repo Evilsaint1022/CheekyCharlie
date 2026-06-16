@@ -1,13 +1,19 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Events, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
-    name: 'messageCreate', // Event name to listen for new messages
+    name: Events.MessageCreate,
     once: false, // Set to false to allow multiple messages to trigger this event
     async execute(message) {
 
         if (message.author.bot) return;
         if (message.webhookId) return;
         if (message.content.includes(':')) return;
+
+        const permissions = message.channel.permissionsFor(message.guild.members.me);
+
+        if (!permissions?.has(PermissionFlagsBits.AddReactions)) {
+            return;
+        }
 
         const MAX_REACTIONS = 20;
         let reactionCount = 0;
@@ -30,9 +36,9 @@ module.exports = {
 
             } catch (error) {
             // Ignore Error: Unknown Emoji
-            if (err.code !== 10014) return;
-            if (err.code !== 30010) return;
-            if (err.code !== 98881) return;
+            if (error.code === 10014) return;
+            if (error.code === 30010) return;
+            if (error.code === 98881) return;
             console.error('Failed to react with shrimp emoji:', error);
             }
         }
