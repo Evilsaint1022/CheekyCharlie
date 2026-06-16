@@ -1,4 +1,4 @@
-# 🌿 <ins>**The CheekyCharlie Discord Bot**</ins> 🌿
+# <ins>🌿 **The CheekyCharlie Discord Bot** 🌿</ins>
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
@@ -22,14 +22,14 @@ https://top.gg/bot/1495254230787817564
 〉**Currently Running on a Rasberry Pi**  
 〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-<h2>🌿 <ins>Discord Support Server</ins> 🌿</h2>
+<h2> 🌿 <ins>Discord Support Server</ins> 🌿 </h2>
 
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
 `@evilsaint1022` & `@nz_linix`  
 
 🔗・[DISCORD INVITE LINK](https://discord.com/invite/3gtJ33cZDH)
 
-<h2>🌿 <ins>API Keys</ins> 🌿</h2>
+<h2> 🌿 <ins>API Keys</ins> 🌿 </h2>
 
 🌿・[OPENAI](https://openai.com/api/)  
 🌿・[GROQ](https://groq.com/)  
@@ -39,7 +39,7 @@ https://top.gg/bot/1495254230787817564
 🌿・[SIMPSONS API](https://thesimpsonsapi.com/)  
 🌿・[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)  
 
-<h2>🌿 <ins>Features</ins> 🌿</h2>
+<h2> 🌿 <ins>Features</ins> 🌿 </h2>
 
 🌿・Full Economy System  
 🌿・Welcome Banner  
@@ -64,7 +64,7 @@ https://top.gg/bot/1495254230787817564
 🌿・Temporary Voice Channels  
 🌿・AI NSFW Content Filtering  
 
-<h2>🌿 <ins>Getting Started</ins> 🌿</h2>
+<h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
   
 _**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
 
@@ -76,13 +76,26 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 **That’s it — you’re ready to use CheekyCharlie!**
 
-<h2>🌿 <ins>Commands Documentation</ins> 🌿</h2>
+<h2> 🌿 <ins>Commands Documentation</ins> 🌿 </h2>
 
-<details><summary> [ 🌿 ] <ins>Everyone Prefix Commands </ins>
+<details><summary><ins>Owner Prefix Commands</ins>  
+  
+</summary>
+  
+***We do have*** `Owner Commands` ***but they are nothing to be worried about.***
+
+- [?servers](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/servers.js) - Views all the servers that `cheekycharlie` is currently in.  
+- [?shutdown](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/shutdown.js) - Shuts down `cheekycharlie`.  
+- [?invitebot](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/invitebot.js) - Gets the invite link for `cheekycharlie`.  
+- [?leaveguild](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/leaveguild.js) - Removes `cheekycharlie` from a server.  
+- [?last-deployment](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/last-deployment.js) - Views when `cheekycharlie` was last restarted.  
+</details>
+
+<details><summary><ins>Everyone Prefix Commands </ins>
   
 </summary>
 
-### **🌿<ins>Economy</ins>**
+### **<ins>Economy</ins>**
 - `?leaderboard` - Check the `wallet`/`bank`/`money`/`level`/`stocks` leaderboard. `?leaderboard money`.
 - `?stocks` - View your FernCoin portfolio. `?stocks portfolio [@user]` views another user's portfolio.
 - `?balance` - Check your Currency balance or check another users by using `?balance @user`.
@@ -99,35 +112,35 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?weekly` - Weekly Currency collect.
 - `?monthly` - Monthly Currency collect.
 
-### **🌿<ins>Economy Games</ins>**
+### **<ins>Economy Games</ins>**
 - `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
 - `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
 
-### **🌿<ins>Economy Jobs</ins>**
+### **<ins>Economy Jobs</ins>**
 - `?tax` - Views how much tax you owe and when the last payment was made.
 - `?jobs` - Views all available jobs.
 - `?job-apply` - Apply for a available job by using `?job-apply` `jobname`.
 - `?work` - Start working and earning currency.
 
-### **🌿<ins>Passive Mode</ins>**
+### **<ins>Passive Mode</ins>**
 - `?passive` - Toggles passive mode on and off.
 
-### **🌿<ins>Shop</ins>**
+### **<ins>Shop</ins>**
 - `?shop` - checks the server shop.
 - `?buy` - buys a item from the shop.
 - `?use` - uses the item bought from from the shop.
 - `?refund` - refunds the item from the shop.
 - `?inventory` - checks the items in the users inventory.
 
-### **🌿<ins>Join-to-Create VC</ins>**
+### **<ins>Join-to-Create VC</ins>**
 - `?lock-vc` - locks the join-to-create vc channel.
 - `?unlock-vc` - unlocks the join-to-create vc channel.
 
-### **🌿<ins>One-Word-Story</ins>**
+### **<ins>One-Word-Story</ins>**
 - `?view-one-word-story` - view the current story in the server
 
-### **🌿<ins>Staff Applications</ins>**
+### **<ins>Staff Applications</ins>**
 - `?staff-apply` - Start a new staff application.
 
 ### **🌿<ins>Confessions</ins>**
@@ -166,7 +179,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </details>
 
-<details><summary> [ 🌿 ] <ins>Whitelisted Prefix Commands</ins>
+<details><summary><ins>Whitelisted Prefix Commands</ins>
 
 </summary>
 
@@ -228,7 +241,7 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary> [ 🌿 ] <ins>Whitelisted Application Commands</ins>
+<details><summary><ins>Whitelisted Application Commands</ins>
   
 </summary>
 
@@ -340,16 +353,4 @@ This is the message. Supports any Discord-native **markdown**.
 - `/remove-qotd-role` - Removes the role set for Question of the day.
 - `/toggle-qotd` - toggles question of the day on or off.
 
-</details>
-
-<h2>🌿 <ins>Owner Commands</ins> 🌿</h2>
-<detials>
-  
-***We do have*** `Owner Commands` ***but they are nothing to be worried about.***
-
-- [?servers](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/servers.js) - Views all the servers that `cheekycharlie` is currently in.
-- [?shutdown](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/shutdown.js) - Shuts down `cheekycharlie`.
-- [?invitebot](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/invitebot.js) - Gets the invite link for `cheekycharlie`.
-- [?leaveguild](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/leaveguild.js) - Removes `cheekycharlie` from a server.
-- [?last-deployment](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/last-deployment.js) - Views when `cheekycharlie` was last restarted.
 </details>
