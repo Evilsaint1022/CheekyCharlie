@@ -78,7 +78,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 <h2> 🌿 <ins>Commands Documentation</ins> 🌿 </h2>
 
-<details><summary><ins>Owner Prefix Commands</ins>  
+<details><summary> [🌿] <ins>Owner Prefix Commands</ins>  
   
 </summary>
   
@@ -91,11 +91,11 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - [?last-deployment](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/last-deployment.js) - Views when `cheekycharlie` was last restarted.  
 </details>
 
-<details><summary><ins>Everyone Prefix Commands </ins>
+<details><summary> [🌿] <ins>Everyone Prefix Commands </ins>
   
 </summary>
 
-### **<ins>Economy</ins>**
+### **🌿<ins>Economy</ins>**
 - `?leaderboard` - Check the `wallet`/`bank`/`money`/`level`/`stocks` leaderboard. `?leaderboard money`.
 - `?stocks` - View your FernCoin portfolio. `?stocks portfolio [@user]` views another user's portfolio.
 - `?balance` - Check your Currency balance or check another users by using `?balance @user`.
@@ -112,35 +112,35 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 - `?weekly` - Weekly Currency collect.
 - `?monthly` - Monthly Currency collect.
 
-### **<ins>Economy Games</ins>**
+### **🌿<ins>Economy Games</ins>**
 - `?blackjack-duels` - Play Blackjack with other users using `?bjd @user 100`
 - `?blackjack-singleplayer` - Starts a game of blackjack using `?bj 100`.
 - `?slots` - Starts a game of slots using `?slots bet`.
 
-### **<ins>Economy Jobs</ins>**
+### **🌿<ins>Economy Jobs</ins>**
 - `?tax` - Views how much tax you owe and when the last payment was made.
 - `?jobs` - Views all available jobs.
 - `?job-apply` - Apply for a available job by using `?job-apply` `jobname`.
 - `?work` - Start working and earning currency.
 
-### **<ins>Passive Mode</ins>**
+### **🌿<ins>Passive Mode</ins>**
 - `?passive` - Toggles passive mode on and off.
 
-### **<ins>Shop</ins>**
+### **🌿<ins>Shop</ins>**
 - `?shop` - checks the server shop.
 - `?buy` - buys a item from the shop.
 - `?use` - uses the item bought from from the shop.
 - `?refund` - refunds the item from the shop.
 - `?inventory` - checks the items in the users inventory.
 
-### **<ins>Join-to-Create VC</ins>**
+### **🌿<ins>Join-to-Create VC</ins>**
 - `?lock-vc` - locks the join-to-create vc channel.
 - `?unlock-vc` - unlocks the join-to-create vc channel.
 
-### **<ins>One-Word-Story</ins>**
+### **🌿<ins>One-Word-Story</ins>**
 - `?view-one-word-story` - view the current story in the server
 
-### **<ins>Staff Applications</ins>**
+### **🌿<ins>Staff Applications</ins>**
 - `?staff-apply` - Start a new staff application.
 
 ### **🌿<ins>Confessions</ins>**
@@ -179,7 +179,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 </details>
 
-<details><summary><ins>Whitelisted Prefix Commands</ins>
+<details><summary> [🌿] <ins>Whitelisted Prefix Commands</ins>
 
 </summary>
 
@@ -241,7 +241,7 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<details><summary><ins>Whitelisted Application Commands</ins>
+<details><summary> [🌿] <ins>Whitelisted Application Commands</ins>
   
 </summary>
 
