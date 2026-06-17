@@ -15,7 +15,7 @@ const CRON_SCHEDULE = '*/10 * * * *'; // Every 10 minutes
 const HISTORY_MAX = 50;
 const STARTING_PRICE = 3000;
 const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward this
-// const EVENT_CHANCE = 0.02;
+const EVENT_CHANCE = 0.02;
 
 let pendingPressureMemory = 0;
 
