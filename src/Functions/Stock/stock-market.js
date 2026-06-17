@@ -305,8 +305,7 @@ async function runStockTick(client) {
                 }
                 
                 if (eventEmbed) {
-                    const message = await channel.messages.fetch(eventMessageId).catch(() => null);
-                    await message.edit({ embeds: [eventEmbed] }).catch(() => null);
+                    await channel.send({ embeds: [eventEmbed] }).catch(() => null);
                 } else {
                     
                 }
