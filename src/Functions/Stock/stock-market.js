@@ -1,10 +1,16 @@
 const cron = require('node-cron');
-const { EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message } = require('discord.js');
 const OpenAI = require('openai');
 const db = require('../../Handlers/database');
 const { generateStockChart } = require('../../Utilities/Stocks/generateChart');
 const emojis = require('../../Utilities/Stocks/stocks_ui');
 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// const CRON_SCHEDULE = '*/2 * * * *'; // Every 2 minutes for testing
+// const EVENT_CHANCE = 0.5; // 50% chance of event every tick for testing
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+// Production settings:
 const CRON_SCHEDULE = '*/10 * * * *'; // Every 10 minutes
 
 const HISTORY_MAX = 50;
@@ -287,21 +293,23 @@ async function runStockTick(client) {
 
                 if (!channel) continue;
 
-                // Delete previous message to keep channel clean
+                // Edit previous message to keep channel clean
                 if (settings.stockmessageid) {
                     const oldMsg = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
-                    if (oldMsg) await oldMsg.delete().catch(() => null);
+                    if (oldMsg) await oldMsg.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
+                } else {
+                    const sent = await channel.send({ embeds: [embed], files: [attachment], components: [tradeRow] });
+                    const existing = await db.settings.get(`${guild.id}`) || {};
+                    existing.stockmessageid = sent.id;
+                    await db.settings.set(`${guild.id}`, existing);
                 }
-
+                
                 if (eventEmbed) {
-                    await channel.send({ embeds: [eventEmbed] }).catch(() => null);
+                    const message = await channel.messages.fetch(eventMessageId).catch(() => null);
+                    await message.edit({ embeds: [eventEmbed] }).catch(() => null);
+                } else {
+                    
                 }
-
-                const sent = await channel.send({ embeds: [embed], files: [attachment], components: [tradeRow] });
-
-                const currentSettings = await db.settings.get(`${guild.id}`) || {};
-                currentSettings.stockmessageid = sent.id;
-                await db.settings.set(`${guild.id}`, currentSettings);
 
             } catch (err) {
                 console.warn(`[📈] [Stock Market] Failed for guild ${guild.name}:`, err.message);
