@@ -12,11 +12,10 @@ const emojis = require('../../Utilities/Stocks/stocks_ui');
 
 // Production settings:
 const CRON_SCHEDULE = '*/10 * * * *'; // Every 10 minutes
-
 const HISTORY_MAX = 50;
 const STARTING_PRICE = 3000;
 const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward this
-const EVENT_CHANCE = 0.02;
+// const EVENT_CHANCE = 0.02;
 
 let pendingPressureMemory = 0;
 
@@ -184,7 +183,7 @@ async function runStockTick(client) {
     if (!client) return;
 
     if (runStockTick._isRunning) {
-        console.log('[📈] [Stock Market] Already running, skipping tick.');
+        console.log('[📈] [STOCK MARKET] Already running, skipping tick.');
         return;
     }
     runStockTick._isRunning = true;
@@ -226,7 +225,7 @@ async function runStockTick(client) {
                 .setFooter({ text: 'FernCoin Exchange · Market Event' })
                 .setTimestamp();
 
-            console.log(`[📈] [MARKET EVENT] ${event.isPositive ? 'BULL' : 'BEAR'} — "${event.title}" | ${prev.toFixed(2)} → ${eventPrice.toFixed(2)} (${pctDisplay})`);
+            console.log(`[📈] [STOCK MARKET EVENT] ${event.isPositive ? 'BULL' : 'BEAR'} — "${event.title}" | ${prev.toFixed(2)} → ${eventPrice.toFixed(2)} (${pctDisplay})`);
         }
 
         await db.stock.set('global', updated);
@@ -293,6 +292,16 @@ async function runStockTick(client) {
 
                 if (!channel) continue;
 
+                if (!settings.stockeventmessageid) {
+                    const neweventMessge = await channel.send({ content: '**📢 Stock market events will appear here!**'}).catch(() => null);
+
+                    if (neweventMessge) {
+                        const existing = await db.settings.get(`${guild.id}`) || {};
+                        existing.stockeventmessageid = neweventMessge.id;
+                        await db.settings.set(`${guild.id}`, existing);
+                    }
+                }
+
                 // Edit previous message to keep channel clean
                 if (settings.stockmessageid) {
                     const oldMsg = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
@@ -303,22 +312,26 @@ async function runStockTick(client) {
                     existing.stockmessageid = sent.id;
                     await db.settings.set(`${guild.id}`, existing);
                 }
-                
+
                 if (eventEmbed) {
-                    await channel.send({ embeds: [eventEmbed] }).catch(() => null);
+                    const oldeventmessage = settings.stockeventmessageid;
+                    const message = await channel.messages.fetch(oldeventmessage).catch(() => null);
+                     await message.edit({ content: '**📢 New Stock Market Event!**', embeds: [eventEmbed] }).catch(() => null);
                 } else {
-                    
+                    const oldeventmessage = settings.stockeventmessageid;
+                    const message = await channel.messages.fetch(oldeventmessage).catch(() => null);
+                     await message.edit({ content: '**📢 No significant market events at this time.**', embeds: [] }).catch(() => null);
                 }
 
             } catch (err) {
-                console.warn(`[📈] [Stock Market] Failed for guild ${guild.name}:`, err.message);
+                console.warn(`[📈] [STOCK MARKET] Failed for guild ${guild.name}:`, err.message);
             }
         }
 
-        console.log(`[📈] [Stock Market] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
+        console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
 
     } catch (err) {
-        console.error('[📈] [Stock Market] Unhandled error:', err);
+        console.error('[📈] [STOCK MARKET] Unhandled error:', err);
     } finally {
         runStockTick._isRunning = false;
     }
@@ -326,7 +339,7 @@ async function runStockTick(client) {
 
 module.exports = async (client) => {
     if (!client) {
-        console.warn('[Stock Market] Client not passed.');
+        console.warn('[STOCK MARKET] Client not passed.');
         return;
     }
 
@@ -336,13 +349,17 @@ module.exports = async (client) => {
     });
 
     // On restart: delete the stale message and post a fresh one immediately if ready, or wait
-    if (client.isReady()) {
-        runStockTick(client);
-    } else {
-        client.once('ready', () => runStockTick(client));
-    }
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
-    console.log('[📈] [Stock Market] Scheduler started.');
+        if (client.isReady()) {
+            console.log('[📈] [STOCK MARKET] Scheduler started.');
+            runStockTick(client);
+        } else {
+            client.once('ready', () => {
+                console.log('[📈] [STOCK MARKET] Scheduler started.');
+                runStockTick(client);
+            });
+        }
 };
 
 module.exports.applyPressure = async (amount) => {
