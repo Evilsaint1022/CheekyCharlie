@@ -294,18 +294,17 @@ async function runStockTick(client) {
 
                 if (!settings.stockeventmessageid) {
                     const neweventMessge = await channel.send({ content: '**📢 Stock market events will appear here!**'}).catch(() => null);
-
-                    if (neweventMessge) {
-                        const existing = await db.settings.get(`${guild.id}`) || {};
+                    const existing = await db.settings.get(`${guild.id}`) || {};
                         existing.stockeventmessageid = neweventMessge.id;
                         await db.settings.set(`${guild.id}`, existing);
-                    }
                 }
+
 
                 // Edit previous message to keep channel clean
                 if (settings.stockmessageid) {
-                    const oldMsg = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
-                    if (oldMsg) await oldMsg.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
+                    const oldstockmessage = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
+                    if (oldstockmessage) await oldstockmessage.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
+
                 } else {
                     const sent = await channel.send({ embeds: [embed], files: [attachment], components: [tradeRow] });
                     const existing = await db.settings.get(`${guild.id}`) || {};
@@ -316,10 +315,13 @@ async function runStockTick(client) {
                 if (eventEmbed) {
                     const oldeventmessage = settings.stockeventmessageid;
                     const message = await channel.messages.fetch(oldeventmessage).catch(() => null);
+                    if (message) {
                      await message.edit({ content: '**📢 New Stock Market Event!**', embeds: [eventEmbed] }).catch(() => null);
+                    }
                 } else {
                     const oldeventmessage = settings.stockeventmessageid;
                     const message = await channel.messages.fetch(oldeventmessage).catch(() => null);
+                    if (message)
                      await message.edit({ content: '**📢 No significant market events at this time.**', embeds: [] }).catch(() => null);
                 }
 
