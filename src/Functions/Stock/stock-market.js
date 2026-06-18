@@ -292,27 +292,31 @@ async function runStockTick(client) {
 
                 if (!channel) continue;
 
-                if (!settings.stockeventmessageid) {
+                const eventmessageid = await channel.messages.fetch(settings.stockeventmessageid).catch(() => null);
+
+                if (!eventmessageid || !settings.stockeventmessageid) {
                     const neweventMessge = await channel.send({ content: '**📢 Stock market events will appear here!**'}).catch(() => null);
                     const existing = await db.settings.get(`${guild.id}`) || {};
                         existing.stockeventmessageid = neweventMessge.id;
                         await db.settings.set(`${guild.id}`, existing);
                 }
 
-
-                // Edit previous message to keep channel clean
-                if (settings.stockmessageid) {
-                    const oldstockmessage = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
-                    if (oldstockmessage) await oldstockmessage.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
-
-                } else {
-                  if (!settings.stockmessageid) { 
+                const stockmessageid = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
+                  
+                  if (!stockmessageid || !settings.stockmessageid) { 
                     const sent = await channel.send({ embeds: [embed], files: [attachment], components: [tradeRow] });
                     const existing = await db.settings.get(`${guild.id}`) || {};
                     existing.stockmessageid = sent.id;
                     await db.settings.set(`${guild.id}`, existing);
-                  }
+
+                } else {
+
+                 // Edit previous message to keep channel clean
+                if (settings.stockmessageid) {
+                    const oldstockmessage = await channel.messages.fetch(settings.stockmessageid).catch(() => null);
+                    if (oldstockmessage) await oldstockmessage.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
                 }
+            }
 
                 if (eventEmbed) {
                     const oldeventmessage = settings.stockeventmessageid;
