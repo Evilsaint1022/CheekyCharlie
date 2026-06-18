@@ -284,7 +284,7 @@ async function runStockTick(client) {
 
         for (const guild of client.guilds.cache.values()) {
             try {
-                const settings = await db.settings.get(`${guild.id}`);
+                const settings = await db.settings.get(`${guild.id}`) || {};
                 if (!settings || !settings.stockchannel) continue;
 
                 const channel = guild.channels.cache.get(settings.stockchannel)
@@ -306,10 +306,12 @@ async function runStockTick(client) {
                     if (oldstockmessage) await oldstockmessage.edit({ embeds: [embed], files: [attachment], components: [tradeRow] }).catch(() => null);
 
                 } else {
+                  if (!settings.stockmessageid) { 
                     const sent = await channel.send({ embeds: [embed], files: [attachment], components: [tradeRow] });
                     const existing = await db.settings.get(`${guild.id}`) || {};
                     existing.stockmessageid = sent.id;
                     await db.settings.set(`${guild.id}`, existing);
+                  }
                 }
 
                 if (eventEmbed) {
