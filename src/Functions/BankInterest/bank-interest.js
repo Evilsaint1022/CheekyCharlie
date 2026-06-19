@@ -9,11 +9,11 @@ const {
     ButtonStyle
 } = require('discord.js');
 
-// Daily Bank Interest Pacific/Auckland Correct Timer --> Production Timer
+// Daily Bank Interest Pacific/Auckland Production Timer
 const time = '0 12 * * *'; // every day at 12:00 PM
 
 // Testing Timer ( Keeping in for future use )
-// const time = '*/2 * * * *'; // Every 2 minutes
+//const time = '*/3 * * * *'; // Every 3 minutes
 
 async function runDailyBankInterest(client) {
     if (!client) {
@@ -65,7 +65,7 @@ async function runDailyBankInterest(client) {
     const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bottom = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const splitter = `**─────────────────────────────────**`;
-    const footer = `🌿・Thanks for using Bank-NZ`;
+    const footer = `🌿・Bank of New Zealand`;
 
     // Apply interest once to all users and collect results
     const interestResults = [];
@@ -123,25 +123,28 @@ async function runDailyBankInterest(client) {
 
             for (const { username, amount, interest, newBalance } of chunk) {
                 pageText +=
-                    `### 🌿 **__${username}__**\n${splitter}\n` +
-                    `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
-                    `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
-                    `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n\n`;
+                    `### 🌿***\`${username}\`***🌿\n` +
+                    `〉**__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
+                    `〉**__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
+                    `〉**__New Balance__** ${custom || ferns}・\`${newBalance}\`\n\n`;
 
                 console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
             }
 
+            const Timestamp = `[\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]`
+
             pages.push(
                 new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(`💰・Daily Bank Interest`)
+                    .setTitle(`🏦・__Daily Bank Interest__`)
                     .setThumbnail(guild.iconURL())
                     .setFooter({
-                        text: `${footer} • ${Math.floor(i / itemsPerPage) + 1}/${totalPages}`
+                        text: `${footer} • Page: ${Math.floor(i / itemsPerPage) + 1}/${totalPages}`
                     })
                     .setDescription(
-                        `${top}\n\n` +
+                        `${top}\n` +
                         pageText +
+                        `***__Updated:__***\n${Timestamp}\n\n` +
                         `${bottom}`
                     )
             );
