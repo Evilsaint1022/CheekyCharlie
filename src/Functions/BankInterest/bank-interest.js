@@ -1,12 +1,19 @@
 const cron = require('node-cron');
 const db = require("./../../Handlers/database");
-const { EmbedBuilder } = require('discord.js');
 
-// Daily Bank Interest Pacific/Auckland Correct Timer --> (DO NOT REMOVE!)
+
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle
+} = require('discord.js');
+
+// Daily Bank Interest Pacific/Auckland Correct Timer --> Production Timer
 const time = '0 12 * * *'; // every day at 12:00 PM
 
 // Testing Timer ( Keeping in for future use )
-// const time = "*/10 * * * * *"; // Every 10 seconds
+// const time = '*/2 * * * *'; // Every 2 minutes
 
 async function runDailyBankInterest(client) {
     if (!client) {
@@ -105,51 +112,79 @@ async function runDailyBankInterest(client) {
             continue;
         }
 
-        let embedsToSend = [];
-        let currentDescription = ``;
+        const pages = [];
 
         for (const { username, amount, interest, newBalance } of interestResults) {
-            const userBlock =
-                `### 🌿・**__${username}__**\n${splitter}\n` +
-                `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
-                `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
-                `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n${splitter}\n\n`;
-
-            if (!currentDescription) currentDescription = top + "\n";
-
-            if ((currentDescription + userBlock + bottom).length > 3500) {
-                currentDescription += bottom;
-                embedsToSend.push(currentDescription);
-                currentDescription = top + "\n" + userBlock;
-            } else {
-                currentDescription += userBlock;
-            }
+            pages.push(
+                new EmbedBuilder()
+                    .setColor(0x207e37)
+                    .setTitle(`💰・Daily Bank Interest`)
+                    .setThumbnail(guild.iconURL())
+                    .setFooter({
+                        text: `${footer} • ${pages.length + 1}/${interestResults.length}`
+                    })
+                    .setDescription(
+                        `${top}\n\n` +
+                        `### 🌿 **__${username}__**\n${splitter}\n` +
+                        `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
+                        `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
+                        `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`` +
+                        `\n\n${bottom}`
+                    )
+            );
 
             console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
         }
 
-        if (currentDescription) {
-            currentDescription += bottom;
-            embedsToSend.push(currentDescription);
-        }
-
         try {
-            for (let i = 0; i < embedsToSend.length; i++) {
-                const embed = new EmbedBuilder()
-                    .setColor(0x207e37)
-                    .setTitle(i === 0 ? `**💰・__Daily Bank Interest__**` : null)
-                    .setDescription(embedsToSend[i])
-                    .setFooter({ text: footer })
-                    .setThumbnail(guild.iconURL());
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('bankinterest_previous')
+                    .setLabel('Previous')
+                    .setStyle(ButtonStyle.Secondary),
 
-                await channel.send({
-                    embeds: [embed],
+                new ButtonBuilder()
+                    .setCustomId('bankinterest_next')
+                    .setLabel('Next')
+                    .setStyle(ButtonStyle.Secondary)
+            );
+
+            const settings = await db.settings.get(`${guild.id}`) || {};
+            const oldmessageid = settings.bankinterestmessageid;
+
+            let message = null;
+
+            if (oldmessageid) {
+                message = await channel.messages
+                    .fetch(oldmessageid)
+                    .catch(() => null);
+            }
+
+            if (message) {
+                await message.edit({
+                    embeds: [pages[0]],
+                    components: pages.length > 1 ? [row] : [row],
                     allowedMentions: { parse: [] }
                 });
+
+            } else {
+
+                message = await channel.send({
+                    embeds: [pages[0]],
+                    components: pages.length > 1 ? [row] : [row],
+                    allowedMentions: { parse: [] }
+                });
+
+                await db.settings.set(
+                    `${guild.id}.bankinterestmessageid`,
+                    message.id
+                );
             }
+
         } catch (err) {
             console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
         }
+
     }
 
     } catch (err) {
