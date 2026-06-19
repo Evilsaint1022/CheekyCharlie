@@ -113,27 +113,38 @@ async function runDailyBankInterest(client) {
         }
 
         const pages = [];
+        const itemsPerPage = 10;
+        const totalPages = Math.ceil(interestResults.length / itemsPerPage);
 
-        for (const { username, amount, interest, newBalance } of interestResults) {
+        for (let i = 0; i < interestResults.length; i += itemsPerPage) {
+            const chunk = interestResults.slice(i, i + itemsPerPage);
+
+            let pageText = "";
+
+            for (const { username, amount, interest, newBalance } of chunk) {
+                pageText +=
+                    `### 🌿 **__${username}__**\n${splitter}\n` +
+                    `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
+                    `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
+                    `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n\n`;
+
+                console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
+            }
+
             pages.push(
                 new EmbedBuilder()
                     .setColor(0x207e37)
                     .setTitle(`💰・Daily Bank Interest`)
                     .setThumbnail(guild.iconURL())
                     .setFooter({
-                        text: `${footer} • ${pages.length + 1}/${interestResults.length}`
+                        text: `${footer} • ${Math.floor(i / itemsPerPage) + 1}/${totalPages}`
                     })
                     .setDescription(
                         `${top}\n\n` +
-                        `### 🌿 **__${username}__**\n${splitter}\n` +
-                        `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
-                        `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
-                        `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`` +
-                        `\n\n${bottom}`
+                        pageText +
+                        `${bottom}`
                     )
             );
-
-            console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
         }
 
         try {
@@ -163,7 +174,7 @@ async function runDailyBankInterest(client) {
             if (message) {
                 await message.edit({
                     embeds: [pages[0]],
-                    components: pages.length > 1 ? [row] : [row],
+                    components: pages.length > 1 ? [row] : [],
                     allowedMentions: { parse: [] }
                 });
 
@@ -171,7 +182,7 @@ async function runDailyBankInterest(client) {
 
                 message = await channel.send({
                     embeds: [pages[0]],
-                    components: pages.length > 1 ? [row] : [row],
+                    components: pages.length > 1 ? [row] : [],
                     allowedMentions: { parse: [] }
                 });
 
