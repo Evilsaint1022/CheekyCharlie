@@ -1,7 +1,6 @@
 const cron = require('node-cron');
 const db = require("./../../Handlers/database");
 
-
 const {
     EmbedBuilder,
     ActionRowBuilder,
@@ -13,7 +12,7 @@ const {
 const time = '0 12 * * *'; // every day at 12:00 PM
 
 // Testing Timer ( Keeping in for future use )
-//const time = '*/3 * * * *'; // Every 3 minutes
+// const time = '*/3 * * * *'; // Every 3 minutes
 
 async function runDailyBankInterest(client) {
     if (!client) {
@@ -124,9 +123,9 @@ async function runDailyBankInterest(client) {
             for (const { username, amount, interest, newBalance } of chunk) {
                 pageText +=
                     `### 🌿***\`${username}\`***🌿\n` +
-                    `〉**__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
-                    `〉**__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
-                    `〉**__New Balance__** ${custom || ferns}・\`${newBalance}\`\n\n`;
+                    `〉***Previous*** ${custom || ferns}・\`${amount}\`\n` +
+                    `〉***Interest*** ${custom || ferns}・\`${interest}\`\n` +
+                    `〉***Current*** ${custom || ferns}・\`${newBalance}\`\n\n`;
 
                 console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
             }
@@ -136,7 +135,7 @@ async function runDailyBankInterest(client) {
             pages.push(
                 new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(`🏦・__Daily Bank Interest__`)
+                    .setTitle(`***\`🏦 Daily Bank Interest\`***`)
                     .setThumbnail(guild.iconURL())
                     .setFooter({
                         text: `${footer} • Page: ${Math.floor(i / itemsPerPage) + 1}/${totalPages}`
@@ -144,7 +143,7 @@ async function runDailyBankInterest(client) {
                     .setDescription(
                         `${top}\n` +
                         pageText +
-                        `***__Updated:__***\n${Timestamp}\n\n` +
+                        `***__Message Updated__***\n${Timestamp}\n\n` +
                         `${bottom}`
                     )
             );
