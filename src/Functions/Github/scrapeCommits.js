@@ -33,7 +33,7 @@ async function scrapeCommits(client) {
         return;
       }
 
-      logGithub('error', `Poll #${pollCount} failed. Retrying in ${GITHUB_POLL_INTERVAL_MS / 1000} seconds.`, err);
+    //  logGithub('error', `Poll #${pollCount} failed. Retrying in ${GITHUB_POLL_INTERVAL_MS / 1000} seconds.`, err);
     } finally {
       setTimeout(runPoll, GITHUB_POLL_INTERVAL_MS);
     }
