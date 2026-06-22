@@ -33,7 +33,7 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.5",
     "node": "^26.3.1",
-    "node-cron": "^4.4.1",
+    "node-cron": "^4.5.0",
     "node-fetch": "^2.7.0",
     "openai": "^6.44.0",
     "path": "^0.12.7",
