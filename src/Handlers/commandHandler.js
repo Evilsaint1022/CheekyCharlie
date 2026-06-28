@@ -104,6 +104,6 @@ module.exports = async (client) => {
     }
 
     // Print the table of commands and a success message
-    console.log(table.toString());
-    console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully loaded commands)'.bold.green); // .bold.white equivalent
+    if (process.env.DEV_MODE == "true") { console.log(table.toString()); }
+    console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully Loaded Commands)'.bold.green); // .bold.white equivalent
 };

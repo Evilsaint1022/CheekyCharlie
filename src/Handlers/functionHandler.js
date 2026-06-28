@@ -50,7 +50,7 @@ function loadFunctions(client) {
     }
 
     // Print the table of functions and success message
-    console.log(table.toString());
+    if (process.env.DEV_MODE == "true") { console.log(table.toString()); }
     console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully Loaded Functions)'.bold.green); // .bold.white equivalent
 }
 
