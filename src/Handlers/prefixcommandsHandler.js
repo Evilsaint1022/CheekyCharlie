@@ -100,6 +100,8 @@ module.exports = async (client) => {
     }
   }
 
-  if (process.env.DEV_MODE == "true") { console.log(table.toString()); }
+  if (process.env.DEV_MODE == "true") { 
+  console.log(table.toString());
   console.log('\x1b[37m%s\x1b[0m', '(✅・Successfully Loaded Prefix Commands)'.bold.green);
+  }
 };
