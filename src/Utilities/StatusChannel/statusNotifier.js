@@ -184,32 +184,38 @@ function getRuntimeCommitShas() {
   }
 }
 
-async function fetchLatestGithubHeadSha() {
-  const headers = {
-    'Accept': 'application/vnd.github+json',
-    'User-Agent': 'CheekyCharlie'
-  };
+  async function fetchLatestGithubHeadSha() {
+    const headers = {
+      'Accept': 'application/vnd.github+json',
+      'User-Agent': 'CheekyCharlie',
+      'Accept-Encoding': 'identity' // 🚨 THIS IS THE FIX
+    };
 
-  if (process.env.GITHUB_KEY) {
-    headers.Authorization = `token ${process.env.GITHUB_KEY}`;
-  }
-
-  try {
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`, {
-      headers
-    });
-
-    if (!response.ok) {
-      return null;
+    if (process.env.GITHUB_KEY) {
+      headers.Authorization = `token ${process.env.GITHUB_KEY}`;
     }
 
-    const commits = await response.json();
-    return Array.isArray(commits) ? commits[0]?.sha || null : null;
-  } catch (error) {
-    statusLog('Failed to fetch latest GitHub commit for status footer.', error);
-    return null;
+    try {
+      const response = await fetch(
+        `https://api.github.com/repos/Evilsaint1022/CheekyCHarlie/commits?per_page=1`,
+        { headers }
+      );
+
+      if (!response.ok) {
+        return null;
+      }
+
+      // 🚨 DO NOT use response.json() (this is what is crashing)
+      const text = await response.text();
+      const commits = JSON.parse(text);
+
+      return Array.isArray(commits) ? commits[0]?.sha || null : null;
+
+    } catch (error) {
+      statusLog('Failed to fetch latest GitHub commit for status footer.', error);
+      return null;
+    }
   }
-}
 
 async function buildStatusEmbed(content, options = {}) {
   const embed = new EmbedBuilder()

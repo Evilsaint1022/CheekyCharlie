@@ -113,10 +113,9 @@ setInterval(() => {
     client.user.setActivity(activity, { type: ActivityType.Custom });
 }, 5000);
 
-    // Bisechosting Finished Startup!
-    console.log(`successfully finished startup`.bold.green);
     // CheekyCharlie is Online!
     console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
+    console.log(`Successfully Finished Startup`.bold.white);
 });
 
 // Interaction Command Handler -----------------------------------------------------------------------------------------------------
