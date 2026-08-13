@@ -1,6 +1,6 @@
 <h1> 🌿 <ins>The CheekyCharlie Discord Bot</ins> 🌿 </h1>
 
-![Status](https://img.shields.io/badge/%20Status-%20Active-green)
+![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?logo=raspberrypi&logoColor=white)
