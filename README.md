@@ -81,6 +81,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 <details><summary> [🌿] <ins>Owner Prefix Commands</ins>  
   
 </summary>
+
 ‎ 
 
 ***We do have*** `Owner Commands` ***but they are nothing to be worried about.***
@@ -95,6 +96,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 <details><summary> [🌿] <ins>Everyone Prefix Commands </ins>  
   
 </summary>
+
 ‎ 
 
 **🌿 <ins>Economy</ins> 🌿**
@@ -185,6 +187,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 <details><summary> [🌿] <ins>Whitelisted Prefix Commands</ins>
 
 </summary>
+
 ‎ 
 
 **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
@@ -243,11 +246,16 @@ This is the message. Supports any Discord-native **markdown**.
 - `?set-welcome-channel` - Sets the welcome channel.
 - `?remove-welcome-channel` - Removes the set welcome channel.
 
+**🌿<ins>Status Channel Setup</ins>**
+- `?set-status-channel` - Sets Status channel for cheekycharlie.
+- `?remove-status-channel` - Removes the status channel set for cheekycharlie.
+
 </details>
 
 <details><summary> [🌿] <ins>Whitelisted Application Commands</ins>
   
 </summary>
+
 ‎ 
 
 **🌿<ins>Set-Whitelisted-Role</ins>** ( Administrator Permission Required )
