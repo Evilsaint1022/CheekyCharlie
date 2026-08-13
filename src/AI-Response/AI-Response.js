@@ -172,7 +172,7 @@ Username: ${await message.author.username}
         ...memory,
         { role: 'system', content: systemPrompt },
       ],
-      model: "meta-llama/llama-4-scout-17b-16e-instruct"
+      model: "llama-3.1-8b-instant"
 
     });
 
