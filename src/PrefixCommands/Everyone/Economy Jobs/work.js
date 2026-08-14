@@ -18,6 +18,9 @@ module.exports = {
         const userId = message.author.id;
         const username = message.author.username;
 
+        const levelsettings = await db.settings.get(message.guild.id);
+        const enabled = levelsettings?.levels || false;
+
         // Currency
         const custom = await db.settings.get(`${message.guild.id}.currencyicon`);
         const ferns = await db.default.get('Default.ferns');
@@ -37,7 +40,7 @@ module.exports = {
         // 1 week
         const week = 7 * 24 * 60 * 60 * 1000;
 
-        if (now - Taxlastpayed >= week && currentTax >= 0) {
+        if (now - Taxlastpayed >= week && currentTax > 0) {
 
             const timePassed = now - Taxlastpayed;
 
@@ -78,14 +81,13 @@ module.exports = {
             const levelsData = await db.levels.get(message.guild.id);
             const userLevels = levelsData?.[userId];
 
-            if (!userLevels) {
-                return message.reply("❌ You don't have any level data yet.");
+            if (enabled === true && !userLevels) {
+                return message.reply("❌ You don't have any level XP yet.");
             }
 
-            const levelsettings = await db.settings.get(message.guild.id);
-            const enabled = levelsettings?.levels || false;
-
+            if (enabled === true && userLevels){
             const { level } = userLevels;
+            }
 
             if (enabled === true && level < selectedJob.level) {
                 await db.workers.delete(`${userId}.job`);
