@@ -29,6 +29,7 @@ module.exports = {
 
         const currency = custom || ferns;
 
+        const currentTax = await db.tax.get(`${userId}.tax`) || 0;
         const Taxlastpayed = await db.tax.get(`${userId}.lastpayed`);
 
         const now = Date.now();
@@ -36,7 +37,7 @@ module.exports = {
         // 1 week
         const week = 7 * 24 * 60 * 60 * 1000;
 
-        if (now - Taxlastpayed >= week) {
+        if (now - Taxlastpayed >= week && currentTax >= 0) {
 
             const timePassed = now - Taxlastpayed;
 
@@ -81,9 +82,12 @@ module.exports = {
                 return message.reply("❌ You don't have any level data yet.");
             }
 
+            const levelsettings = await db.settings.get(message.guild.id);
+            const enabled = levelsettings?.levels || false;
+
             const { level } = userLevels;
 
-            if (level < selectedJob.level) {
+            if (enabled === true && level < selectedJob.level) {
                 await db.workers.delete(`${userId}.job`);
 
                 return message.reply(
