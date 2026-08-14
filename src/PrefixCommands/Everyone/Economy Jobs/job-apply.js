@@ -69,15 +69,18 @@ module.exports = {
             );
         }
 
+        const levelsettings = await db.settings.get(guildKey);
+        const enabled = levelsettings?.levels || false;
+
+
         // Level Data Fetch
         const levelsData = await db.levels.get(guildKey);
         const userLevels = levelsData?.[userId];
 
-        if (!userLevels) {
-            return message.reply("❌ You don't have any level data yet.");
-        }
-
         const { xp, level } = levelsData[userId];
+
+        if (enabled === true && userLevels) {
+            return message.reply("❌ You don't have any level XP yet.");
 
         // Level requirement check
         if (level < selectedJob.level) {
@@ -85,6 +88,8 @@ module.exports = {
                 `❌ You need to be **Level ${selectedJob.level}** to apply for **${selectedJob.name}**.\n` +
                 `_You are currently level:_ **${level}**`
             );
+        }
+
         }
 
         // Get current job
