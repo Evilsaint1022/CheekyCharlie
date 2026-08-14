@@ -140,7 +140,7 @@ module.exports = {
 
       // Add money back to wallet
       const balanceData =
-        (await db.wallet.get(userKey).catch(() => ({ balance: 0 }))) || { balance: 0 };
+        await db.wallet.get(userKey)
 
       balanceData.balance += refundAmount;
       await db.wallet.set(userKey, balanceData);
