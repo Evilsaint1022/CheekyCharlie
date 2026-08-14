@@ -35,7 +35,7 @@ module.exports = {
     // -------------------------------------------------------
     async function migrateData() {
       // ---------- INVENTORY ----------
-      let fullInventory = await db.inventory.get(guildKey).catch(() => undefined);
+      let fullInventory = await db.inventory.get(guildKey);
 
       if (fullInventory && typeof fullInventory === 'object') {
         if (fullInventory[oldKey] && !fullInventory[newKey]) {
@@ -48,8 +48,8 @@ module.exports = {
       }
 
       // ---------- WALLET ----------
-      const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
-      const newWallet = await db.wallet.get(newKey).catch(() => undefined);
+      const oldWallet = await db.wallet.get(oldKey);
+      const newWallet = await db.wallet.get(newKey);
 
       if (oldWallet && !newWallet) {
         await db.wallet.set(newKey, oldWallet);
@@ -58,8 +58,8 @@ module.exports = {
       }
 
       // ---------- BANK ----------
-      const oldBank = await db.bank.get(oldKey).catch(() => undefined);
-      const newBank = await db.bank.get(newKey).catch(() => undefined);
+      const oldBank = await db.bank.get(oldKey);
+      const newBank = await db.bank.get(newKey);
 
       if (oldBank && !newBank) {
         await db.bank.set(newKey, oldBank);
@@ -75,7 +75,7 @@ module.exports = {
     const userKey = newKey;
 
     // Load inventory
-    let fullInventory = await db.inventory.get(guildKey).catch(() => ({})) || {};
+    let fullInventory = await db.inventory.get(guildKey) || {};
     const userInventoryData = fullInventory[userKey] || { inventory: [] };
     let inventory = userInventoryData.inventory || [];
 

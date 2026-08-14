@@ -16,7 +16,7 @@ module.exports = {
     // Get mentioned user or fallback to message author
     const user =
       message.mentions.users.first() ||
-      (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null) ||
+      (args[0] ? await message.client.users.fetch(args[0]) : null) ||
       message.author;
 
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
@@ -37,7 +37,7 @@ module.exports = {
     // -------------------------------------------------------
     async function migrateData() {
       // -------- INVENTORY --------
-      let inv = await db.inventory.get(guildKey).catch(() => undefined);
+      let inv = await db.inventory.get(guildKey);
 
       if (inv && typeof inv === 'object') {
         if (inv[oldKey] && !inv[newKey]) {
@@ -50,8 +50,8 @@ module.exports = {
       }
 
       // -------- WALLET --------
-      const oldWallet = await db.wallet.get(oldKey).catch(() => undefined);
-      const newWallet = await db.wallet.get(newKey).catch(() => undefined);
+      const oldWallet = await db.wallet.get(oldKey);
+      const newWallet = await db.wallet.get(newKey);
 
       if (oldWallet && !newWallet) {
         await db.wallet.set(newKey, oldWallet);
@@ -61,8 +61,8 @@ module.exports = {
       }
 
       // -------- BANK --------
-      const oldBank = await db.bank.get(oldKey).catch(() => undefined);
-      const newBank = await db.bank.get(newKey).catch(() => undefined);
+      const oldBank = await db.bank.get(oldKey);
+      const newBank = await db.bank.get(newKey);
 
       if (oldBank && !newBank) {
         await db.bank.set(newKey, oldBank);
