@@ -182,6 +182,14 @@ async function tickStock(stockData, pendingPressure) {
 async function runStockTick(client) {
     if (!client) return;
 
+    const guild = client.guilds.cache.first();
+
+    const custom = await db.settings.get(`${guild.id}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guild.id}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
     if (runStockTick._isRunning) {
         console.log('[📈] [STOCK MARKET] Already running, skipping tick.');
         return;
@@ -220,7 +228,7 @@ async function runStockTick(client) {
                 .setTitle(`${eventIcon} MARKET EVENT: ${event.title}`)
                 .setDescription(
                     `${event.description}\n\n` +
-                    `**Impact:** \`${pctDisplay}\`  ·  **New Price:** \`${Math.round(eventPrice).toLocaleString()} Ferns\``
+                    `**Impact:** \`${pctDisplay}\`  ·  **New Price:** \`${Math.round(eventPrice).toLocaleString()} ${customname ||fernsname }\``
                 )
                 .setFooter({ text: 'FernCoin Exchange · Market Event' })
                 .setTimestamp();
@@ -253,9 +261,9 @@ async function runStockTick(client) {
 
         const embed = new EmbedBuilder()
             .setColor(embedColor)
-            .setTitle(`${emojis.ferncoin} FernCoin · FERN`)
+            .setTitle(`${emojis.ferncoin} FernCoin Stock-Market`)
             .setDescription(
-                `### ${trendEmoji} **${Math.round(price).toLocaleString()} Ferns**\n` +
+                `### ${trendEmoji} **${Math.round(price).toLocaleString()} ${customname ||fernsname }**\n` +
                 `${changeSign} \`${Math.abs(change).toFixed(2)}\` | \`${Math.abs(changePct).toFixed(2)}%\` ${pctSign}`
             )
             .addFields(
