@@ -38,15 +38,22 @@ function buildKeypadRows(sessionId) {
 }
 
 function buildKeypadContainer(session, sessionId) {
-    const { action, input, price, walletBalance, bankBalance, holdings } = session;
+    const { action, input, price, walletBalance, bankBalance, holdings, guildId } = session;
+
     const isBuy = action === 'buy';
     const amount = parseInt(input || '0', 10);
     const cost = Math.round(amount * price);
     const costLabel = isBuy ? 'Cost' : 'Earnings';
 
+    const custom = db.settings.get(`${guildId}.currencyicon`)
+    const ferns = db.default.get("Default.ferns");
+
+    const customname = db.settings.get(`${guildId}.currencyname`)
+    const fernsname = db.default.get("Default.name");
+
     const infoText = isBuy
-        ? `### 🛒 Buy FernCoins\n${emojis.ferncoin} Price: **${price.toLocaleString()} Ferns** per FERN\n💰 Wallet: **${walletBalance.toLocaleString()}**  ·  🏦 Bank: **${bankBalance.toLocaleString()}**\n📊 Available: **${(walletBalance + bankBalance).toLocaleString()} Ferns**`
-        : `### 💸 Sell FernCoins\n${emojis.ferncoin} Price: **${price.toLocaleString()} Ferns** per FERN\n📦 Your holdings: **${holdings.toLocaleString()} FERN**`;
+        ? `### 🛒 Buy FernCoins\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n💰 Wallet: **\`${walletBalance.toLocaleString()}\`**  ·  🏦 Bank: **\`${bankBalance.toLocaleString()}\`**\n📊 Available: **\`${(walletBalance + bankBalance).toLocaleString()}\` ${customname || fernsname}**`
+        : `### 💸 Sell FernCoins\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n📦 Your holdings: **\`${holdings.toLocaleString()}\` FERNCOIN**`;
 
     const container = new ContainerBuilder()
         .addTextDisplayComponents(
@@ -57,7 +64,7 @@ function buildKeypadContainer(session, sessionId) {
         )
         .addTextDisplayComponents(
             new TextDisplayBuilder().setContent(
-                `Amount: \`${input || '0'}\` FERN  ·  ${costLabel}: \`${cost.toLocaleString()}\` Ferns`
+                `Amount: \`${input || '0'}\` FERNCOIN  ·  ${costLabel}: \`${cost.toLocaleString()}\` ${customname || fernsname}`
             )
         )
         .addTextDisplayComponents(
@@ -88,6 +95,14 @@ module.exports = {
 
     async execute(interaction) {
         if (!interaction.isButton()) return;
+
+        const guildId = interaction.guild.id
+
+        const custom = db.settings.get(`${guildId}.currencyicon`)
+        const ferns = db.default.get("Default.ferns");
+
+        const customname = db.settings.get(`${guildId}.currencyname`)
+        const fernsname = db.default.get("Default.name");
 
         // ── Open Buy / Sell keypad ──────────────────────────────────────
         if (interaction.customId === 'stock_buy' || interaction.customId === 'stock_sell') {
@@ -184,7 +199,7 @@ module.exports = {
             if (totalAvailable < cost) {
                 return interaction.update({
                     components: [buildStatusContainer(
-                        `❌ Not enough Ferns.\nYou need **${cost.toLocaleString()}** but have **${totalAvailable.toLocaleString()}** total (wallet + bank).`
+                        `❌ Not enough ${customname || fernsname}.\nYou need **${cost.toLocaleString()} ${customname || fernsname}** but have **${totalAvailable.toLocaleString()} ${customname || fernsname}** total (wallet + bank).`
                     )],
                     flags: MessageFlags.IsComponentsV2
                 });
@@ -210,7 +225,7 @@ module.exports = {
 
             await applyPressure(amount);
 
-            console.log(`[📈] [STOCK BUY] ${interaction.user.username} bought ${amount} FERN for ${cost} Ferns (wallet: ${walletDeduction}, bank: ${bankDeduction})`);
+            console.log(`[📈] [STOCK BUY] ${interaction.user.username} bought ${amount} FERNCOINS for ${cost.toLocaleString()} ${customname || fernsname} (wallet: ${walletDeduction}, bank: ${bankDeduction})`);
 
             const sourceLine = bankDeduction > 0
                 ? `💰 \`${walletDeduction.toLocaleString()}\` from wallet  ·  🏦 \`${bankDeduction.toLocaleString()}\` from bank`
@@ -218,9 +233,9 @@ module.exports = {
 
             return interaction.update({
                 components: [buildStatusContainer(
-                    `✅ Bought **${amount} FERN** from 🌿 **Fern Exchange** for **${cost.toLocaleString()} Ferns**!\n` +
+                    `✅ Bought **${amount} FERNCOINS** from 🌿 **FernCoin Exchange** for **${cost.toLocaleString()} ${customname || fernsname}**!\n` +
                     `${sourceLine}\n` +
-                    `${emojis.ferncoin} Holdings: **${(currentHoldings + amount).toLocaleString()} FERN**`
+                    `${emojis.ferncoin} Holdings: **${(currentHoldings + amount).toLocaleString()} FERNCOINS**`
                 )],
                 flags: MessageFlags.IsComponentsV2
             });
@@ -232,7 +247,7 @@ module.exports = {
         if (currentHoldings < amount) {
             return interaction.update({
                 components: [buildStatusContainer(
-                    `❌ Not enough FERN.\nYou have **${currentHoldings.toLocaleString()} FERN** but tried to sell **${amount.toLocaleString()}**.`
+                    `❌ Not enough FERNCOINS.\nYou have **${currentHoldings.toLocaleString()} FERNCOINS** but tried to sell **${amount.toLocaleString()}**.`
                 )],
                 flags: MessageFlags.IsComponentsV2
             });
@@ -254,12 +269,12 @@ module.exports = {
 
         await applyPressure(-amount);
 
-        console.log(`[📈] [STOCK SELL] ${interaction.user.username} sold ${amount} FERN for ${earnings} Ferns`);
+        console.log(`[📈] [STOCK SELL] ${interaction.user.username} sold ${amount} FERNCOINS for ${earnings} ${customname || fernsname}`);
 
         return interaction.update({
             components: [buildStatusContainer(
-                `✅ Sold **${amount} FERN** to 🌿 **Fern Exchange** for **${earnings.toLocaleString()} Ferns**!\n` +
-                `${emojis.ferncoin} Holdings: **${(currentHoldings - amount).toLocaleString()} FERN**  ·  💰 Wallet: **${(currentBalance + earnings).toLocaleString()} Ferns**`
+                `✅ Sold **${amount} FERNCOINS** to 🌿 **Fern Exchange** for **${earnings.toLocaleString()} ${customname || fernsname}**!\n` +
+                `${emojis.ferncoin} Holdings: **${(currentHoldings - amount).toLocaleString()} FERNCOINS**  ·  💰 Wallet: **${(currentBalance + earnings).toLocaleString()} ${customname || fernsname}**`
             )],
             flags: MessageFlags.IsComponentsV2
         });
