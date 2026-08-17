@@ -44,7 +44,15 @@ async function showPortfolio(message) {
     const targetUser = message.mentions.users.first() || message.author;
     const userId = targetUser.id;
 
-    console.log(`[📈] [STOCKS PORTFOLIO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} — ${message.author.username} viewed ${targetUser.username}'s portfolio`);
+    const guildId = message.guild.id
+
+    const custom = await db.settings.get(`${guildId}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guildId}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
+
+    console.log(`[📈] [STOCKS PORTFOLIO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed ${targetUser.username}'s portfolio`);
 
     const stockData = await db.stock.get('global');
     const currentPrice = stockData?.price ?? 3000;
@@ -65,7 +73,7 @@ async function showPortfolio(message) {
         : [...trades].reverse().slice(0, 5).map(t => {
             const icon   = t.type === 'buy' ? '🟢' : '🔴';
             const action = t.type === 'buy' ? 'Bought' : 'Sold';
-            return `${icon} ${action} **${t.amount.toLocaleString()} FERN** @ \`${Math.round(t.pricePerFern).toLocaleString()}\` · **${t.total.toLocaleString()} Ferns** · *${timeAgo(t.timestamp)}*`;
+            return `${icon} ${action} **${t.amount.toLocaleString()} FERNCOINS** @ \`${Math.round(t.pricePerFern).toLocaleString()}\` · **${t.total.toLocaleString()} ${customname || fernsname}** · *${timeAgo(t.timestamp)}*`;
         }).join('\n');
 
     const neverTraded = holdings === 0 && totalSpent === 0 && totalEarned === 0;
@@ -77,32 +85,32 @@ async function showPortfolio(message) {
         .addFields(
             {
                 name: `${emojis.ferncoin} Holdings`,
-                value: `\`${holdings.toLocaleString()} FERN\``,
+                value: `\`${holdings.toLocaleString()} FERNCOIN\``,
                 inline: true
             },
             {
                 name: '💱 Current Price',
-                value: `\`${Math.round(currentPrice).toLocaleString()} Ferns\``,
+                value: `\`${Math.round(currentPrice).toLocaleString()} ${customname || fernsname}\``,
                 inline: true
             },
             {
                 name: '💼 Portfolio Value',
-                value: `\`${Math.round(portfolioValue).toLocaleString()} Ferns\``,
+                value: `\`${Math.round(portfolioValue).toLocaleString()} ${customname || fernsname}\``,
                 inline: true
             },
             {
                 name: '📤 Total Invested',
-                value: `\`${totalSpent.toLocaleString()} Ferns\``,
+                value: `\`${totalSpent.toLocaleString()} ${customname || fernsname}\``,
                 inline: true
             },
             {
                 name: '📥 Total Earned',
-                value: `\`${totalEarned.toLocaleString()} Ferns\``,
+                value: `\`${totalEarned.toLocaleString()} ${customname || fernsname}\``,
                 inline: true
             },
             {
                 name: `${pnlEmoji} Net P&L`,
-                value: `\`${pnlSign}${Math.round(netPnL).toLocaleString()} Ferns\``,
+                value: `\`${pnlSign}${Math.round(netPnL).toLocaleString()} ${customname || fernsname}\``,
                 inline: true
             },
             {
@@ -120,7 +128,15 @@ async function showPortfolio(message) {
 // Leaderboard
 // ─────────────────────────────────────────────────────────
 async function showLeaderboard(message) {
-    console.log(`[📈] [STOCKS LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} — ${message.author.username}`);
+    console.log(`[📈] [STOCKS LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed the stocks leaderboard`);
+
+    const guildId = message.guild.id
+
+    const custom = await db.settings.get(`${guildId}.currencyicon`)
+    const ferns = await db.default.get("Default.ferns");
+
+    const customname = await db.settings.get(`${guildId}.currencyname`)
+    const fernsname = await db.default.get("Default.name");
 
     const stockData = await db.stock.get('global');
     const currentPrice = stockData?.price ?? 3000;
@@ -162,7 +178,7 @@ async function showLeaderboard(message) {
                 const pnlIcon = e.netPnL >= 0 ? '📈' : '📉';
                 return (
                     `${medal} <@${e.userId}>\n` +
-                    `✦ ${emojis.ferncoin} \`${e.holdings.toLocaleString()} FERN\`  ·  💼 \`${Math.round(e.portfolioValue).toLocaleString()} Ferns\`  ·  ${pnlIcon} \`${pnlSign}${Math.round(e.netPnL).toLocaleString()}\``
+                    `✦ ${emojis.ferncoin} \`${e.holdings.toLocaleString()} FERNCOINS\`  ·  💼 \`${Math.round(e.portfolioValue).toLocaleString()} ${customname || fernsname}\`  ·  ${pnlIcon} \`${pnlSign}${Math.round(e.netPnL).toLocaleString()}\``
                 );
             }).join('\n\n');
 
@@ -172,7 +188,7 @@ async function showLeaderboard(message) {
             .setColor(0x207e37)
             .addFields({
                 name: '💱 Current Price',
-                value: `\`${Math.round(currentPrice).toLocaleString()} Ferns\` per FERN`,
+                value: `\`${Math.round(currentPrice).toLocaleString()} ${customname || fernsname}\` per FERNCOIN`,
                 inline: true
             })
             .setThumbnail(message.guild.iconURL())

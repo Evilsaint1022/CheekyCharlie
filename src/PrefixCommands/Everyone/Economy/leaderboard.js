@@ -40,7 +40,7 @@ module.exports = {
     const guildKey = `${message.guild.id}`;
 
     console.log(
-      `[🌿] [LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} (${message.guild.id}) | ` +
+      `[🌿] [LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - ` +
       `${message.author.tag} used '${type}' leaderboard`
     );
 
