@@ -182,7 +182,7 @@ async function tickStock(stockData, pendingPressure) {
 async function runStockTick(client) {
     if (!client) return;
 
-    const guild = client.guilds.cache.first();
+    for (const guild of client.guilds.cache.values()) {
 
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -288,7 +288,9 @@ async function runStockTick(client) {
                 .setLabel('Sell FernCoin')
                 .setEmoji({ name: 'FernCoin', id: '1506670591556583464' })
                 .setStyle(ButtonStyle.Danger)
+        
         );
+    
 
         for (const guild of client.guilds.cache.values()) {
             try {
@@ -338,6 +340,7 @@ async function runStockTick(client) {
                     if (message)
                      await message.edit({ content: '**📢 No significant market events at this time.**', embeds: [] }).catch(() => null);
                 }
+                
 
             } catch (err) {
                 console.warn(`[📈] [STOCK MARKET] Failed for guild ${guild.name}:`, err.message);
@@ -345,11 +348,12 @@ async function runStockTick(client) {
         }
 
         console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
-
-    } catch (err) {
-        console.error('[📈] [STOCK MARKET] Unhandled error:', err);
-    } finally {
-        runStockTick._isRunning = false;
+    
+        } catch (err) {
+            console.error('[📈] [STOCK MARKET] Unhandled error:', err);
+        } finally {
+            runStockTick._isRunning = false;
+        }
     }
 }
 
