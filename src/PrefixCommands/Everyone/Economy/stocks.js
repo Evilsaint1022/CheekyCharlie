@@ -2,6 +2,8 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentTyp
 const db = require('../../../Handlers/database');
 const emojis = require('../../../Utilities/Stocks/stocks_ui');
 
+const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+
 function timeAgo(ts) {
     const diff = Date.now() - ts;
     const d = Math.floor(diff / 86400000);
@@ -80,46 +82,53 @@ async function showPortfolio(message) {
 
     const embed = new EmbedBuilder()
         .setColor(neverTraded ? 0x6e7681 : embedColor)
-        .setTitle(`${emojis.ferncoin} FernCoin Portfolio`)
-        .setAuthor({ name: targetUser.displayName || targetUser.username, iconURL: targetUser.displayAvatarURL() })
+        .setTitle(`***${emojis.ferncoin} __${targetUser.username} FernCoin Portfolio__***`)
+        .setThumbnail(targetUser.displayAvatarURL())
         .addFields(
             {
                 name: `${emojis.ferncoin} Holdings`,
-                value: `\`${holdings.toLocaleString()} FERNCOIN\``,
+                value: `\`${holdings.toLocaleString()}\` FERNCOIN`,
                 inline: true
             },
             {
                 name: '💱 Current Price',
-                value: `\`${Math.round(currentPrice).toLocaleString()} ${customname || fernsname}\``,
+                value: `\`${Math.round(currentPrice).toLocaleString()}\` ${customname || fernsname}`,
                 inline: true
             },
             {
                 name: '💼 Portfolio Value',
-                value: `\`${Math.round(portfolioValue).toLocaleString()} ${customname || fernsname}\``,
+                value: `\`${Math.round(portfolioValue).toLocaleString()}\` ${customname || fernsname}`,
                 inline: true
             },
             {
                 name: '📤 Total Invested',
-                value: `\`${totalSpent.toLocaleString()} ${customname || fernsname}\``,
+                value: `\`${totalSpent.toLocaleString()}\` ${customname || fernsname}`,
                 inline: true
             },
             {
                 name: '📥 Total Earned',
-                value: `\`${totalEarned.toLocaleString()} ${customname || fernsname}\``,
+                value: `\`${totalEarned.toLocaleString()}\` ${customname || fernsname}`,
                 inline: true
             },
             {
                 name: `${pnlEmoji} Net P&L`,
-                value: `\`${pnlSign}${Math.round(netPnL).toLocaleString()} ${customname || fernsname}\``,
+                value: `\`${pnlSign}${Math.round(netPnL).toLocaleString()}\` ${customname || fernsname}`,
                 inline: true
+            },
+            {
+                name: ``,
+                value: `${middle}`
             },
             {
                 name: `📜 Recent Trades (${trades.length} total)`,
                 value: tradeHistory
-            }
+            },       
+            {
+                name: ``,
+                value: `${middle}`
+            },
         )
-        .setFooter({ text: 'FernCoin Exchange · ?stocks leaderboard for rankings' })
-        .setTimestamp();
+        .setFooter({ text: `🌿 FernCoin Exchange · ?stocks leaderboard for Rankings 🌿` })
 
     return message.reply({ embeds: [embed] });
 }
@@ -184,13 +193,8 @@ async function showLeaderboard(message) {
 
         return new EmbedBuilder()
             .setTitle(`**╭─── ${emojis.ferncoin} FernCoin Leaderboard ───╮**`)
-            .setDescription(lines + `\n\n**╰──────[ Your Rank: ${userRankLabel} ]───────╯**`)
+            .setDescription(`***Current Price***\n${custom || ferns} \`${Math.round(currentPrice).toLocaleString()}\` ${customname || fernsname} per FernCoin\n\n` + lines + `\n\n**╰──────[ Your Rank: ${userRankLabel} ]───────╯**`)
             .setColor(0x207e37)
-            .addFields({
-                name: '💱 Current Price',
-                value: `\`${Math.round(currentPrice).toLocaleString()} ${customname || fernsname}\` per FERNCOIN`,
-                inline: true
-            })
             .setThumbnail(message.guild.iconURL())
             .setFooter({
                 text: `Page ${page + 1} of ${totalPages} · FernCoin Exchange`,
