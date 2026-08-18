@@ -31,7 +31,7 @@ module.exports = {
     const fernsname = await db.default.get("Default.name");
 
     const sender = message.author;
-    const bar = `**─────────────────────────────────**`;
+    const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 
     // --------------------
     // Argument parsing
@@ -84,10 +84,10 @@ module.exports = {
       const taxembed = new EmbedBuilder()
         .setTitle(`**🧾・__Tax Payment Successful!__**`)
         .setDescription(
-          `${bar}\n` +
-          `〉💰 **__Paid Amount:__ ${custom || ferns} \`${payAmount.toLocaleString()}\`**\n` +
-          `〉⚠️ **__Remaining Tax:__ ${custom || ferns} \`${newTax.toLocaleString()}\`**\n` +
-          `${bar}\n`
+          `${middle}\n` +
+          `ㅤ 💰 **__Paid Amount:__ ${custom || ferns} \`${payAmount.toLocaleString()}\`**\n` +
+          `ㅤ ⚠️ **__Remaining Tax:__ ${custom || ferns} \`${newTax.toLocaleString()}\`**\n` +
+          `${middle}\n`
         )
         .setFooter({ text: `🌿 Inland Revenue Department` })
         .setTimestamp();
@@ -157,10 +157,10 @@ module.exports = {
       const paymentembed = new EmbedBuilder()
         .setTitle(`**🌿・__Payment Successful!__**`)
         .setDescription(
-          `${bar}\n` +
-          `〉💰 **__Paid:__**     💰 **__Receiver:__**\n` +
-          `〉**${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
-          `${bar}\n`
+          `${middle}\n` +
+          `ㅤ 💰 **__Paid:__**     💰 **__Receiver:__**\n` +
+          `ㅤ **${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
+          `${middle}\n`
         )
         .setFooter({ text: `🌿 ${message.guild.name}` })
         .setTimestamp();
