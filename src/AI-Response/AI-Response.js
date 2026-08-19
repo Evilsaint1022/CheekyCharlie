@@ -31,7 +31,7 @@ async function handleAIMessage(client, message) {
     return;
   };
 
-  const openai = new OpenAI({ apiKey: GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1" });
+  const openai = new OpenAI({ apiKey: GROQ_API_KEY, baseURL: "https://openrouter.ai/api/v1" });
 
   const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
@@ -172,7 +172,7 @@ Username: ${await message.author.username}
         ...memory,
         { role: 'system', content: systemPrompt },
       ],
-      model: "llama-3.1-8b-instant"
+      model: "aion-labs/aion-3.0-mini"
 
     });
 
