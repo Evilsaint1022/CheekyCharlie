@@ -13,7 +13,7 @@ let runningSince = null;
 
 const GuildTimeoutMap = new Map();
 
-const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://api.groq.com/openai/v1", timeout: 15000 });
+const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://openrouter.ai/api/v1", timeout: 15000 });
 
 const API_TIMEOUT_MS = 20000;
 
@@ -127,7 +127,7 @@ async function checkAIDeadchat(client) {
                         messages: [
                             { role: 'system', content: finalPrompt },
                         ],
-                        model: "openai/gpt-oss-120b",
+                        model: "anthropic/claude-sonnet-5",
                         temperature: 1.5,
                     }),
                     API_TIMEOUT_MS,

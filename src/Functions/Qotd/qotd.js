@@ -17,7 +17,7 @@ let scheduledTask = null;
 
 const openai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1",
+  baseURL: "https://openrouter.ai/api/v1",
   timeout: 15000
 });
 
@@ -67,7 +67,7 @@ async function sendQuestionOfTheDay(client) {
       const response = await withTimeout(
         openai.chat.completions.create({
           messages: [{ role: 'system', content: prompt }],
-          model: "openai/gpt-oss-120b",
+          model: "anthropic/claude-sonnet-5",
           temperature: 1.5
         }),
         API_TIMEOUT_MS,
