@@ -28,7 +28,7 @@ let pendingPressureMemory = 0;
 
 const groq = new OpenAI({
     apiKey: process.env.GROQ_API_KEY,
-    baseURL: 'https://api.groq.com/openai/v1',
+    baseURL: 'https://openrouter.ai/api/v1',
     timeout: 10000
 });
 
@@ -75,7 +75,7 @@ async function generateEventText(isPositive) {
     try {
         const response = await groq.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
-            model: 'openai/gpt-oss-120b',
+            model: 'anthropic/claude-sonnet-5',
             temperature: 1.1,
             max_tokens: 150
         });
