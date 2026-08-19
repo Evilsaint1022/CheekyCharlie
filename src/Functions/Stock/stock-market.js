@@ -182,7 +182,7 @@ async function tickStock(stockData, pendingPressure) {
 async function runStockTick(client) {
     if (!client) return;
 
-    for (const guild of client.guilds.cache.values()) {
+    const guild = client.guilds.cache.values();
 
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -290,15 +290,15 @@ async function runStockTick(client) {
                 .setStyle(ButtonStyle.Danger)
         
         );
-        
+            for (const guild of client.guilds.cache.values()) {
             try {
                 const settings = await db.settings.get(`${guild.id}`) || {};
-                if (!settings || !settings.stockchannel) continue;
+                if (!settings || !settings.stockchannel);
 
                 const channel = guild.channels.cache.get(settings.stockchannel)
                     || await guild.channels.fetch(settings.stockchannel).catch(() => null);
 
-                if (!channel) continue;
+                if (!channel);
 
                 const eventmessageid = await channel.messages.fetch(settings.stockeventmessageid).catch(() => null);
 
@@ -343,17 +343,17 @@ async function runStockTick(client) {
             } catch (err) {
                 console.warn(`[📈] [STOCK MARKET] Failed for guild ${guild.name}:`, err.message);
             }
-        
+        }
 
         console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
-    
+
         } catch (err) {
             console.error('[📈] [STOCK MARKET] Unhandled error:', err);
         } finally {
             runStockTick._isRunning = false;
         }
-    }
-}
+        
+      };
 
 module.exports = async (client) => {
     if (!client) {
