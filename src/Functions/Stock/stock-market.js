@@ -290,9 +290,7 @@ async function runStockTick(client) {
                 .setStyle(ButtonStyle.Danger)
         
         );
-    
-
-        for (const guild of client.guilds.cache.values()) {
+        
             try {
                 const settings = await db.settings.get(`${guild.id}`) || {};
                 if (!settings || !settings.stockchannel) continue;
@@ -345,7 +343,7 @@ async function runStockTick(client) {
             } catch (err) {
                 console.warn(`[📈] [STOCK MARKET] Failed for guild ${guild.name}:`, err.message);
             }
-        }
+        
 
         console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Price: ${prev.toFixed(2)} → ${price.toFixed(2)} (${isUp ? '+' : ''}${change.toFixed(2)}, ${(volatility * 100).toFixed(1)}% vol)`);
     
