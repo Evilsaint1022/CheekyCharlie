@@ -2,11 +2,13 @@ const cron = require('node-cron');
 const db = require("./../../Handlers/database");
 const { EmbedBuilder } = require('discord.js');
 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// Testing Timer ( Keeping in for future use )
+// const time = "*/60 * * * * *"; // Every 60 seconds
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 // Daily Bank Interest Pacific/Auckland Correct Timer --> (DO NOT REMOVE!)
 const time = '0 12 * * *'; // every day at 12:00 PM
-
-// Testing Timer ( Keeping in for future use )
-// const time = "*/10 * * * * *"; // Every 10 seconds
 
 async function runDailyBankInterest(client) {
     if (!client) {
@@ -55,9 +57,9 @@ async function runDailyBankInterest(client) {
 
     const bankEntries = migratedEntries;
 
-    const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const splitter = `**─────────────────────────────────**`;
+    const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·\n\n`;
+    const bottom = `\n· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+    const splitter = `***─────────────────────────────────***\n`;
     const footer = `🌿・Thanks for using Bank-NZ`;
 
     // Apply interest once to all users and collect results
@@ -104,23 +106,21 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-
+        const nztimestamp = `\n***[ \`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\` ]***\n`
         let embedsToSend = [];
-        let currentDescription = ``;
+        let currentDescription = `***Thanks for using The Bank System ❤️***\n${splitter}`;
 
         for (const { username, amount, interest, newBalance } of interestResults) {
+
             const userBlock =
-                `### 🌿・**__${username}__**\n${splitter}\n` +
-                `- **__Old Bank__** ${custom || ferns}・\`${amount}\`\n` +
-                `- **__Interest Gained__** ${custom || ferns}・\`${interest}\`\n` +
-                `- **__New Balance__** ${custom || ferns}・\`${newBalance}\`\n${splitter}\n\n`;
+                `🌿***${username}:***ㅤ ㅤ ***${custom || ferns} \`${amount}\`***ㅤ ㅤ***+\`${interest}\`***ㅤ ㅤ***${custom || ferns} \`${newBalance}\`***\n`;
 
-            if (!currentDescription) currentDescription = top + "\n";
+            if (!currentDescription) currentDescription = splitter + "";
 
-            if ((currentDescription + userBlock + bottom).length > 3500) {
-                currentDescription += bottom;
+            if ((currentDescription + userBlock).length > 3600) {
+                currentDescription += nztimestamp;
                 embedsToSend.push(currentDescription);
-                currentDescription = top + "\n" + userBlock;
+                currentDescription = splitter + "" + userBlock;
             } else {
                 currentDescription += userBlock;
             }
@@ -129,7 +129,7 @@ async function runDailyBankInterest(client) {
         }
 
         if (currentDescription) {
-            currentDescription += bottom;
+            currentDescription += nztimestamp;
             embedsToSend.push(currentDescription);
         }
 
@@ -137,9 +137,8 @@ async function runDailyBankInterest(client) {
             for (let i = 0; i < embedsToSend.length; i++) {
                 const embed = new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(i === 0 ? `**💰・__Daily Bank Interest__**` : null)
+                    .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
                     .setDescription(embedsToSend[i])
-                    .setFooter({ text: footer })
                     .setThumbnail(guild.iconURL());
 
                 await channel.send({
