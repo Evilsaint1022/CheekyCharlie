@@ -48,7 +48,7 @@ client.startupTime = Math.floor(Date.now() / 1000);
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
-    await sendStatusMessage(client, 'Cheeky Charlie is back online.', {
+    await sendStatusMessage(client, 'CheekyCharlie is back online.', {
       includeCommitFooter: true
     });
 
