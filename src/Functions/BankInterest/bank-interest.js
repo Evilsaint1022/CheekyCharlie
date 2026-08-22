@@ -146,7 +146,7 @@ async function runDailyBankInterest(client) {
             for (let i = 0; i < embedsToSend.length; i++) {
                 const embed = new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(i === 0 ? `💰 Daily Bank Interest` : null)
+                    .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL());
 
