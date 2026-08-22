@@ -86,9 +86,11 @@ async function runDailyBankInterest(client) {
 
     // Per-guild: send to channel if configured, otherwise just log
     for (const guild of client.guilds.cache.values()) {
-        const settings = await db.settings.get(`${guild.id}`);
+        const settings = await db.settings.get(`${guild.id}`) || {};
         const custom = await db.settings.get(`${guild.id}.currencyicon`);
         const ferns = await db.default.get("Default.ferns");
+
+        const existingMessage = settings.bankinterestmessageid;
 
         const hasChannel = settings && settings.bankinterest;
         let channel = null;
@@ -133,6 +135,29 @@ async function runDailyBankInterest(client) {
             embedsToSend.push(currentDescription);
         }
 
+        if (existingMessage) {
+
+        const message = channel.messages.cache.get(existingMessage)
+            || await channel.messages.fetch(existingMessage).catch(() => null);
+
+
+        if (message) {
+
+            for (let i = 0; i < embedsToSend.length; i++) {
+                const embed = new EmbedBuilder()
+                    .setColor(0x207e37)
+                    .setTitle(i === 0 ? `💰 Daily Bank Interest` : null)
+                    .setDescription(embedsToSend[i])
+                    .setThumbnail(guild.iconURL());
+
+                await message.edit({
+                    embeds: [embed],
+                    allowedMentions: { parse: [] }
+                });
+            }
+        }
+            } else {
+
         try {
             for (let i = 0; i < embedsToSend.length; i++) {
                 const embed = new EmbedBuilder()
@@ -141,16 +166,18 @@ async function runDailyBankInterest(client) {
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL());
 
-                await channel.send({
+                let message = await channel.send({
                     embeds: [embed],
                     allowedMentions: { parse: [] }
-                });
-            }
-        } catch (err) {
-            console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
-        }
-    }
+                })
 
+                await db.settings.set(`${guild.id}.bankinterestmessageid`, message.id);
+            }
+                } catch (err) {
+                    console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
+                }
+            }
+        }
     } catch (err) {
         console.error('[💰] [Bank Interest] Unhandled error:', err);
     } finally {
