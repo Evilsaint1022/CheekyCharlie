@@ -25,7 +25,7 @@ module.exports = {
         const sub = args[0]?.toLowerCase();
 
         if (!sub || sub === 'portfolio' || sub === 'p') {
-            return showPortfolio(message);
+            return showPortfolio(message, args);
         }
         if (sub === 'leaderboard' || sub === 'lb') {
             return showLeaderboard(message);
@@ -42,8 +42,16 @@ module.exports = {
 // ─────────────────────────────────────────────────────────
 // Portfolio
 // ─────────────────────────────────────────────────────────
-async function showPortfolio(message) {
-    const targetUser = message.mentions.users.first() || message.author;
+async function showPortfolio(message, args) {
+    const author = message.author;
+
+    const targetUser =
+        message.mentions.users.first() ||
+        (args[1]
+            ? await message.client.users.fetch(args[1]).catch(() => null)
+            : null) ||
+        author;
+
     const userId = targetUser.id;
 
     const guildId = message.guild.id
@@ -82,7 +90,7 @@ async function showPortfolio(message) {
 
     const embed = new EmbedBuilder()
         .setColor(neverTraded ? 0x6e7681 : embedColor)
-        .setTitle(`***${emojis.ferncoin} __${targetUser.username} FernCoin Portfolio__***`)
+        .setTitle(`***🌿 \`${targetUser.username} FernCoin Portfolio\` 🌿***`)
         .setThumbnail(targetUser.displayAvatarURL())
         .addFields(
             {
@@ -192,8 +200,8 @@ async function showLeaderboard(message) {
             }).join('\n\n');
 
         return new EmbedBuilder()
-            .setTitle(`**╭─── ${emojis.ferncoin} FernCoin Leaderboard ───╮**`)
-            .setDescription(`***Current Price***\n${custom || ferns} \`${Math.round(currentPrice).toLocaleString()}\` ${customname || fernsname} per FernCoin\n\n` + lines + `\n\n**╰──────[ Your Rank: ${userRankLabel} ]───────╯**`)
+            .setTitle(`***╭─── ${emojis.ferncoin} \`FernCoin Leaderboard\` ───╮***`)
+            .setDescription(`***Current Price***\n${custom || ferns} \`${Math.round(currentPrice).toLocaleString()}\` ${customname || fernsname} per FernCoin\n\n` + lines + `\n\n***╰──────[ Your Rank: ${userRankLabel} ]───────╯***`)
             .setColor(0x207e37)
             .setThumbnail(message.guild.iconURL())
             .setFooter({
