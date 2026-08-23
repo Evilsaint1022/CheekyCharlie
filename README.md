@@ -36,6 +36,7 @@ https://top.gg/bot/1495254230787817564
 🌿・[TENOR](https://tenor.com/gifapi)  
 🌿・[CAT API](https://thecatapi.com/)  
 🌿・[DOG API](https://thedogapi.com/)  
+🌿・[OPENROUTER](https://openrouter.ai/)  
 🌿・[SIMPSONS API](https://thesimpsonsapi.com/)  
 🌿・[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)  
 
