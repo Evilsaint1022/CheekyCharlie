@@ -1,6 +1,8 @@
 // EXCLUDE
 require('dotenv').config({ quiet: true });
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 const {
   owner,
   repo,
@@ -53,16 +55,41 @@ async function sendCommitNotification(client, commit) {
 
     await new Promise(resolve => setTimeout(resolve, 5000));
 
-    const imageUrl =
-  `https://opengraph.githubassets.com/1/${owner}/${repo}/commit/${sha}?t=${Date.now()}`;
+    const imageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}/commit/${sha}?t=${Date.now()}`;
+
+    const placeholderPath = path.join(__dirname, '../Utilities/Github/repostoredimage.png');
+
+    let image;
+    let attachment = null;
+
+    try {
+      const response = await fetch(imageUrl);
+
+      if (response.ok) {
+        image = imageUrl;
+      } else {
+        throw new Error(`GitHub image returned ${response.status}`);
+      }
+    } catch {
+      if (fs.existsSync(placeholderPath)) {
+        attachment = new AttachmentBuilder(placeholderPath, {
+          name: 'repostoredimage.png'
+        });
+
+        image = 'attachment://repostoredimage.png';
+      } else {
+        logGithub('warn', `Placeholder image not found: ${placeholderPath}`);
+      }
+    }
+
 
     const embed = new EmbedBuilder()
-      .setDescription(`# ***🌿 \`${repo} Updates\`*** 🌿\n### ${commitlink}\n${middle}\n${centeredmessage}\n\n${centeredauthor}\n${middle}`)
-      .setImage(imageUrl)
+      .setDescription(`## ***🌿 \`${repo} Updates\`*** 🌿\n### ${commitlink}\n${middle}\n${centeredmessage}\n\n${centeredauthor}\n${middle}`)
+      .setImage(image)
       .setColor(0x207e37)
       .setTimestamp(new Date());
 
-    await channel.send({ embeds: [embed] });
+    await channel.send({ embeds: [embed], ...(attachment ? { files: [attachment] } : {})});
 
     const nextSentShas = [...state.sentShas.filter((savedSha) => savedSha !== sha), sha].slice(-MAX_STORED_SHAS);
     await saveGithubState({
