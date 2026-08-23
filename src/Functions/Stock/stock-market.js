@@ -531,6 +531,9 @@ async function runStockTick(client) {
                     }
                 }
 
+                const emoji = emojis.ferncoin;
+                const emojiId = emoji.match(/\d+/)?.[0];
+
                 /*
                  * Main stock-market embed.
                  */
@@ -538,10 +541,9 @@ async function runStockTick(client) {
                     new EmbedBuilder()
                         .setColor(embedColor)
                         .setTitle(
-                            `***🌿 \`The Stock-Market\` 🌿***`
+                            `***${emojis.ferncoin} \`FernCoin Stock-Market\`***`
                         )
                         .setDescription(
-                            `***Type: ${emojis.ferncoin} FernCoin***\n` +
                             `### ${trendEmoji} ` +
                             `**${currencyIcon} ` +
                             `${Math.round(price).toLocaleString()} ` +
@@ -551,7 +553,7 @@ async function runStockTick(client) {
                             `\`${Math.abs(changePct).toFixed(2)}%\` ` +
                             `${pctSign}`
                         )
-                        .setThumbnail(guild.iconURL())
+                        .setThumbnail(`https://cdn.discordapp.com/emojis/${emojiId}.png`)
                         .addFields({
                             name: '📊 Trend',
                             value: trendBar,
