@@ -561,7 +561,7 @@ async function runStockTick(client) {
                             'attachment://ferncoin-chart.png'
                         )
                         .setFooter({
-                            text: `${emojis.ferncoin} FernCoin Exchange`
+                            text: `🌿 FernCoin Exchange`
                         })
                         .setTimestamp();
 
@@ -627,7 +627,7 @@ async function runStockTick(client) {
                                 `${currencyName}\``
                             )
                             .setFooter({
-                                text: `${emojis.ferncoin} FernCoin Exchange · Market Event`
+                                text: `🌿 FernCoin Exchange · Market Event`
                             })
                             .setTimestamp();
                 }
