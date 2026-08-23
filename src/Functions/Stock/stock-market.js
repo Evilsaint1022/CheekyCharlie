@@ -540,10 +540,8 @@ async function runStockTick(client) {
                 const embed =
                     new EmbedBuilder()
                         .setColor(embedColor)
-                        .setTitle(
-                            `***${emojis.ferncoin} \`FernCoin Stock-Market\`***`
-                        )
                         .setDescription(
+                            `## ***${emojis.ferncoin} \`FernCoin Stock-Market\`***\n` +
                             `### ${trendEmoji} ` +
                             `**${currencyIcon} ` +
                             `${Math.round(price).toLocaleString()} ` +
@@ -563,7 +561,7 @@ async function runStockTick(client) {
                             'attachment://ferncoin-chart.png'
                         )
                         .setFooter({
-                            text: 'FernCoin Exchange'
+                            text: `${emojis.ferncoin} FernCoin Exchange`
                         })
                         .setTimestamp();
 
@@ -629,8 +627,7 @@ async function runStockTick(client) {
                                 `${currencyName}\``
                             )
                             .setFooter({
-                                text:
-                                    'FernCoin Exchange · Market Event'
+                                text: `${emojis.ferncoin} FernCoin Exchange · Market Event`
                             })
                             .setTimestamp();
                 }
@@ -683,13 +680,13 @@ async function runStockTick(client) {
                     if (eventEmbed) {
                         await eventMessage.edit({
                             content:
-                                '**📢 New Stock Market Event!**',
+                                '***📢 \`New Stock Market Event!\`***',
                             embeds: [eventEmbed]
                         }).catch(() => null);
                     } else {
                         await eventMessage.edit({
                             content:
-                                '**📢 No significant market events at this time.**',
+                                '***📢 \`No significant market events at this time.\`***',
                             embeds: []
                         }).catch(() => null);
                     }
