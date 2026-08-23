@@ -10,9 +10,11 @@ const {
   logGithub
 } = require('./github-state');
 
-const discordChannelId = '1500835312912564294'; // Real channel for commit notifications.
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// const discordChannelId = '1508843915577528441'; // This is for testing purposes.
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-// const discordChannelId = '1512940416167710862'; // This is for testing purposes.
+const discordChannelId = '1500835312912564294'; // Production Channel for commit notifications.
 
 async function sendCommitNotification(client, commit) {
   try {
@@ -29,13 +31,13 @@ async function sendCommitNotification(client, commit) {
       return;
     }
 
-    const middle =    `**✦━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✦**`;
+    const middle =    `**━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━**`;
     const formattedMessage = message.length > 1200
       ? `${message.slice(0, 1197)}...`
       : message;
-    const centeredmessage = `**${formattedMessage}**`;
-    const centeredauthor = `〉**The Author: \`${authorName}\`**`;
-    const commitlink = `ㅤㅤㅤ[🔗・_Commit Link Here_](${htmlUrl})`;
+    const centeredmessage = `***${formattedMessage}***`;
+    const centeredauthor = `〉***The Author: \`${authorName}\`***`;
+    const commitlink = `ㅤㅤㅤ[🔗 Commit Link Here](${htmlUrl})`;
 
     const state = await getGithubState();
 
@@ -55,7 +57,7 @@ async function sendCommitNotification(client, commit) {
   `https://opengraph.githubassets.com/1/${owner}/${repo}/commit/${sha}?t=${Date.now()}`;
 
     const embed = new EmbedBuilder()
-      .setDescription(`# 🌿 **__${repo} Updates__** 🌿\n### ${commitlink}\n${middle}\n‎\n${centeredmessage}\n‎\n${centeredauthor}\n${middle}`)
+      .setDescription(`# ***🌿 \`${repo} Updates\`*** 🌿\n### ${commitlink}\n${middle}\n${centeredmessage}\n\n${centeredauthor}`)
       .setImage(imageUrl)
       .setColor(0x207e37)
       .setTimestamp(new Date());
