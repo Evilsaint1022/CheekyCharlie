@@ -538,9 +538,10 @@ async function runStockTick(client) {
                     new EmbedBuilder()
                         .setColor(embedColor)
                         .setTitle(
-                            `${emojis.ferncoin} FernCoin Stock-Market`
+                            `***🌿 \`The Stock-Market\` 🌿***`
                         )
                         .setDescription(
+                            `***Type: ${emojis.ferncoin} FernCoin***\n` +
                             `### ${trendEmoji} ` +
                             `**${currencyIcon} ` +
                             `${Math.round(price).toLocaleString()} ` +
@@ -550,6 +551,7 @@ async function runStockTick(client) {
                             `\`${Math.abs(changePct).toFixed(2)}%\` ` +
                             `${pctSign}`
                         )
+                        .setThumbnail(guild.iconURL())
                         .addFields({
                             name: '📊 Trend',
                             value: trendBar,
