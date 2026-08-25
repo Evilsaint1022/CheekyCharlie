@@ -85,8 +85,8 @@ module.exports = {
         .setTitle(`**🧾・__Tax Payment Successful!__**`)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid Amount:__ ${custom || ferns} \`${payAmount.toLocaleString()}\`**\n` +
-          `ㅤ ⚠️ **__Remaining Tax:__ ${custom || ferns} \`${newTax.toLocaleString()}\`**\n` +
+          `ㅤ 💰 ***__Paid Amount:__  __Remaining Tax:__***\n` +
+          `ㅤ ㅤ ${custom || ferns} \`${payAmount.toLocaleString()}\`     ${custom || ferns} \`${newTax.toLocaleString()}\`\n` +
           `${middle}\n`
         )
         .setFooter({ text: `🌿 Inland Revenue Department` })
