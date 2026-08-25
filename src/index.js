@@ -48,7 +48,7 @@ client.startupTime = Math.floor(Date.now() / 1000);
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
-    await sendStatusMessage(client, 'CheekyCharlie is back online.', {
+    await sendStatusMessage(client, `***\`CheekyCharlie is back online.\`***`, {
       includeCommitFooter: true
     });
 
@@ -202,7 +202,7 @@ process.once('SIGINT', () => {
 });
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
-sendEarlyStatusMessage('Starting...').catch((error) => {
+sendEarlyStatusMessage('***\`Starting...\`***').catch((error) => {
   console.error('Failed to send early startup status message:', error);
 });
 
