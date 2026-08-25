@@ -76,6 +76,8 @@ module.exports = {
             job => job.id === selectedJobId
         );
 
+        if (enabled) {
+
         // Check job level requirement (and fix invalid jobs automatically)
         if (selectedJob && selectedJob.level) {
             const levelsData = await db.levels.get(message.guild.id);
@@ -98,6 +100,7 @@ module.exports = {
                 );
             }
         }
+    }
 
         // Job missing
         if (!selectedJob) {

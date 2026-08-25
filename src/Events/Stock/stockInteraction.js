@@ -52,8 +52,8 @@ function buildKeypadContainer(session, sessionId) {
     const fernsname = db.default.get("Default.name");
 
     const infoText = isBuy
-        ? `### 🛒 Buy FernCoins\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n💰 Wallet: **\`${walletBalance.toLocaleString()}\`**  ·  🏦 Bank: **\`${bankBalance.toLocaleString()}\`**\n📊 Available: **\`${(walletBalance + bankBalance).toLocaleString()}\` ${customname || fernsname}**`
-        : `### 💸 Sell FernCoins\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n📦 Your holdings: **\`${holdings.toLocaleString()}\` FERNCOIN**`;
+        ? `### 🛒 \`Buy FernCoins\`\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n💰 Wallet: **\`${walletBalance.toLocaleString()}\`**  ·  🏦 Bank: **\`${bankBalance.toLocaleString()}\`**\n📊 Available: **\`${(walletBalance + bankBalance).toLocaleString()}\` ${customname || fernsname}**`
+        : `### 💸 \`Sell FernCoins\`\n${emojis.ferncoin} Price: **\`${price.toLocaleString()}\` ${customname || fernsname}** per FERNCOIN\n📦 Your holdings: **\`${holdings.toLocaleString()}\` FERNCOIN**`;
 
     const container = new ContainerBuilder()
         .addTextDisplayComponents(

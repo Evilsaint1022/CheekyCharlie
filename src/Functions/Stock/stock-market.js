@@ -15,14 +15,15 @@ const emojis = require('../../Utilities/Stocks/stocks_ui');
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // const CRON_SCHEDULE = '*/2 * * * *'; // Every 2 minutes for testing
 // const EVENT_CHANCE = 0.5; // 50% chance of event every tick for testing
+// const EVENT_CHANCE = 0.9; // 90% chance of event every tick for testing
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 // Production settings:
 const CRON_SCHEDULE = '*/10 * * * *'; // Every 10 minutes
+const EVENT_CHANCE = 0.02;
 const HISTORY_MAX = 50;
 const STARTING_PRICE = 3000;
 const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward this
-const EVENT_CHANCE = 0.02;
 
 let pendingPressureMemory = 0;
 
@@ -615,16 +616,17 @@ async function runStockTick(client) {
                         new EmbedBuilder()
                             .setColor(eventColor)
                             .setTitle(
-                                `${eventIcon} MARKET EVENT: ${event.title}`
+                                `***${eventIcon} \`STOCK-MARKET EVENT:\` ${eventIcon}***`
                             )
                             .setDescription(
-                                `${event.description}\n\n` +
+                                `***_${event.title}_***\n\n` +
+                                `_${event.description}_\n\n` +
                                 `**Impact:** ` +
                                 `\`${pctDisplay}\`  ·  ` +
                                 `**New Price:** ` +
                                 `${currencyIcon} ` +
-                                `\`${Math.round(eventPrice).toLocaleString()} ` +
-                                `${currencyName}\``
+                                `\`${Math.round(eventPrice).toLocaleString()}\` ` +
+                                `${currencyName}`
                             )
                             .setFooter({
                                 text: `🌿 FernCoin Exchange · Market Event`

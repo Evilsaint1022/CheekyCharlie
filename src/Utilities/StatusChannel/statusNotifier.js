@@ -317,10 +317,10 @@ async function shutdownBot(client, options = {}) {
     statusLog(`Shutdown requested via ${reason}.`);
 
     if (client.isReady()) {
-      await sendStatusMessage(client, 'Shutting down...', {
+      await sendStatusMessage(client, `***\`Shutting down...\`***`, {
         color: STATUS_EMBED_COLOR_OFFLINE
       });
-      await sendStatusMessage(client, 'CheekyCharlie is offline.', {
+      await sendStatusMessage(client, `***\`CheekyCharlie is offline.\`***`, {
         color: STATUS_EMBED_COLOR_OFFLINE
       });
     }

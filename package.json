@@ -21,7 +21,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.14.1",
     "@discordjs/rest": "^2.6.3",
-    "@napi-rs/canvas": "^1.0.7",
+    "@napi-rs/canvas": "^1.0.8",
     "axios": "^1.19.0",
     "cheerio": "^1.2.0",
     "child_process": "^1.0.2",
@@ -42,7 +42,7 @@
     "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
-    "eslint": "^10.8.1",
+    "eslint": "^10.9.1",
     "nodemon": "^3.1.14"
   },
   "overrides": {
