@@ -625,8 +625,8 @@ async function runStockTick(client) {
                                 `\`${pctDisplay}\`  ·  ` +
                                 `**New Price:** ` +
                                 `${currencyIcon} ` +
-                                `\`${Math.round(eventPrice).toLocaleString()} ` +
-                                `${currencyName}\``
+                                `\`${Math.round(eventPrice).toLocaleString()}\` ` +
+                                `${currencyName}`
                             )
                             .setFooter({
                                 text: `🌿 FernCoin Exchange · Market Event`
