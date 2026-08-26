@@ -83,14 +83,15 @@ module.exports = {
             const levelsData = await db.levels.get(message.guild.id);
             const userLevels = levelsData?.[userId];
 
-            if (enabled && !userLevels) {
+            if (!userLevels) {
                 return message.reply("❌ You don't have any level XP yet.");
             }
 
             const { level } = userLevels;
             
-            if (enabled && level < selectedJob.level) {
+            if (level < selectedJob.level) {
                 await db.workers.delete(`${userId}.job`);
+                await db.lastclaim.delete(`${userId}.jobs`);
 
                 return message.reply(
                     `❌ Your current job (**${selectedJob.name}**)\n` + 
