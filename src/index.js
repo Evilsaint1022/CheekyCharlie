@@ -45,10 +45,24 @@ client.prefixCommands = new Collection();
 // Deployment timestamp (Unix seconds) — set once at process start
 client.startupTime = Math.floor(Date.now() / 1000);
 
+
+// Testing Status Emojis
+// const Red = `<:Red:1542465623139819541>`
+// const Orange = `<:Orange:1542465612125704192>`
+// const Green = `<:Green:1542465573609275532>`
+
+// Production Status Emojis
+const Red = `<:Red:1505107804808282112>`;
+const Orange = `<:Orange:1505107802824118342>`;
+const Green = `<:Green:1505107801050189895>`;
+
+
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
+
     console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
-    await sendStatusMessage(client, `***\`CheekyCharlie is back online.\`***`, {
+
+    await sendStatusMessage(client, `${Green} ***CheekyCharlie is Online.***`, {
       includeCommitFooter: true
     });
 
@@ -202,7 +216,7 @@ process.once('SIGINT', () => {
 });
 
 // Client Login ---------------------------------------------------------------------------------------------------------------------
-sendEarlyStatusMessage('***\`Starting...\`***').catch((error) => {
+sendEarlyStatusMessage(`${Orange} ***Starting...***`).catch((error) => {
   console.error('Failed to send early startup status message:', error);
 });
 

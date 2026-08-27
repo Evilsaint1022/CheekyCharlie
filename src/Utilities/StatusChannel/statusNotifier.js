@@ -300,6 +300,16 @@ async function sendEarlyStatusMessage(content, options = {}) {
   }
 }
 
+// Testing Status Emojis
+// const Red = `<:Red:1542465623139819541>`
+// const Orange = `<:Orange:1542465612125704192>`
+// const Green = `<:Green:1542465573609275532>`
+
+// Production Status Emojis
+const Red = `<:Red:1505107804808282112>`;
+const Orange = `<:Orange:1505107802824118342>`;
+const Green = `<:Green:1505107801050189895>`;
+
 async function shutdownBot(client, options = {}) {
   const {
     exitCode = 0,
@@ -317,10 +327,10 @@ async function shutdownBot(client, options = {}) {
     statusLog(`Shutdown requested via ${reason}.`);
 
     if (client.isReady()) {
-      await sendStatusMessage(client, `***\`Shutting down...\`***`, {
+      await sendStatusMessage(client, `${Orange} ***Shutting Down...***`, {
         color: STATUS_EMBED_COLOR_OFFLINE
       });
-      await sendStatusMessage(client, `***\`CheekyCharlie is offline.\`***`, {
+      await sendStatusMessage(client, `${Red} ***CheekyCharlie is Offline.***`, {
         color: STATUS_EMBED_COLOR_OFFLINE
       });
     }
