@@ -115,7 +115,7 @@ async function runDailyBankInterest(client) {
         for (const { username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `🌿***${username}:***ㅤ ㅤ ***${custom || ferns} \`${amount}\`***ㅤ ㅤ***+\`${interest}\`***ㅤ ㅤ***${custom || ferns} \`${newBalance}\`***\n`;
+                `🌿***${username}:***ㅤ ㅤ***${custom || ferns} \`${amount}\`*** ***+\`${interest}\`*** ***${custom || ferns} \`${newBalance}\`***\n`;
 
             if (!currentDescription) currentDescription = splitter + "";
 
