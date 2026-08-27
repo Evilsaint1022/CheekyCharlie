@@ -57,19 +57,29 @@ async function sendCommitNotification(client, commit) {
 
     const imageUrl = `https://opengraph.githubassets.com/1/${owner}/${repo}/commit/${sha}?t=${Date.now()}`;
 
-    const placeholderPath = path.join(__dirname, '../Utilities/Github/repostoredimage.png');
+    const placeholderPath = path.join(__dirname, '../../Utilities/Github/repostoredimage.png');
 
     let image;
     let attachment = null;
 
     try {
       const response = await fetch(imageUrl);
+      const contentType = response.headers.get('content-type') || '';
 
-      if (response.ok) {
-        image = imageUrl;
-      } else {
-        throw new Error(`GitHub image returned ${response.status}`);
+      if (!response.ok || !contentType.startsWith('image/')) {
+        throw new Error(`GitHub image returned ${response.status} (${contentType || 'unknown content type'})`);
       }
+
+      const imageBuffer = Buffer.from(await response.arrayBuffer());
+
+      if (!imageBuffer.length) {
+        throw new Error('GitHub image response was empty.');
+      }
+
+      attachment = new AttachmentBuilder(imageBuffer, {
+        name: 'github-commit.png'
+      });
+      image = 'attachment://github-commit.png';
     } catch {
       if (fs.existsSync(placeholderPath)) {
         attachment = new AttachmentBuilder(placeholderPath, {
