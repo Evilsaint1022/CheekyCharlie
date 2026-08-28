@@ -92,15 +92,17 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
-            .setTitle(top)
             .setDescription(
-                `_Successfully withdrew **${custom || ferns}・${withdrawAmount.toLocaleString()}**_\n` +
+                `### ***🌿\`${author.username}'s Withdrawal!\`🌿***\n` +
+                `_Successfully withdrew **${custom || ferns} ${withdrawAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${walletBalance.toLocaleString()}     ${custom || ferns}・${bankBalance.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns} \`${walletBalance.toLocaleString()}\`     ${custom || ferns} \`${bankBalance.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
+            .setThumbnail(author.displayAvatarURL({ dynamic: true }))
+
         await message.reply({ embeds: [embed] });
 
         console.log(
@@ -127,12 +129,12 @@ module.exports = {
 
         const embedlog = new EmbedBuilder()
           .setDescription(
-                `### 🏦・**__Bank Transaction__**\n` +
+                `### ***🏦 \`Bank Transaction\`***\n` +
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Withdraw:__**\n   **\`-\`** ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`\n\n` +
-                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `💰・**__Bank Withdraw:__**\n  ***- ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
+                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
                 `${bar}`
             )
             .setColor(0x207e37)

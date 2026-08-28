@@ -89,12 +89,12 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
-            .setTitle(top)
             .setDescription(
+                `### ***🌿\`${author.username}'s Deposit!\`🌿***\n` +
                 `_Successfully deposited **${custom || ferns} ${depositAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ${custom || ferns} \`${balance.toLocaleString()}\`     ${custom || ferns} \`${bank.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
@@ -124,12 +124,12 @@ module.exports = {
 
       const embedlog = new EmbedBuilder()
           .setDescription(
-                `### 🏦・**__Bank Transaction__**\n` +
+                `### ***🏦 \`Bank Transaction\`***\n` +
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Deposit:__**\n   **\`+\`** ${custom || ferns} \`${depositAmount.toLocaleString()}\`\n\n` +
-                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')}\`] [\`${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns} \`${depositAmount.toLocaleString()}\`***\n\n` +
+                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
                 `${bar}`
             )
           .setColor(0x207e37)
