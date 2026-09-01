@@ -116,7 +116,7 @@ module.exports = {
 
         if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > walletBalance) {
             return message.reply(
-                `❌ You do not have enough ${customname || fernsname} in your Bank to withdraw or you entered an invalid amount.`
+                `❌ You do not have enough ${customname || fernsname} in your Bank to deposit or you entered an invalid amount.`
             );
         }
 
