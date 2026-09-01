@@ -71,10 +71,36 @@ module.exports = {
 
         let withdrawAmount;
 
-        if (args[0].toLowerCase() === "all") {
+        const amount = args[0].toLowerCase();
+
+        if (amount === "all") {
+
             withdrawAmount = bankBalance;
+
         } else {
-            withdrawAmount = parseInt(args[0], 10);
+
+            const match = amount.match(/^(\d+(?:\.\d+)?)(k|m|b|t)?$/);
+
+            if (!match) {
+
+                return message.reply(
+                    "❌ Please enter a valid amount, such as `500`, `9k`, `8.5k`, `1m`, or `all`."
+                );
+
+            }
+
+            const number = parseFloat(match[1]);
+            const suffix = match[2];
+
+            const multipliers = {
+                k: 1_000,
+                m: 1_000_000,
+                b: 1_000_000_000,
+                t: 1_000_000_000_000
+            };
+
+            withdrawAmount = number * (multipliers[suffix] || 1);
+
         }
 
         if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > bankBalance) {
@@ -97,7 +123,7 @@ module.exports = {
                 `_Successfully withdrew **${custom || ferns} ${withdrawAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns} \`${walletBalance.toLocaleString()}\`     ${custom || ferns} \`${bankBalance.toLocaleString()}\`\n` +
+                `ㅤ ${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

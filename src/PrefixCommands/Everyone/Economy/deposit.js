@@ -64,14 +64,36 @@ module.exports = {
         // !deposit all
         let depositAmount;
 
-        if (!args[0]) {
-            return message.reply("❌ Please specify an amount to deposit.");
-        }
+        const amount = args[0].toLowerCase();
 
-        if (args[0].toLowerCase() === "all") {
+        if (amount === "all") {
+
             depositAmount = balance;
+
         } else {
-            depositAmount = parseInt(args[0], 10);
+
+            const match = amount.match(/^(\d+(?:\.\d+)?)(k|m|b|t)?$/);
+
+            if (!match) {
+
+                return message.reply(
+                    "❌ Please enter a valid amount, such as `500`, `9k`, `8.5k`, `1m`, or `all`."
+                );
+
+            }
+
+            const number = parseFloat(match[1]);
+            const suffix = match[2];
+
+            const multipliers = {
+                k: 1_000,
+                m: 1_000_000,
+                b: 1_000_000_000,
+                t: 1_000_000_000_000
+            };
+
+            depositAmount = number * (multipliers[suffix] || 1);
+
         }
 
         if (!depositAmount || depositAmount <= 0 || balance < depositAmount) {
@@ -94,7 +116,7 @@ module.exports = {
                 `_Successfully deposited **${custom || ferns} ${depositAmount.toLocaleString()}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns} \`${balance.toLocaleString()}\`     ${custom || ferns} \`${bank.toLocaleString()}\`\n` +
+                `ㅤ ${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
