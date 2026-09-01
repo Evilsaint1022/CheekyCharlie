@@ -74,6 +74,85 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 **That’s it — you’re ready to use CheekyCharlie!**
 
+<h2> 🌿 <ins>Reactions Documentation</ins> 🌿 </h2>
+
+<details><summary> [🌿] <ins>Animals</ins>  
+  </summary>
+  
+‎ 
+  
+- `cat`: 🐱
+- `dog`: 🐶
+- `mouse`: 🐭
+- `hamster`: 🐹
+- `rabbit`: 🐰
+- `fox`: 🦊
+- `bear`: 🐻
+- `panda`: 🐼
+- `koala`: 🐨
+- `tiger`: 🐯
+- `lion`: 🦁
+- `cow`: 🐮
+- `pig`: 🐷
+- `frog`: 🐸
+- `monkey`: 🐵
+- `chicken`: 🐔
+- `penguin`: 🐧
+- `bird`: 🐦
+- `wolf`: 🐺
+- `horse`: 🐴
+- `unicorn`: 🦄
+- `elephant`: 🐘
+- `snake`: 🐍
+- `turtle`: 🐢
+- `fish`: 🐟
+- `dolphin`: 🐬
+- `whale`: 🐳
+- `shark`: 🦈
+- `octopus`: 🐙
+- `crab`: 🦀
+- `shrimp`: 🦐
+- `spider`: 🕷️
+
+</details>
+
+<details><summary> [🌿] <ins>Fruit & Vegetable</ins>  
+  </summary>
+  
+‎ 
+  
+- `apple`: 🍎
+- `banana`: 🍌
+- `orange`: 🍊
+- `grape`: 🍇
+- `strawberry`: 🍓
+- `watermelon`: 🍉
+- `pineapple`: 🍍
+- `peach`: 🍑
+- `lemon`: 🍋
+- `avocado`: 🥑
+- `tomato`: 🍅
+- `carrot`: 🥕
+- `corn`: 🌽
+- `potato`: 🥔
+- `broccoli`: 🥦
+- `lettuce`: 🥬
+- `cucumber`: 🥒
+- `onion`: 🧅
+- `garlic`: 🧄
+- `pepper`: 🫑
+
+ </details>
+
+<details><summary> [🌿] <ins>Other Reactions</ins>  
+  </summary>
+  
+‎ 
+  
+- `Welcome`: :heart:
+  
+</details>
+
 <h2> 🌿 <ins>Commands Documentation</ins> 🌿 </h2>
 
 <details><summary> [🌿] <ins>Owner Prefix Commands</ins>  
