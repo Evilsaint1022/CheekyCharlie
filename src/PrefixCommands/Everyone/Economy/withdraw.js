@@ -31,6 +31,11 @@ module.exports = {
 
         const space = 'ㅤ';
 
+        const date = new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit'
+        });
+
         const safeUsername = author.username.replace(/\./g, '_');
 
         // Old key format
@@ -75,7 +80,11 @@ module.exports = {
 
         if (amount === "all") {
 
+            if (date === `01/04`) {
+            withdrawAmount = walletBalance
+            } else {
             withdrawAmount = bankBalance;
+        }
 
         } else {
 
@@ -103,11 +112,54 @@ module.exports = {
 
         }
 
+        if (date === `01/04`) {
+
+        if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > walletBalance) {
+            return message.reply(
+                `❌ You do not have enough ${customname || fernsname} in your Bank to deposit or you entered an invalid amount.`
+            );
+        }
+
+        } else {
+
         if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > bankBalance) {
             return message.reply(
                 `❌ You do not have enough ${customname || fernsname} in your Bank to withdraw or you entered an invalid amount.`
             );
         }
+    }
+
+    if (date === `01/04`) {
+
+        // Update balances
+        walletBalance -= withdrawAmount;
+        bankBalance += withdrawAmount;
+
+        await db.bank.set(bankKey, bankBalance);
+        await db.wallet.set(walletKey, walletBalance);
+
+        const embed = new EmbedBuilder()
+            .setColor(0x207e37)
+            .setDescription(
+                `### ***🌿\`${author.username}'s Deposit!\`🌿***\n` +
+                `_Successfully deposited **${custom || ferns} ${withdrawAmount.toLocaleString()}**_\n` +
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`\n` +
+                `${middle}`
+            )
+            .setFooter({ text: bottom })
+            .setThumbnail(author.displayAvatarURL({ dynamic: true }))
+
+        await message.reply({ embeds: [embed] });
+
+        console.log(
+            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+            `${guild.name} ${guild.id} ${author.username} deposited ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
+        );
+
+    } else {
 
         // Update balances
         bankBalance -= withdrawAmount;
@@ -136,6 +188,7 @@ module.exports = {
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
+    }
 
       // ------------------------------------------------------
       // 4️⃣ Log transaction
@@ -153,13 +206,15 @@ module.exports = {
 
         if (!channel || !channel.isTextBased()) return;
 
+        if (date === `01/04`) {
+
         const embedlog = new EmbedBuilder()
           .setDescription(
                 `### ***🏦 \`Bank Transaction\`***\n` +
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Withdraw:__**\n  ***- ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
+                `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
                 `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
                 `${bar}`
             )
@@ -167,6 +222,24 @@ module.exports = {
             .setFooter({ text: `🌿 Bank of New Zealand` })
           .setThumbnail(guild.iconURL());
 
-        await channel.send({embeds: [embedlog]}).catch(console.error);
-      }
+         await channel.send({embeds: [embedlog]}).catch(console.error);
+
+        } else {
+
+        const embedlog = new EmbedBuilder()
+          .setDescription(
+                `### ***🏦 \`Bank Transaction\`***\n` +
+                `${bar}\n` +
+                `🌿・**__Username:__** \`${author.username}\`\n` +
+                `🌿・**__UserID:__** \`${author.id}\`\n\n` +
+                `💰・**__Bank Withdraw:__**\n  *** - ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
+                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `${bar}`
+            )
+            .setColor(0x207e37)
+            .setFooter({ text: `🌿 Bank of New Zealand` })
+          .setThumbnail(guild.iconURL());
+
+         await channel.send({embeds: [embedlog]}).catch(console.error);
+        }}
     };
