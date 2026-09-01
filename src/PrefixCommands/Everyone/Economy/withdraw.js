@@ -159,7 +159,7 @@ module.exports = {
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Withdraw:__**\n  ***- ${custom || ferns}・\`${withdrawAmount.toLocaleString()}\`***\n\n` +
+                `💰・**__Bank Withdraw:__**\n  ***- ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
                 `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
                 `${bar}`
             )
