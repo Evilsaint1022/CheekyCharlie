@@ -6,6 +6,30 @@ function escapeUsername(username) {
   return username.replace(/\./g, '_');
 }
 
+function parseAmount(input) {
+
+  if (!input) return NaN;
+
+  const amount = input.toLowerCase();
+
+  const match = amount.match(/^(\d+(?:\.\d+)?)(k|m|b|t)?$/);
+
+  if (!match) return NaN;
+
+  const number = parseFloat(match[1]);
+  const suffix = match[2];
+
+  const multipliers = {
+    k: 1_000,
+    m: 1_000_000,
+    b: 1_000_000_000,
+    t: 1_000_000_000_000
+  };
+
+  return number * (multipliers[suffix] || 1);
+
+}
+
 module.exports = {
   name: "pay",
   aliases: [],
@@ -44,7 +68,7 @@ module.exports = {
       message.mentions.users.first() ||
       message.guild.members.cache.get(filteredArgs[0])?.user;
 
-    const amount = parseInt(filteredArgs[1], 10);
+    const amount = parseAmount(filteredArgs[1]);
 
     // ------------------------------------------------------
     // 🧾 TAX MODE HANDLER
@@ -56,7 +80,7 @@ module.exports = {
       const senderBalance = (await db.wallet.get(senderNewKey)) || 0;
 
       const taxDebt = Number(await db.tax.get(`${sender.id}.tax`) || 0);
-      const amount = Number(args[1]);
+      const amount = parseAmount(args[1]);
 
       if (!amount || isNaN(amount)) {
         return message.reply("❌ Please provide a valid amount.\nExample: `?pay tax 100`");
