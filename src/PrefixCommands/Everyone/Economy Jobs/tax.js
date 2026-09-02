@@ -24,8 +24,8 @@ module.exports = {
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
 
     // format last paid
-    let lastPaidText = "🌿・Never Paid";
-    let bottom = "🌿・IRD NZ";
+    let lastPaidText = "🌿 Never Paid Tax 🌿";
+    let bottom = `ㅤ 🌿 Inland Revenue Department 🌿`;
 
     if (lastPaid) {
       const date = new Date(lastPaid);
@@ -38,18 +38,17 @@ module.exports = {
     const overdue = !lastPaid || now - lastPaid > week;
 
     const embed = new EmbedBuilder()
-      .setColor(overdue ? 0xff4d4d : 0x2ecc71)
-      .setTitle(`**🧾 __${message.author.tag} Tax's__**`)
+      .setColor(overdue ? 0xff4d4d : 0x207e37)
+      .setTitle(`***🧾 \`${message.author.tag} Tax's\`***`)
       .setDescription(
         `_You are viewing your tax information._\n` +
         `${middle}\n` +
-        `ㅤ **💰__Current Tax__**   **⏰__Last Paid__**\n` +
-        `ㅤ ${custom || ferns}・${currentTax.toLocaleString()}      ${lastPaidText}\n` +
+        `ㅤ **💰__Current Tax__    ⏰__Last Paid__**\n` +
+        `ㅤ ***${custom || ferns}・\`${currentTax.toLocaleString()}\`***      ${lastPaidText}\n` +
         `${middle}\n`
       )
       .setFooter({ text: bottom })
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
-      .setTimestamp();
 
     return message.channel.send({ embeds: [embed] });
   }

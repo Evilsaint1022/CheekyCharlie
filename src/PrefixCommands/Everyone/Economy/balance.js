@@ -35,9 +35,9 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const top = `**🌿 __${targetUser.username}'s Balance__ 🌿**`;
+        const top = `***🌿 \`${targetUser.username}'s Balance\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-        const bottom = `🌿・Thanks for using Bank-NZ`;
+        const bottom = `ㅤ ㅤ🌿 Thanks For Using Bank-NZ 🌿`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -71,8 +71,8 @@ module.exports = {
             .setDescription(
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
+                `ㅤ ${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
