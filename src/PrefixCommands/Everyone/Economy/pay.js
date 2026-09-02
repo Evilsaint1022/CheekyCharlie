@@ -106,15 +106,16 @@ module.exports = {
       await db.tax.set(`${sender.id}.lastpayed`, Date.now());
 
       const taxembed = new EmbedBuilder()
-        .setTitle(`**🧾・__Tax Payment Successful!__**`)
+        .setTitle(`***🧾 \`Tax Payment Successful\`***`)
+        .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 ***__Paid Amount:__  __Remaining Tax:__***\n` +
-          `ㅤ ㅤ ${custom || ferns} \`${payAmount.toLocaleString()}\`     ${custom || ferns} \`${newTax.toLocaleString()}\`\n` +
+          `ㅤ 💰 **__Paid Amount:__  __Remaining Tax:__**\n` +
+          `ㅤ ***ㅤ${custom || ferns}・\`${payAmount.toLocaleString()}\`      ${custom || ferns}・\`${newTax.toLocaleString()}\`***\n` +
           `${middle}\n`
         )
-        .setFooter({ text: `🌿 Inland Revenue Department` })
-        .setTimestamp();
+        .setFooter({ text: `ㅤ 🌿 Inland Revenue Department 🌿` })
+        .setThumbnail(sender.displayAvatarURL({ dynamic: true }))
 
       // Console Logs
       console.log(`[🌿] [TAX] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} ${sender.username} paid ${payAmount.toLocaleString()} ${customname || fernsname} towards their tax's`);
@@ -179,15 +180,16 @@ module.exports = {
       }
 
       const paymentembed = new EmbedBuilder()
-        .setTitle(`**🌿・__Payment Successful!__**`)
+        .setTitle(`***🌿 \`Payment Successful!\` 🌿***`)
+        .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid:__**     💰 **__Receiver:__**\n` +
-          `ㅤ **${custom || ferns} \`${amount.toLocaleString()}\`     ${user.username}**\n` +
+          `ㅤ 💰 **__Paid:__     💰 __Receiver:__**\n` +
+          `ㅤ ***${custom || ferns}・\`${amount.toLocaleString()}\`      \`${user.username}\`***\n` +
           `${middle}\n`
         )
-        .setFooter({ text: `🌿 ${message.guild.name}` })
-        .setTimestamp();
+        .setFooter({ text: `ㅤ 🌿 ${sender.username} ${sender.id} 🌿` })
+        .setThumbnail(sender.displayAvatarURL({ dynamic: true }))
 
       // ------------------------------------------------------
       // 3️⃣ Apply transaction

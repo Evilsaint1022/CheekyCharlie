@@ -73,10 +73,10 @@ module.exports = {
         const fernsname = await db.default.get("Default.name");
 
         const space = 'ㅤ';
-        const top = `**🌿 __${username} Begs!__ 🌿**`;
+        const top = `***🌿 \`${username} Begs!\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
-        const bottom = `🌿・Come Back for More!`;
+        const bottom = `ㅤ 🌿 Come Back for More Soon! 🌿`;
 
         // Cooldown check
         const lastBeg = await db.lastclaim.get(`${userId}.beg`) || 0;
@@ -113,8 +113,8 @@ module.exports = {
             .setDescription(
                 `_${phrase}_ **${custom || ferns} ${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
+                `ㅤ ${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
