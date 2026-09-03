@@ -46,8 +46,6 @@ module.exports = {
                 ]
             });
 
-            console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name} and ${member.user.username}'s Voice has been Created!`);
-
             // Move the member to the new temp channel
             await member.voice.setChannel(newChannel).catch(err => {
                 console.error("[JTC Error] Failed to move member:", err);
@@ -67,6 +65,22 @@ module.exports = {
             const data = await db.vcmembers.get(key) || {};
 
             if (!data[vcId]) data[vcId] = {};
+
+            // Check if this is a temporary VC
+            const activeIdsKey = `${guildId}_activeVCs`;
+            const activeVCs = await db.vc.get(activeIdsKey) || {};
+
+            if (activeVCs[vcId]) {
+                // Check if this is the first member in the VC
+                const isFirstMember = newState.channel.members.size === 1;
+
+                if (isFirstMember) {
+                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name} and ${member.user.username}'s Voice has been Created!`);
+                } else {
+                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name}`);
+                }
+            }
+
             data[vcId][memberId] = true;
 
             await db.vcmembers.set(key, data);

@@ -34,26 +34,15 @@ async function handleChannelLeave(oldState, activeVCs, activeIdsKey) {
     const guild = oldState.guild;
     const channelId = oldState.channel.id;
 
-    // Not a JoinToCreate channel → ignore
+    // Not a temporary VC → ignore
     if (!activeVCs[channelId]) return;
 
     const guildName = guild.name;
     const guildId = guild.id;
 
-    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} left and ${oldState.channel.name} has been Deleted!`);
-
     const tempChannel = oldState.channel;
 
-    // Disconnect bots (console-safe)
-    for (const [_, member] of tempChannel.members) {
-        if (member.user.bot) {
-            try {
-                await member.voice.disconnect();
-            } catch {}
-        }
-    }
-
-    // Wait a moment for Discord to update member cache
+    // Wait for Discord to update the member cache
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     const refreshed = guild.channels.cache.get(channelId);
@@ -65,8 +54,22 @@ async function handleChannelLeave(oldState, activeVCs, activeIdsKey) {
         return;
     }
 
-    // Delete temp VC if empty (console-safe)
-    if (refreshed.members.size === 0) {
+    // Check if the member was the last member
+    const isLastMember = refreshed.members.size === 0;
+
+    if (isLastMember) {
+        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} was the last member to leave, ${tempChannel.name} has been Deleted!`);
+
+        // Disconnect bots (console-safe)
+        for (const [_, member] of tempChannel.members) {
+            if (member.user.bot) {
+                try {
+                    await member.voice.disconnect();
+                } catch {}
+            }
+        }
+
+        // Delete temp VC if empty (console-safe)
         try {
             await refreshed.delete();
         } catch (err) {
@@ -75,5 +78,7 @@ async function handleChannelLeave(oldState, activeVCs, activeIdsKey) {
 
         delete activeVCs[channelId];
         await db.vc.set(activeIdsKey, activeVCs);
+    } else {
+        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} left ${tempChannel.name}`);
     }
 }
