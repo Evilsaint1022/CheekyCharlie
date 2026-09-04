@@ -1,12 +1,16 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const db = require("../../Handlers/database");
 
-//-----------------------------------------------------------------------
-const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
-const targetBotId = '302050872383242240'; // Disboard bot ID
+// Testing Timers:
 //-----------------------------------------------------------------------
 // const reminderDelay = 2 * 60 * 1000; // --> 2 minute [ TESTING ONLY ]
 // const targetBotId = '235148962103951360'; // Carlbot's ID [ TESTING ONLY ]
+//-----------------------------------------------------------------------
+
+// Production Timers
+//-----------------------------------------------------------------------
+const reminderDelay = 2 * 60 * 60 * 1000; // --> 2 hours
+const targetBotId = '302050872383242240'; // Disboard bot ID
 //-----------------------------------------------------------------------
 
 // 🔒 Tracks active reminders so they only run once
@@ -104,8 +108,8 @@ module.exports = {
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
       const bumped = new EmbedBuilder()
-        .setDescription(`## 🌿 **__Bump Reminder__** 🌿\n🎁 **_You have been gifted ${custom || ferns}・${rewardAmount.toLocaleString()}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
-        .setFooter({ text: `Bumper: #${currentbumpcount}` })
+        .setDescription(`## ***🌿 \`Bump Reminder!\` 🌿***\n🎁 **_You have been gifted ${custom || ferns}\`${rewardAmount.toLocaleString()}\`_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
+        .setFooter({ text: `ㅤBumper: #${currentbumpcount}` })
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
 
@@ -158,7 +162,7 @@ async function scheduleReminder(client, channelId, roleId, cooldownKey, guildKey
       }
 
       const bumpreminder = new EmbedBuilder()
-        .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
+        .setDescription(`## ***🌿 \`It's Time to Bump!\` 🌿***\n**_Its been 2 hours and its time to bump again!_**\n_You can bump by using the /bump command_\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
 
