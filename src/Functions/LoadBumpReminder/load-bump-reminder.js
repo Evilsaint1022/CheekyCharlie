@@ -7,10 +7,15 @@ const db = require('../../Handlers/database');
  */
 async function loadBumpReminder(client) {
 
+
+    // Testing Timers:
+    //-----------------------------------------------------------------------
+    // const reminderDelay =  2 * 60 * 1000; // --> 2 minute for [ TESTING ONLY ]
+    //-----------------------------------------------------------------------
+
+    // Production Timers:
     //-----------------------------------------------------------------------
     const reminderDelay = 2 * 60 * 60 * 1000; // 2 Hour Timer
-    //-----------------------------------------------------------------------
-    //const reminderDelay =  2 * 60 * 1000; // --> 2 minute for [ TESTING ONLY ]
     //-----------------------------------------------------------------------
     
     const guildIds = Array.from(await client.guilds.cache.keys());
@@ -46,7 +51,7 @@ async function loadBumpReminder(client) {
                 console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Sent in ${channel.name} ${channel.id}`);
                 
                 const bumpreminder = new EmbedBuilder()
-                    .setDescription(`## 🌿 **__It's Time to Bump!__** 🌿\n**_Its been 2 hours and its time to bump again!_**\n- **_\`You can bump by using the /bump command\`_**\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
+                    .setDescription(`## ***🌿 \`It's Time to Bump!\` 🌿***\n**_Its been 2 hours and its time to bump again!_**\n_You can bump by using the /bump command_\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)
                     .setColor(0x207e37)
                     .setThumbnail(guild.iconURL())
 

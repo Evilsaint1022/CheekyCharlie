@@ -7,6 +7,7 @@ const { EmbedBuilder } = require('discord.js');
 // const time = "*/60 * * * * *"; // Every 60 seconds
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+// Production Timer:
 // Daily Bank Interest Pacific/Auckland Correct Timer --> (DO NOT REMOVE!)
 const time = '0 12 * * *'; // every day at 12:00 PM
 
@@ -108,14 +109,14 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `\n***[ \`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\` ]***\n`
+        const nztimestamp = `\n***Bank-Interest TimeStamp:***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
         let embedsToSend = [];
         let currentDescription = `***Thanks for using The Bank System ❤️***\n${splitter}`;
 
         for (const { username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `🌿***${username}:***ㅤ ㅤ***${custom || ferns} \`${amount}\`*** ***+\`${interest}\`*** ***${custom || ferns} \`${newBalance}\`***\n`;
+                `***〉${username}:***ㅤ ㅤ***${custom || ferns}\`${amount.toLocaleString()}\`*** ***+\`${interest.toLocaleString()}\`*** ***${custom || ferns}\`${newBalance.toLocaleString()}\`***\n`;
 
             if (!currentDescription) currentDescription = splitter + "";
 
@@ -127,7 +128,7 @@ async function runDailyBankInterest(client) {
                 currentDescription += userBlock;
             }
 
-            console.log(`[💰] [Bank Interest] ${username}: Old ${amount}, +${interest}, New ${newBalance}`);
+            console.log(`[💰] [Bank Interest] ${username}: Old ${amount.toLocaleString()}, +${interest.toLocaleString()}, New ${newBalance.toLocaleString()}`);
         }
 
         if (currentDescription) {
@@ -148,7 +149,8 @@ async function runDailyBankInterest(client) {
                     .setColor(0x207e37)
                     .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
                     .setDescription(embedsToSend[i])
-                    .setThumbnail(guild.iconURL());
+                    .setThumbnail(guild.iconURL())
+                    .setFooter({ text: `ㅤ 💰 Daily Bank-Interest for ${guild.name}` });
 
                 await message.edit({
                     embeds: [embed],
@@ -164,7 +166,8 @@ async function runDailyBankInterest(client) {
                     .setColor(0x207e37)
                     .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
                     .setDescription(embedsToSend[i])
-                    .setThumbnail(guild.iconURL());
+                    .setThumbnail(guild.iconURL())
+                    .setFooter({ text: `ㅤ 💰 Daily Bank-Interest for ${guild.name}` });
 
                 let message = await channel.send({
                     embeds: [embed],

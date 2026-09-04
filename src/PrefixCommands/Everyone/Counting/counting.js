@@ -4,6 +4,7 @@ const db = require('../../../Handlers/database'); // adjust path if needed
 
 module.exports = {
     name: "counting",
+    aliases: ["count"],
     description: "Shows the current, next expected and record number for counting.",
 
     async execute(message, args) {
@@ -47,26 +48,24 @@ module.exports = {
                 }
             }
 
-            const CountingLives = await db.lives.get(`${guildKey}.lives`);
-          
+            let CountingLives = await db.lives.get(`${guildKey}.lives`);
+            CountingLives = "❤️".repeat(Number(CountingLives) || 0);
 
             // Build embed
             const embed = new EmbedBuilder()
-                .setTitle(`🌿 **__${guildName} Counting!__** 🌿`)
+                .setTitle(`***🌿 \`${guildName} Counting!\` 🌿***`)
                 .setDescription(
                     `_This is the current counting info for ${guildName}._\n` +
                     `${middle}\n` +
-                    `⭐**__Highest Record__**\n` +
-                    `- \`${countingData.record}\`\n` +
-                    `🌿**__Current Number__**\n` +
-                    `- \`${countingData.current}\`\n` +
-                    `🌿**__Next Number__**\n` +
-                    `- \`${countingData.expected}\`\n\n` +
-                    `❤️ **__Lives:__** \`${CountingLives}\`\n` +
-                    `${middle}\n`
+                    `ㅤ⭐**__Highest Record__**\n` +
+                    `ㅤ \`${countingData.record}\`\n` +
+                    `ㅤ🌿**__Next Number__ ㅤ🌿__Current Number__**\n` +
+                    `ㅤ \`${countingData.current}\`     ㅤ ㅤ ㅤ ㅤㅤ\`${countingData.expected}\`\n` +
+                    `${middle}\n` +
+                    `***Remaining Lives:***\n\`${CountingLives}\`\n`
                 )
                 .setThumbnail(message.guild.iconURL())
-                .setFooter({ text: `Last Counter: ${lastUser}` })
+                .setFooter({ text: `ㅤ 🌿 The Last Counter: ${lastUser} 🌿` })
                 .setColor(0x207e37);
 
             await message.reply({ embeds: [embed] });
