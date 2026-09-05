@@ -63,6 +63,8 @@ async function runDailyBankInterest(client) {
     const splitter = `***─────────────────────────────────***\n`;
     const footer = `🌿・Thanks for using Bank-NZ`;
 
+    const blank = "\u2800";
+
     // Apply interest once to all users and collect results
     const interestResults = [];
 
@@ -116,7 +118,7 @@ async function runDailyBankInterest(client) {
         for (const { username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `***〉${username}:***ㅤ ㅤ***${custom || ferns}\`${amount.toLocaleString()}\`*** ***+\`${interest.toLocaleString()}\`*** ***${custom || ferns}\`${newBalance.toLocaleString()}\`***\n`;
+                `***〉${username}:***${blank}***${custom || ferns}\`${amount}\`***${blank}***+\`${interest}\`***${blank}***${custom || ferns}\`${newBalance}\`***\n`;
 
             if (!currentDescription) currentDescription = splitter + "";
 
