@@ -11,7 +11,12 @@ module.exports = {
   async execute(message, client) {
     if (message.author.bot) return;
 
+    // Testing Channel:
+    // const modMailChannelId = `1545706770649841695`;
+
+    // Production Channel:
     const modMailChannelId = `1502163708854665226`;
+
     if (!modMailChannelId) return;
 
     const modMailChannel = client.channels.cache.get(modMailChannelId);
