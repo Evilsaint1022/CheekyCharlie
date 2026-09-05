@@ -17,15 +17,13 @@ module.exports = {
 
     const leftEmbed = {
       color: 0xff4d4d,
-      title: '**Cheeky Charlie left a server!**',
-      description: `**Server: ${guild.name}**\nID: \`${guild.id}\``
+      title: '***🌿 \`CheekyCharlie Left a Server!\` 🌿***',
+      description: `**Server Name: \`${guild.name}\`**\n**Server ID: \`${guild.id}\`**`
     };
 
     const four_square_server_ID = await db.default.get("Default.four_square_server");
 
     if (!four_square_server_ID) return;
-
-    console.log("Four Square Server ID:", four_square_server_ID);
 
     let FourSquareServer;
 
