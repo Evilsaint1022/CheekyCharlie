@@ -52,7 +52,7 @@ module.exports = {
 
         // 🫰🏻 Anonymous vent container (Components v2)
             const confessionembed = new EmbedBuilder()
-            .setTitle('🌿 **__Anonymous Confession__** 🌿')
+            .setTitle('🌿 **\`Anonymous Confession\`** 🌿')
             .setDescription(confession)
             .setThumbnail(message.guild.iconURL())
             .setColor(0x207e37)
