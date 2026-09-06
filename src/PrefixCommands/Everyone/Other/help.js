@@ -1,3 +1,4 @@
+// Prefix Command
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -11,11 +12,13 @@ const db = require('../../../Handlers/database');
 /**
  * Splits an array into pages of a fixed size
  */
-function chunkByItems(array, itemsPerPage = 15) {
+function chunkByItems(array, itemsPerPage = 10) {
   const pages = [];
+
   for (let i = 0; i < array.length; i += itemsPerPage) {
     pages.push(array.slice(i, i + itemsPerPage).join('\n'));
   }
+
   return pages;
 }
 
@@ -45,6 +48,7 @@ module.exports = {
       (await db.whitelisted.get(`${guildId}.whitelistedRoles`)) || [];
 
     const memberRoles = message.member.roles.cache.map(r => r.id);
+
     const hasPermission = WHITELISTED_ROLE_IDS.some(id =>
       memberRoles.includes(id)
     );
@@ -53,146 +57,267 @@ module.exports = {
 
     console.log(
       `[🌿] [HELP] [${new Date().toLocaleDateString('en-GB')}] ` +
-      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", {
+        timeZone: "Pacific/Auckland"
+      })}] ` +
       `${guildName} ${guildId} ${message.author.username} used the help command.`
     );
 
-    // ===================== COMMAND LISTS =====================
+    // ===================== COMMAND DATA =====================
 
-    const publicCommands = [
-      '**🌿・__Economy__**',
-      '- `?leaderboard`・Check the wallet/bank/money/level leaderboard',
-      '- `?balance`・Check your ferns balance or check another users balance',
-      '- `?deposit`・Deposit ferns into your bank',
-      '- `?withdraw`・Withdraw ferns from your bank',
-      '- `?level`・Check your current level or other users level',
-      '- `?levelroles`・View all level roles for this server',
-      '- `?pick`・Picks ferns when the drop party`s drops',
-      '- `?pay`・Pay other members Ferns',
-      '- `?rob`・Rob another user`s wallet',
-      '- `?heist`・Heist another user`s bank',
-      '- `?beg`・Beg for ferns',
-      '- `?daily`・Daily ferns collect',
-      '- `?weekly`・Weekly ferns collect',
-      '- `?monthly`・Monthly ferns collect',
-      ``,
-      '**🌿・__Economy Games__**',
-      '- `blackjack-singleplayer`・Starts a game of blackjack`',
-      '- `?blackjack-duels`・Starts a game of blackjack duels`',
-      '- `?slots`・Starts a game of slots using `?slots bet`',
-      ``,
-      '**🌿・__Passive Mode__**',
-      '- `?passive`・Toggle passive mode',
-      ``,
-      '**🌿・__Shop__**',
-      '- `?shop`・View the shop',
-      '- `?buy`・Buy items from the shop',
-      '- `?use`・Use items.',
-      '- `?refund`・refund items bought from the shop',
-      '- `?inventory`・View your inventory',
-      ``,
-      '**🌿・__Join-to-Create VC__**',
-      '- `?lock-vc`・Locks the join-to-create vc channel',
-      '- `?unlock-vc`・Unlocks the join-to-create vc channel',
-      ``,
-      '**🌿・__One-Word-Story__**',
-      '- `?view-one-word-story`・Views the current story in the server',
-      ``,
-      '**🌿・__Staff Applications__**',
-      '- `?staff-apply`・Start a new staff application',
-      ``,
-      '**🌿・__Confession__**',
-      '- `?confession`・Confess anonymously to the set confession channel',
-      ``,
-      '**🌿・__Counting__**',
-      '- `?counting`・View the current, next expected and record number for the guilds counting.',
-      ``,
-      '**🌿・__Birthdays__**',
-      '- `?birthday set`・Set your birthday. Format:`dd/mm/yyyy`',
-      ``,
-      '**🌿・__Fun__**',
-      '- `?avatar`・View yours or someone elses avatar',
-      '- `?ai-search`・Use AI search',
-      '- `?emoji`・Show a custom emoji',
-      '- `?cat`・Random cat image.',
-      '- `?dog`・Random dog image',
-      '- `?slap`・Slap a user',
-      '- `?kick`・Kick a user',
-      '- `?hug`・Hug a user',
-      '- `?kiss`・Kiss a user',
-      '- `?tickle`・Tickle a user',
-      '- `?punch`・Punch a user',
-      ``,
-      '**🌿・__Others__**',
-      '- `?help`・View all commands',
-      '- `?github`・View the bot`s github repo',
-      '- `?ping`・Check the bot`s latency',
-      '- `?invite`・Generate a temporary invite link for the server',
-    ];
+    const commandsData = await db.commands.get('prefix_commands');
 
-    const whitelistedCommands = [
-      '**🌿・__Set-Whitelisted-Role__**',
-      '- `?set-whitelisted-roles`・Sets a role to be whitelisted',
-      '- `?remove-whitelisted-roles`・Removes a role from being whitelisted',
-      ``,
-      '**🌿・__Staff-Applications__**',
-      '- `?staff-toggle`・Toggles staff applications from open and closed.',
-      ``,
-      '**🌿・__Ghostping__**',
-      '- `?ghostping-toggle`・Toggles ghostping from on and off.',
-      ``,
-      '**🌿・__Prefix__**',
-      '- `?prefix-set`・Sets a prefix for the server',
-      '- `?prefix-reset`・Resets the prefix for the server',
-      ``,
-      '**🌿・__Others__**',
-      '- `?echo`・Repeats what ever you say',
-      '- `?stop`・Staff command to use during heated moments in chat',
-      '- `?steal`・teal emojis from other guilds',
-      ``,
-      '**🌿・__Birthdays__**',
-      '- `?birthdaychannel`・Sets a birthday channel for the birthday messages',
-      '- `?birthdaypingrole`・Sets a role to be pinged for the birthday messages',
-      '- `?birthdaygivenrole`・Sets a role to be given for birthdays',
-    ];
+    if (!commandsData) {
+      return message.reply('No command data could be found.');
+    }
+
+    // ===================== FORMAT CATEGORY =====================
+
+    /**
+     * Converts:
+     * economy_games
+     *
+     * into:
+     * Economy Games
+     */
+    function formatCategoryName(name) {
+      return name
+        .split('_')
+        .map(word =>
+          word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join(' ');
+    }
+
+    // ===================== FORMAT COMMAND =====================
+
+    /**
+     * Converts a command object into help-menu lines.
+     */
+    function formatCommand(command) {
+
+      const lines = [];
+
+      let line =
+        `- \`${command.command}\`・${command.description}`;
+
+      lines.push(line);
+
+      // Usage
+      if (command.usage) {
+      // lines.push(``);
+      }
+
+      // Aliases
+      if (command.aliases?.length) {
+        // lines.push(``);
+      }
+
+      return lines;
+    }
+
+    // ===================== FORMAT CATEGORY =====================
+
+    function formatCommandCategory(categoryName, commands) {
+
+      const lines = [
+        `**🌿・__${formatCategoryName(categoryName)}__**`
+      ];
+
+      for (const command of commands) {
+        lines.push(
+          ...formatCommand(command)
+        );
+      }
+
+      lines.push('');
+
+      return lines;
+    }
+
+    // ===================== PUBLIC COMMANDS =====================
+
+    const publicCommands = [];
+
+    if (commandsData.everyone) {
+
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.everyone
+      )) {
+
+        publicCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
+
+      }
+
+    }
+
+    // ===================== WHITELISTED COMMANDS =====================
+
+    const whitelistedCommands = [];
+
+    if (
+      hasPermission &&
+      commandsData.whitelisted
+    ) {
+
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.whitelisted
+      )) {
+
+        whitelistedCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
+
+      }
+
+    }
+
+    // ===================== OWNER COMMANDS =====================
+
+    // Replace this with your Discord user ID
+    const owners = await db.owners.get('CheekyCharlie_Owners');
+
+        if (!Array.isArray(owners)) {
+      console.error('Owners list broken:', owners);
+      return message.reply('⚠️ Owner list is misconfigured.');
+    }
+
+    const ownerCommands = [];
+
+    if (owners.includes(message.author.id)) {
+
+      ownerCommands.push(
+        ...formatCommandCategory(
+          'Owner',
+          commandsData.owner
+        )
+      );
+
+    }
 
     // ===================== EMBEDS =====================
 
     const embeds = [];
-    const publicPages = chunkByItems(publicCommands, 30);
+
+    // ===================== PUBLIC PAGES =====================
+
+    const publicPages = chunkByItems(
+      publicCommands,
+      30
+    );
 
     publicPages.forEach((content, index) => {
+
       embeds.push(
         new EmbedBuilder()
-          .setTitle('🌿 **__Help Menu__** 🌿')
+          .setTitle('🌿 **\`CheekyCharlie Help Menu\`** 🌿')
           .setColor(0x207e37)
-          .setThumbnail(message.client.user.displayAvatarURL())
+          .setThumbnail(
+            message.client.user.displayAvatarURL()
+          )
           .setDescription(
-            `- **The Prefix has been set to** \`?\`\n${middle}\n${content}\n${middle}`
+            `- **The Prefix has been set to** \`?\`\n` +
+            `${middle}\n` +
+            `${content}\n` +
+            `${middle}`
           )
           .setFooter({
-            text: `Page ${index + 1}/${publicPages.length} • Requested by ${message.author.tag}`
+            text:
+              `Page ${index + 1}/${publicPages.length} • ` +
+              `Requested by ${message.author.tag}`
           })
           .setTimestamp()
       );
+
     });
 
-    if (hasPermission) {
-      const staffPages = chunkByItems(whitelistedCommands, 30);
+    // ===================== WHITELISTED PAGES =====================
+
+    if (
+      hasPermission &&
+      whitelistedCommands.length > 0
+    ) {
+
+      const staffPages = chunkByItems(
+        whitelistedCommands,
+        30
+      );
 
       staffPages.forEach((content, index) => {
+
         embeds.push(
           new EmbedBuilder()
-            .setTitle('🌿 **__Whitelisted Commands__** 🌿')
+            .setTitle('🌿 **\`Whitelisted Prefix Commands\`** 🌿')
             .setColor(0x207e37)
-            .setThumbnail(message.client.user.displayAvatarURL())
-            .setDescription(`${middle}\n${content}\n${middle}`)
+            .setThumbnail(
+              message.client.user.displayAvatarURL()
+            )
+            .setDescription(
+              `${middle}\n` +
+              `${content}\n` +
+              `${middle}`
+            )
             .setFooter({
-              text: `Staff Page ${index + 1}/${staffPages.length} • ${message.author.tag}`
+              text:
+                `Staff Page ${index + 1}/${staffPages.length} • ` +
+                `${message.author.tag}`
             })
             .setTimestamp()
         );
+
       });
+
+    }
+
+    // ===================== OWNER PAGES =====================
+
+    if (ownerCommands.length > 0) {
+
+      const ownerPages = chunkByItems(
+        ownerCommands,
+        30
+      );
+
+      ownerPages.forEach((content, index) => {
+
+        embeds.push(
+          new EmbedBuilder()
+            .setTitle('🌿 **\`Owner Prefix Commands\`** 🌿')
+            .setColor(0x207e37)
+            .setThumbnail(
+              message.client.user.displayAvatarURL()
+            )
+            .setDescription(
+              `${middle}\n` +
+              `${content}\n` +
+              `${middle}`
+            )
+            .setFooter({
+              text:
+                `Owner Page ${index + 1}/${ownerPages.length} • ` +
+                `${message.author.tag}`
+            })
+            .setTimestamp()
+        );
+
+      });
+
+    }
+
+    // ===================== NO COMMANDS CHECK =====================
+
+    if (embeds.length === 0) {
+      return message.reply(
+        'There are currently no commands available.'
+      );
     }
 
     // ===================== BUTTONS =====================
@@ -200,6 +325,7 @@ module.exports = {
     let page = 0;
 
     const row = new ActionRowBuilder().addComponents(
+
       new ButtonBuilder()
         .setCustomId('prev')
         .setLabel('Previous')
@@ -215,8 +341,13 @@ module.exports = {
         .setCustomId('next')
         .setLabel('Next')
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(embeds.length === 1)
+        .setDisabled(
+          embeds.length === 1
+        )
+
     );
+
+    // ===================== SEND =====================
 
     const sentMessage = await message.reply({
       embeds: [embeds[page]],
@@ -225,46 +356,110 @@ module.exports = {
 
     // ===================== COLLECTOR =====================
 
-    const collector = sentMessage.createMessageComponentCollector({
-      time: 60_000
-    });
+    const collector =
+      sentMessage.createMessageComponentCollector({
+        time: 60_000
+      });
 
     collector.on('collect', async i => {
+
+      // ===================== USER CHECK =====================
+
       if (i.user.id !== message.author.id) {
+
         return i.reply({
           content: "You can't use these buttons.",
           ephemeral: true
         });
+
       }
 
+      // ===================== STOP =====================
+
       if (i.customId === 'stop') {
+
         collector.stop('stopped');
+
         return i.update({
           components: [
             new ActionRowBuilder().addComponents(
               row.components.map(btn =>
-                ButtonBuilder.from(btn).setDisabled(true)
+                ButtonBuilder
+                  .from(btn)
+                  .setDisabled(true)
               )
             )
           ]
         });
+
       }
 
-      if (i.customId === 'prev') page--;
-      if (i.customId === 'next') page++;
+      // ===================== PAGE CHANGE =====================
 
-      row.components[0].setDisabled(page === 0);
-      row.components[2].setDisabled(page === embeds.length - 1);
+      if (i.customId === 'prev') {
+        page--;
+      }
+
+      if (i.customId === 'next') {
+        page++;
+      }
+
+      // Safety
+      if (page < 0) {
+        page = 0;
+      }
+
+      if (page > embeds.length - 1) {
+        page = embeds.length - 1;
+      }
+
+      // ===================== BUTTON STATE =====================
+
+      row.components[0].setDisabled(
+        page === 0
+      );
+
+      row.components[2].setDisabled(
+        page === embeds.length - 1
+      );
+
+      // ===================== UPDATE =====================
 
       await i.update({
         embeds: [embeds[page]],
         components: [row]
       });
+
     });
 
+    // ===================== COLLECTOR END =====================
+
     collector.on('end', async () => {
-      row.components.forEach(button => button.setDisabled(true));
-      await sentMessage.edit({ components: [row] });
+
+      row.components.forEach(button =>
+        button.setDisabled(true)
+      );
+
+      try {
+
+        await sentMessage.edit({
+          components: [row]
+        });
+
+      } catch (error) {
+
+        // Message may have been deleted
+        if (error.code !== 10008) {
+          console.error(
+            '[HELP] Failed to disable buttons:',
+            error
+          );
+        }
+
+      }
+
     });
+
   }
 };
+

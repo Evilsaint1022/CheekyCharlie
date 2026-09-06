@@ -4,6 +4,7 @@ const db = {
 
     // Owners ID's DataBase -------------------------------------------------------------------------
     owners: new DotDB("./src/Utilities/Storage_Static/Settings/Owners/owners.json"),
+    commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
     
     // -----------------------------------------------------------------------------------------
     default: new DotDB("./src/Utilities/Storage_Static/Settings/Default/default.json"),

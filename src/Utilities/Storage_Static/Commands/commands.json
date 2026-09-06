@@ -1,0 +1,767 @@
+{
+  "prefix_commands": {
+    "owner": [
+      {
+        "command": "?servers",
+        "description": "Views all the servers that cheekycharlie is currently in."
+      },
+      {
+        "command": "?shutdown",
+        "description": "Shuts down cheekycharlie."
+      },
+      {
+        "command": "?invitebot",
+        "description": "Gets the invite link for cheekycharlie."
+      },
+      {
+        "command": "?leaveguild",
+        "description": "Removes cheekycharlie from a server."
+      },
+      {
+        "command": "?last-deployment",
+        "description": "Views when cheekycharlie was last restarted."
+      }
+    ],
+    "everyone": {
+      "economy": [
+        {
+          "command": "?leaderboard",
+          "description": "Check the wallet/bank/money/level/stocks leaderboard.",
+          "usage": "?leaderboard money"
+        },
+        {
+          "command": "?stocks",
+          "description": "View your FernCoin portfolio.",
+          "usage": "?stocks portfolio @user"
+        },
+        {
+          "command": "?balance",
+          "description": "Check your Currency balance or check another user's balance.",
+          "usage": "?balance @user"
+        },
+        {
+          "command": "?deposit",
+          "description": "Deposit Currency into your bank.",
+          "usage": "?deposit all | ?deposit 100"
+        },
+        {
+          "command": "?withdraw",
+          "description": "Withdraw Currency from your bank.",
+          "usage": "?withdraw all | ?withdraw 100"
+        },
+        {
+          "command": "?level",
+          "description": "Check your current level or check another user's level.",
+          "usage": "?level @user"
+        },
+        {
+          "command": "?levelroles",
+          "description": "Displays all level roles set for the guild."
+        },
+        {
+          "command": "?pick",
+          "description": "Picks Currency when the drop party drops."
+        },
+        {
+          "command": "?pay",
+          "description": "Pay other users Currency.",
+          "usage": "?pay @user | ?pay tax <amount>"
+        },
+        {
+          "command": "?rob",
+          "description": "Rob other users' wallets.",
+          "usage": "?rob @user"
+        },
+        {
+          "command": "?heist",
+          "description": "Rob other users' banks.",
+          "usage": "?heist @user"
+        },
+        {
+          "command": "?beg",
+          "description": "Beg for Currency.",
+          "aliases": [
+            "?bg"
+          ]
+        },
+        {
+          "command": "?daily",
+          "description": "Daily Currency collect."
+        },
+        {
+          "command": "?weekly",
+          "description": "Weekly Currency collect."
+        },
+        {
+          "command": "?monthly",
+          "description": "Monthly Currency collect."
+        }
+      ],
+      "economy_games": [
+        {
+          "command": "?blackjack-duels",
+          "description": "Play Blackjack with other users.",
+          "usage": "?bjd @user 100"
+        },
+        {
+          "command": "?blackjack-singleplayer",
+          "description": "Starts a game of blackjack.",
+          "usage": "?bj 100"
+        },
+        {
+          "command": "?slots",
+          "description": "Starts a game of slots.",
+          "usage": "?slots bet"
+        }
+      ],
+      "economy_jobs": [
+        {
+          "command": "?tax",
+          "description": "Views how much tax you owe and when the last payment was made."
+        },
+        {
+          "command": "?jobs",
+          "description": "Views all available jobs."
+        },
+        {
+          "command": "?job-apply",
+          "description": "Apply for an available job.",
+          "usage": "?job-apply jobname"
+        },
+        {
+          "command": "?work",
+          "description": "Start working and earning currency."
+        }
+      ],
+      "passive_mode": [
+        {
+          "command": "?passive",
+          "description": "Toggles passive mode on and off."
+        }
+      ],
+      "shop": [
+        {
+          "command": "?shop",
+          "description": "Checks the server shop."
+        },
+        {
+          "command": "?buy",
+          "description": "Buys an item from the shop."
+        },
+        {
+          "command": "?use",
+          "description": "Uses an item bought from the shop."
+        },
+        {
+          "command": "?refund",
+          "description": "Refunds an item from the shop."
+        },
+        {
+          "command": "?inventory",
+          "description": "Checks the items in the user's inventory."
+        }
+      ],
+      "join_to_create_vc": [
+        {
+          "command": "?lock-vc",
+          "description": "Locks the join-to-create VC channel."
+        },
+        {
+          "command": "?unlock-vc",
+          "description": "Unlocks the join-to-create VC channel."
+        }
+      ],
+      "one_word_story": [
+        {
+          "command": "?view-one-word-story",
+          "description": "Views the current story in the server."
+        }
+      ],
+      "staff_applications": [
+        {
+          "command": "?staff-apply",
+          "description": "Starts a new staff application."
+        }
+      ],
+      "confessions": [
+        {
+          "command": "?confession",
+          "description": "Sends an anonymous confession to the server's set confession channel."
+        }
+      ],
+      "counting": [
+        {
+          "command": "?counting",
+          "description": "Views the current, next expected, and record number for the guild's counting."
+        }
+      ],
+      "birthdays": [
+        {
+          "command": "?birthday-set",
+          "description": "Sets a birthday.",
+          "usage": "?birthday-set dd/mm/yyyy"
+        },
+        {
+          "command": "?birthday",
+          "description": "Views other users' birthdays."
+        }
+      ],
+      "fun": [
+        {
+          "command": "?avatar",
+          "description": "Views your or someone else's avatar.",
+          "usage": "?pfp @user"
+        },
+        {
+          "command": "?ai-search",
+          "description": "Uses gpt-4o-mini to search for results.",
+          "usage": "?ai text"
+        },
+        {
+          "command": "?emoji",
+          "description": "Shows a custom emoji as an image (PNG/GIF).",
+          "usage": "?e Emoji"
+        },
+        {
+          "command": "?cat",
+          "description": "Generates a random picture of a cat."
+        },
+        {
+          "command": "?dog",
+          "description": "Generates a random picture of a dog."
+        },
+        {
+          "command": "?slap",
+          "description": "Slaps another user.",
+          "usage": "?slap @user"
+        },
+        {
+          "command": "?kick",
+          "description": "Kicks another user.",
+          "usage": "?kick @user"
+        },
+        {
+          "command": "?hug",
+          "description": "Hugs another user.",
+          "usage": "?hug @user"
+        },
+        {
+          "command": "?kiss",
+          "description": "Kisses another user.",
+          "usage": "?kiss @user"
+        },
+        {
+          "command": "?tickle",
+          "description": "Tickles another user.",
+          "usage": "?tickle @user"
+        },
+        {
+          "command": "?punch",
+          "description": "Punches another user.",
+          "usage": "?punch @user"
+        }
+      ],
+      "simpsons": [
+        {
+          "command": "?characters",
+          "description": "Displays all characters that you can roleplay as."
+        }
+      ],
+      "other": [
+        {
+          "command": "?help",
+          "description": "Help command that displays commands."
+        },
+        {
+          "command": "?ping",
+          "description": "Checks the bot's latency."
+        },
+        {
+          "command": "?github",
+          "description": "Provides the GitHub link to CheekyCharlie's repository."
+        },
+        {
+          "command": "?invite",
+          "description": "Generates a temporary invite link for the server you are in."
+        },
+        {
+          "command": "?support",
+          "description": "Sends an invite link to the support server."
+        },
+        {
+          "command": "?vote",
+          "description": "Sends the top.gg vote URL."
+        }
+      ]
+    },
+    "whitelisted": {
+      "set_whitelisted_role": [
+        {
+          "command": "?set-whitelisted-roles",
+          "description": "Sets a whitelisted role.",
+          "permission": "Administrator"
+        },
+        {
+          "command": "?remove-whitelisted-roles",
+          "description": "Removes a whitelisted role."
+        }
+      ],
+      "prefix_setup": [
+        {
+          "command": "?prefix-set",
+          "description": "Sets a prefix for your guild."
+        },
+        {
+          "command": "?prefix-reset",
+          "description": "Resets the prefix for prefix commands."
+        }
+      ],
+      "verified_role_setup": [
+        {
+          "command": "?set-verified-role",
+          "description": "Sets the verified role for the guild and optionally a role to remove after verification.",
+          "usage": "?set-verified-role <role_id or role_mention> [role_to_remove_id or role_mention]"
+        },
+        {
+          "command": "?remove-verified-role",
+          "description": "Removes the verified role for auto-kick and button verification."
+        },
+        {
+          "command": "?send-verification-button",
+          "description": "Sends a verification button in the current channel. A verified role must be set first.",
+          "usage": "?send-verification-button <mode> <button-label>",
+          "modes": [
+            "math",
+            "puzzle"
+          ],
+          "default_button_label": "Verify ->"
+        }
+      ],
+      "birthdays_setup": [
+        {
+          "command": "?birthdaychannel",
+          "description": "Sets a birthday channel for the birthday messages."
+        },
+        {
+          "command": "?birthdaypingrole",
+          "description": "Sets a role to be pinged for the birthday messages."
+        },
+        {
+          "command": "?birthdaygivenrole",
+          "description": "Sets a role that will be given to the birthday user."
+        }
+      ],
+      "currency_setup": [
+        {
+          "command": "?set-currency-icon",
+          "description": "Sets a custom currency icon for the economy system."
+        },
+        {
+          "command": "?set-currency-name",
+          "description": "Sets a custom currency name for the economy system."
+        },
+        {
+          "command": "?remove-currency-icon",
+          "description": "Removes the set custom currency icon."
+        },
+        {
+          "command": "?remove-currency-name",
+          "description": "Removes the set custom currency name."
+        }
+      ],
+      "bank_system_setup": [
+        {
+          "command": "?set-bankinterest-channel",
+          "description": "Sets a Bank Interest channel where the bank interest messages will be sent."
+        },
+        {
+          "command": "?remove-bankinterest-channel",
+          "description": "Removes the Bank Interest channel that has been set."
+        },
+        {
+          "command": "?set-banktransactions-channel",
+          "description": "Sets a Bank Transactions channel where deposit and withdraw messages will be sent."
+        },
+        {
+          "command": "?remove-banktransactions-channel",
+          "description": "Removes the Bank Transactions channel that has been set."
+        }
+      ],
+      "stock_market_setup": [
+        {
+          "command": "?set-stock-channel",
+          "description": "Sets the channel where FernCoin stock updates will be posted every 10 minutes."
+        },
+        {
+          "command": "?remove-stock-channel",
+          "description": "Removes the FernCoin stock channel."
+        }
+      ],
+      "sticky_messages_setup": [
+        {
+          "command": "?sticky-message",
+          "description": "Lets you send a sticky message into the current channel."
+        }
+      ],
+      "staff_applications_setup": [
+        {
+          "command": "?staff-toggle",
+          "description": "Toggles staff applications between open and closed."
+        }
+      ],
+      "ghostping_setup": [
+        {
+          "command": "?ghostping-toggle",
+          "description": "Toggles ghostping from off and on."
+        }
+      ],
+      "other": [
+        {
+          "command": "?echo",
+          "description": "Echoes messages.",
+          "usage": "?echo messagecontent"
+        },
+        {
+          "command": "?stop",
+          "description": "Staff command to use during heated moments in chat."
+        },
+        {
+          "command": "?steal",
+          "description": "Steals emojis from other guilds.",
+          "usage": "?steal emoji emojiname | ?steal emoji"
+        }
+      ],
+      "welcome_banner_setup": [
+        {
+          "command": "?set-welcome-channel",
+          "description": "Sets the welcome channel."
+        },
+        {
+          "command": "?remove-welcome-channel",
+          "description": "Removes the set welcome channel."
+        }
+      ],
+      "status_channel_setup": [
+        {
+          "command": "?set-status-channel",
+          "description": "Sets the status channel for cheekycharlie."
+        },
+        {
+          "command": "?remove-status-channel",
+          "description": "Removes the status channel set for cheekycharlie."
+        }
+      ]
+    }
+  },
+  "application_commands": {
+    "whitelisted": {
+      "set_whitelisted_role": [
+        {
+          "command": "/set-whitelisted-roles",
+          "description": "Sets a whitelisted role.",
+          "permission": "Administrator"
+        },
+        {
+          "command": "/remove-whitelisted-roles",
+          "description": "Removes a whitelisted role."
+        }
+      ],
+      "counting_setup": [
+        {
+          "command": "/set-counting-channel",
+          "description": "Sets the counting entertainment channel."
+        },
+        {
+          "command": "/set-counting-emojis",
+          "description": "Sets custom emojis for reactions."
+        },
+        {
+          "command": "/remove-counting-channel",
+          "description": "Removes the set counting channel."
+        },
+        {
+          "command": "/remove-counting-emojis",
+          "description": "Removes custom emoji reactions for counting."
+        }
+      ],
+      "rss_feed_setup": [
+        {
+          "command": "/set-rss-channel",
+          "description": "Lets you set a channel where new RSS feed news will be sent."
+        },
+        {
+          "command": "/set-rss-topics",
+          "description": "Choose which topics you'd like to receive in your channel."
+        },
+        {
+          "command": "/remove-rss-channel",
+          "description": "Removes the RSS feed news channel."
+        }
+      ],
+      "shop_setup": [
+        {
+          "command": "/add-shop-item",
+          "description": "Adds items to the server's shop."
+        },
+        {
+          "command": "/remove-shop-item",
+          "description": "Removes shop items by name."
+        },
+        {
+          "command": "/edit-shop-item",
+          "description": "Edits items in the server shop."
+        }
+      ],
+      "one_word_story_setup": [
+        {
+          "command": "/set-story-channel",
+          "description": "Sets the channel for the one-word story game."
+        },
+        {
+          "command": "/remove-story-channel",
+          "description": "Removes the currently set one-word story channel."
+        },
+        {
+          "command": "/reset-one-word-story",
+          "description": "Resets the current one-word story in the server."
+        }
+      ],
+      "nsfw_filter_setup": [
+        {
+          "command": "/toggle-nsfw-filter",
+          "description": "Toggles the AI NSFW filter."
+        },
+        {
+          "command": "/set-nsfw-logs-channel",
+          "description": "Sets an NSFW logs channel."
+        },
+        {
+          "command": "/remove-nsfw-logs-channel",
+          "description": "Removes the set NSFW logs channel."
+        }
+      ],
+      "ai_response_setup": [
+        {
+          "command": "/set-ignored-ai-channel",
+          "description": "Adds a channel or category to the deactivated AI channels."
+        },
+        {
+          "command": "/remove-ignored-ai-channel",
+          "description": "Removes a channel or category from the deactivated AI channels."
+        }
+      ],
+      "levels_setup": [
+        {
+          "command": "/toggle-levels",
+          "description": "Toggles Levels on and off."
+        },
+        {
+          "command": "/set-level-channel",
+          "description": "Sets the Level Notification Channel."
+        },
+        {
+          "command": "/remove-level-channel",
+          "description": "Removes the Level Notification Channel."
+        },
+        {
+          "command": "/set-level-role",
+          "description": "Adds a role to the level system."
+        },
+        {
+          "command": "/remove-level-role",
+          "description": "Removes a level from the level system."
+        }
+      ],
+      "starboard_setup": [
+        {
+          "command": "/set-starboard-channel",
+          "description": "Sets the Starboard Channel."
+        },
+        {
+          "command": "/set-starboard-count",
+          "description": "Sets the amount of emojis needed for Starboard."
+        },
+        {
+          "command": "/set-starboard-emoji",
+          "description": "Sets the Starboard Emoji."
+        }
+      ],
+      "join_to_create_vc_setup": [
+        {
+          "command": "/set-join-to-create-vc",
+          "description": "Sets the Join to Create VC channel."
+        },
+        {
+          "command": "/remove-join-to-crate-vc",
+          "description": "Removes the Join to Create VC channel."
+        }
+      ],
+      "boosters_role_setup": [
+        {
+          "command": "/set-boosters-role",
+          "description": "Sets the server's boosters role ID."
+        },
+        {
+          "command": "/remove-boosters-role",
+          "description": "Removes the server's boosters role ID."
+        }
+      ],
+      "verified_role_setup": [
+        {
+          "command": "/set-verified-role",
+          "description": "Sets a verified role for the auto-kick event and verification button system. Optionally removes an old role after verification."
+        },
+        {
+          "command": "/remove-verified-role",
+          "description": "Removes the verified role that has been set."
+        }
+      ],
+      "drop_party_setup": [
+        {
+          "command": "/set-drop-party-channel",
+          "description": "Sets the Drop Party Channel."
+        },
+        {
+          "command": "/remove-drop-party-channel",
+          "description": "Removes the Drop Party Channel."
+        }
+      ],
+      "color_of_the_week_setup": [
+        {
+          "command": "/set-color-of-the-week",
+          "description": "Sets a role for Color of the Week."
+        },
+        {
+          "command": "/remove-color-of-the-week",
+          "description": "Removes the role set for Color of the Week."
+        }
+      ],
+      "bump_reminder_setup": [
+        {
+          "command": "/set-bump-channel",
+          "description": "Sets a channel for the bump reminder."
+        },
+        {
+          "command": "/set-bump-role",
+          "description": "Sets a bump role for the bump reminder."
+        }
+      ],
+      "banned_channel_setup": [
+        {
+          "command": "/set-ban-channel",
+          "description": "Sets the banned channel."
+        },
+        {
+          "command": "/remove-ban-channel",
+          "description": "Removes the banned channel."
+        }
+      ],
+      "staff_applications_setup": [
+        {
+          "command": "/accept-application",
+          "description": "Accepts an application."
+        },
+        {
+          "command": "/decline-application",
+          "description": "Declines an application."
+        },
+        {
+          "command": "/manage-staff-apps-questions",
+          "description": "Adds, removes, or sorts the questions."
+        },
+        {
+          "command": "/set-staff-app-channel",
+          "description": "Sets the channel where new applications will go."
+        },
+        {
+          "command": "/remove-staff-app-channel",
+          "description": "Removes the channel and disables staff applications."
+        }
+      ],
+      "ai_deadchat_setup": [
+        {
+          "command": "/set-deadchat-channel",
+          "description": "Sets the AI Deadchat channel to send messages in."
+        },
+        {
+          "command": "/set-deadchat-role",
+          "description": "Sets the role to mention in the messages."
+        },
+        {
+          "command": "/set-deadchat-duration",
+          "description": "Sets the time after the chat goes dead before a message is sent."
+        },
+        {
+          "command": "/toggle-deadchat",
+          "description": "Toggles AI Deadchat on or off."
+        }
+      ],
+      "confession_setup": [
+        {
+          "command": "/set-confession-channel",
+          "description": "Sets the confession channel where confessions will go."
+        },
+        {
+          "command": "/remove-confession-channel",
+          "description": "Removes the confession channel and disables confessions."
+        }
+      ],
+      "giveaway_setup": [
+        {
+          "command": "/giveaway",
+          "description": "Creates a giveaway with a prize, duration, and number of winners."
+        },
+        {
+          "command": "/giveaway-setup whitelist",
+          "description": "Toggles whitelist mode so only whitelisted roles can join."
+        },
+        {
+          "command": "/giveaway-setup whitelist-add-role",
+          "description": "Adds a role to the giveaway participation whitelist."
+        },
+        {
+          "command": "/giveaway-setup whitelist-remove-role",
+          "description": "Removes a role from the giveaway participation whitelist."
+        },
+        {
+          "command": "/giveaway-setup blacklist",
+          "description": "Toggles blacklist mode so blacklisted roles cannot join."
+        },
+        {
+          "command": "/giveaway-setup blacklist-add-role",
+          "description": "Adds a role to the giveaway participation blacklist."
+        },
+        {
+          "command": "/giveaway-setup blacklist-remove-role",
+          "description": "Removes a role from the giveaway participation blacklist."
+        },
+        {
+          "command": "/giveaway-setup view",
+          "description": "Views the current giveaway settings."
+        }
+      ],
+      "question_of_the_day_setup": [
+        {
+          "command": "/set-qotd-channel",
+          "description": "Sets a Question of the Day channel."
+        },
+        {
+          "command": "/remove-qotd-channel",
+          "description": "Removes the channel set for Question of the Day."
+        },
+        {
+          "command": "/set-qotd-role",
+          "description": "Sets a Question of the Day ping role."
+        },
+        {
+          "command": "/remove-qotd-role",
+          "description": "Removes the role set for Question of the Day."
+        },
+        {
+          "command": "/toggle-qotd",
+          "description": "Toggles Question of the Day on or off."
+        }
+      ]
+    }
+  }
+}
