@@ -111,7 +111,7 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `\n***Bank-Interest TimeStamp:***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
+        const nztimestamp = `\n***__Bank-Interest TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
         let embedsToSend = [];
         let currentDescription = `***Thanks for using The Bank System ❤️***\n${splitter}`;
 
