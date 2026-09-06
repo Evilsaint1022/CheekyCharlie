@@ -16,16 +16,14 @@ module.exports = {
     if (!bot_channel_ID) return;
 
     const joinedEmbed = {
-      color: 0x759eff,
-      title: '**Cheeky Charlie joined a new server!**',
-      description: `**Server: ${guild.name}**\nID: \`${guild.id}\``
+      color: 0x207e37,
+      title: '***🌿 \`CheekyCharlie Joined a New Server!\` 🌿***',
+      description: `**Server Name: \`${guild.name}\`**\n**Server ID: \`${guild.id}\`**`
     };
 
     const four_square_server_ID = await db.default.get("Default.four_square_server");
 
     if (!four_square_server_ID) return;
-
-    console.log("Four Square Server ID:", four_square_server_ID);
 
     let FourSquareServer;
 

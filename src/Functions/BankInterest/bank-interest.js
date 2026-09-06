@@ -63,6 +63,8 @@ async function runDailyBankInterest(client) {
     const splitter = `***─────────────────────────────────***\n`;
     const footer = `🌿・Thanks for using Bank-NZ`;
 
+    const blank = "\u2800";
+
     // Apply interest once to all users and collect results
     const interestResults = [];
 
@@ -109,14 +111,14 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `\n***Bank-Interest TimeStamp:***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
+        const nztimestamp = `\n***__Bank-Interest TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
         let embedsToSend = [];
         let currentDescription = `***Thanks for using The Bank System ❤️***\n${splitter}`;
 
         for (const { username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `***〉${username}:***ㅤ ㅤ***${custom || ferns}\`${amount.toLocaleString()}\`*** ***+\`${interest.toLocaleString()}\`*** ***${custom || ferns}\`${newBalance.toLocaleString()}\`***\n`;
+                `***〉${username}:***${blank}***${custom || ferns}\`${amount}\`***${blank}***+\`${interest}\`***${blank}***${custom || ferns}\`${newBalance}\`***\n`;
 
             if (!currentDescription) currentDescription = splitter + "";
 

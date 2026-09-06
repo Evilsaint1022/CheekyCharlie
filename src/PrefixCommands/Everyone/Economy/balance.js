@@ -35,7 +35,7 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const top = `***🌿 \`${targetUser.username}'s Balance\` 🌿***`;
+        const top = `***🌿\`${targetUser.username}'s Balance\`🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bottom = `ㅤ ㅤ🌿 Thanks For Using Bank-NZ 🌿`;
 
@@ -72,7 +72,7 @@ module.exports = {
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`\n` +
+                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

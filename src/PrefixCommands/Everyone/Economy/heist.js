@@ -73,9 +73,9 @@ module.exports = {
       );
     }
 
-    const top = `**🌿 __Heist Successful__ 🌿 **`;
+    const top = `**🌿\`Heist Successful\`🌿**`;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `🌿・Banks are not Safe!`;
+    const bottom = `🌿・The Banks are Not Safe!`;
 
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -123,10 +123,10 @@ module.exports = {
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Heisted_ **${target.username}** _for_ ${custom || ferns} **${stealAmount.toLocaleString()}** _${customname || fernsname}!_\n` +
+        `_You Heisted ${target.username} for **${custom || ferns}${stealAmount.toLocaleString()} ${customname || fernsname}**!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
+        `ㅤ ***${custom || ferns}・${balance.toLocaleString()}       ${custom || ferns}・${bank.toLocaleString()}***\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

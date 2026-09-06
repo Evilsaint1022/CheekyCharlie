@@ -142,10 +142,10 @@ module.exports = {
             .setColor(0x207e37)
             .setDescription(
                 `### ***🌿\`${author.username}'s Deposit!\`🌿***\n` +
-                `_Successfully deposited **${custom || ferns} ${withdrawAmount.toLocaleString()}**_\n` +
+                `_Successfully deposited **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`\n` +
+                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
@@ -172,10 +172,10 @@ module.exports = {
             .setColor(0x207e37)
             .setDescription(
                 `### ***🌿\`${author.username}'s Withdrawal!\`🌿***\n` +
-                `_Successfully withdrew **${custom || ferns} ${withdrawAmount.toLocaleString()}**_\n` +
+                `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`\n` +
+                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
@@ -214,8 +214,8 @@ module.exports = {
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
-                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns}\`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
             .setColor(0x207e37)
@@ -232,8 +232,8 @@ module.exports = {
                 `${bar}\n` +
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
-                `💰・**__Bank Withdraw:__**\n  *** - ${custom || ferns} \`${withdrawAmount.toLocaleString()}\`***\n\n` +
-                `***__Transaction TimeStamp:__***\n [\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]\n` +
+                `💰・**__Bank Withdraw:__**\n  *** - ${custom || ferns}\`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
             .setColor(0x207e37)

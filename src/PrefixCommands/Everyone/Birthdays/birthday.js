@@ -12,6 +12,8 @@ module.exports = {
         client.users.cache.get(args[0]) ||
         message.author;
 
+      const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+
       const guildKey = message.guild.id;
       const guildName = message.guild.name;
       const guildId = message.guild.id;
@@ -32,24 +34,13 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(0x207e37)
-        .setTitle("🎂・**__Birthday Info__**")
+        .setTitle(`🎂**\`${user.username}'s Birthday Info\`**`)
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
-        .addFields(
-          {
-            name: "**__User__**",
-            value: `${user.tag}`,
-            inline: false,
-          },
-          {
-            name: "**__Birthday__**",
-            value: `${birthday.day}/${birthday.month}/${birthday.year}`,
-            inline: false,
-          }
-        )
+        .setDescription(`_You are viewing ${user.username}'s Birthday!_\n${middle}\nㅤ ***🍥__Current Birthday:__***\nㅤ ***\`${birthday.day}\`/\`${birthday.month}\`/\`${birthday.year}\`***\n${middle}`)
         .setFooter({
-          text: `Requested by ${message.author.tag}`,
+          text: `Birthday Requested by ${message.author.tag}`,
           iconURL: message.author.displayAvatarURL({ dynamic: true }),
-        })
+        });
 
       return message.reply({ embeds: [embed] });
     } catch (err) {

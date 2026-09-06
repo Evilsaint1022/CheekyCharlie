@@ -5,6 +5,7 @@ module.exports = {
 
   async execute(message) {
     // Ignore bot messages
+       if (!message.guild) return;
        if (message.author.bot) return;
        if (message.webhookId) return;
        if (message.content.includes(':')) return;

@@ -31,8 +31,8 @@ module.exports = {
     );
 
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `**╰────────────────────────────╯**`;
-    const bottommessage = `🌿・Four-Squre Level Roles`;
+    const bottom = `**╰────────────────────────────────╯**`;
+    const bottommessage = `ㅤ ***🌿・${message.guild.name} Level Roles・🌿***`;
     const levelRoles = await db.levelroles.get(guildKey);
 
     if (!levelRoles || Object.keys(levelRoles).length === 0) {
@@ -63,13 +63,13 @@ module.exports = {
           const roleDisplay = role ? role : "`Role not found`";
           const sticky = data.sticky ? "`\`Yes\``" : "`\`No\``";
 
-          return `🌿・${base}\n> • **Role:** ${roleDisplay}\n> • **Permanent:** ${sticky}`;
+          return `🌿・${base}\n〉**Role:** ${roleDisplay}\n〉**Permanent:** ${sticky}`;
         })
         .join('\n\n');
 
       return new EmbedBuilder()
-        .setTitle(`**╭─── 🌿 ${message.guild.name} Level Roles 🌿 ───╮**`)
-        .setDescription(`\n_current level roles for ${message.guild.name}_\n` + `${middle}\n` + content + `\n\n${bottommessage}\n\n${bottom}` || "*No level roles found.*")
+        .setTitle(`**╭─── 🌿 \`Servers Level Roles\` 🌿 ───╮**`)
+        .setDescription(`\n_Current level roles for ${message.guild.name}_\n` + `${middle}\n` + content + `\n\n${bottommessage}\n${bottom}` || "*No level roles found.*")
         .setColor(0x207e37)
         .setThumbnail(message.guild.iconURL())
         .setFooter({

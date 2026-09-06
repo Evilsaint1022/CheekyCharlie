@@ -73,7 +73,7 @@ module.exports = {
         const fernsname = await db.default.get("Default.name");
 
         const space = 'ㅤ';
-        const top = `***🌿 \`${username} Begs!\` 🌿***`;
+        const top = `***🌿\`${username} Begs!\`🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
         const bottom = `ㅤ 🌿 Come Back for More Soon! 🌿`;
@@ -111,10 +111,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_${phrase}_ **${custom || ferns} ${reward.toLocaleString()}**\n` +
+                `_${phrase} **${custom || ferns}${reward.toLocaleString()} ${customname || fernsname}**!_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`\n` +
+                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
