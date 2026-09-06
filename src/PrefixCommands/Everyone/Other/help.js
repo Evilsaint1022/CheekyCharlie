@@ -12,11 +12,11 @@ const db = require('../../../Handlers/database');
 /**
  * Splits an array into pages of a fixed size
  */
-function chunkByItems(array, itemsPerPage = 10) {
+function chunkByItems(array, itemsPerPage = 15) {
   const pages = [];
 
   for (let i = 0; i < array.length; i += itemsPerPage) {
-    pages.push(array.slice(i, i + itemsPerPage).join('\n'));
+    pages.push(array.slice(i, i + itemsPerPage).join(''));
   }
 
   return pages;
@@ -66,9 +66,14 @@ module.exports = {
     // ===================== COMMAND DATA =====================
 
     const commandsData = await db.commands.get('prefix_commands');
+    const application = await db.commands.get('application_commands');
 
     if (!commandsData) {
-      return message.reply('No command data could be found.');
+      return message.reply('No prefix command data could be found.');
+    }
+
+    if (!application) {
+      console.warn('[HELP] No application command data could be found.');
     }
 
     // ===================== FORMAT CATEGORY =====================
@@ -86,7 +91,7 @@ module.exports = {
         .map(word =>
           word.charAt(0).toUpperCase() + word.slice(1)
         )
-        .join(' ');
+        .join('');
     }
 
     // ===================== FORMAT COMMAND =====================
@@ -99,7 +104,7 @@ module.exports = {
       const lines = [];
 
       let line =
-        `- \`${command.command}\`・${command.description}`;
+        `***\`${command.command}\`***・_${command.description}_\n`;
 
       lines.push(line);
 
@@ -121,7 +126,7 @@ module.exports = {
     function formatCommandCategory(categoryName, commands) {
 
       const lines = [
-        `**🌿・__${formatCategoryName(categoryName)}__**`
+        ``
       ];
 
       for (const command of commands) {
@@ -130,57 +135,83 @@ module.exports = {
         );
       }
 
-      lines.push('');
+      // lines.push('');
 
       return lines;
     }
 
-    // ===================== PUBLIC COMMANDS =====================
+// ===================== PUBLIC PREFIX COMMANDS =====================
 
-    const publicCommands = [];
+const publicCommands = [];
 
-    if (commandsData.everyone) {
+if (commandsData.everyone) {
 
-      for (const [categoryName, commands] of Object.entries(
-        commandsData.everyone
-      )) {
+  for (const [categoryName, commands] of Object.entries(
+    commandsData.everyone
+  )) {
 
-        publicCommands.push(
-          ...formatCommandCategory(
-            categoryName,
-            commands
-          )
-        );
+    publicCommands.push(
+      ...formatCommandCategory(
+        categoryName,
+        commands
+      )
+    );
 
-      }
+  }
 
-    }
+}
 
-    // ===================== WHITELISTED COMMANDS =====================
 
-    const whitelistedCommands = [];
+// ===================== WHITELISTED PREFIX COMMANDS =====================
 
-    if (
-      hasPermission &&
-      commandsData.whitelisted
-    ) {
+const whitelistedCommands = [];
 
-      for (const [categoryName, commands] of Object.entries(
-        commandsData.whitelisted
-      )) {
+if (
+  hasPermission &&
+  commandsData.whitelisted
+) {
 
-        whitelistedCommands.push(
-          ...formatCommandCategory(
-            categoryName,
-            commands
-          )
-        );
+  for (const [categoryName, commands] of Object.entries(
+    commandsData.whitelisted
+  )) {
 
-      }
+    whitelistedCommands.push(
+      ...formatCommandCategory(
+        categoryName,
+        commands
+      )
+    );
 
-    }
+  }
 
-    // ===================== OWNER COMMANDS =====================
+}
+
+
+// ===================== WHITELISTED APPLICATION COMMANDS =====================
+
+const applicationCommands = [];
+
+if (
+  hasPermission &&
+  application?.whitelisted
+) {
+
+  for (const [categoryName, commands] of Object.entries(
+    application.whitelisted
+  )) {
+
+    applicationCommands.push(
+      ...formatCommandCategory(
+        categoryName,
+        commands
+      )
+    );
+
+  }
+
+}
+
+    // ===================== OWNER PREFIX COMMANDS =====================
 
     // Replace this with your Discord user ID
     const owners = await db.owners.get('CheekyCharlie_Owners');
@@ -211,7 +242,7 @@ module.exports = {
 
     const publicPages = chunkByItems(
       publicCommands,
-      30
+      20
     );
 
     publicPages.forEach((content, index) => {
@@ -224,22 +255,19 @@ module.exports = {
             message.client.user.displayAvatarURL()
           )
           .setDescription(
-            `- **The Prefix has been set to** \`?\`\n` +
-            `${middle}\n` +
-            `${content}\n` +
-            `${middle}`
+            `**Welcome to the Cheekycharlie \`?help\` Menu!**\n` +
+            `${middle}\n${content}${middle}`
           )
           .setFooter({
             text:
-              `Page ${index + 1}/${publicPages.length} • ` +
+              `🌿 Prefix Commands Page: ${index + 1}/${publicPages.length} • ` +
               `Requested by ${message.author.tag}`
           })
-          .setTimestamp()
       );
 
     });
 
-    // ===================== WHITELISTED PAGES =====================
+    // ===================== WHITELISTED PREFIX PAGES =====================
 
     if (
       hasPermission &&
@@ -248,7 +276,7 @@ module.exports = {
 
       const staffPages = chunkByItems(
         whitelistedCommands,
-        30
+        20
       );
 
       staffPages.forEach((content, index) => {
@@ -258,19 +286,46 @@ module.exports = {
             .setTitle('🌿 **\`Whitelisted Prefix Commands\`** 🌿')
             .setColor(0x207e37)
             .setThumbnail(
-              message.client.user.displayAvatarURL()
-            )
-            .setDescription(
-              `${middle}\n` +
-              `${content}\n` +
-              `${middle}`
-            )
+              message.client.user.displayAvatarURL())
+            .setDescription(`${middle}\n${content}${middle}`)
             .setFooter({
               text:
-                `Staff Page ${index + 1}/${staffPages.length} • ` +
+                `🌿 Whitelisted Prefix Page: ${index + 1}/${staffPages.length} • ` +
                 `${message.author.tag}`
             })
-            .setTimestamp()
+        );
+
+      });
+
+    }
+
+    // ===================== WHITELISTED APPLICATION PAGES =====================
+
+        if (
+      hasPermission &&
+      applicationCommands.length > 0
+    ) {
+
+      const staffPages = chunkByItems(
+        applicationCommands,
+        20
+      );
+
+      staffPages.forEach((content, index) => {
+
+        embeds.push(
+          new EmbedBuilder()
+            .setTitle('🌿 **\`Whitelisted Application Commands\`** 🌿')
+            .setColor(0x207e37)
+            .setThumbnail(
+              message.client.user.displayAvatarURL()
+            )
+            .setDescription(`${middle}\n${content}${middle}`)
+            .setFooter({
+              text:
+                `🌿 Whitelisted Application Page: ${index + 1}/${staffPages.length} • ` +
+                `${message.author.tag}`
+            })
         );
 
       });
@@ -283,7 +338,7 @@ module.exports = {
 
       const ownerPages = chunkByItems(
         ownerCommands,
-        30
+        20
       );
 
       ownerPages.forEach((content, index) => {
@@ -295,17 +350,12 @@ module.exports = {
             .setThumbnail(
               message.client.user.displayAvatarURL()
             )
-            .setDescription(
-              `${middle}\n` +
-              `${content}\n` +
-              `${middle}`
-            )
+            .setDescription(`${middle}\n${content}${middle}`)
             .setFooter({
               text:
-                `Owner Page ${index + 1}/${ownerPages.length} • ` +
+                `🌿 Owners Page: ${index + 1}/${ownerPages.length} • ` +
                 `${message.author.tag}`
             })
-            .setTimestamp()
         );
 
       });
