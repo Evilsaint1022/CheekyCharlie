@@ -111,7 +111,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_${phrase}_ **${custom || ferns}${reward.toLocaleString()} ${customname || fernsname}**\n` +
+                `_${phrase} **${custom || ferns}${reward.toLocaleString()} ${customname || fernsname}**!_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
                 `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
