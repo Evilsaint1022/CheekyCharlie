@@ -32,7 +32,7 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
 
         const space = 'ㅤ';
-        const top = `**🌿 __${username} Daily!__ 🌿**`;
+        const top = `**🌿\`${username} Daily!\`🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
         const bottom = `🌿・Come Back Tomorrow for More!`;
@@ -111,10 +111,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(top)
             .setDescription(
-                `_You have claimed your daily reward of_ **${custom || ferns} ${rewardAmount.toLocaleString()}**!\n` +
+                `_You have claimed your daily reward of_ **${custom || ferns}${rewardAmount.toLocaleString()} ${customname || fernsname}**!\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

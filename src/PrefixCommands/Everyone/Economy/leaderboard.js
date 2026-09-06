@@ -202,7 +202,7 @@ module.exports = {
           const base = `**__${start + idx + 1}.__  ${entry.username}**`;
 
           if (type === 'level') {
-            return `${base}\n✦  🎉・Level ${entry.stat}・\`${entry.xp} XP\``;
+            return `${base}\n***✦  🎉・Level ${entry.stat}***・\`${entry.xp} XP\``;
           }
 
           if (type === 'stocks') {
@@ -211,15 +211,15 @@ module.exports = {
             return `${base}\n✦  ${stockEmojis.ferncoin}・\`${entry.holdings.toLocaleString()}\`\n✦  💼 \`${Math.round(entry.stat).toLocaleString()}\`・${pnlIcon} \`${pnlSign}${Math.round(entry.netPnL).toLocaleString()}\``;
           }
 
-          return `${base}\n✦  💰・${entry.stat.toLocaleString()}`;
+          return `${base}\n***✦  💰・\`${entry.stat.toLocaleString()}\`***`;
         })
         .join('\n\n');
 
       return new EmbedBuilder()
-        .setTitle(`**╭─── 🌿 ${labels[type]} Leaderboard 🌿 ───╮**`)
+        .setTitle(`**╭─── 🌿 \`${labels[type]} Leaderboard\` 🌿 ───╮**`)
         .setDescription(
           (leaderboard || "*No users found.*") +
-          `\n\n**╰─────────[ Your Rank: #${userRank} ]──────────╯**`
+          `\n\n**╰────────[ \`Your Rank: #${userRank}\` ]─────────╯**`
         )
         .setColor(0x207e37)
         .setThumbnail(message.guild.iconURL())
