@@ -238,7 +238,7 @@ if (
 
     const embeds = [];
 
-    // ===================== PUBLIC PAGES =====================
+    // ===================== PUBLIC PREFIX PAGES =====================
 
     const publicPages = chunkByItems(
       publicCommands,
@@ -332,7 +332,7 @@ if (
 
     }
 
-    // ===================== OWNER PAGES =====================
+    // ===================== OWNER PREFIX PAGES =====================
 
     if (ownerCommands.length > 0) {
 
