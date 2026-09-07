@@ -408,6 +408,15 @@ module.exports = {
         time: 60_000
       });
 
+
+// ===================== TIMER RESET =====================
+
+    function resetTimer() {
+      collector.resetTimer({
+        time: 60_000
+      });
+    }
+
     // ===================== STATE =====================
 
     let currentCategory = null;
@@ -425,12 +434,15 @@ module.exports = {
           content: "You can't use these buttons.",
           ephemeral: true
         });
-
       }
+      
 
       // ===================== CATEGORY CHANGE =====================
 
       if (i.customId.startsWith('help_')) {
+
+        // Resets the 60 second timer.
+        resetTimer();
 
         const selectedCategory =
           i.customId.replace('help_', '');
@@ -536,6 +548,9 @@ module.exports = {
 
       if (i.customId === 'menu') {
 
+        // Refresh the 60 seconds timer.
+        resetTimer();
+
         currentCategory = null;
         page = 0;
 
@@ -543,7 +558,6 @@ module.exports = {
           embeds: [helpEmbed],
           components: [categoryRow]
         });
-
       }
 
       // ===================== STOP =====================
@@ -682,7 +696,6 @@ module.exports = {
             navigationRow
           ]
         });
-
       }
 
     });
