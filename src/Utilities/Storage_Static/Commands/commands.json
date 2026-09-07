@@ -287,10 +287,6 @@
         {
           "command": "?support",
           "description": "Sends an invite link to the support server."
-        },
-        {
-          "command": "?vote",
-          "description": "Sends the top.gg vote URL."
         }
       ]
     },
