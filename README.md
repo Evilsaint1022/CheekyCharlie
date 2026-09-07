@@ -72,11 +72,13 @@ _**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in ch
 _Setting the whitelisted role gives that role access to the whitelisted commands._
 
 - `/help` - Help command that displays commands.
-- `/ping` - Check Bots Latency.
+- `/ping` - Check CheekyCharlie's latency.
 
 **That’s it — you’re ready to use CheekyCharlie!**
 
 <h2> 🌿 <ins>Reactions Documentation</ins> 🌿 </h2>
+
+These are CheekyCharlie's automatic reactions.
 
 <details><summary> <ins><strong>Animals</strong></ins>  
   </summary>
@@ -156,6 +158,8 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 </details>
 
 <h2> 🌿 <ins>Commands Documentation</ins> 🌿 </h2>
+
+These are the current CheekyCharlie commands.
 
 <details><summary> <ins><strong>Owner Prefix Commands</strong></ins>  
   
