@@ -10,7 +10,7 @@ const {
 const db = require('../../../Handlers/database');
 
 /**
- * Splits an array into pages of a fixed size
+ * Splits an array of pages into a fixed number of items
  */
 function chunkByItems(array, itemsPerPage = 15) {
   const pages = [];
@@ -110,7 +110,7 @@ module.exports = {
 
       // Usage
       if (command.usage) {
-      // lines.push(``);
+        // lines.push(``);
       }
 
       // Aliases
@@ -140,83 +140,81 @@ module.exports = {
       return lines;
     }
 
-// ===================== PUBLIC PREFIX COMMANDS =====================
+    // ===================== PUBLIC PREFIX COMMANDS =====================
 
-const publicCommands = [];
+    const publicCommands = [];
 
-if (commandsData.everyone) {
+    if (commandsData.everyone) {
 
-  for (const [categoryName, commands] of Object.entries(
-    commandsData.everyone
-  )) {
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.everyone
+      )) {
 
-    publicCommands.push(
-      ...formatCommandCategory(
-        categoryName,
-        commands
-      )
-    );
+        publicCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
 
-  }
+      }
 
-}
+    }
 
+    // ===================== WHITELISTED PREFIX COMMANDS =====================
 
-// ===================== WHITELISTED PREFIX COMMANDS =====================
+    const whitelistedCommands = [];
 
-const whitelistedCommands = [];
+    if (
+      hasPermission &&
+      commandsData.whitelisted
+    ) {
 
-if (
-  hasPermission &&
-  commandsData.whitelisted
-) {
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.whitelisted
+      )) {
 
-  for (const [categoryName, commands] of Object.entries(
-    commandsData.whitelisted
-  )) {
+        whitelistedCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
 
-    whitelistedCommands.push(
-      ...formatCommandCategory(
-        categoryName,
-        commands
-      )
-    );
+      }
 
-  }
+    }
 
-}
+    // ===================== WHITELISTED APPLICATION COMMANDS =====================
 
+    const applicationCommands = [];
 
-// ===================== WHITELISTED APPLICATION COMMANDS =====================
+    if (
+      hasPermission &&
+      application?.whitelisted
+    ) {
 
-const applicationCommands = [];
+      for (const [categoryName, commands] of Object.entries(
+        application.whitelisted
+      )) {
 
-if (
-  hasPermission &&
-  application?.whitelisted
-) {
+        applicationCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
 
-  for (const [categoryName, commands] of Object.entries(
-    application.whitelisted
-  )) {
+      }
 
-    applicationCommands.push(
-      ...formatCommandCategory(
-        categoryName,
-        commands
-      )
-    );
-
-  }
-
-}
+    }
 
     // ===================== OWNER PREFIX COMMANDS =====================
 
     // Replace this with your Discord user ID
     const owners = await db.owners.get('CheekyCharlie_Owners');
 
-        if (!Array.isArray(owners)) {
+    if (!Array.isArray(owners)) {
       console.error('Owners list broken:', owners);
       return message.reply('⚠️ Owner list is misconfigured.');
     }
@@ -234,174 +232,173 @@ if (
 
     }
 
-    // ===================== EMBEDS =====================
-
-    const embeds = [];
-
-    // ===================== PUBLIC PREFIX PAGES =====================
+    // ===================== COMMAND PAGES =====================
 
     const publicPages = chunkByItems(
       publicCommands,
       20
     );
 
-    publicPages.forEach((content, index) => {
+    const whitelistedPages =
+      hasPermission && whitelistedCommands.length > 0
+        ? chunkByItems(whitelistedCommands, 20)
+        : [];
 
-      embeds.push(
-        new EmbedBuilder()
-          .setTitle('🌿 **\`CheekyCharlie Help Menu\`** 🌿')
-          .setColor(0x207e37)
-          .setThumbnail(
-            message.client.user.displayAvatarURL()
-          )
-          .setDescription(
-            `**Welcome to the Cheekycharlie \`?help\` Menu!**\n` +
-            `${middle}\n${content}${middle}`
-          )
-          .setFooter({
-            text:
-              `🌿 Prefix Commands Page: ${index + 1}/${publicPages.length} • ` +
-              `Requested by ${message.author.tag}`
-          })
-      );
+    const applicationPages =
+      hasPermission && applicationCommands.length > 0
+        ? chunkByItems(applicationCommands, 20)
+        : [];
 
-    });
+    const ownerPages =
+      ownerCommands.length > 0
+        ? chunkByItems(ownerCommands, 20)
+        : [];
 
-    // ===================== WHITELISTED PREFIX PAGES =====================
+    // ===================== CATEGORY DATA =====================
 
-    if (
-      hasPermission &&
-      whitelistedCommands.length > 0
-    ) {
+    const categories = {
+      public: {
+        name: 'Everyone Prefix Commands',
+        emoji: '🌿',
+        pages: publicPages,
+        color: 0x207e37
+      },
 
-      const staffPages = chunkByItems(
-        whitelistedCommands,
-        20
-      );
+      whitelisted: {
+        name: 'Whitelisted Prefix Commands',
+        emoji: '🔒',
+        pages: whitelistedPages,
+        color: 0x207e37
+      },
 
-      staffPages.forEach((content, index) => {
+      application: {
+        name: 'Whitelisted Application Commands',
+        emoji: '🔧',
+        pages: applicationPages,
+        color: 0x207e37
+      },
 
-        embeds.push(
-          new EmbedBuilder()
-            .setTitle('🌿 **\`Whitelisted Prefix Commands\`** 🌿')
-            .setColor(0x207e37)
-            .setThumbnail(
-              message.client.user.displayAvatarURL())
-            .setDescription(`${middle}\n${content}${middle}`)
-            .setFooter({
-              text:
-                `🌿 Whitelisted Prefix Page: ${index + 1}/${staffPages.length} • ` +
-                `${message.author.tag}`
-            })
-        );
+      owner: {
+        name: 'Owner Commands',
+        emoji: '👑',
+        pages: ownerPages,
+        color: 0x207e37
+      }
+    };
 
-      });
+    // ===================== EMBED BUILDER =====================
 
+    function createCategoryEmbed(categoryKey, page = 0) {
+
+      const category = categories[categoryKey];
+
+      const content = category.pages[page] || '';
+
+      let pageText = '';
+
+      if (category.pages.length > 1) {
+        pageText =
+          `🌿 ${category.name} Page: ${page + 1}/${category.pages.length} • `;
+      } else {
+        pageText =
+          `🌿 ${category.name} • `;
+      }
+
+      return new EmbedBuilder()
+        .setTitle(`🌿 **\`${category.name}\`** 🌿`)
+        .setColor(category.color)
+        .setThumbnail(
+          message.client.user.displayAvatarURL()
+        )
+        .setDescription(
+          `${middle}\n${content}${middle}`
+        )
+        .setFooter({
+          text:
+            `${pageText}` +
+            `${message.author.tag}`
+        });
     }
 
-    // ===================== WHITELISTED APPLICATION PAGES =====================
+    // ===================== HELP MENU EMBED =====================
 
-        if (
-      hasPermission &&
-      applicationCommands.length > 0
-    ) {
-
-      const staffPages = chunkByItems(
-        applicationCommands,
-        20
-      );
-
-      staffPages.forEach((content, index) => {
-
-        embeds.push(
-          new EmbedBuilder()
-            .setTitle('🌿 **\`Whitelisted Application Commands\`** 🌿')
-            .setColor(0x207e37)
-            .setThumbnail(
-              message.client.user.displayAvatarURL()
-            )
-            .setDescription(`${middle}\n${content}${middle}`)
-            .setFooter({
-              text:
-                `🌿 Whitelisted Application Page: ${index + 1}/${staffPages.length} • ` +
-                `${message.author.tag}`
-            })
-        );
-
+    const helpEmbed = new EmbedBuilder()
+      .setTitle('🌿 **`CheekyCharlie Help Menu`** 🌿')
+      .setColor(0x207e37)
+      .setThumbnail(
+        message.client.user.displayAvatarURL()
+      )
+      .setDescription(
+        `**Welcome to the CheekyCharlie \`?help\` Menu!**\n\n` +
+        `Use the buttons below to select the type of commands you want to view.\n\n` +
+        `🌿 **\`Everyone Prefix Commands\`**\n` +
+        `Commands available to everyone.\n\n` +
+        `🔒 **\`Whitelisted Prefix Commands\`**\n` +
+        `Prefix commands available to whitelisted members.\n\n` +
+        `🔧 **\`Whitelisted Application Commands\`**\n` +
+        `Application commands available to whitelisted members.\n\n` +
+        `👑 **\`Owner Commands\`**\n` +
+        `Commands available to CheekyCharlie owners.\n` +
+        `${middle}`
+      )
+      .setFooter({
+        text:
+          `🌿 Select a command category • ` +
+          `Requested by ${message.author.tag}`
       });
-
-    }
-
-    // ===================== OWNER PREFIX PAGES =====================
-
-    if (ownerCommands.length > 0) {
-
-      const ownerPages = chunkByItems(
-        ownerCommands,
-        20
-      );
-
-      ownerPages.forEach((content, index) => {
-
-        embeds.push(
-          new EmbedBuilder()
-            .setTitle('🌿 **\`Owner Prefix Commands\`** 🌿')
-            .setColor(0x207e37)
-            .setThumbnail(
-              message.client.user.displayAvatarURL()
-            )
-            .setDescription(`${middle}\n${content}${middle}`)
-            .setFooter({
-              text:
-                `🌿 Owners Page: ${index + 1}/${ownerPages.length} • ` +
-                `${message.author.tag}`
-            })
-        );
-
-      });
-
-    }
 
     // ===================== NO COMMANDS CHECK =====================
 
-    if (embeds.length === 0) {
+    if (
+      publicPages.length === 0 &&
+      whitelistedPages.length === 0 &&
+      applicationPages.length === 0 &&
+      ownerPages.length === 0
+    ) {
       return message.reply(
         'There are currently no commands available.'
       );
     }
 
-    // ===================== BUTTONS =====================
+    // ===================== CATEGORY BUTTONS =====================
 
-    let page = 0;
-
-    const row = new ActionRowBuilder().addComponents(
+    const categoryRow = new ActionRowBuilder().addComponents(
 
       new ButtonBuilder()
-        .setCustomId('prev')
-        .setLabel('Previous')
+        .setCustomId('help_public')
+        .setLabel('Everyone Prefix')
+        .setEmoji('🌿')
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(true),
+        .setDisabled(publicPages.length === 0),
 
       new ButtonBuilder()
-        .setCustomId('stop')
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Danger),
-
-      new ButtonBuilder()
-        .setCustomId('next')
-        .setLabel('Next')
+        .setCustomId('help_whitelisted')
+        .setLabel('Whitelisted Prefix')
+        .setEmoji('🔒')
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(
-          embeds.length === 1
-        )
+        .setDisabled(!hasPermission || whitelistedPages.length === 0),
+
+      new ButtonBuilder()
+        .setCustomId('help_application')
+        .setLabel('Whitelisted Application')
+        .setEmoji('🔧')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(!hasPermission || applicationPages.length === 0),
+
+      new ButtonBuilder()
+        .setCustomId('help_owner')
+        .setLabel('Owner')
+        .setEmoji('👑')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(ownerPages.length === 0)
 
     );
 
     // ===================== SEND =====================
 
     const sentMessage = await message.reply({
-      embeds: [embeds[page]],
-      components: [row]
+      embeds: [helpEmbed],
+      components: [categoryRow]
     });
 
     // ===================== COLLECTOR =====================
@@ -410,6 +407,13 @@ if (
       sentMessage.createMessageComponentCollector({
         time: 60_000
       });
+
+    // ===================== STATE =====================
+
+    let currentCategory = null;
+    let page = 0;
+
+    // ===================== COLLECT =====================
 
     collector.on('collect', async i => {
 
@@ -424,61 +428,262 @@ if (
 
       }
 
+      // ===================== CATEGORY CHANGE =====================
+
+      if (i.customId.startsWith('help_')) {
+
+        const selectedCategory =
+          i.customId.replace('help_', '');
+
+        if (!categories[selectedCategory]) {
+          return;
+        }
+
+        const category =
+          categories[selectedCategory];
+
+        // Security check
+        if (
+          selectedCategory === 'whitelisted' &&
+          !hasPermission
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (
+          selectedCategory === 'application' &&
+          !hasPermission
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (
+          selectedCategory === 'owner' &&
+          ownerPages.length === 0
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (category.pages.length === 0) {
+          return i.reply({
+            content:
+              'There are currently no commands in this category.',
+            ephemeral: true
+          });
+        }
+
+        currentCategory = selectedCategory;
+        page = 0;
+
+        // ===================== NAVIGATION BUTTONS =====================
+
+        const navigationRow =
+          new ActionRowBuilder().addComponents(
+
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(
+                category.pages.length === 1
+              )
+
+          );
+
+        return i.update({
+          embeds: [
+            createCategoryEmbed(
+              currentCategory,
+              page
+            )
+          ],
+          components: [
+            navigationRow
+          ]
+        });
+
+      }
+
+      // ===================== MENU =====================
+
+      if (i.customId === 'menu') {
+
+        currentCategory = null;
+        page = 0;
+
+        return i.update({
+          embeds: [helpEmbed],
+          components: [categoryRow]
+        });
+
+      }
+
       // ===================== STOP =====================
 
       if (i.customId === 'stop') {
 
         collector.stop('stopped');
 
-        return i.update({
-          components: [
-            new ActionRowBuilder().addComponents(
-              row.components.map(btn =>
-                ButtonBuilder
-                  .from(btn)
-                  .setDisabled(true)
-              )
+        const disabledRows = [];
+
+        // Disable category buttons
+        disabledRows.push(
+          new ActionRowBuilder().addComponents(
+            categoryRow.components.map(btn =>
+              ButtonBuilder
+                .from(btn)
+                .setDisabled(true)
             )
-          ]
+          )
+        );
+
+        // Disable navigation buttons
+        if (currentCategory) {
+
+          const category =
+            categories[currentCategory];
+
+          disabledRows.push(
+            new ActionRowBuilder().addComponents(
+
+              new ButtonBuilder()
+                .setCustomId('prev')
+                .setLabel('Previous')
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('menu')
+                .setLabel('Menu')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('stop')
+                .setLabel('Stop')
+                .setStyle(ButtonStyle.Danger)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('next')
+                .setLabel('Next')
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true)
+
+            )
+          );
+
+        }
+
+        return i.update({
+          components: []
         });
 
       }
 
       // ===================== PAGE CHANGE =====================
 
-      if (i.customId === 'prev') {
-        page--;
+      if (
+        currentCategory &&
+        (i.customId === 'prev' ||
+          i.customId === 'next')
+      ) {
+
+        const category =
+          categories[currentCategory];
+
+        if (i.customId === 'prev') {
+          page--;
+        }
+
+        if (i.customId === 'next') {
+          page++;
+        }
+
+        // ===================== SAFETY =====================
+
+        if (page < 0) {
+          page = 0;
+        }
+
+        if (page > category.pages.length - 1) {
+          page = category.pages.length - 1;
+        }
+
+        // ===================== NAVIGATION BUTTONS =====================
+
+        const navigationRow =
+          new ActionRowBuilder().addComponents(
+
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(page === 0),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(
+                page === category.pages.length - 1
+              )
+
+          );
+
+        // ===================== UPDATE =====================
+
+        return i.update({
+          embeds: [
+            createCategoryEmbed(
+              currentCategory,
+              page
+            )
+          ],
+          components: [
+            navigationRow
+          ]
+        });
+
       }
-
-      if (i.customId === 'next') {
-        page++;
-      }
-
-      // Safety
-      if (page < 0) {
-        page = 0;
-      }
-
-      if (page > embeds.length - 1) {
-        page = embeds.length - 1;
-      }
-
-      // ===================== BUTTON STATE =====================
-
-      row.components[0].setDisabled(
-        page === 0
-      );
-
-      row.components[2].setDisabled(
-        page === embeds.length - 1
-      );
-
-      // ===================== UPDATE =====================
-
-      await i.update({
-        embeds: [embeds[page]],
-        components: [row]
-      });
 
     });
 
@@ -486,14 +691,58 @@ if (
 
     collector.on('end', async () => {
 
-      row.components.forEach(button =>
-        button.setDisabled(true)
-      );
-
       try {
 
+        const disabledRows = [];
+
+        // Disable category buttons
+        disabledRows.push(
+          new ActionRowBuilder().addComponents(
+            categoryRow.components.map(btn =>
+              ButtonBuilder
+                .from(btn)
+                .setDisabled(true)
+            )
+          )
+        );
+
+        // Disable navigation buttons if a category is open
+        if (currentCategory) {
+
+          disabledRows.push(
+            new ActionRowBuilder().addComponents(
+
+              new ButtonBuilder()
+                .setCustomId('prev')
+                .setLabel('Previous')
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('menu')
+                .setLabel('Menu')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('stop')
+                .setLabel('Stop')
+                .setStyle(ButtonStyle.Danger)
+                .setDisabled(true),
+
+              new ButtonBuilder()
+                .setCustomId('next')
+                .setLabel('Next')
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true)
+
+            )
+          );
+
+        }
+
         await sentMessage.edit({
-          components: [row]
+          components: []
         });
 
       } catch (error) {
@@ -512,4 +761,3 @@ if (
 
   }
 };
-

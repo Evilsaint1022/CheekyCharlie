@@ -3,19 +3,22 @@ const {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle
+  ButtonStyle,
+  ChannelType
 } = require('discord.js');
 
 const db = require('../../../Handlers/database');
 
 /**
- * Splits an array into pages of a fixed size
+ * Splits an array of pages into a fixed number of items
  */
 function chunkByItems(array, itemsPerPage = 15) {
   const pages = [];
+
   for (let i = 0; i < array.length; i += itemsPerPage) {
-    pages.push(array.slice(i, i + itemsPerPage).join('\n'));
+    pages.push(array.slice(i, i + itemsPerPage).join(''));
   }
+
   return pages;
 }
 
@@ -25,8 +28,10 @@ module.exports = {
     .setDescription('Shows all available commands'),
 
   async execute(interaction) {
-    // Prevent DMs
-    if (interaction.channel.isDMBased()) {
+
+    // ===================== DM CHECK =====================
+
+    if (!interaction.guild) {
       return interaction.reply({
         content: 'This command cannot be used in DMs.',
         ephemeral: true
@@ -36,7 +41,6 @@ module.exports = {
     const guildName = interaction.guild.name;
     const guildId = interaction.guild.id;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const space = 'ㅤ';
 
     // ===================== PERMISSIONS =====================
 
@@ -44,227 +48,630 @@ module.exports = {
       (await db.whitelisted.get(`${guildId}.whitelistedRoles`)) || [];
 
     const memberRoles = interaction.member.roles.cache.map(r => r.id);
+
     const hasPermission = WHITELISTED_ROLE_IDS.some(id =>
       memberRoles.includes(id)
     );
 
-    // ===================== PERMISSIONS =====================
+    // ===================== LOG =====================
 
-    console.log(`[🌿] [HELP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the help command.`);
+    console.log(
+      `[🌿] [HELP] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", {
+        timeZone: "Pacific/Auckland"
+      })}] ` +
+      `${guildName} ${guildId} ${interaction.user.username} used the help command.`
+    );
 
-    // ===================== COMMAND LISTS =====================
-    // Each line = ONE item (important for 20 per page)
+    // ===================== COMMAND DATA =====================
 
-    const publicCommands = [
-      '**🌿・__Economy__**',
-      '- `?leaderboard`・Check the wallet/bank/money/level leaderboard',
-      '- `?balance`・Check your ferns balance or check another users balance',
-      '- `?deposit`・Deposit ferns into your bank',
-      '- `?withdraw`・Withdraw ferns from your bank',
-      '- `?level`・Check your current level or other users level',
-      '- `?levelroles`・View all level roles for this server',
-      '- `?pick`・Picks ferns when the drop party`s drops',
-      '- `?pay`・Pay other members Ferns',
-      '- `?rob`・Rob another user`s wallet',
-      '- `?heist`・Heist another user`s bank',
-      '- `?beg`・Beg for ferns',
-      '- `?daily`・Daily ferns collect',
-      '- `?weekly`・Weekly ferns collect',
-      '- `?monthly`・Monthly ferns collect',
-      ``,
-      '**🌿・__Economy Games__**',
-      '- `blackjack-singleplayer`・Starts a game of blackjack`',
-      '- `?blackjack-duels`・Starts a game of blackjack duels`',
-      '- `?slots`・Starts a game of slots using `?slots bet`',
-      ``,
-      '**🌿・__Passive Mode__**',
-      '- `?passive`・Toggle passive mode',
-      ``,
-      '**🌿・__Shop__**',
-      '- `?shop`・View the shop',
-      '- `?buy`・Buy items from the shop',
-      '- `?use`・Use items.',
-      '- `?refund`・refund items bought from the shop',
-      '- `?inventory`・View your inventory',
-      ``,
-      '**🌿・__Join-to-Create VC__**',
-      '- `?lock-vc`・Locks the join-to-create vc channel',
-      '- `?unlock-vc`・Unlocks the join-to-create vc channel',
-      ``,
-      '**🌿・__One-Word-Story__**',
-      '- `?view-one-word-story`・Views the current story in the server',
-      ``,
-      '**🌿・__Staff Applications__**',
-      '- `?staff-apply`・Start a new staff application',
-      ``,
-      '**🌿・__Confession__**',
-      '- `?confession`・Confess anonymously to the set confession channel',
-      ``,
-      '**🌿・__Counting__**',
-      '- `?counting`・View the current, next expected and record number for the guilds counting.',
-      ``,
-      '**🌿・__Birthdays__**',
-      '- `?birthday set`・Set your birthday. Format:`dd/mm/yyyy`',
-      ``,
-      '**🌿・__Fun__**',
-      '- `?avatar`・View yours or someone elses avatar',
-      '- `?ai-search`・Use AI search',
-      '- `?emoji`・Show a custom emoji',
-      '- `?cat`・Random cat image.',
-      '- `?dog`・Random dog image',
-      '- `?slap`・Slap a user',
-      '- `?kick`・Kick a user',
-      '- `?hug`・Hug a user',
-      '- `?kiss`・Kiss a user',
-      '- `?tickle`・Tickle a user',
-      '- `?punch`・Punch a user',
-      ``,
-      '**🌿・__Others__**',
-      '- `?help`・View all commands',
-      '- `?github`・View the bot`s github repo',
-      '- `?ping`・Check the bot`s latency',
-      '- `?invite`・Generate a temporary invite link for the server',
-    ];
+    const commandsData = await db.commands.get('prefix_commands');
+    const application = await db.commands.get('application_commands');
 
-    const whitelistedCommands = [
-      '**🌿・__Set-Whitelisted-Role__**',
-      '- `?set-whitelisted-roles`・Sets a role to be whitelisted',
-      '- `?remove-whitelisted-roles`・Removes a role from being whitelisted',
-      ``,
-      '**🌿・__Staff-Applications__**',
-      '- `?staff-toggle`・Toggles staff applications from open and closed.',
-      ``,
-      '**🌿・__Ghostping__**',
-      '- `?ghostping-toggle`・Toggles ghostping from on and off.',
-      ``,
-      '**🌿・__Prefix__**',
-      '- `?prefix-set`・Sets a prefix for the server',
-      '- `?prefix-reset`・Resets the prefix for the server',
-      ``,
-      '**🌿・__Others__**',
-      '- `?echo`・Repeats what ever you say',
-      '- `?stop`・Staff command to use during heated moments in chat',
-      '- `?steal`・teal emojis from other guilds',
-      ``,
-      '**🌿・__Birthdays__**',
-      '- `?birthdaychannel`・Sets a birthday channel for the birthday messages',
-      '- `?birthdaypingrole`・Sets a role to be pinged for the birthday messages',
-      '- `?birthdaygivenrole`・Sets a role to be given for birthdays',
-    ];
-
-    // ===================== EMBEDS =====================
-
-    const embeds = [];
-
-    // Public pages (15 items per page)
-    const publicPages = chunkByItems(publicCommands, 30);
-
-    publicPages.forEach((content, index) => {
-      embeds.push(
-        new EmbedBuilder()
-          .setTitle(`🌿 **__Help Menu__** 🌿`)
-          .setColor(0x207e37)
-          .setThumbnail(interaction.client.user.displayAvatarURL())
-          .setDescription(
-            `- **The Prefix has been set to** \`?\`\n${middle}\n${content}\n${middle}`
-          )
-          .setFooter({
-            text: `Page ${index + 1}/${publicPages.length} • Requested by ${interaction.user.tag}`
-          })
-          .setTimestamp()
-      );
-    });
-
-    // Whitelisted pages
-    if (hasPermission) {
-      const staffPages = chunkByItems(whitelistedCommands, 30);
-
-      staffPages.forEach((content, index) => {
-        embeds.push(
-          new EmbedBuilder()
-            .setTitle('🌿 **__Whitelisted Commands__** 🌿')
-            .setColor(0x207e37)
-            .setThumbnail(interaction.client.user.displayAvatarURL())
-            .setDescription(`${middle}\n${content}\n${middle}`)
-            .setFooter({
-              text: `Staff Page ${index + 1}/${staffPages.length} • ${interaction.user.tag}`
-            })
-            .setTimestamp()
-        );
+    if (!commandsData) {
+      return interaction.reply({
+        content: 'No prefix command data could be found.',
+        ephemeral: true
       });
     }
 
-    // ===================== BUTTONS =====================
+    if (!application) {
+      console.warn('[HELP] No application command data could be found.');
+    }
 
-    let page = 0;
+    // ===================== FORMAT CATEGORY =====================
 
-    const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId('prev')
-        .setLabel('Previous')
-        .setStyle(ButtonStyle.Secondary)
-        .setDisabled(true),
+    /**
+     * Converts:
+     * economy_games
+     *
+     * into:
+     * Economy Games
+     */
+    function formatCategoryName(name) {
+      return name
+        .split('_')
+        .map(word =>
+          word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join('');
+    }
 
-      new ButtonBuilder()
-        .setCustomId('stop')
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Danger),
+    // ===================== FORMAT COMMAND =====================
 
-      new ButtonBuilder()
-        .setCustomId('next')
-        .setLabel('Next')
-        .setStyle(ButtonStyle.Secondary)
-        .setDisabled(embeds.length === 1)
+    /**
+     * Converts a command object into help-menu lines.
+     */
+    function formatCommand(command) {
+
+      const lines = [];
+
+      let line =
+        `***\`${command.command}\`***・_${command.description}_\n`;
+
+      lines.push(line);
+
+      // Usage
+      if (command.usage) {
+        // lines.push(``);
+      }
+
+      // Aliases
+      if (command.aliases?.length) {
+        // lines.push(``);
+      }
+
+      return lines;
+    }
+
+    // ===================== FORMAT CATEGORY =====================
+
+    function formatCommandCategory(categoryName, commands) {
+
+      const lines = [
+        ``
+      ];
+
+      for (const command of commands) {
+        lines.push(
+          ...formatCommand(command)
+        );
+      }
+
+      // lines.push('');
+
+      return lines;
+    }
+
+    // ===================== PUBLIC PREFIX COMMANDS =====================
+
+    const publicCommands = [];
+
+    if (commandsData.everyone) {
+
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.everyone
+      )) {
+
+        publicCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
+
+      }
+
+    }
+
+    // ===================== WHITELISTED PREFIX COMMANDS =====================
+
+    const whitelistedCommands = [];
+
+    if (
+      hasPermission &&
+      commandsData.whitelisted
+    ) {
+
+      for (const [categoryName, commands] of Object.entries(
+        commandsData.whitelisted
+      )) {
+
+        whitelistedCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
+
+      }
+
+    }
+
+    // ===================== WHITELISTED APPLICATION COMMANDS =====================
+
+    const applicationCommands = [];
+
+    if (
+      hasPermission &&
+      application?.whitelisted
+    ) {
+
+      for (const [categoryName, commands] of Object.entries(
+        application.whitelisted
+      )) {
+
+        applicationCommands.push(
+          ...formatCommandCategory(
+            categoryName,
+            commands
+          )
+        );
+
+      }
+
+    }
+
+    // ===================== OWNER PREFIX COMMANDS =====================
+
+    const owners = await db.owners.get('CheekyCharlie_Owners');
+
+    if (!Array.isArray(owners)) {
+      console.error('Owners list broken:', owners);
+
+      return interaction.reply({
+        content: '⚠️ Owner list is misconfigured.',
+        ephemeral: true
+      });
+    }
+
+    const ownerCommands = [];
+
+    if (owners.includes(interaction.user.id)) {
+
+      ownerCommands.push(
+        ...formatCommandCategory(
+          'Owner',
+          commandsData.owner
+        )
+      );
+
+    }
+
+    // ===================== COMMAND PAGES =====================
+
+    const publicPages = chunkByItems(
+      publicCommands,
+      20
     );
 
-    const message = await interaction.reply({
-      embeds: [embeds[page]],
-      components: [row],
-      fetchReply: true
+    const whitelistedPages =
+      hasPermission && whitelistedCommands.length > 0
+        ? chunkByItems(whitelistedCommands, 20)
+        : [];
+
+    const applicationPages =
+      hasPermission && applicationCommands.length > 0
+        ? chunkByItems(applicationCommands, 20)
+        : [];
+
+    const ownerPages =
+      ownerCommands.length > 0
+        ? chunkByItems(ownerCommands, 20)
+        : [];
+
+    // ===================== CATEGORY DATA =====================
+
+    const categories = {
+      public: {
+        name: 'Everyone Prefix Commands',
+        emoji: '🌿',
+        pages: publicPages,
+        color: 0x207e37
+      },
+
+      whitelisted: {
+        name: 'Whitelisted Prefix Commands',
+        emoji: '🔒',
+        pages: whitelistedPages,
+        color: 0x207e37
+      },
+
+      application: {
+        name: 'Whitelisted Application Commands',
+        emoji: '🔧',
+        pages: applicationPages,
+        color: 0x207e37
+      },
+
+      owner: {
+        name: 'Owner Commands',
+        emoji: '👑',
+        pages: ownerPages,
+        color: 0x207e37
+      }
+    };
+
+    // ===================== EMBED BUILDER =====================
+
+    function createCategoryEmbed(categoryKey, page = 0) {
+
+      const category = categories[categoryKey];
+
+      const content = category.pages[page] || '';
+
+      let pageText = '';
+
+      if (category.pages.length > 1) {
+        pageText =
+          `🌿 ${category.name} Page: ${page + 1}/${category.pages.length} • `;
+      } else {
+        pageText =
+          `🌿 ${category.name} • `;
+      }
+
+      return new EmbedBuilder()
+        .setTitle(`🌿 **\`${category.name}\`** 🌿`)
+        .setColor(category.color)
+        .setThumbnail(
+          interaction.client.user.displayAvatarURL()
+        )
+        .setDescription(
+          `${middle}\n${content}${middle}`
+        )
+        .setFooter({
+          text:
+            `${pageText}` +
+            `${interaction.user.tag}`
+        });
+    }
+
+    // ===================== HELP MENU EMBED =====================
+
+    const helpEmbed = new EmbedBuilder()
+      .setTitle('🌿 **`CheekyCharlie Help Menu`** 🌿')
+      .setColor(0x207e37)
+      .setThumbnail(
+        interaction.client.user.displayAvatarURL()
+      )
+      .setDescription(
+        `**Welcome to the CheekyCharlie \`/help\` Menu!**\n\n` +
+        `Use the buttons below to select the type of commands you want to view.\n\n` +
+        `🌿 **\`Everyone Prefix Commands\`**\n` +
+        `Commands available to everyone.\n\n` +
+        `🔒 **\`Whitelisted Prefix Commands\`**\n` +
+        `Prefix commands available to whitelisted members.\n\n` +
+        `🔧 **\`Whitelisted Application Commands\`**\n` +
+        `Application commands available to whitelisted members.\n\n` +
+        `👑 **\`Owner Commands\`**\n` +
+        `Commands available to CheekyCharlie owners.\n` +
+        `${middle}`
+      )
+      .setFooter({
+        text:
+          `🌿 Select a command category • ` +
+          `Requested by ${interaction.user.tag}`
+      });
+
+    // ===================== NO COMMANDS CHECK =====================
+
+    if (
+      publicPages.length === 0 &&
+      whitelistedPages.length === 0 &&
+      applicationPages.length === 0 &&
+      ownerPages.length === 0
+    ) {
+      return interaction.reply({
+        content: 'There are currently no commands available.',
+        ephemeral: true
+      });
+    }
+
+    // ===================== CATEGORY BUTTONS =====================
+
+    const categoryRow = new ActionRowBuilder().addComponents(
+
+      new ButtonBuilder()
+        .setCustomId('help_public')
+        .setLabel('Everyone Prefix')
+        .setEmoji('🌿')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(publicPages.length === 0),
+
+      new ButtonBuilder()
+        .setCustomId('help_whitelisted')
+        .setLabel('Whitelisted Prefix')
+        .setEmoji('🔒')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(!hasPermission || whitelistedPages.length === 0),
+
+      new ButtonBuilder()
+        .setCustomId('help_application')
+        .setLabel('Whitelisted Application')
+        .setEmoji('🔧')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(!hasPermission || applicationPages.length === 0),
+
+      new ButtonBuilder()
+        .setCustomId('help_owner')
+        .setLabel('Owner')
+        .setEmoji('👑')
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(ownerPages.length === 0)
+
+    );
+
+    // ===================== SEND =====================
+
+    await interaction.reply({
+      embeds: [helpEmbed],
+      components: [categoryRow]
     });
+
+    const sentMessage = await interaction.fetchReply();
 
     // ===================== COLLECTOR =====================
 
-    const collector = message.createMessageComponentCollector({
-      time: 60_000
-    });
+    const collector =
+      sentMessage.createMessageComponentCollector({
+        time: 60_000
+      });
+
+    // ===================== STATE =====================
+
+    let currentCategory = null;
+    let page = 0;
+
+    // ===================== COLLECT =====================
 
     collector.on('collect', async i => {
+
+      // ===================== USER CHECK =====================
+
       if (i.user.id !== interaction.user.id) {
+
         return i.reply({
           content: "You can't use these buttons.",
           ephemeral: true
         });
+
       }
 
-      if (i.customId === 'stop') {
-        collector.stop('stopped');
-        return i.update({
-          components: [
-            new ActionRowBuilder().addComponents(
-              row.components.map(btn =>
-                ButtonBuilder.from(btn).setDisabled(true)
+      // ===================== CATEGORY CHANGE =====================
+
+      if (i.customId.startsWith('help_')) {
+
+        const selectedCategory =
+          i.customId.replace('help_', '');
+
+        if (!categories[selectedCategory]) {
+          return;
+        }
+
+        const category =
+          categories[selectedCategory];
+
+        // ===================== SECURITY CHECK =====================
+
+        if (
+          selectedCategory === 'whitelisted' &&
+          !hasPermission
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (
+          selectedCategory === 'application' &&
+          !hasPermission
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (
+          selectedCategory === 'owner' &&
+          ownerPages.length === 0
+        ) {
+          return i.reply({
+            content:
+              "You don't have permission to view these commands.",
+            ephemeral: true
+          });
+        }
+
+        if (category.pages.length === 0) {
+          return i.reply({
+            content:
+              'There are currently no commands in this category.',
+            ephemeral: true
+          });
+        }
+
+        currentCategory = selectedCategory;
+        page = 0;
+
+        // ===================== NAVIGATION BUTTONS =====================
+
+        const navigationRow =
+          new ActionRowBuilder().addComponents(
+
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(
+                category.pages.length === 1
               )
+
+          );
+
+        // Category buttons disappear here.
+        return i.update({
+          embeds: [
+            createCategoryEmbed(
+              currentCategory,
+              page
             )
+          ],
+          components: [
+            navigationRow
           ]
         });
+
       }
 
-      if (i.customId === 'prev') page--;
-      if (i.customId === 'next') page++;
+      // ===================== MENU =====================
 
-      row.components[0].setDisabled(page === 0);
-      row.components[2].setDisabled(page === embeds.length - 1);
+      if (i.customId === 'menu') {
 
-      await i.update({
-        embeds: [embeds[page]],
-        components: [row]
-      });
+        currentCategory = null;
+        page = 0;
+
+        return i.update({
+          embeds: [helpEmbed],
+          components: [categoryRow]
+        });
+
+      }
+
+      // ===================== STOP =====================
+
+      if (i.customId === 'stop') {
+
+        collector.stop('stopped');
+
+        return i.update({
+          components: []
+        });
+
+      }
+
+      // ===================== PAGE CHANGE =====================
+
+      if (
+        currentCategory &&
+        (i.customId === 'prev' ||
+          i.customId === 'next')
+      ) {
+
+        const category =
+          categories[currentCategory];
+
+        if (i.customId === 'prev') {
+          page--;
+        }
+
+        if (i.customId === 'next') {
+          page++;
+        }
+
+        // ===================== SAFETY =====================
+
+        if (page < 0) {
+          page = 0;
+        }
+
+        if (page > category.pages.length - 1) {
+          page = category.pages.length - 1;
+        }
+
+        // ===================== NAVIGATION BUTTONS =====================
+
+        const navigationRow =
+          new ActionRowBuilder().addComponents(
+
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(page === 0),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(
+                page === category.pages.length - 1
+              )
+
+          );
+
+        // ===================== UPDATE =====================
+
+        return i.update({
+          embeds: [
+            createCategoryEmbed(
+              currentCategory,
+              page
+            )
+          ],
+          components: [
+            navigationRow
+          ]
+        });
+
+      }
+
     });
+
+    // ===================== COLLECTOR END =====================
 
     collector.on('end', async () => {
-      row.components.forEach(button => button.setDisabled(true));
-      await message.edit({ components: [row] });
+
+      try {
+
+        // Remove all buttons when the collector
+        // times out or is stopped.
+        await sentMessage.edit({
+          components: []
+        });
+
+      } catch (error) {
+
+        // Message may have been deleted
+        if (error.code !== 10008) {
+          console.error(
+            '[HELP] Failed to remove buttons:',
+            error
+          );
+        }
+
+      }
+
     });
+
   }
 };
