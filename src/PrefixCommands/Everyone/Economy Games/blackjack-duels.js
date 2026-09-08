@@ -94,15 +94,15 @@ module.exports = {
 
       const makeEmbed = () => ({
         color: 0xffffff,
-        title: '**__♦️ Blackjack Duel ♦️__**',
-        description: `${author.username} vs ${opponent.username}\n\nBet: ${custom || ferns}${bet}`,
+        title: '***♦️ \`Blackjack Duel\` ♦️***',
+        description: `***${author.username} vs ${opponent.username}***\n\n**Bet: ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}**`,
         fields: [
           {
-            name: `${author.username}'s Cards`,
+            name: `***\`${author.username}'s Cards\`***`,
             value: challengerCards.join(', ')
           },
           {
-            name: `${opponent.username}'s Cards`,
+            name: `***\`${opponent.username}'s Cards\`***`,
             value: turn === author.id ? 'Hidden' : opponentCards.join(', ')
           },
           {
@@ -155,8 +155,8 @@ module.exports = {
           return btn.update({
             embeds: [{
               color: 0x00ff00,
-              title: '**__♠️ Blackjack Results ♠️__**',
-              description: `${winner.username} wins ${custom || ferns}${bet}!`
+              title: '***♠️ \`Blackjack Results\` ♠️***',
+              description: `***${winner.username} Wins ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`
             }],
             components: []
           });
@@ -189,10 +189,10 @@ module.exports = {
           return btn.update({
             embeds: [{
               color: 0x00ff00,
-              title: '**__♠️ Blackjack Results ♠️__**',
+              title: '***♠️ \`Blackjack Results\` ♠️***',
               description: winner
-                ? `${winner.username} wins ${custom || ferns}${bet}!`
-                : '🤝 It’s a tie!'
+                ? `***${winner.username} Wins ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`
+                : '***🤝 It’s a tie!***'
             }],
             components: []
           });

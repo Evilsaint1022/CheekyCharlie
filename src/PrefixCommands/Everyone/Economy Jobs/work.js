@@ -183,7 +183,7 @@ module.exports = {
                 `${selectedJob.emoji} _${phrase}_ **${currency}${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}***\n` +
+                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
                 `${middle}\n\n`
             )
             .setColor(0x207e37)

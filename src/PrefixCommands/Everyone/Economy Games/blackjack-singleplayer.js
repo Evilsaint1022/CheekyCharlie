@@ -111,8 +111,8 @@ module.exports = {
 
     const gameEmbed = {
       color: 0xFFFFFF,
-      title: '**__♦️ Blackjack ♦️__**',
-      description: `Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
+      title: '***♦️ \`BlackJack-SinglePlayer\` ♦️***',
+      description: `Placed Bet: ${custom || ferns}${bet.toLocaleString()} ${customname || fernsname}!\n\n\`Your move: Hit or Stand?\``,
       thumbnail: { url: author.displayAvatarURL() },
       fields: [
         { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -151,8 +151,8 @@ module.exports = {
 
       const updatedEmbed = {
         color: 0xFFFFFF,
-        title: '**__♣️ Blackjack ♣️__**',
-        description: `Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Your move: Hit or Stand?\``,
+        title: '***♣️ \`BlackJack-SinglePlayer\` ♣️***',
+        description: `***Placed Bet: ${custom || ferns}${bet.toLocaleString()} ${customname || fernsname}!***\n\n**\`Your move: Hit or Stand?\`**`,
         thumbnail: { url: author.displayAvatarURL() },
         fields: [
           { name: 'Your Cards', value: playerCards.join(', '), inline: true },
@@ -204,15 +204,15 @@ module.exports = {
 
       const resultEmbed = {
         color: finalResult === 'win' ? 0x00FF00 : finalResult === 'lose' ? 0xFF0000 : 0xFFFF00,
-        title: '**__♠️ Blackjack Results ♠️__**',
-        description: `You **${finalResult.toUpperCase()}** ${custom || ferns}${bet.toLocaleString()}`,
+        title: '***♠️ \`BlackJack Result\` ♠️***',
+        description: `**You ${finalResult.toUpperCase()} ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!**`,
         thumbnail: { url: author.displayAvatarURL() },
         fields: [
           { name: 'Your Cards', value: playerCards.join(', '), inline: true },
           { name: 'Your Total', value: playerTotal.toString(), inline: true },
           { name: `Dealer's Cards`, value: dealerCards.join(', '), inline: false },
           { name: `Dealer's Total`, value: dealerTotal.toString(), inline: true },
-          { name: '**__New Balance__**', value: `${custom || ferns}${balance.toLocaleString()}`, inline: false }
+          { name: '💰 __New Balance__', value: `${custom || ferns}・\`${balance.toLocaleString()}\``, inline: false }
         ]
       };
 

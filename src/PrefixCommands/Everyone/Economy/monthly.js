@@ -91,7 +91,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(top)
       .setDescription(
-        `You have claimed your monthly reward of **${custom || ferns} ${rewardAmount.toLocaleString()}**!\n` +
+        `_You have claimed your monthly reward of **${custom || ferns} ${rewardAmount.toLocaleString()} ${customname || fernsname}**!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
         `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`     ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
