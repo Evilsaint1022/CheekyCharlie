@@ -38,7 +38,7 @@ module.exports = {
         const bar = `**─────────────────────────────────**`;
 
         // Jobs per page
-        const JOBS_PER_PAGE = 10;
+        const JOBS_PER_PAGE = 5;
 
         // Split into pages
         const pages = [];
@@ -63,8 +63,8 @@ module.exports = {
             }).join('\n\n');
 
             const embed = new EmbedBuilder()
-                .setTitle('**╭─── 🌿__Available Jobs__🌿 ───╮**')
-                .setDescription(`_You can use the \`?job-apply\` command to apply for a job!_\n` + description + `\n\n**╰───────── Page ${pages.length + 1}/${Math.ceil(jobs.length / JOBS_PER_PAGE)} ──────────╯**`)
+                .setTitle('***╭─── 🌿 \`Available Jobs\` 🌿 ───╮***')
+                .setDescription(`_You can use the \`?job-apply\` command to apply for a job!_\n` + description + `\n\n***╰───────── Page ${pages.length + 1}/${Math.ceil(jobs.length / JOBS_PER_PAGE)} ──────────╯***`)
                 .setColor(0x207e37)
                 .setThumbnail(message.guild.iconURL())
 

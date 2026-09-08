@@ -31,7 +31,7 @@ module.exports = {
     );
 
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `**╰────────────────────────────────╯**`;
+    const bottom = `***╰────────────────────────────────╯***`;
     const bottommessage = `ㅤ ***🌿・${message.guild.name} Level Roles・🌿***`;
     const levelRoles = await db.levelroles.get(guildKey);
 
@@ -46,7 +46,7 @@ module.exports = {
     // ------------------------------
     // PAGINATION
     // ------------------------------
-    const itemsPerPage = 10;
+    const itemsPerPage = 5;
     const totalPages = Math.max(1, Math.ceil(sortedLevels.length / itemsPerPage));
     let currentPage = 0;
 

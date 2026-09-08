@@ -40,8 +40,8 @@ module.exports = {
     );
 
     const embed = new EmbedBuilder()
-      .setTitle('🌿**__Here is the following emoji:__**')
-      .setDescription(`Emoji Name: ${emojiName}\nEmoji ID: ${emojiId}`)
+      .setTitle(`***🌿 \`Here is the following emoji!\` 🌿***`)
+      .setDescription(`***Emoji Name: \`${emojiName}\`\nEmoji ID: \`${emojiId}\`***`)
       .setImage(imageURL)
       .setColor(0x207e37);
 

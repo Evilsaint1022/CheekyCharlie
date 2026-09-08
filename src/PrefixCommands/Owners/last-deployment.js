@@ -25,7 +25,7 @@ module.exports = {
         const ts = client.startupTime;
 
         return message.reply(
-            `🌿 **Last Deployment**\n<t:${ts}:F> (<t:${ts}:R>)`
+            `***🌿 \`Last Deployment\` 🌿***\n<t:${ts}:F> (<t:${ts}:R>)`
         );
     }
 };

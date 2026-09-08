@@ -35,8 +35,8 @@ module.exports = {
       `&permissions=${permissions.bitfield}`;
 
     message.reply(
-      `🔗 **Invite CheekyCharlie**\n` +
-      `${invite}`
+      `***🌿 \`CheekyCharlie Invite\` 🌿***\n` +
+      `- 🔗 [Invite Link:](${invite})`
     );
   }
 };

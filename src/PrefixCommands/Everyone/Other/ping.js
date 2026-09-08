@@ -1,4 +1,5 @@
 // ping.js --------------------------------------------------------------------------------------------------------------------------------
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name: 'ping',
@@ -21,21 +22,14 @@ module.exports = {
 
     const latency = Date.now() - start;
 
-    const pingEmbed = {
-      color: 0x207e37,
-      title: '**Pong! 🏓**',
-      description: `**Latency: ${latency}ms.**`
-    };
-
-    // Add guild icon thumbnail if available
-    if (message.guild.iconURL()) {
-      pingEmbed.thumbnail = {
-        url: message.guild.iconURL({ dynamic: true, size: 128 }),
-      };
-    }
+    const embed = new EmbedBuilder()
+      .setColor(0x207e37)
+      .setTitle(`***🏓\`Ping Pong!\`***`)
+      .setDescription(`**Latency: \`${latency}ms.\`**`)
+      .setThumbnail(message.guild.iconURL())
 
     // Edit message with embed
-    await sentMessage.edit({ embeds: [pingEmbed], content: '' });
+    await sentMessage.edit({ embeds: [embed], content: '' });
 
     // Console Logs
     console.log(

@@ -26,7 +26,7 @@ module.exports = {
     });
 
     const avatarEmbed = new EmbedBuilder()
-      .setTitle(`${user.username}'s Avatar`)
+      .setTitle(`***🌿 \`${user.username}'s Avatar\` 🌿***`)
       .setImage(avatarUrl)
       .setColor(0x207e37)
       .setFooter({
