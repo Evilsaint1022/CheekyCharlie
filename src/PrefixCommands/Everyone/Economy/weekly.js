@@ -29,7 +29,7 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const top = `**🌿 __${username}'s Weekly!__ 🌿**`;
+        const top = `**🌿 \`${username}'s Weekly!\` 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
         const bottom = `🌿・Come Back Next Week for More!`;

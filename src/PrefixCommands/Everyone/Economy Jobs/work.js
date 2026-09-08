@@ -178,17 +178,17 @@ module.exports = {
 
         // Embed
         const embed = new EmbedBuilder()
-            .setTitle(`**🌿 __${username} Worked!__ 🌿**`)
+            .setTitle(`***🌿 \`${username} Worked!\` 🌿***`)
             .setDescription(
-                `${selectedJob.emoji} ${phrase} **${currency} ${reward.toLocaleString()}**\n` +
+                `${selectedJob.emoji} _${phrase}_ **${currency}${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
+                `ㅤ ***${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}***\n` +
                 `${middle}\n\n`
             )
             .setColor(0x207e37)
             .setFooter({
-                text: `🌿 Current Job: ${selectedJob.name}`
+                text: ` 🌿 Current Job: ${selectedJob.name}`
             })
             .setThumbnail(message.author.displayAvatarURL({ dynamic: true }));
 

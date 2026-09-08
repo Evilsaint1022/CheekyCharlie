@@ -65,7 +65,7 @@ module.exports = {
 
     if (target.id === robber.id) return message.reply('You cannot rob yourself!');
 
-    const top = `**🌿 __Robbery Successful__ 🌿**`;
+    const top = `***🌿 \`Robbery Successful\` 🌿***`;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bottom = `🌿・You better hope no one robs you!`;
 
@@ -117,10 +117,10 @@ module.exports = {
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Robbed_ **${target.username}** _for_ ${custom || name} **${stealAmount.toLocaleString()}** _${customname || fernsname}!_\n` +
+        `_You Robbed_ **${target.username}** for ${custom || fernsname}**\`${stealAmount.toLocaleString()}\`** ${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ${custom || ferns}・${balance.toLocaleString()}      ${custom || ferns}・${bank.toLocaleString()}\n` +
+        `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

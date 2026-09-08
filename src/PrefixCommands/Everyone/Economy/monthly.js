@@ -30,7 +30,7 @@ module.exports = {
     const newKey = `${author.id}`;
     const space = "ㅤ";
 
-    const top = `**🌿 __${username}'s Monthly!__ 🌿**`;
+    const top = `**🌿 \`${username}'s Monthly!\` 🌿**`;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bar = `**─────────────────────────────────**`;
     const bottom = `🌿・Come back next month!`;
@@ -94,7 +94,7 @@ module.exports = {
         `You have claimed your monthly reward of **${custom || ferns} ${rewardAmount.toLocaleString()}**!\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ${custom || ferns}・${balance.toLocaleString()}     ${custom || ferns}・${bank.toLocaleString()}\n` +
+        `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`     ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

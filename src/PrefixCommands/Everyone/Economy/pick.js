@@ -130,9 +130,10 @@ module.exports = {
             const reply = await message.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setTitle(`${custom || ferns} ${customname || fernsname} Picked!`)
-                        .setDescription(`You picked **${custom || ferns}・${coinsEarned.toLocaleString()}**`)
+                        .setTitle(`${custom || ferns} \`${customname || fernsname} Picked!\``)
+                        .setDescription(`${middle}\n\n***You have picked ${custom || ferns}\`${coinsEarned.toLocaleString()}\` ${customname || fernsname}***\n\n${middle}`)
                         .setColor(0xDE4949)
+                        .setThumbnail(author.displayAvatarURL({ dynamic: true }))
                 ]
             });
 

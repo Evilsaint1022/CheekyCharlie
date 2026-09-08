@@ -32,7 +32,7 @@ module.exports = {
         const timestamp = new Date().toLocaleTimeString();
 
         const space = 'ㅤ';
-        const top = `**🌿\`${username} Daily!\`🌿**`;
+        const top = `**🌿 \`${username} Daily!\` 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
         const bottom = `🌿・Come Back Tomorrow for More!`;

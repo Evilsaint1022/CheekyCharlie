@@ -31,7 +31,7 @@ module.exports = {
         const guildKey = `${guild.id}`;
         const userKey = `${targetUser.id}`;
 
-        const top = `**🌿\`${targetUser.username}'s Level\`🌿**`;
+        const top = `**🌿 \`${targetUser.username}'s Level\` 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bottom = `🌿・Keep up the Good Work!`;
 

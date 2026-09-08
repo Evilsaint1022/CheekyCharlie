@@ -35,7 +35,7 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const top = `***🌿\`${targetUser.username}'s Balance\`🌿***`;
+        const top = `***🌿 \`${targetUser.username}'s Balance\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bottom = `ㅤ ㅤ🌿 Thanks For Using Bank-NZ 🌿`;
 

@@ -43,8 +43,8 @@ module.exports = {
       .setDescription(
         `_You are viewing your tax information._\n` +
         `${middle}\n` +
-        `ㅤ **💰__Current Tax__    ⏰__Last Paid__**\n` +
-        `ㅤ ***${custom || ferns}・\`${currentTax.toLocaleString()}\`***      ${lastPaidText}\n` +
+        `ㅤ **💰__Current Tax__   ⏰__Last Payment__**\n` +
+        `ㅤ ***${custom || ferns}・\`${currentTax.toLocaleString()}\`***     ${lastPaidText}\n` +
         `${middle}\n`
       )
       .setFooter({ text: bottom })

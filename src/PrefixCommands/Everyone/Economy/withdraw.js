@@ -142,7 +142,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setDescription(
-                `### ***🌿\`${author.username}'s Deposit!\`🌿***\n` +
+                `### ***🌿 \`${author.username}'s Deposit!\` 🌿***\n` +
                 `_Successfully deposited **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
