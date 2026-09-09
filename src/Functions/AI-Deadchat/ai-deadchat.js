@@ -3,7 +3,10 @@ const db = require("../../Handlers/database");
 const { Client, MessageFlags } = require("discord.js");
 const OpenAI = require("openai");
 
+// Testing Timer:
 // const time = "*/5 * * * * *"; // every 5 seconds for testing purposes only.
+
+// Production Timer:
 const time = "0 */5 * * * *"; // every 5 minutes
 
 let isRunning = false;
@@ -13,7 +16,16 @@ let runningSince = null;
 
 const GuildTimeoutMap = new Map();
 
-const openai = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: "https://openrouter.ai/api/v1", timeout: 15000 });
+  // We no Longer use Groq
+  // const GROQ_API_KEY = API_KEY;
+  const OPENROUTER = process.env.OPENROUTER;
+
+    if (!OPENROUTER) {
+    console.warn('OPENROUTER Key is not set!')
+    return;
+  };
+
+const openai = new OpenAI({ apiKey: OPENROUTER, baseURL: "https://openrouter.ai/api/v1", timeout: 15000 });
 
 const API_TIMEOUT_MS = 20000;
 
@@ -131,7 +143,7 @@ async function checkAIDeadchat(client) {
                         temperature: 1.5,
                     }),
                     API_TIMEOUT_MS,
-                    'Groq API'
+                    'OPENROUTER API'
                 );
 
                 const reply = response.choices[0].message.content;

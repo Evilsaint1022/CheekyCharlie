@@ -27,8 +27,17 @@ const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward thi
 
 let pendingPressureMemory = 0;
 
-const groq = new OpenAI({
-    apiKey: process.env.GROQ_API_KEY,
+  // We no Longer use Groq
+  // const GROQ_API_KEY = API_KEY;
+  const OPENROUTER = process.env.OPENROUTER;
+
+    if (!OPENROUTER) {
+    console.warn('OPENROUTER Key is not set!')
+    return;
+  };
+
+const stonks = new OpenAI({
+    apiKey: OPENROUTER,
     baseURL: 'https://openrouter.ai/api/v1',
     timeout: 10000
 });
@@ -74,7 +83,7 @@ async function generateEventText(isPositive) {
         `{"title": "<short punchy headline, max 60 chars>", "description": "<1-2 dramatic sentences of news detail, max 200 chars>"}`;
 
     try {
-        const response = await groq.chat.completions.create({
+        const response = await stonks.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
             model: 'anthropic/claude-sonnet-5',
             temperature: 1.1,
