@@ -60,7 +60,7 @@ async function runDailyBankInterest(client) {
 
     const top =    `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·\n\n`;
     const bottom = `\n· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const splitter = `***─────────────────────────────────***\n`;
+    const splitter = `***─────────────────────────────────***`;
     const footer = `🌿・Thanks for using Bank-NZ`;
 
     const blank = "\u2800";
@@ -111,9 +111,9 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `\n***__Bank-Interest TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
+        const nztimestamp = `\n***__Bank-Interest TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
         let embedsToSend = [];
-        let currentDescription = `***Thanks for using The Bank System ❤️***\n${splitter}`;
+        let currentDescription = `_ㅤDaily Bank-Interest for ${guild.name}_\n${splitter}\n`;
 
         for (const { username, amount, interest, newBalance } of interestResults) {
 
@@ -146,10 +146,9 @@ async function runDailyBankInterest(client) {
             for (let i = 0; i < embedsToSend.length; i++) {
                 const embed = new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
+                    .setTitle(i === 0 ? `***╭───── 💰 \`Daily Bank Interest\` ─────╮***` : null)
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL())
-                    .setFooter({ text: `ㅤ 💰 Daily Bank-Interest for ${guild.name}` });
 
                 await message.edit({
                     embeds: [embed],
@@ -168,10 +167,9 @@ async function runDailyBankInterest(client) {
             for (let i = 0; i < embedsToSend.length; i++) {
                 const embed = new EmbedBuilder()
                     .setColor(0x207e37)
-                    .setTitle(i === 0 ? `***💰 \`Daily Bank Interest\`***` : null)
+                    .setTitle(i === 0 ? `***╭───── 💰 \`Daily Bank Interest\` ─────╮***` : null)
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL())
-                    .setFooter({ text: `ㅤ 💰 Daily Bank-Interest for ${guild.name}` });
 
                 let message = await channel.send({
                     embeds: [embed],
