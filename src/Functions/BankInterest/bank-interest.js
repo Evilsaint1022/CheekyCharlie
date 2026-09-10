@@ -118,11 +118,11 @@ async function runDailyBankInterest(client) {
         for (const { username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `***〉${username}:***${blank}***${custom || ferns}\`${amount}\`***${blank}***+\`${interest}\`***${blank}***${custom || ferns}\`${newBalance}\`***\n`;
+                `***🌿・__${username}:__***\n_${custom || ferns}・\`${amount.toLocaleString()}\`${blank}+\`${interest.toLocaleString()}\`${blank}${custom || ferns}・\`${newBalance.toLocaleString()}\`_\n`;
 
             if (!currentDescription) currentDescription = splitter + "";
 
-            if ((currentDescription + userBlock).length > 3600) {
+            if ((currentDescription + userBlock).length > 4000) {
                 currentDescription += nztimestamp;
                 embedsToSend.push(currentDescription);
                 currentDescription = splitter + "" + userBlock;
