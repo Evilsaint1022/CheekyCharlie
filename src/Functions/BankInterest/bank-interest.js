@@ -138,11 +138,8 @@ async function runDailyBankInterest(client) {
             embedsToSend.push(currentDescription);
         }
 
-        if (existingMessage) {
-
         const message = channel.messages.cache.get(existingMessage)
             || await channel.messages.fetch(existingMessage).catch(() => null);
-
 
         if (message) {
 
@@ -159,8 +156,13 @@ async function runDailyBankInterest(client) {
                     allowedMentions: { parse: [] }
                 });
             }
-        }
-            } else {
+            
+        } else {
+
+        const message = channel.messages.cache.get(existingMessage)
+            || await channel.messages.fetch(existingMessage).catch(() => null);
+
+        if (!message) {  
 
         try {
             for (let i = 0; i < embedsToSend.length; i++) {
@@ -178,8 +180,9 @@ async function runDailyBankInterest(client) {
 
                 await db.settings.set(`${guild.id}.bankinterestmessageid`, message.id);
             }
-                } catch (err) {
+                    } catch (err) {
                     console.warn(`[Bank Interest] Failed to send message in ${guild.name}:`, err.message);
+                    }
                 }
             }
         }
