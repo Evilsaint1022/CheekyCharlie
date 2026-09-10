@@ -4,10 +4,13 @@ const db = {
 
     // Owners ID's DataBase -------------------------------------------------------------------------
     owners: new DotDB("./src/Utilities/Storage_Static/Settings/Owners/owners.json"),
-    commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
-    
-    // -----------------------------------------------------------------------------------------
+
+    // Static DataBase -------------------------------------------------------------------------
     default: new DotDB("./src/Utilities/Storage_Static/Settings/Default/default.json"),
+    commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
+    joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
+    // -----------------------------------------------------------------------------------------
+    
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     vcmembers: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
@@ -58,7 +61,6 @@ const db = {
     passive: new DotDB("./src/Utilities/Storage/Settings/Passive/passive.json"),
     stolen: new DotDB("./src/Utilities/Storage/Economy/Stolen/stolen.json"),
     lives: new DotDB("./src/Utilities/Storage/Settings/Lives/lives.json"),
-    joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
     workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json"),
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
     stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json")
