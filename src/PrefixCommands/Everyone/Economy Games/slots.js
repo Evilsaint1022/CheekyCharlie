@@ -95,7 +95,7 @@ module.exports = {
     console.log(
       `[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} bet ${customname || fernsname}${bet.toLocaleString()}`
+      `${guild.name} ${guild.id} ${author.username} bet ${bet.toLocaleString()} ${customname || fernsname}`
     );
 
     // 🎰 Slot setup
