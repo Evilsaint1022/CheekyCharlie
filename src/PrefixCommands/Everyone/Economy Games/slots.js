@@ -173,7 +173,7 @@ module.exports = {
       .setDescription(resultText)
       .addFields(
         { name: 'Final Slot Results', value: final.join(' | ') },
-        { name: 'New Balance', value: `***${custom || ferns}・\`${balance.toLocaleString()}\`***` }
+        { name: '💰 __New Balance__', value: `***${custom || ferns}・\`${balance.toLocaleString()}\`***` }
       );
 
     await slotMessage.edit({ embeds: [resultEmbed] });
