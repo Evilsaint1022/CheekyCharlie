@@ -1,8 +1,8 @@
 [
-  {
-    "id": "beggar",
-    "name": "Beggar",
-    "emoji": "🪙",
+    {
+    "id": "homeless",
+    "name": "Homeless",
+    "emoji": "💩",
     "min": 5,
     "max": 20,
     "tax": 0,
@@ -10,14 +10,24 @@
     "level": 1
   },
   {
+    "id": "beggar",
+    "name": "Beggar",
+    "emoji": "🪙",
+    "min": 10,
+    "max": 30,
+    "tax": 0,
+    "cooldown": 60000,
+    "level": 2
+  },
+  {
     "id": "farmer",
     "name": "Farmer",
     "emoji": "🌾",
     "min": 20,
     "max": 50,
-    "tax": 2,
+    "tax": 1,
     "cooldown": 300000,
-    "level": 2
+    "level": 3
   },
   {
     "id": "fisherman",
@@ -27,7 +37,7 @@
     "max": 80,
     "tax": 3,
     "cooldown": 300000,
-    "level": 3
+    "level": 5
   },
   {
     "id": "lumberjack",
@@ -35,9 +45,9 @@
     "emoji": "🪓",
     "min": 40,
     "max": 90,
-    "tax": 4,
+    "tax": 5,
     "cooldown": 300000,
-    "level": 4
+    "level": 8
   },
   {
     "id": "miner",
@@ -45,9 +55,9 @@
     "emoji": "⛏️",
     "min": 50,
     "max": 120,
-    "tax": 5,
+    "tax": 6,
     "cooldown": 300000,
-    "level": 5
+    "level": 10
   },
   {
     "id": "chef",
@@ -57,7 +67,7 @@
     "max": 130,
     "tax": 6,
     "cooldown": 360000,
-    "level": 6
+    "level": 12
   },
   {
     "id": "mechanic",
@@ -67,7 +77,7 @@
     "max": 180,
     "tax": 8,
     "cooldown": 360000,
-    "level": 7
+    "level": 15
   },
   {
     "id": "delivery_driver",
@@ -77,7 +87,7 @@
     "max": 160,
     "tax": 7,
     "cooldown": 360000,
-    "level": 8
+    "level": 17
   },
   {
     "id": "security_guard",
@@ -87,7 +97,7 @@
     "max": 200,
     "tax": 9,
     "cooldown": 420000,
-    "level": 9
+    "level": 19
   },
   {
     "id": "teacher",
@@ -97,7 +107,7 @@
     "max": 220,
     "tax": 10,
     "cooldown": 420000,
-    "level": 10
+    "level": 21
   },
   {
     "id": "programmer",
@@ -107,7 +117,7 @@
     "max": 300,
     "tax": 12,
     "cooldown": 480000,
-    "level": 11
+    "level": 24
   },
   {
     "id": "doctor",
@@ -117,7 +127,7 @@
     "max": 400,
     "tax": 15,
     "cooldown": 600000,
-    "level": 12
+    "level": 26
   },
   {
     "id": "scientist",
@@ -127,7 +137,7 @@
     "max": 450,
     "tax": 16,
     "cooldown": 600000,
-    "level": 13
+    "level": 28
   },
   {
     "id": "pilot",
@@ -137,7 +147,7 @@
     "max": 550,
     "tax": 18,
     "cooldown": 720000,
-    "level": 14
+    "level": 30
   },
   {
     "id": "ceo",
@@ -147,6 +157,26 @@
     "max": 1000,
     "tax": 25,
     "cooldown": 900000,
-    "level": 15
+    "level": 33
+  },
+  {
+    "id": "mark_zuckerburg",
+    "name": "Mark Zuckerberg",
+    "emoji": "🤖",
+    "min": 500,
+    "max": 1200,
+    "tax": 30,
+    "cooldown": 1200000,
+    "level": 35
+  },
+  {
+    "id": "jeff_bezos",
+    "name": "Jeff Bezos",
+    "emoji": "👨🏻‍🦲",
+    "min": 700,
+    "max": 1500,
+    "tax": 35,
+    "cooldown": 1500000,
+    "level": 37
   }
 ]

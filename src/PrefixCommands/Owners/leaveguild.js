@@ -49,7 +49,7 @@ module.exports = {
     // EMBED
     // -----------------------------
     const embed = new EmbedBuilder()
-      .setTitle('**🌿 __Leave Guild__ 🌿**')
+      .setTitle('***🌿 \`Leave Guild\` 🌿***')
       .setDescription('〉Select a server for the \`CheekyCharlie\` to leave.')
       .setColor(0x207e37);
 
@@ -105,11 +105,11 @@ module.exports = {
         await interaction.update({
           embeds: [
             new EmbedBuilder()
-              .setTitle('👋 Left Guild')
+              .setTitle('***👋 \`CheekyCharlie Left Guild\`***')
               .setDescription(
-                `Successfully left **${guildName}**\n\`${guildId}\``
+                `***Successfully left \`${guildName}\` - \`${guildId}\`***`
               )
-              .setColor('Green')
+              .setColor(0x207e37)
           ],
           components: []
         });

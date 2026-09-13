@@ -24,14 +24,16 @@ function encrypt(text) {
 
 async function handleAIMessage(client, message) {
 
-  const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  // We no Longer use Groq
+  // const GROQ_API_KEY = API_KEY;
+  const OPENROUTER = process.env.OPENROUTER;
 
-  if (!GROQ_API_KEY) {
-    console.warn('🟥・The GROQ_API_KEY is not set.')
+  if (!OPENROUTER) {
+    console.warn('OPENROUTER Key is not set!')
     return;
   };
 
-  const openai = new OpenAI({ apiKey: GROQ_API_KEY, baseURL: "https://openrouter.ai/api/v1" });
+  const openai = new OpenAI({ apiKey: OPENROUTER, baseURL: "https://openrouter.ai/api/v1" });
 
   const DiscordPings = message.content.match(/@(everyone|here)/g) || [];
 
@@ -157,15 +159,15 @@ async function handleAIMessage(client, message) {
     const systemPrompt_raw = fs.readFileSync("./src/AI-Response/systemPrompt.txt", "utf8");
 
     const userInfo = `
-Display Name (Use this to adress to the user): ${await message.author.displayName}
-Username: ${await message.author.username}
-      `
+    Display Name (Use this to adress to the user): ${await message.author.displayName}
+    Username: ${await message.author.username}
+          `
 
     const nzTime = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
 
     const systemPrompt = systemPrompt_raw.replaceAll("{USER_INFO}", userInfo).replaceAll("{NZ_DATE_TIME}", nzTime)
 
-    console.log('🧠 Sending message to Groq...');
+    console.log('🧠 Sending message to OPENROUTER...');
     const response = await openai.chat.completions.create({
 
       messages: [
@@ -177,14 +179,14 @@ Username: ${await message.author.username}
     });
 
     const reply = response.choices[0].message.content;
-    console.log(`🤖 Groq Reply: ${reply}`);
+    console.log(`🤖 OPENROUTER Reply: ${reply}`);
     message.reply(reply);
 
     memory.push({ role: 'assistant', content: reply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
     console.log('📁 Chat logged!');
   } catch (err) {
-    console.error('❌ Error talking to Groq:', err);
+    console.error('❌ Error talking to OPENROUTER:', err);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
   }
 }

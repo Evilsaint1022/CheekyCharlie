@@ -34,7 +34,7 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(0x207e37)
-        .setTitle(`🎂**\`${user.username}'s Birthday Info\`**`)
+        .setTitle(`🎂 **\`${user.username}'s Birthday Info\`**`)
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .setDescription(`_You are viewing ${user.username}'s Birthday!_\n${middle}\nㅤ ***🍥__Current Birthday:__***\nㅤ ***\`${birthday.day}\`/\`${birthday.month}\`/\`${birthday.year}\`***\n${middle}`)
         .setFooter({

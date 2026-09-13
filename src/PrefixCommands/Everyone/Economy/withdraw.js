@@ -109,9 +109,9 @@ module.exports = {
             };
 
             withdrawAmount = number * (multipliers[suffix] || 1);
-
         }
 
+        // Aprils Fools Event ----------------------------------------
         if (date === `01/04`) {
 
         if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > walletBalance) {
@@ -119,17 +119,6 @@ module.exports = {
                 `❌ You do not have enough ${customname || fernsname} in your Bank to deposit or you entered an invalid amount.`
             );
         }
-
-        } else {
-
-        if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > bankBalance) {
-            return message.reply(
-                `❌ You do not have enough ${customname || fernsname} in your Bank to withdraw or you entered an invalid amount.`
-            );
-        }
-    }
-
-    if (date === `01/04`) {
 
         // Update balances
         walletBalance -= withdrawAmount;
@@ -141,7 +130,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setDescription(
-                `### ***🌿\`${author.username}'s Deposit!\`🌿***\n` +
+                `### ***🌿 \`${author.username}'s Deposit!\` 🌿***\n` +
                 `_Successfully deposited **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
@@ -159,40 +148,7 @@ module.exports = {
             `${guild.name} ${guild.id} ${author.username} deposited ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
 
-    } else {
-
-        // Update balances
-        bankBalance -= withdrawAmount;
-        walletBalance += withdrawAmount;
-
-        await db.bank.set(bankKey, bankBalance);
-        await db.wallet.set(walletKey, walletBalance);
-
-        const embed = new EmbedBuilder()
-            .setColor(0x207e37)
-            .setDescription(
-                `### ***🌿\`${author.username}'s Withdrawal!\`🌿***\n` +
-                `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
-                `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
-                `${middle}`
-            )
-            .setFooter({ text: bottom })
-            .setThumbnail(author.displayAvatarURL({ dynamic: true }))
-
-        await message.reply({ embeds: [embed] });
-
-        console.log(
-            `[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] ` +
-            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
-        );
-    }
-
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
+        // Transaction Log -------------------------------------------
 
         const channelId = await db.settings.get(`${guild.id}.banktransactions`);
 
@@ -205,9 +161,7 @@ module.exports = {
         }
 
         if (!channel || !channel.isTextBased()) return;
-
-        if (date === `01/04`) {
-
+        
         const embedlog = new EmbedBuilder()
           .setDescription(
                 `### ***🏦 \`Bank Transaction\`***\n` +
@@ -225,6 +179,56 @@ module.exports = {
          await channel.send({embeds: [embedlog]}).catch(console.error);
 
         } else {
+
+        // Production Code -------------------------------------------
+        if (!withdrawAmount || withdrawAmount <= 0 || withdrawAmount > bankBalance) {
+            return message.reply(
+                `❌ You do not have enough ${customname || fernsname} in your Bank to withdraw or you entered an invalid amount.`
+            );
+        }
+
+        // Update balances
+        bankBalance -= withdrawAmount;
+        walletBalance += withdrawAmount;
+
+        await db.bank.set(bankKey, bankBalance);
+        await db.wallet.set(walletKey, walletBalance);
+
+        const embed = new EmbedBuilder()
+            .setColor(0x207e37)
+            .setDescription(
+                `### ***🌿 \`${author.username}'s Withdrawal!\` 🌿***\n` +
+                `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
+                `${middle}\n` +
+                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
+                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
+                `${middle}`
+            )
+            .setFooter({ text: bottom })
+            .setThumbnail(author.displayAvatarURL({ dynamic: true }))
+
+        await message.reply({ embeds: [embed] });
+
+        console.log(
+            `[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+            `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
+        );
+
+        // Transaction Log -------------------------------------------
+    
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
+
+        if (!channelId) return;
+
+        let channel = guild.channels.cache.get(channelId);
+
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
+
 
         const embedlog = new EmbedBuilder()
           .setDescription(

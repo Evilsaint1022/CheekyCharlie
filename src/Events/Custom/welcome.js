@@ -26,12 +26,7 @@ module.exports = {
       const fetchedMessage = await message.channel.messages.fetch(message.id).catch(() => null);
       if (!fetchedMessage) return; // Message was deleted
 
-      console.log(
-        `[❤️] [WELCOME REACTION] [${new Date().toLocaleDateString('en-GB')}] ` +
-        `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-        `${message.guild.name} (${message.guild.id}) - ` +
-        `#${message.channel.name} (${message.channel.id})`
-      );
+      console.log(`[❤️] [WELCOME REACTION] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Welcome ❤️ Reaction in ${message.channel.name} ${message.channel.id}`)
 
       await fetchedMessage.react('❤️');
 

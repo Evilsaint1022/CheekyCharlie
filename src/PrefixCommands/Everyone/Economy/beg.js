@@ -73,7 +73,7 @@ module.exports = {
         const fernsname = await db.default.get("Default.name");
 
         const space = 'ㅤ';
-        const top = `***🌿\`${username} Begs!\`🌿***`;
+        const top = `***🌿 \`${username} Begs!\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
         const bottom = `ㅤ 🌿 Come Back for More Soon! 🌿`;

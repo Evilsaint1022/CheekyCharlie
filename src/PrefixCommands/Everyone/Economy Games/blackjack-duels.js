@@ -13,8 +13,32 @@ module.exports = {
     }
 
     const { guild, author, channel } = message;
+
+  function parseAmount(input) {
+    if (!input) return NaN;
+
+    const value = input.toLowerCase().replace(/,/g, '').trim();
+
+    const match = value.match(/^(\d+(?:\.\d+)?)([kmb])?$/);
+
+    if (!match) return NaN;
+
+    const number = parseFloat(match[1]);
+    const suffix = match[2];
+
+    const multipliers = {
+      k: 1_000,
+      m: 1_000_000,
+      b: 1_000_000_000
+    };
+
+    return Math.floor(number * (multipliers[suffix] || 1));
+  }
+
     const opponent = message.mentions.users.first();
-    const bet = parseInt(args[1]);
+
+    // 🎯 Bet parsing
+    const bet = parseAmount(args[0]);
 
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -23,10 +47,15 @@ module.exports = {
     const fernsname = await db.default.get("Default.name");
 
     if (!opponent) return message.reply('❌ You must mention a user to challenge.');
+
     if (opponent.bot || opponent.id === author.id)
       return message.reply('❌ You can’t challenge bots or yourself.');
-    if (isNaN(bet) || bet <= 0)
-      return message.reply('❌ You must provide a valid bet amount.');
+
+    if (isNaN(bet)) {
+      return message.reply(
+        "Please provide a valid bet amount. Examples: `100`, `1k`, `2.5k`, `1m`."
+      );
+    }
 
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.blackjack-duels`;
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);
@@ -94,15 +123,15 @@ module.exports = {
 
       const makeEmbed = () => ({
         color: 0xffffff,
-        title: '**__♦️ Blackjack Duel ♦️__**',
-        description: `${author.username} vs ${opponent.username}\n\nBet: ${custom || ferns}${bet}`,
+        title: '***♦️ \`Blackjack Duel\` ♦️***',
+        description: `***${author.username} vs ${opponent.username}***\n\n**Bet: ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}**`,
         fields: [
           {
-            name: `${author.username}'s Cards`,
+            name: `***\`${author.username}'s Cards\`***`,
             value: challengerCards.join(', ')
           },
           {
-            name: `${opponent.username}'s Cards`,
+            name: `***\`${opponent.username}'s Cards\`***`,
             value: turn === author.id ? 'Hidden' : opponentCards.join(', ')
           },
           {
@@ -155,8 +184,8 @@ module.exports = {
           return btn.update({
             embeds: [{
               color: 0x00ff00,
-              title: '**__♠️ Blackjack Results ♠️__**',
-              description: `${winner.username} wins ${custom || ferns}${bet}!`
+              title: '***♠️ \`Blackjack Results\` ♠️***',
+              description: `***${winner.username} Wins ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`
             }],
             components: []
           });
@@ -189,10 +218,10 @@ module.exports = {
           return btn.update({
             embeds: [{
               color: 0x00ff00,
-              title: '**__♠️ Blackjack Results ♠️__**',
+              title: '***♠️ \`Blackjack Results\` ♠️***',
               description: winner
-                ? `${winner.username} wins ${custom || ferns}${bet}!`
-                : '🤝 It’s a tie!'
+                ? `***${winner.username} Wins ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`
+                : '***🤝 It’s a tie!***'
             }],
             components: []
           });

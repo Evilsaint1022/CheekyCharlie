@@ -43,6 +43,10 @@ module.exports = {
       );
     }
 
+    // Console Logs
+    console.log(`[⭐] [SET-WELCOME-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${guildId} ${message.author.username} used the set-welcome-channel command to set ${channel.name} ${channel.id}`);
+
+
     // Save channel ID
     await db.settings.set(
       `${message.guild.id}.welcomechannel`,

@@ -15,8 +15,17 @@ let isRunning = false;
 let isScheduled = false;
 let scheduledTask = null;
 
+  // We no Longer use Groq
+  // const GROQ_API_KEY = API_KEY;
+  const OPENROUTER = process.env.OPENROUTER;
+
+  if (!OPENROUTER) {
+    console.warn('OPENROUTER Key is not set!')
+    return;
+  };
+
 const openai = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY,
+  apiKey: OPENROUTER,
   baseURL: "https://openrouter.ai/api/v1",
   timeout: 15000
 });
@@ -71,7 +80,7 @@ async function sendQuestionOfTheDay(client) {
           temperature: 1.5
         }),
         API_TIMEOUT_MS,
-        'Groq API (QOTD)'
+        'OPENROUTER API (QOTD)'
       );
 
       const question = response.choices?.[0]?.message?.content?.trim() || "What’s your favourite thing about" || "What’s your morning" || "What’s your afternoon"  || "What’s your night";

@@ -26,6 +26,11 @@ module.exports = {
     joinedMembers.push(member.id);
     await db.members.set(key, joinedMembers);
 
+    // Member Count Filtering
+    const membercount = member.guild.members.cache.filter(
+      m => !m.user.bot
+    ).size;
+
     try {
       // Load the welcome template and member avatar
       const templatePath = path.join(__dirname, '../../Utilities/Banners/banner.png');
@@ -70,7 +75,7 @@ module.exports = {
       ctx.fillStyle = '#d9d9d9';
 
       ctx.fillText(
-      `Member #${member.guild.memberCount}`,
+      `Member #${membercount}`,
       canvas.width / 2, 250);
 
       // Convert the canvas to a buffer and send as an attachment
@@ -78,7 +83,7 @@ module.exports = {
       
       // Send the customized welcome message with the image attachment
       await channel.send({
-        content: `**〉Welcome <@${member.id}> to the ${member.guild.name} Server!**\n`,
+        content: `***Welcome <@${member.id}> to the ${member.guild.name} Server!***\n`,
         files: [attachment]
       });
     } catch (error) {

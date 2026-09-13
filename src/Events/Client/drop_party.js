@@ -15,7 +15,10 @@ dropPartyEvent.clearDrop = function () {
     this.dropPartyData = null;
     this.emit('clearDrop');
 };
+// Testing Timer:
+// const cooldownDuration = 2 * 60 * 1000; // 2 minutes
 
+// Production Timer:
 const cooldownDuration = 10 * 60 * 1000; // 10 minutes
 let isProcessing = false; // Lock to prevent concurrent execution
 
@@ -87,7 +90,7 @@ module.exports = {
             if (channel) {
 
                 const dropMessage = await channel.send(
-                    '**🎉 A Drop Party Has Started!🎉**\n**Use the `?pick` command to grab your rewards!**'
+                    '### **🎉 \`A Drop Party Has Started!\` 🎉**\n**Use the \`?pick\` command to grab your rewards!**'
                 );
 
                 console.log(`[🎉] [DROP PARTY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Drop party message sent.`);

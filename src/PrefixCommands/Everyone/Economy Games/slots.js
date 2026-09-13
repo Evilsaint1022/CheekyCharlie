@@ -9,7 +9,6 @@ const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 module.exports = {
   name: 'slots',
   description: 'Spin the slot machine and bet your balance!',
-  usage: '!slots <bet>',
 
   async execute(message, args) {
 
@@ -31,10 +30,34 @@ module.exports = {
     const balanceKey = `${author.id}.balance`;
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.slots`;
 
+    function parseAmount(input) {
+    if (!input) return NaN;
+
+    const value = input.toLowerCase().replace(/,/g, '').trim();
+
+    const match = value.match(/^(\d+(?:\.\d+)?)([kmb])?$/);
+
+    if (!match) return NaN;
+
+    const number = parseFloat(match[1]);
+    const suffix = match[2];
+
+    const multipliers = {
+      k: 1_000,
+      m: 1_000_000,
+      b: 1_000_000_000
+    };
+
+    return Math.floor(number * (multipliers[suffix] || 1));
+  }
+
     // 🎯 Bet parsing
-    const bet = parseInt(args[0], 10);
-    if (!bet || isNaN(bet)) {
-      return message.reply("Please provide a valid bet amount.");
+    const bet = parseAmount(args[0]);
+
+    if (isNaN(bet)) {
+      return message.reply(
+        "Please provide a valid bet amount. Examples: `100`, `1k`, `2.5k`, `1m`."
+      );
     }
 
     if (bet <= 0) {
@@ -86,10 +109,10 @@ module.exports = {
 
     // 🖼 Initial embed
     const baseEmbed = new EmbedBuilder()
-      .setTitle('🎰 **__Spinning the Slots__**')
+      .setTitle('***🎰 \`Spinning the Slots\`***')
       .setColor(0x207e37)
       .setThumbnail(author.displayAvatarURL())
-      .setDescription(`Placed Bet: ${custom || ferns}${bet.toLocaleString()}\n\n\`Spinning...\``)
+      .setDescription(`***Placed Bet: ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***\n\n***\`Slots Spinning...\`***`)
       .addFields({ name: 'Slots', value: '⬛ | ⬛ | ⬛' });
 
     const slotMessage = await message.reply({ embeds: [baseEmbed] });
@@ -131,26 +154,26 @@ module.exports = {
       balance += winnings;
       await db.wallet.set(balanceKey, balance);
 
-      resultText = `🎉 You **won** ${custom || ferns}${winnings.toLocaleString()}!`;
+      resultText = `***🎉 You Won ${custom || ferns}\`${winnings.toLocaleString()}\` ${customname || fernsname}!***`;
       resultColor = 0x00FF00;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings} ${customname || fernsname}.`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings.toLocaleString()} ${customname || fernsname}.`);
     } else {
-      resultText = `😢 You lost your bet of ${custom || ferns}${bet.toLocaleString()}.`;
+      resultText = `***😢 You Lost your bet of ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`;
       resultColor = 0xFF0000;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet} ${customname || fernsname}.`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet.toLocaleString()} ${customname || fernsname}.`);
     }
 
     // 🏁 Final result embed
     const resultEmbed = new EmbedBuilder()
-      .setTitle('🎰 **__Slots Result__**')
+      .setTitle('***🎰 \`Slots Result\`***')
       .setColor(resultColor)
       .setThumbnail(author.displayAvatarURL())
       .setDescription(resultText)
       .addFields(
-        { name: 'Final Slots', value: final.join(' | ') },
-        { name: 'New Balance', value: `${custom || ferns}${balance.toLocaleString()}` }
+        { name: 'Final Slot Results', value: final.join(' | ') },
+        { name: '💰 __New Balance__', value: `***${custom || ferns}・\`${balance.toLocaleString()}\`***` }
       );
 
     await slotMessage.edit({ embeds: [resultEmbed] });

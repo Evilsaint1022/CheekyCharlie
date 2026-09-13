@@ -119,10 +119,10 @@ module.exports = {
 
         // Embed
         const embed = new EmbedBuilder()
-            .setTitle('**🌿 __Job Applied__ 🌿**')
+            .setTitle('***🌿 \`Job Applied\` 🌿***')
             .setDescription(
                 `\nYou are now working as a ${selectedJob.emoji} **${selectedJob.name}**\n\n` +
-                `〉Earnings: ${currency} ${selectedJob.min.toLocaleString()} - ${selectedJob.max.toLocaleString()}\n` +
+                `〉Earnings: ${currency}\`${selectedJob.min.toLocaleString()}\` - \`${selectedJob.max.toLocaleString()}\`\n` +
                 `〉Cooldown: ${cooldownMinutes} minute(s)\n` +
                 `〉ID: \`${selectedJob.id}\``
             )

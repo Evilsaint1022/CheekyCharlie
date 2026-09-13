@@ -23,14 +23,14 @@ module.exports = {
     }
 
     const guildList = client.guilds.cache.map(
-      guild => `**${guild.name}** — \`${guild.id}\``
+      guild => `〉***__${guild.name}__ — [\`${guild.id}\`]***`
     );
 
     const embed = new EmbedBuilder()
-      .setColor('Green')
-      .setTitle(`🌍 CheekyCharlie Servers (${guildList.length})`)
+      .setColor(0x207e37)
+      .setTitle(`***🌍 \`CheekyCharlie Servers\` [\`${guildList.length}\`]***`)
       .setDescription(guildList.join('\n').slice(0, 4096))
-      .setFooter({ text: 'CheekyCharlie • Server List' })
+      .setFooter({ text: 'CheekyCharlie Servers List' })
       .setTimestamp();
 
     message.channel.send({ embeds: [embed] });

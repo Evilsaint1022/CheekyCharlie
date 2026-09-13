@@ -30,10 +30,6 @@ module.exports = {
     try {
       FourSquareServer = await client.guilds.fetch(four_square_server_ID);
     } catch (error) {
-      console.error(
-        `Failed to fetch guild ${four_square_server_ID}:`,
-        error.message
-      );
       return;
     }
 
