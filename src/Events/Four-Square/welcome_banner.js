@@ -6,7 +6,11 @@ const db = require('../../Handlers/database');
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    // Channel ID where the welcome message will be sent
+
+    // Test Channel:
+    // const channelId = '1508362167215194152';
+
+    // Production Channel ID where the welcome message will be sent
     const channelId = '1500763626422796288';
     const channel = member.guild.channels.cache.get(channelId);
 
@@ -25,6 +29,11 @@ module.exports = {
     // Save this member
     joinedMembers.push(member.id);
     await db.members.set(key, joinedMembers);
+
+    // Member Count Filtering
+    const membercount = member.guild.members.cache.filter(
+      m => !m.user.bot
+    ).size;
 
     try {
       // Load the welcome template and member avatar
@@ -66,7 +75,7 @@ module.exports = {
                  `**• Verify in <#1500763684375629894>**\n` +
                  `**• Get some roles in ⁠<id:customize>**\n` +
                  `**• Chat with us in ⁠<#1500763511448539307>**\n\n` +
-                 `**🌿Member #${member.guild.memberCount}**`,
+                 `**🌿Member #${membercount}**`,
         files: [attachment],
       });
     } catch (error) {
