@@ -46,6 +46,6 @@ module.exports = {
         await message.reply(`The role <@&${role.id}> has been removed from the whitelist.`);
 
         // Console Logs
-        console.log(`[⭐] [REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName}_${guildId} ${message.author.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
+        console.log(`[⭐] [REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
     }
 };

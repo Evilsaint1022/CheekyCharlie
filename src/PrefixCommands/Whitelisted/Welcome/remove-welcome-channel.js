@@ -39,6 +39,9 @@ module.exports = {
       );
     }
 
+    // Console Logs
+    console.log(`[⭐] [REMOVE-WELCOME-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${guildId} ${message.author.username} used the remove-welcome-channel command to Remove ${currentChannel}`);
+
     // Remove the welcome channel
     await db.settings.delete(`${guildId}.welcomechannel`);
 
