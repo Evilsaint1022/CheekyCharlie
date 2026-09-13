@@ -111,18 +111,6 @@ module.exports = {
             withdrawAmount = number * (multipliers[suffix] || 1);
         }
 
-        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
-
-        if (!channelId) return;
-
-        let channel = guild.channels.cache.get(channelId);
-
-        if (!channel) {
-            channel = await guild.channels.fetch(channelId).catch(() => null);
-        }
-
-        if (!channel || !channel.isTextBased()) return;
-
         // Aprils Fools Event ----------------------------------------
         if (date === `01/04`) {
 
@@ -159,6 +147,20 @@ module.exports = {
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} deposited ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
+
+        // Transaction Log -------------------------------------------
+
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
+
+        if (!channelId) return;
+
+        let channel = guild.channels.cache.get(channelId);
+
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
         
         const embedlog = new EmbedBuilder()
           .setDescription(
@@ -195,7 +197,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setDescription(
-                `### ***🌿\`${author.username}'s Withdrawal!\`🌿***\n` +
+                `### ***🌿 \`${author.username}'s Withdrawal!\` 🌿***\n` +
                 `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
@@ -212,11 +214,20 @@ module.exports = {
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
-    
 
-      // ------------------------------------------------------
-      // 4️⃣ Log transaction
-      // ------------------------------------------------------
+        // Transaction Log -------------------------------------------
+    
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
+
+        if (!channelId) return;
+
+        let channel = guild.channels.cache.get(channelId);
+
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
 
 
         const embedlog = new EmbedBuilder()

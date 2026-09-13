@@ -105,18 +105,6 @@ module.exports = {
 
         }
 
-        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
-
-        if (!channelId) return;
-
-        let channel = guild.channels.cache.get(channelId);
-
-        if (!channel) {
-            channel = await guild.channels.fetch(channelId).catch(() => null);
-        }
-
-        if (!channel || !channel.isTextBased()) return;
-
         // Aprils Fools Event -----------------------------------------------------
         if (date === `01/04`) {
 
@@ -151,6 +139,19 @@ module.exports = {
         console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} withdrew ${depositAmount.toLocaleString()} ${customname || fernsname}`);
         
         // Transaction Log -------------------------------------------
+
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
+
+        if (!channelId) return;
+
+        let channel = guild.channels.cache.get(channelId);
+
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
+
         const embedlog = new EmbedBuilder()
         .setDescription(
                 `### ***🏦 \`Bank Transaction\`***\n` +
@@ -201,6 +202,19 @@ module.exports = {
         console.log(`[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount.toLocaleString()} ${customname || fernsname}`);
         
        // Transaction Log -------------------------------------------
+
+        const channelId = await db.settings.get(`${guild.id}.banktransactions`);
+
+        if (!channelId) return;
+
+        let channel = guild.channels.cache.get(channelId);
+
+        if (!channel) {
+            channel = await guild.channels.fetch(channelId).catch(() => null);
+        }
+
+        if (!channel || !channel.isTextBased()) return;
+
       const embedlog = new EmbedBuilder()
           .setDescription(
                 `### ***🏦 \`Bank Transaction\`***\n` +
