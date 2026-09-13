@@ -13,8 +13,32 @@ module.exports = {
     }
 
     const { guild, author, channel } = message;
+
+  function parseAmount(input) {
+    if (!input) return NaN;
+
+    const value = input.toLowerCase().replace(/,/g, '').trim();
+
+    const match = value.match(/^(\d+(?:\.\d+)?)([kmb])?$/);
+
+    if (!match) return NaN;
+
+    const number = parseFloat(match[1]);
+    const suffix = match[2];
+
+    const multipliers = {
+      k: 1_000,
+      m: 1_000_000,
+      b: 1_000_000_000
+    };
+
+    return Math.floor(number * (multipliers[suffix] || 1));
+  }
+
     const opponent = message.mentions.users.first();
-    const bet = parseInt(args[1]);
+
+    // 🎯 Bet parsing
+    const bet = parseAmount(args[0]);
 
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -23,10 +47,15 @@ module.exports = {
     const fernsname = await db.default.get("Default.name");
 
     if (!opponent) return message.reply('❌ You must mention a user to challenge.');
+
     if (opponent.bot || opponent.id === author.id)
       return message.reply('❌ You can’t challenge bots or yourself.');
-    if (isNaN(bet) || bet <= 0)
-      return message.reply('❌ You must provide a valid bet amount.');
+
+    if (isNaN(bet)) {
+      return message.reply(
+        "Please provide a valid bet amount. Examples: `100`, `1k`, `2.5k`, `1m`."
+      );
+    }
 
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.blackjack-duels`;
     const lastUsed = await db.cooldowns.get(GLOBAL_COOLDOWN_KEY);

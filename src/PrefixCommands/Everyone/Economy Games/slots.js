@@ -30,10 +30,34 @@ module.exports = {
     const balanceKey = `${author.id}.balance`;
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.slots`;
 
+    function parseAmount(input) {
+    if (!input) return NaN;
+
+    const value = input.toLowerCase().replace(/,/g, '').trim();
+
+    const match = value.match(/^(\d+(?:\.\d+)?)([kmb])?$/);
+
+    if (!match) return NaN;
+
+    const number = parseFloat(match[1]);
+    const suffix = match[2];
+
+    const multipliers = {
+      k: 1_000,
+      m: 1_000_000,
+      b: 1_000_000_000
+    };
+
+    return Math.floor(number * (multipliers[suffix] || 1));
+  }
+
     // 🎯 Bet parsing
-    const bet = parseInt(args[0], 10);
-    if (!bet || isNaN(bet)) {
-      return message.reply("Please provide a valid bet amount.");
+    const bet = parseAmount(args[0]);
+
+    if (isNaN(bet)) {
+      return message.reply(
+        "Please provide a valid bet amount. Examples: `100`, `1k`, `2.5k`, `1m`."
+      );
     }
 
     if (bet <= 0) {
