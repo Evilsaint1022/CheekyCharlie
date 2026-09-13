@@ -118,7 +118,7 @@ module.exports = {
         .setThumbnail(sender.displayAvatarURL({ dynamic: true }))
 
       // Console Logs
-      console.log(`[🌿] [TAX] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} ${sender.username} paid ${payAmount.toLocaleString()} ${customname || fernsname} towards their tax's`);
+      console.log(`[🌿] [PAY TAX] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} ${sender.username} paid ${payAmount.toLocaleString()} ${customname || fernsname} towards their tax's`);
 
       return message.reply({ embeds: [taxembed] });
     }

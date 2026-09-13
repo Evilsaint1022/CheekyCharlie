@@ -9,7 +9,6 @@ const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 module.exports = {
   name: 'slots',
   description: 'Spin the slot machine and bet your balance!',
-  usage: '!slots <bet>',
 
   async execute(message, args) {
 
