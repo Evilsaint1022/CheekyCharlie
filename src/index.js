@@ -79,8 +79,6 @@ client.once("clientReady", async () => {
 
     // Status Toggles
     const normal = true;
-    const down = false;
-    const issues = false;
 
     // Status Groups
     const normalstatus = [
@@ -104,20 +102,9 @@ client.once("clientReady", async () => {
     "Your daily dose of cheekiness"
 ];
 
-const downstatus = [
-    "🔴・𝗖𝘂𝗿𝗿𝗲𝗻𝘁𝗹𝘆 𝗗𝗼𝘄𝗻",
-    "🔧・Server Restarting Soon"
-];
-
-const issuesstatus = [
-    "⚠️・Experiencing Issues"
-];
-
 // Combine all enabled statuses
 const activeStatuses = [
-    ...(normal ? normalstatus : []),
-    ...(down ? downstatus : []),
-    ...(issues ? issuesstatus : [])
+    ...(normal ? normalstatus : [])
 ];
 
 // Set Activity
