@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "commonjs",
   "main": "src/index.js",
-  "description": "Modular Disord Bot",
+  "description": "A Modular Disord Bot",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -35,7 +35,7 @@
     "node": "^26.9.0",
     "node-cron": "^4.6.0",
     "node-fetch": "^2.7.0",
-    "openai": "^7.19.0",
+    "openai": "^7.20.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",

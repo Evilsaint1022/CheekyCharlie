@@ -1,7 +1,7 @@
 // Index.js -------------------------------------------------------------------------------------------------------------------------
 //
 // ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-//             Created by Evilsaint1022
+//      ❤️ Created by Evilsaint1022 & NZ-Linix ❤️
 // ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //
 // ------------------------------------------------- @Index.js ----------------------------------------------------------------------
@@ -45,16 +45,20 @@ client.prefixCommands = new Collection();
 // Deployment timestamp (Unix seconds) — set once at process start
 client.startupTime = Math.floor(Date.now() / 1000);
 
+if (process.env.DEV_MODE == "true") {
 
 // Testing Status Emojis
-// const Red = `<:Red:1542465623139819541>`
-// const Orange = `<:Orange:1542465612125704192>`
-// const Green = `<:Green:1542465573609275532>`
+ Red = `<:Red:1542465623139819541>`;
+ Orange = `<:Orange:1542465612125704192>`;
+ Green = `<:Green:1542465573609275532>`;
+
+} else {
 
 // Production Status Emojis
-const Red = `<:Red:1505107804808282112>`;
-const Orange = `<:Orange:1505107802824118342>`;
-const Green = `<:Green:1505107801050189895>`;
+Red = `<:Red:1505107804808282112>`;
+Orange = `<:Orange:1505107802824118342>`;
+Green = `<:Green:1505107801050189895>`;
+}
 
 
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
@@ -84,22 +88,64 @@ client.once("clientReady", async () => {
     const normalstatus = [
     "Shopping at the Four-Square",
     "Made in New Zealand",
-    "Stocking Shelves",
-    "Packing up the boxes",
+    "Stocking the Shelves",
+    "Packing up the Boxes",
     "Stocking the Fridges",
     "Helping a Customer",
     "Greeting Customers at the Door",
-    "Made by the people for the people!",
-    "mee6 who? I'm CheekyCharlie!",
-    "Serving up some cheeky vibes",
-    "Here to brighten your day!",
-    "Your friendly neighborhood bot",
-    "Spreading smiles and good vibes",
-    "CheekyCharlie at your service!",
-    "Bringing the fun to your server",
-    "Making your day a little cheekier",
-    "Here to make you smile",
-    "Your daily dose of cheekiness"
+    "Working the Night Shift",
+    "On the Checkout",
+    "Scanning Some Groceries",
+    "Restocking the Aisles",
+    "Checking the Stock",
+    "Taking a Lunch Break",
+    "Having a Quick Cuppa",
+    "Keeping the Shelves Full",
+    "Making the Store Cheeky",
+    "Serving Up Some Cheeky Vibes",
+    "Bringing the Good Vibes",
+    "Here to Brighten Your Day!",
+    "Your Friendly Neighbourhood Bot",
+    "Spreading Smiles & Good Vibes",
+    "CheekyCharlie at Your Service!",
+    "Bringing the Fun to Your Server",
+    "Making Your Server a Little Cheekier",
+    "Here to Make You Smile",
+    "Your Daily Dose of Cheekiness",
+    "Keeping Things Cheeky",
+    "Just Being a Little Cheeky",
+    "Powered by Kiwi Ingenuity",
+    "100% Kiwi Made",
+    "Freshly Made in Aotearoa",
+    "Straight From the Four-Square",
+    "Keeping It Kiwi",
+    "Living the Kiwi Life",
+    "Having a Cheeky Moment",
+    "Probably Causing Trouble",
+    "Definitely Up to Something",
+    "Doing Bot Things",
+    "Pretending to Work",
+    "Working Hard or Hardly Working",
+    "Checking My Notifications",
+    "Waiting for Someone to Say Hi",
+    "Keeping an Eye on Things",
+    "Watching the Server",
+    "Patrolling the Aisles",
+    "Avoiding the Checkout Queue",
+    "Looking for the Good Snacks",
+    "Buying the Last Packet of Shapes",
+    "Having a Cheeky Snack",
+    "Where's the L&P?",
+    "Someone Say Fish & Chips?",
+    "Putting the Kettle On",
+    "Sweet As, Bro!",
+    "Yeah, Nah, I'm Working",
+    "Chur, I'm On It!",
+    "No Worries, I'm Here",
+    "Keeping the Server Fresh",
+    "Fresh Outta the Four-Square",
+    "Serving Fresh Bot Vibes",
+    "The Cheekiest Bot in Aotearoa"
 ];
 
 // Combine all enabled statuses
