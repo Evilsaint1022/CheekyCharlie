@@ -1,5 +1,31 @@
 const db = require('../../Handlers/database');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, StickerFormatType } = require('discord.js');
+
+const STARBOARD_COLOR = 0x217e38;
+const EMBED_DESCRIPTION_LIMIT = 4096;
+const FIELD_VALUE_LIMIT = 1024;
+
+function truncate(text, maxLength) {
+  if (text.length <= maxLength) return text;
+
+  return `${text.slice(0, maxLength - 1)}…`;
+}
+
+function formatMessageContent(content) {
+  const quotedContent = content
+    .split('\n')
+    .map(line => `${line || 'ㅤ'}`)
+    .join('\n');
+
+  return truncate(quotedContent, EMBED_DESCRIPTION_LIMIT - 4);
+}
+
+function formatAttachmentName(name) {
+  return truncate(
+    (name || 'Attachment').replace(/[\[\]()]/g, ''),
+    80
+  );
+}
 
 module.exports = async function updateStarboard(reaction) {
 
@@ -11,8 +37,6 @@ module.exports = async function updateStarboard(reaction) {
 
   const guildId = guild.id;
 
-  const guildName = guild.name;
-
   const userId = message.author.id;
 
   const username = message.author.username;
@@ -21,17 +45,7 @@ module.exports = async function updateStarboard(reaction) {
 
   const messageId = message.id;
 
-  const middle = `✦━━━━━━━━━━━━━━━━━━━━━━━━✦`;
-
   const guildKey = `${guildId}`; // Guild key for storage
-
-  function padText(text, padLength = 3) {
-
-    return `${space}`.repeat(padLength) + text + `${space}`.repeat(padLength);
-
-  }
-
-  const space = 'ㅤ';
 
   try {
 
@@ -126,101 +140,139 @@ module.exports = async function updateStarboard(reaction) {
     // Create the embed
     // -------------------------------------------------------------
 
+    const guildIcon = guild.iconURL({ dynamic: true, size: 128 });
+    const authorAvatar = message.author.displayAvatarURL({
+      dynamic: true,
+      size: 128
+    });
+
     const embed = new EmbedBuilder()
-      .setColor(0xFFD700)
-      .setDescription(`### ***${starboardEmoji} | ${currentCount} | ${message.url}***\n\n${middle}\n〉***Author: \`${authorName}\`***\n〉***Reactions: \`${currentCount}\`***\n〉***Message Content: \`${messageContent}\`***\n${middle}`)
-      .setTimestamp(message.createdAt);
-
-    // -------------------------------------------------------------
-    // Handle attachments
-    // -------------------------------------------------------------
-
-    const imageAttachments = [];
-    const otherAttachments = [];
-
-    if (message.attachments.size > 0) {
-
-      for (const attachment of message.attachments.values()) {
-
-        const contentType = attachment.contentType || '';
-
-        const isImage =
-          contentType.startsWith('image/') ||
-          /\.(png|jpe?g|gif|webp|avif)$/i.test(attachment.url);
-
-        if (isImage) {
-
-          imageAttachments.push(attachment);
-
-        } else {
-
-          otherAttachments.push(attachment);
-
+      .setColor(STARBOARD_COLOR)
+      .setAuthor({
+        name: authorName,
+        iconURL: authorAvatar
+      })
+      .setTitle(`${starboardEmoji} ${currentCount} ${currentCount === 1 ? 'Star' : 'Stars'}`)
+      .setURL(message.url)
+      .setDescription("ㅤ\n" + formatMessageContent(messageContent) + "\nㅤ")
+      .addFields(
+        {
+          name: 'Author',
+          value: `<@${userId}>`,
+          inline: true
+        },
+        {
+          name: 'Channel',
+          value: `<#${message.channel.id}>`,
+          inline: true
+        },
+        {
+          name: 'Original Message',
+          value: `[Jump to message](${message.url})`,
+          inline: true
         }
-
-      }
-
-    }
-
-    // -------------------------------------------------------------
-    // Display the first image/GIF directly in the embed
-    // -------------------------------------------------------------
-
-    if (imageAttachments.length > 0) {
-
-      embed.setImage(imageAttachments[0].url);
-
-    }
-
-    // -------------------------------------------------------------
-    // Display any additional images / other attachments
-    // as clickable links
-    // -------------------------------------------------------------
-
-    const attachmentLinks = [];
-
-    if (imageAttachments.length > 1) {
-
-      for (let i = 1; i < imageAttachments.length; i++) {
-
-        attachmentLinks.push(
-          `[Image ${i + 1}](${imageAttachments[i].url})`
-        );
-
-      }
-
-    }
-
-    for (const attachment of otherAttachments) {
-
-      attachmentLinks.push(
-        `[${attachment.name || 'Attachment'}](${attachment.url})`
-      );
-
-    }
-
-    if (attachmentLinks.length > 0) {
-
-      embed.addFields({
-        name: '📎 Attachments',
-        value: attachmentLinks.join('\n'),
-        inline: false
+      )
+      .setFooter({
+        text: `${truncate(guild.name, 100)} • Starboard`,
+        ...(guildIcon ? { iconURL: guildIcon } : {})
       });
 
+    const images = [];
+    const mediaLinks = [];
+    const seenImages = new Set();
+    const seenLinks = new Set();
+
+    function mediaUrl(value) {
+      try {
+        const url = new URL(value);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : null;
+      } catch (_) {
+        return null;
+      }
     }
 
-    // -------------------------------------------------------------
-    // Stickers
-    // -------------------------------------------------------------
+    function isImageUrl(value) {
+      const url = mediaUrl(value);
+      return url && /\.(png|jpe?g|gif|webp|avif)$/i.test(new URL(url).pathname);
+    }
 
-    if (message.stickers.size > 0) {
+    function addLink(label, value, spoiler = false) {
+      const url = mediaUrl(value);
+      if (!url || seenLinks.has(url)) return;
+      seenLinks.add(url);
+      const link = `[${formatAttachmentName(label)}](<${url}>)`;
+      mediaLinks.push(spoiler ? `||${link}||` : link);
+    }
 
-      embed.addFields({
-        name: '🎟️ Stickers',
-        value: '[Message contains stickers]',
-        inline: false
-      });
+    function addImage(value) {
+      const url = mediaUrl(value);
+      if (!url || seenImages.has(url)) return;
+      seenImages.add(url);
+      if (images.length < 10) images.push(url);
+      else addLink('Additional image', url);
+    }
 
+    for (const attachment of message.attachments.values()) {
+      if (attachment.spoiler) {
+        addLink(attachment.name, attachment.url, true);
+      } else if (attachment.contentType?.startsWith('image/') || isImageUrl(attachment.url)) {
+        addImage(attachment.url);
+      } else {
+        addLink(attachment.name, attachment.url);
+      }
+    }
+
+  
+    const content = message.content || '';
+    const customEmojiPattern = /<(a?):\w+:(\d+)>/g;
+    const customEmojis = [...content.matchAll(customEmojiPattern)];
+    if (customEmojis.length && !content.replace(customEmojiPattern, '').trim()) {
+      for (const [, animated, id] of customEmojis) {
+        addImage(`https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?size=256&quality=lossless`);
+      }
+    }
+
+    const spoilers = content.match(/\|\|[\s\S]*?\|\|/g) || [];
+    const visibleContent = content.replace(/\|\|[\s\S]*?\|\|/g, '');
+    for (const match of visibleContent.matchAll(/https?:\/\/[^\s<>]+/g)) {
+      const url = match[0].replace(/[.,!?;:)\]]+$/, '');
+      if (isImageUrl(url)) addImage(url);
+    }
+
+    for (const source of message.embeds) {
+      if (source.url && spoilers.some(spoiler => spoiler.includes(source.url))) continue;
+      if (source.image?.url) addImage(source.image.url);
+      else if (isImageUrl(source.url)) addImage(source.url);
+      else if (source.thumbnail?.url) addImage(source.thumbnail.url);
+      if (source.video) addLink('Watch video / GIF', source.url || source.video.url);
+    }
+
+    for (const sticker of message.stickers.values()) {
+      if ([StickerFormatType.PNG, StickerFormatType.APNG, StickerFormatType.GIF].includes(sticker.format)) {
+        addImage(sticker.url);
+      } else {
+        addLink(sticker.name || 'Sticker', sticker.url);
+      }
+    }
+
+    if (mediaLinks.length) {
+      const lines = [];
+      let length = 0;
+      for (const link of mediaLinks) {
+        if (length + link.length + 1 > FIELD_VALUE_LIMIT - 60) continue;
+        lines.push(link);
+        length += link.length + 1;
+      }
+      if (lines.length < mediaLinks.length) lines.push('More media available via **Jump to message**.');
+      embed.addFields({ name: '📎 Media & attachments', value: lines.join('\n'), inline: false });
+    }
+
+    const embeds = [embed];
+    if (images.length) {
+      embed.setImage(images[0]);
+      for (const url of images.slice(1)) {
+        embeds.push(new EmbedBuilder().setColor(STARBOARD_COLOR).setImage(url));
+      }
     }
 
     // -------------------------------------------------------------
@@ -239,7 +291,7 @@ module.exports = async function updateStarboard(reaction) {
 
           await oldMsg.edit({
             content: '',
-            embeds: [embed]
+            embeds
           });
 
           return;
@@ -259,7 +311,7 @@ module.exports = async function updateStarboard(reaction) {
     // -------------------------------------------------------------
 
     const newMsg = await starboardChannelObj.send({
-      embeds: [embed]
+      embeds
     });
 
     await newMsg.react(emojiForReaction);
