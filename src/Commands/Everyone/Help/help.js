@@ -569,17 +569,47 @@ module.exports = {
         });
       }
 
-      // ===================== STOP =====================
+     // ===================== STOP =====================
 
-      if (i.customId === 'stop') {
+    if (i.customId === 'stop') {
 
-        collector.stop('stopped');
+      collector.stop('stopped');
 
-        return i.update({
-          components: []
-        });
+      // We are currently viewing a command category,
+      // so keep ONLY the navigation buttons and disable them.
+      return i.update({
+        components: [
+          new ActionRowBuilder().addComponents(
 
-      }
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true)
+
+          )
+        ]
+      });
+
+    }
 
       // ===================== PAGE CHANGE =====================
 
@@ -658,24 +688,74 @@ module.exports = {
 
     });
 
-    // ===================== COLLECTOR END =====================
+ // ===================== COLLECTOR END =====================
 
     collector.on('end', async () => {
 
       try {
 
-        // Remove all buttons when the collector
-        // times out or is stopped.
-        await sentMessage.edit({
-          components: []
-        });
+        // If we are viewing a command category,
+        // keep ONLY the navigation buttons and disable them.
+        if (currentCategory) {
+
+          await sentMessage.edit({
+            components: [
+              new ActionRowBuilder().addComponents(
+
+                new ButtonBuilder()
+                  .setCustomId('prev')
+                  .setLabel('Previous')
+                  .setStyle(ButtonStyle.Secondary)
+                  .setDisabled(true),
+
+                new ButtonBuilder()
+                  .setCustomId('menu')
+                  .setLabel('Menu')
+                  .setStyle(ButtonStyle.Primary)
+                  .setDisabled(true),
+
+                new ButtonBuilder()
+                  .setCustomId('stop')
+                  .setLabel('Stop')
+                  .setStyle(ButtonStyle.Danger)
+                  .setDisabled(true),
+
+                new ButtonBuilder()
+                  .setCustomId('next')
+                  .setLabel('Next')
+                  .setStyle(ButtonStyle.Secondary)
+                  .setDisabled(true)
+
+              )
+            ]
+          });
+
+        } else {
+
+          // Help menu timed out, so keep ONLY the category buttons
+          // and disable them.
+          await sentMessage.edit({
+            components: [
+              new ActionRowBuilder().addComponents(
+
+                ...categoryRow.components.map(button =>
+                  ButtonBuilder
+                    .from(button)
+                    .setDisabled(true)
+                )
+
+              )
+            ]
+          });
+
+        }
 
       } catch (error) {
 
         // Message may have been deleted
         if (error.code !== 10008) {
           console.error(
-            '[HELP] Failed to remove buttons:',
+            '[HELP] Failed to disable buttons:',
             error
           );
         }

@@ -560,68 +560,48 @@ module.exports = {
         });
       }
 
-      // ===================== STOP =====================
+    // ===================== STOP =====================
 
-      if (i.customId === 'stop') {
+    if (i.customId === 'stop') {
 
-        collector.stop('stopped');
+      collector.stop('stopped');
 
-        const disabledRows = [];
-
-        // Disable category buttons
-        disabledRows.push(
+      // We are currently viewing a command category,
+      // so keep ONLY the navigation buttons and disable them.
+      return i.update({
+        components: [
           new ActionRowBuilder().addComponents(
-            categoryRow.components.map(btn =>
-              ButtonBuilder
-                .from(btn)
-                .setDisabled(true)
-            )
+
+            new ButtonBuilder()
+              .setCustomId('prev')
+              .setLabel('Previous')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('menu')
+              .setLabel('Menu')
+              .setStyle(ButtonStyle.Primary)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('stop')
+              .setLabel('Stop')
+              .setStyle(ButtonStyle.Danger)
+              .setDisabled(true),
+
+            new ButtonBuilder()
+              .setCustomId('next')
+              .setLabel('Next')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true)
+
           )
-        );
+        ]
+      });
 
-        // Disable navigation buttons
-        if (currentCategory) {
+    }
 
-          const category =
-            categories[currentCategory];
-
-          disabledRows.push(
-            new ActionRowBuilder().addComponents(
-
-              new ButtonBuilder()
-                .setCustomId('prev')
-                .setLabel('Previous')
-                .setStyle(ButtonStyle.Secondary)
-                .setDisabled(true),
-
-              new ButtonBuilder()
-                .setCustomId('menu')
-                .setLabel('Menu')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true),
-
-              new ButtonBuilder()
-                .setCustomId('stop')
-                .setLabel('Stop')
-                .setStyle(ButtonStyle.Danger)
-                .setDisabled(true),
-
-              new ButtonBuilder()
-                .setCustomId('next')
-                .setLabel('Next')
-                .setStyle(ButtonStyle.Secondary)
-                .setDisabled(true)
-
-            )
-          );
-
-        }
-
-        return i.update({
-          components: []
-        });
-
-      }
 
       // ===================== PAGE CHANGE =====================
 
@@ -700,63 +680,68 @@ module.exports = {
 
     });
 
+
     // ===================== COLLECTOR END =====================
 
     collector.on('end', async () => {
 
       try {
 
-        const disabledRows = [];
-
-        // Disable category buttons
-        disabledRows.push(
-          new ActionRowBuilder().addComponents(
-            categoryRow.components.map(btn =>
-              ButtonBuilder
-                .from(btn)
-                .setDisabled(true)
-            )
-          )
-        );
-
-        // Disable navigation buttons if a category is open
+        // If we are viewing a command category,
+        // keep ONLY the navigation buttons and disable them.
         if (currentCategory) {
 
-          disabledRows.push(
-            new ActionRowBuilder().addComponents(
+          await sentMessage.edit({
+            components: [
+              new ActionRowBuilder().addComponents(
 
-              new ButtonBuilder()
-                .setCustomId('prev')
-                .setLabel('Previous')
-                .setStyle(ButtonStyle.Secondary)
-                .setDisabled(true),
+                new ButtonBuilder()
+                  .setCustomId('prev')
+                  .setLabel('Previous')
+                  .setStyle(ButtonStyle.Secondary)
+                  .setDisabled(true),
 
-              new ButtonBuilder()
-                .setCustomId('menu')
-                .setLabel('Menu')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true),
+                new ButtonBuilder()
+                  .setCustomId('menu')
+                  .setLabel('Menu')
+                  .setStyle(ButtonStyle.Primary)
+                  .setDisabled(true),
 
-              new ButtonBuilder()
-                .setCustomId('stop')
-                .setLabel('Stop')
-                .setStyle(ButtonStyle.Danger)
-                .setDisabled(true),
+                new ButtonBuilder()
+                  .setCustomId('stop')
+                  .setLabel('Stop')
+                  .setStyle(ButtonStyle.Danger)
+                  .setDisabled(true),
 
-              new ButtonBuilder()
-                .setCustomId('next')
-                .setLabel('Next')
-                .setStyle(ButtonStyle.Secondary)
-                .setDisabled(true)
+                new ButtonBuilder()
+                  .setCustomId('next')
+                  .setLabel('Next')
+                  .setStyle(ButtonStyle.Secondary)
+                  .setDisabled(true)
 
-            )
-          );
+              )
+            ]
+          });
+
+        } else {
+
+          // Help menu timed out, so keep ONLY the category buttons
+          // and disable them.
+          await sentMessage.edit({
+            components: [
+              new ActionRowBuilder().addComponents(
+
+                ...categoryRow.components.map(button =>
+                  ButtonBuilder
+                    .from(button)
+                    .setDisabled(true)
+                )
+
+              )
+            ]
+          });
 
         }
-
-        await sentMessage.edit({
-          components: []
-        });
 
       } catch (error) {
 
@@ -771,6 +756,5 @@ module.exports = {
       }
 
     });
-
   }
 };

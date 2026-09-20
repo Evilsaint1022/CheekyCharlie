@@ -233,24 +233,27 @@ module.exports = {
     // ------------------------------
     // BUTTONS
     // ------------------------------
-    const row = () =>
+    const row = (disabled = false) =>
       new ActionRowBuilder().addComponents(
+
         new ButtonBuilder()
           .setCustomId('previous')
           .setLabel('Previous')
           .setStyle(ButtonStyle.Primary)
-          .setDisabled(currentPage === 0),
+          .setDisabled(disabled || currentPage === 0),
 
         new ButtonBuilder()
           .setCustomId('stop')
           .setLabel('Stop')
-          .setStyle(ButtonStyle.Danger),
+          .setStyle(ButtonStyle.Danger)
+          .setDisabled(disabled),
 
         new ButtonBuilder()
           .setCustomId('next')
           .setLabel('Next')
           .setStyle(ButtonStyle.Primary)
-          .setDisabled(currentPage === totalPages - 1)
+          .setDisabled(disabled || currentPage === totalPages - 1)
+
       );
 
     const msg = await message.reply({
@@ -264,6 +267,7 @@ module.exports = {
     });
 
     collector.on('collect', async (btn) => {
+
       if (btn.user.id !== message.author.id) {
         return btn.reply({
           content: "You're not allowed to use these buttons.",
@@ -271,21 +275,65 @@ module.exports = {
         });
       }
 
-      if (btn.customId === 'previous' && currentPage > 0) currentPage--;
-      if (btn.customId === 'next' && currentPage < totalPages - 1) currentPage++;
+      // ------------------------------
+      // STOP
+      // ------------------------------
       if (btn.customId === 'stop') {
-        collector.stop();
-        return btn.update({ components: [] });
+
+        collector.stop('stopped');
+
+        return btn.update({
+          components: [row(true)]
+        });
+
+      }
+
+      // ------------------------------
+      // PAGE NAVIGATION
+      // ------------------------------
+      if (btn.customId === 'previous' && currentPage > 0) {
+        currentPage--;
+      }
+
+      if (btn.customId === 'next' && currentPage < totalPages - 1) {
+        currentPage++;
       }
 
       await btn.update({
         embeds: [generateEmbed(currentPage)],
         components: [row()]
       });
+
+      // Refresh the 60 second timeout
+      collector.resetTimer({
+        time: 60000
+      });
+
     });
 
-    collector.on('end', () => {
-      if (msg.editable) msg.edit({ components: [] });
+    // ------------------------------
+    // COLLECTOR END
+    // ------------------------------
+    collector.on('end', async () => {
+
+      try {
+
+        await msg.edit({
+          components: [row(true)]
+        });
+
+      } catch (error) {
+
+        // Message may have been deleted
+        if (error.code !== 10008) {
+          console.error(
+            '[LEADERBOARD] Failed to disable buttons:',
+            error
+          );
+        }
+
+      }
+
     });
   }
-};
+}
