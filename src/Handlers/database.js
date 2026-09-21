@@ -9,6 +9,7 @@ const db = {
     default: new DotDB("./src/Utilities/Storage_Static/Settings/Default/default.json"),
     commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
+    bankInterest: new DotDB("./src/Utilities/Storage_Static/Bank-Interest/bank-interest.json"),
     // -----------------------------------------------------------------------------------------
     
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),

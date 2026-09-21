@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const db = require("./../../Handlers/database");
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // Testing Timer ( Keeping in for future use )
@@ -111,15 +111,20 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `${splitter}\n    ***__Bank-Interest TimeStamp:__***\n    ***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
+        const nztimestamp = `\n ***__Bank-Interest TimeStamp:__***\n ***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
         let embedsToSend = [];
         let currentDescription = `_ㅤDaily Bank-Interest for ${guild.name}_\n${splitter}\n`;
 
-        for (const { username, amount, interest, newBalance } of interestResults) {
+        for (const { userId, username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `***🌿 __${username}:__***\n_${custom || ferns}・\`${amount.toLocaleString()}\`${blank}+\`${interest.toLocaleString()}\`${blank}${custom || ferns}・\`${newBalance.toLocaleString()}\`_\n`;
+                `***__${username}:__***\n_${custom || ferns}・\`${amount.toLocaleString()}\`${blank}+\`${interest.toLocaleString()}\`${blank}${custom || ferns}・\`${newBalance.toLocaleString()}\`_\n`;
 
+            // Bank Interest DB Save
+            db.bankInterest.set(`${userId}.amount`, amount.toLocaleString())
+            db.bankInterest.set(`${userId}.interest`, interest.toLocaleString())
+            db.bankInterest.set(`${userId}.new_balance`, newBalance.toLocaleString())
+            
             if (!currentDescription) currentDescription = splitter + "";
 
             if ((currentDescription + userBlock).length > 4000) {
@@ -138,6 +143,26 @@ async function runDailyBankInterest(client) {
             embedsToSend.push(currentDescription);
         }
 
+        // Add pagination buttons only when there is more than one page
+        let components = [];
+
+        if (embedsToSend.length > 1) {
+            components = [
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId('bankinterest_previous')
+                            .setLabel('Previous')
+                            .setStyle(ButtonStyle.Secondary),
+
+                        new ButtonBuilder()
+                            .setCustomId('bankinterest_next')
+                            .setLabel('Next')
+                            .setStyle(ButtonStyle.Secondary)
+                    )
+            ];
+        }
+
         const message = channel.messages.cache.get(existingMessage)
             || await channel.messages.fetch(existingMessage).catch(() => null);
 
@@ -152,6 +177,7 @@ async function runDailyBankInterest(client) {
 
                 await message.edit({
                     embeds: [embed],
+                    components: components,
                     allowedMentions: { parse: [] }
                 });
             }
@@ -173,6 +199,7 @@ async function runDailyBankInterest(client) {
 
                 let message = await channel.send({
                     embeds: [embed],
+                    components: components,
                     allowedMentions: { parse: [] }
                 })
 
