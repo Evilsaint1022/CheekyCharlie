@@ -53,7 +53,7 @@ module.exports = {
         const endTimestamp = Math.floor(endTime / 1000);
 
         const topRowFromat    = "***───────── 🎉 \`NEW GIVEAWAY\` 🎉 ────────***"
-        const middle =              `ㅤㅤ ㅤㅤ ㅤㅤㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+        const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
         const bottomRowFormat = "***──────────────────────────────────────***"
 
         const space = 'ㅤ'

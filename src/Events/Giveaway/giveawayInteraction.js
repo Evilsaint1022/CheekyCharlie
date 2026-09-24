@@ -122,7 +122,7 @@ module.exports = {
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
             const topRowFromat    = "***─────────── 🎉 \`GIVEAWAY\` 🎉 ──────────***"
-            const middle =              `ㅤㅤ ㅤㅤ ㅤㅤㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+            const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
             const bottomRowFormat = "***─────────────────────────────────────────***"
 
             const space = 'ㅤ'
@@ -224,7 +224,7 @@ module.exports = {
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
             const topRowFromat    = "***─────────── 🎉 \`GIVEAWAY\` 🎉 ──────────***"
-            const middle =              `ㅤㅤ ㅤㅤ ㅤㅤㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+            const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
             const bottomRowFormat = "***────────────────────────────────────***"
 
             const space = 'ㅤ'

@@ -77,7 +77,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
         }
 
         const topRowFromat    = "***──────── 🎉 \`GIVEAWAY RESULTS\` 🎉 ───────***"
-        const middle =              `ㅤㅤ ㅤㅤ ㅤㅤㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+        const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
         const bottomRowFormat = "***───────────────────────────────────────***"
 
         const space = 'ㅤ'
