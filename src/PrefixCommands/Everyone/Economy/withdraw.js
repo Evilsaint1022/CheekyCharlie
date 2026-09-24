@@ -2,6 +2,22 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 module.exports = {
     name: "withdraw",
     aliases: ["wd"],
@@ -66,6 +82,10 @@ module.exports = {
 
         let walletBalance = Number(await db.wallet.get(walletKey)) || 0;
         let bankBalance = Number(await db.bank.get(bankKey)) || 0;
+
+        // Format amounts 
+        const formattedBalance = formatAmount(walletBalance); 
+        const formattedBank = formatAmount(bankBalance);
 
         // Parse withdraw amount
         // !withdraw 100
@@ -134,7 +154,7 @@ module.exports = {
                 `_Successfully deposited **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
@@ -201,7 +221,7 @@ module.exports = {
                 `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${walletBalance.toLocaleString()}\`      ${custom || ferns}・\`${bankBalance.toLocaleString()}\`***\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

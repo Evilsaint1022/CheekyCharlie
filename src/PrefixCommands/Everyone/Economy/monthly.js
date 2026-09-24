@@ -2,6 +2,22 @@
 const { EmbedBuilder } = require("discord.js");
 const db = require("../../../Handlers/database");
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 const monthlyCooldown = 30 * 24 * 60 * 60 * 1000; // 30 days
 const rewardAmount = 3000;
 
@@ -87,6 +103,10 @@ module.exports = {
     await db.wallet.set(`${newKey}.balance`, balance);
     await db.lastclaim.set(`${newKey}.monthly`, now);
 
+    // Format amounts 
+    const formattedBalance = formatAmount(balance); 
+    const formattedBank = formatAmount(bank);
+
     // Embed
     const embed = new EmbedBuilder()
       .setTitle(top)
@@ -94,7 +114,7 @@ module.exports = {
         `_You have claimed your monthly reward of **${custom || ferns}${rewardAmount.toLocaleString()} ${customname || fernsname}**!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`     ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
+        `ㅤ ***${custom || ferns}・\`${formattedBalance}\`   ${custom || ferns}・\`${formattedBank}\`***\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })

@@ -2,6 +2,22 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require("../../../Handlers/database");
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
 const baseRewardAmount = 100; // Base daily reward
 
@@ -107,6 +123,10 @@ module.exports = {
             `${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}!`
         );
 
+        // Format amounts 
+        const formattedBalance = formatAmount(balance); 
+        const formattedBank = formatAmount(bank);
+
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(top)
@@ -114,7 +134,7 @@ module.exports = {
                 `_You have claimed your daily reward of **${custom || ferns}${rewardAmount.toLocaleString()} ${customname || fernsname}**!_\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

@@ -1,6 +1,22 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database');
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 module.exports = {
     name: 'work',
     description: 'Work your current job and earn money.',
@@ -176,6 +192,10 @@ module.exports = {
         const phrase =
             phrases[Math.floor(Math.random() * phrases.length)];
 
+        // Format amounts 
+        const formattedBalance = formatAmount(balance); 
+        const formattedBank = formatAmount(bank);
+
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(`***🌿 \`${username} Worked!\` 🌿***`)
@@ -183,7 +203,7 @@ module.exports = {
                 `${selectedJob.emoji} _${phrase}_ **${currency}${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
                 `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}\n\n`
             )
             .setColor(0x207e37)

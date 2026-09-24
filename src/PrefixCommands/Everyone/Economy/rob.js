@@ -1,6 +1,22 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database'); // adjust path if needed
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 module.exports = {
   name: 'rob',
   description: 'Rob another user\'s Wallet',
@@ -111,7 +127,11 @@ module.exports = {
             `[🌿] [ROB] [${new Date().toLocaleDateString('en-GB')}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${message.guild.name} ${message.guild.id} ${robber.username} used the rob command to rob ${target.username} for ${stealAmount.toLocaleString()} ${customname || fernsname}.`
-        );
+    );
+
+    // Format amounts 
+    const formattedBalance = formatAmount(balance); 
+    const formattedBank = formatAmount(bank);
 
     const embed = new EmbedBuilder()
       .setColor(0x207e37)
@@ -120,7 +140,7 @@ module.exports = {
         `_You Robbed_ **${target.username}** for ${custom || fernsname}**\`${stealAmount.toLocaleString()}\`** ${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-        `ㅤ ***${custom || ferns}・\`${balance.toLocaleString()}\`      ${custom || ferns}・\`${bank.toLocaleString()}\`***\n` +
+        `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
         `${middle}`
       )
       .setFooter({ text: bottom })
