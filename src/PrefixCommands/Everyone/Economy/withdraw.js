@@ -83,10 +83,6 @@ module.exports = {
         let walletBalance = Number(await db.wallet.get(walletKey)) || 0;
         let bankBalance = Number(await db.bank.get(bankKey)) || 0;
 
-        // Format amounts 
-        const formattedBalance = formatAmount(walletBalance); 
-        const formattedBank = formatAmount(bankBalance);
-
         // Parse withdraw amount
         // !withdraw 100
         // !withdraw all
@@ -146,6 +142,10 @@ module.exports = {
 
         await db.bank.set(bankKey, bankBalance);
         await db.wallet.set(walletKey, walletBalance);
+
+        // Format amounts 
+        const formattedBalance = formatAmount(walletBalance); 
+        const formattedBank = formatAmount(bankBalance);
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
@@ -213,6 +213,10 @@ module.exports = {
 
         await db.bank.set(bankKey, bankBalance);
         await db.wallet.set(walletKey, walletBalance);
+
+        // Format amounts 
+        const formattedBalance = formatAmount(walletBalance); 
+        const formattedBank = formatAmount(bankBalance);
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)

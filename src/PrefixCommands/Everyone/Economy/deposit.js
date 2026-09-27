@@ -80,10 +80,6 @@ module.exports = {
         let balance = await db.wallet.get(`${newKey}.balance`) || 0;
         let bank = await db.bank.get(`${newKey}.bank`) || 0;
 
-        // Format amounts 
-        const formattedBalance = formatAmount(balance); 
-        const formattedBank = formatAmount(bank);
-
         // Parse deposit amount
         // !deposit 100
         // !deposit all
@@ -140,6 +136,10 @@ module.exports = {
         // Save
         await db.wallet.set(`${newKey}.balance`, balance);
         await db.bank.set(`${newKey}.bank`, bank);
+
+        // Format amounts 
+        const formattedBalance = formatAmount(balance); 
+        const formattedBank = formatAmount(bank);
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
@@ -203,6 +203,10 @@ module.exports = {
         // Save
         await db.wallet.set(`${newKey}.balance`, balance);
         await db.bank.set(`${newKey}.bank`, bank);
+
+        // Format amounts 
+        const formattedBalance = formatAmount(balance); 
+        const formattedBank = formatAmount(bank);
 
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
