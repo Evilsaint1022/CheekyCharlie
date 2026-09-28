@@ -165,7 +165,28 @@ setInterval(() => {
     console.log(`🌿・Successfully Finished Startup!`.bold.white);
 });
 
-// Interaction Command Handler -----------------------------------------------------------------------------------------------------
+// DayLight Savings Check -----------------------------------------------------------------------------------------------------
+let timeZone = "Pacific/Auckland";
+
+let isDaylightSaving =
+    new Intl.DateTimeFormat("en-NZ", {
+        timeZone,
+        timeZoneName: "longOffset"
+    })
+    .formatToParts(new Date())
+    .find(part => part.type === "timeZoneName")
+    ?.value === "GMT+13";
+
+let timezone = isDaylightSaving ? "NZDT" : "NZST";
+
+if (timezone = "NZDT") {
+console.log(`[${timezone}] DayLight Savings Time...`.bold.white);
+} else {
+if (timezone = "NZST") {
+console.log(`[${timezone}] Normal NZ Time...`.bold.white);
+}}
+
+// Interaction Command Handler --------------------------------------------------------------------------------------------------
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
