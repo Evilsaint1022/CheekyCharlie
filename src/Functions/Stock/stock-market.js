@@ -297,7 +297,7 @@ async function runStockTick(client) {
 
     if (runStockTick._isRunning) {
         console.log(
-            '[📈] [STOCK MARKET] Already running, skipping tick.'
+            `[📈] [STOCK MARKET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] Already running, skipping tick.`
         );
 
         return;
@@ -379,7 +379,7 @@ async function runStockTick(client) {
                     : '📉💥';
 
             console.log(
-                `[📈] [STOCK MARKET EVENT] ` +
+                `[📈] [STOCK MARKET EVENT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
                 `${event.isPositive ? 'BULL' : 'BEAR'} — ` +
                 `"${event.title}" | ` +
                 `${prev.toFixed(2)} → ` +
@@ -719,13 +719,8 @@ async function runStockTick(client) {
 
         console.log(
             `[📈] [STOCK MARKET] ` +
-            `[${new Date().toLocaleDateString('en-GB')}] ` +
-            `[${new Date().toLocaleTimeString(
-                'en-NZ',
-                {
-                    timeZone: 'Pacific/Auckland'
-                }
-            )}] ` +
+            `[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+            `[${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `Price: ` +
             `${prev.toFixed(2)} → ` +
             `${price.toFixed(2)} ` +
@@ -768,9 +763,7 @@ module.exports = async (client) => {
     );
 
     if (client.isReady()) {
-        console.log(
-            '[📈] [STOCK MARKET] Scheduler started.'
-        );
+        console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] Scheduler Started.`);
 
         runStockTick(client);
     } else {
@@ -778,7 +771,7 @@ module.exports = async (client) => {
             'ready',
             () => {
                 console.log(
-                    '[📈] [STOCK MARKET] Scheduler started.'
+                    `[📈] [STOCK MARKET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] Scheduler Started.`
                 );
 
                 runStockTick(client);
