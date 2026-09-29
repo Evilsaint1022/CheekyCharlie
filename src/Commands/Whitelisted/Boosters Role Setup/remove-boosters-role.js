@@ -45,7 +45,7 @@ module.exports = {
 
       await db.settings.set(guildKey, currentSettings);
 
-      console.log(`[⭐] [REMOVE-BOOSTERS-ROLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildKey} ${username} removed the Boosters role setting.`);
+      console.log(`[⭐] [REMOVE-BOOSTERS-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildKey} ${username} removed the Boosters role setting.`);
 
       await interaction.reply({
         content: `✅ Boosters role setting has been removed.`,

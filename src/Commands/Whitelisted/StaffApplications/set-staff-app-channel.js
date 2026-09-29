@@ -43,7 +43,7 @@ module.exports = {
         const channelKey = `${guildId}.channel`;
         await db.staff_app_questions.set(channelKey, channel.id);
 
-        console.log(`[⭐] [SET-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} set staff application channel to #${channel.name}`);
+        console.log(`[⭐] [SET-STAFF-APP-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} set staff application channel to #${channel.name}`);
 
         await interaction.reply({
             content: `✅ Staff application channel set to <#${channel.id}>`,

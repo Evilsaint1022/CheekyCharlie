@@ -26,7 +26,7 @@ async function runDailyBankInterest(client) {
 
     try {
 
-    console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
+    console.log(`[💰] [Bank Interest] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Starting Bank Interest...`);
 
     const rawEntries = await db.bank.all();
     if (!rawEntries || typeof rawEntries !== "object") {
@@ -111,7 +111,7 @@ async function runDailyBankInterest(client) {
             console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
             continue;
         }
-        const nztimestamp = `\n ***__Bank-Interest TimeStamp:__***\n ***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
+        const nztimestamp = `\n ***__Bank-Interest TimeStamp:__***\n ***[\`${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
         let embedsToSend = [];
         let currentDescription = `_ㅤDaily Bank-Interest for ${guild.name}_\n${splitter}\n`;
 

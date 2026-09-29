@@ -40,7 +40,7 @@ module.exports = {
     delete settings.qotdChannelId
 
     await db.settings.set(guildKey, settings);
-    console.log(`[⭐] [REMOVE-QOTD-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-qotd-channel command.`);
+    console.log(`[⭐] [REMOVE-QOTD-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-qotd-channel command.`);
 
     return interaction.reply({
       content: `✅ QOTD channel has been removed`,

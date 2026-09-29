@@ -52,6 +52,6 @@ module.exports = {
     });
     
     //console logs
-    console.log(`[⭐] [REMOVE-COUNTING-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-channel command.`);
+    console.log(`[⭐] [REMOVE-COUNTING-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the remove-counting-channel command.`);
   }
 };

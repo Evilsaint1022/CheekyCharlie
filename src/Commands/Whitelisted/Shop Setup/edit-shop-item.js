@@ -105,7 +105,7 @@ module.exports = {
     }
 
     //console logs
-    console.log(`[⭐] [EDIT-SHOP-ITEM] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the edit-shop-item command.`);
+    console.log(`[⭐] [EDIT-SHOP-ITEM] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${user.username} used the edit-shop-item command.`);
 
     return interaction.reply({
       content: `Successfully updated the item "${currentTitle}".`,

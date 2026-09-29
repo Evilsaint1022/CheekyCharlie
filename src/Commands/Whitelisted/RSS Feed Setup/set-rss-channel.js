@@ -41,7 +41,7 @@ module.exports = {
         await db.settings.set(`${guildId}.rssTopics`, []);
         await db.settings.set(`${guildId}.rssNewsChannel`, channel.id);
 
-        console.log(`[⭐] [SET-RSS-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-rss-channel command.`);
+        console.log(`[⭐] [SET-RSS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-rss-channel command.`);
 
         await interaction.reply({ content: `RSS channel set to ${channel.url}.`, flags: MessageFlags.Ephemeral });
 

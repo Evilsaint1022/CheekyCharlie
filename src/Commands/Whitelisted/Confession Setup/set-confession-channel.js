@@ -45,7 +45,7 @@ module.exports = {
 
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
-        console.log(`[⭐] [SET-CONFESSION-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-confession-channel command to set the channel ${channel.name} ${channel.id}`);
+        console.log(`[⭐] [SET-CONFESSION-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-confession-channel command to set the channel ${channel.name} ${channel.id}`);
 
         await interaction.reply({ content: `✅ Confession channel set to ${channel.url}.`, flags: 64 });
     },

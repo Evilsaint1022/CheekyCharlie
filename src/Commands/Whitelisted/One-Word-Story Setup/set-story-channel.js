@@ -55,6 +55,6 @@ module.exports = {
       flags: 64
     });
     //console logs
-    console.log(`[⭐] [SET-STORY-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-channel command.`);
+    console.log(`[⭐] [SET-STORY-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-counting-channel command.`);
   }
 };

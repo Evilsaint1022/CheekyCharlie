@@ -41,7 +41,7 @@ module.exports = {
 
     await db.settings.set(guildKey, settings);
 
-    console.log(`[⭐] [SET-QOTD-ROLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-qotd-role command.`);
+    console.log(`[⭐] [SET-QOTD-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-qotd-role command.`);
 
     return interaction.reply({
       content: `✅ QOTD role set to ${role}`,

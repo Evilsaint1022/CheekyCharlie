@@ -26,7 +26,7 @@ module.exports = {
         }
 
 
-    console.log(`[⭐] [TOGGLE-LEVELS] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the toggle levels command.`);
+    console.log(`[⭐] [TOGGLE-LEVELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the toggle levels command.`);
 
     // Get current levels state (default false)
     const currentState = await db.settings.get(`${guildId}.levels`) || false;

@@ -46,6 +46,8 @@ module.exports = {
     // Save back without overwriting the full entry
     await db.starboard.set(guildKey, existingData);
 
+    console.log(`[⭐] [SET-STARBOARD-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-starboard-channel command to set the channel to ${channel.id}`);
+
     await interaction.reply({ content: `✅ Starboard channel set to ${channel.url}.`, flags: 64 });
   },
 };

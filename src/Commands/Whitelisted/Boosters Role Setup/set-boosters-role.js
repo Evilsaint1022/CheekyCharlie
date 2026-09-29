@@ -48,7 +48,7 @@ module.exports = {
       await db.settings.set(`${guildId}`, currentSettings);
 
      // Console Log
-      console.log(`[⭐] [SET-BOOSTERS-ROLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${username} set the Boosters role to <@&${role.id}>`);
+      console.log(`[⭐] [SET-BOOSTERS-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${username} set the Boosters role to <@&${role.id}>`);
 
       await interaction.reply({
         content: `✅ Boosters role set to <@&${role.id}>`,

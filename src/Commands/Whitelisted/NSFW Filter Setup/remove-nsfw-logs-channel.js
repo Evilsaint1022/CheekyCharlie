@@ -38,7 +38,7 @@ module.exports = {
 
         await db.settings.delete(`${guildId}.nsfwLogsChannel`);
 
-        console.log(`[⭐] [REMOVE-NSFW-LOGS-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Removed the NSFW Logs Channel.`);
+        console.log(`[⭐] [REMOVE-NSFW-LOGS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Removed the NSFW Logs Channel.`);
 
         return interaction.reply({
             content: "NSFW logs channel has been removed.",

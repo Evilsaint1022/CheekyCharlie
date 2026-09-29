@@ -39,6 +39,8 @@ module.exports = {
 
     await db.starboard.set(guildKey, existingData);
 
+    console.log(`[⭐] [SET-STARBOARD-EMOJI] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-starboard-emoji command to set the starboard emoji to ${emojiInput}`);
+
     return interaction.reply({
       content: `✅ Starboard emoji has been set to ${emojiInput}`,
       flags: 64

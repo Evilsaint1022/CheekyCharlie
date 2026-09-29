@@ -44,6 +44,8 @@ module.exports = {
     // Save without overwriting other fields
     await db.starboard.set(guildKey, existingData);
 
+    console.log(`[⭐] [SET-STARBOARD-COUNT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-starboard-count command to set the starboard count to ${count}`);
+
     await interaction.reply({ content: `✅ Starboard count set to **${count}**.`, flags: 64 });
   },
 };

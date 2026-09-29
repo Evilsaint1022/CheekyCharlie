@@ -36,6 +36,11 @@ let pendingPressureMemory = 0;
     return;
   };
 
+  if (process.env.DEV_MODE == "true") {
+    console.warn('STOCK-MARKET HAS BEEN DISABLED')
+    return;
+}
+
 const stonks = new OpenAI({
     apiKey: OPENROUTER,
     baseURL: 'https://openrouter.ai/api/v1',

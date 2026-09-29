@@ -103,7 +103,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Whitelist ${settings.whitelistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Whitelist ${settings.whitelistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
                 break;
 
             case 'whitelist-add-role':
@@ -123,7 +123,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${whitelistRole.name} added to whitelist by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${whitelistRole.name} added to whitelist by ${interaction.user.username}`);
                 break;
 
             case 'whitelist-remove-role':
@@ -143,7 +143,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${removeWhitelistRole.name} removed from whitelist by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${removeWhitelistRole.name} removed from whitelist by ${interaction.user.username}`);
                 break;
 
             case 'blacklist':
@@ -157,7 +157,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Blacklist ${settings.blacklistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Blacklist ${settings.blacklistEnabled ? 'enabled' : 'disabled'} by ${interaction.user.username}`);
                 break;
 
             case 'blacklist-add-role':
@@ -176,7 +176,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${blacklistRole.name} added to blacklist by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${blacklistRole.name} added to blacklist by ${interaction.user.username}`);
                 break;
 
             case 'blacklist-remove-role':
@@ -196,7 +196,7 @@ module.exports = {
                     flags: 64 
                 });
 
-                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${removeBlacklistRole.name} removed from blacklist by ${interaction.user.username}`);
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${removeBlacklistRole.name} removed from blacklist by ${interaction.user.username}`);
                 break;
 
             case 'view':

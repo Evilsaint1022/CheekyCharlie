@@ -31,14 +31,14 @@ module.exports = {
 
         if (currentState) {
             await db.settings.set(`${guildId}.nsfwFilter`, false);
-            console.log(`[⭐] [NSFW-FILTER-TOGGLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} toggled nsfw filter to false.`);
+            console.log(`[⭐] [NSFW-FILTER-TOGGLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} toggled nsfw filter to false.`);
             await interaction.reply({
                 content: 'NSFW filter has been disabled for this server.',
                 flags: MessageFlags.Ephemeral,
             });
         } else {
             await db.settings.set(`${guildId}.nsfwFilter`, true);
-            console.log(`[⭐] [NSFW-FILTER-TOGGLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} toggled nsfw filter to true.`);
+            console.log(`[⭐] [NSFW-FILTER-TOGGLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} toggled nsfw filter to true.`);
             await interaction.reply({
                 content: 'NSFW filter has been enabled for this server.',
                 flags: MessageFlags.Ephemeral,

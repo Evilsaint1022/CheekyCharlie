@@ -53,6 +53,6 @@ module.exports = {
         flags: MessageFlags.Ephemeral
       });
     }
-    console.log(`[⭐] [REMOVE-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guildId} ${user.username} used the remove-color-of-the-week command.`);
+    console.log(`[⭐] [REMOVE-COLOR-OF-THE-WEEK] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guildId} ${user.username} used the remove-color-of-the-week command.`);
   }
 };

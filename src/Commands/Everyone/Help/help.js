@@ -56,7 +56,7 @@ module.exports = {
     // ===================== LOG =====================
 
     console.log(
-      `[🌿] [HELP] [${new Date().toLocaleDateString('en-NZ')}] ` +
+      `[🌿] [HELP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", {
         timeZone: "Pacific/Auckland"
       })}] ` +

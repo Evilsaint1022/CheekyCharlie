@@ -45,7 +45,7 @@ module.exports = {
         // Logging the action
         const timestamp = new Date().toLocaleTimeString();
         const datestamp = new Date().toLocaleDateString();
-        console.log(`[⭐] [SET-DEADCHAT-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-deadchat-channel command to set the channel ID "${channel.id}"`);
+        console.log(`[⭐] [SET-DEADCHAT-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-deadchat-channel command to set the channel ${channel.id}`);
 
         return interaction.reply({ content: `✅ Deadchat messages will now be sent in <#${channel.id}>.\n-# Make sure the deadchat role and deadchat duration are set too and the AI deadchat is activated.`, flags: 64 });
     },

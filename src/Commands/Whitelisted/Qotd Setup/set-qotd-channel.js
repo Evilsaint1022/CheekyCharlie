@@ -42,7 +42,7 @@ module.exports = {
 
     await db.settings.set(guildKey, settings);
 
-    console.log(`[⭐] [SET-QOTD-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-qotd-channel command.`);
+    console.log(`[⭐] [SET-QOTD-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-qotd-channel command.`);
 
     return interaction.reply({
       content: `✅ QOTD channel set to ${channel}`,

@@ -76,7 +76,7 @@ module.exports = {
             flags: [MessageFlags.IsComponentsV2]
         })
 
-        console.log(`[⭐] [DECLINE-APPLICATION] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} declined staff application for user ${application.userId}. Reason: ${reason}`);
+        console.log(`[⭐] [DECLINE-APPLICATION] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} declined staff application for user ${application.userId}. Reason: ${reason}`);
 
         await interaction.reply({
             content: '✅ Application declined successfully!',

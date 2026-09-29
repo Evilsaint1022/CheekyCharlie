@@ -40,7 +40,7 @@ module.exports = {
         await db.settings.delete(`${guildId}.rssTopics`);
         await db.settings.delete(`${guildId}.rssNewsChannel`);
 
-        console.log(`[⭐] [REMOVE-RSS-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-rss-channel command.`);
+        console.log(`[⭐] [REMOVE-RSS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-rss-channel command.`);
 
         await interaction.reply({
             content: 'RSS channel has been removed.',

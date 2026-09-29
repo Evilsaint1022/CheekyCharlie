@@ -95,7 +95,7 @@ module.exports = {
 
         await db.giveaway_participants.set(giveawayId, []);
 
-        console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} created a giveaway for ${prize} with ${winners} winner(s) ending in ${duration} minutes.`);
+        console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} created a giveaway for ${prize} with ${winners} winner(s) ending in ${duration} minutes.`);
 
         await interaction.reply({ 
             content: '✅ Giveaway created successfully!', 
