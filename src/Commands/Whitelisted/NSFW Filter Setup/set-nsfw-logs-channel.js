@@ -42,6 +42,8 @@ module.exports = {
 
         await db.settings.set(`${guildId}.nsfwLogsChannel`, channel.id);
 
+        console.log(`[⭐] [SET-NSFW-LOGS-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} Set the NSFW Logs Channel to ${channel.name} ${channel.id}.`);
+
         return interaction.reply({
             content: `NSFW logs channel has been set to <#${channel.id}>.`,
             flags: MessageFlags.Ephemeral

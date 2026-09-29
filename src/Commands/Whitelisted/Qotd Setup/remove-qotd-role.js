@@ -42,7 +42,7 @@ module.exports = {
         delete settings.qotdRoleId
 
         await db.settings.set(guildKey, settings);
-        console.log(`[⭐] [REMOVE-QOTD-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-qotd-role command.`);
+        console.log(`[⭐] [REMOVE-QOTD-ROLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-qotd-role command.`);
 
         return interaction.reply({
         content: `✅ QOTD role has been removed`,

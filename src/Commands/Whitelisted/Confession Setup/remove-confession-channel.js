@@ -39,7 +39,7 @@ module.exports = {
         db.settings.set(`${guildId}`, currentSettings);
 
         const timestamp = new Date().toISOString();
-        console.log(`[⭐] [REMOVE-CONFESSION-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-confession-channel command to remove the set confession channel. .`);
+        console.log(`[⭐] [REMOVE-CONFESSION-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the remove-confession-channel command to remove the set confession channel. .`);
 
         return interaction.reply({ content: '✅ The confession channel has been removed.', flags: 64 });
     },

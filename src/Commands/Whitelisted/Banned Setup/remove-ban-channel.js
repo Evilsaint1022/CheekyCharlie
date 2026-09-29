@@ -45,7 +45,7 @@ module.exports = {
 
       // Save updated settings
       await db.settings.set(guildKey, currentSettings);
-      console.log(`[⭐] [REMOVE-BAN-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${username} removed ${currentSettings.ban_channel} from the ban channel.`);
+      console.log(`[⭐] [REMOVE-BAN-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${username} removed ${currentSettings.ban_channel} from the ban channel.`);
 
       await interaction.reply({
         content: `✅ Ban channel has been removed.`,

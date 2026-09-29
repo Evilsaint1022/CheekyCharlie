@@ -45,7 +45,7 @@ module.exports = {
       existing.roleId = role.id;
 
       await db.bump.set(key, existing);
-      console.log(`[⭐] [SET-BUMP-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-bump-role command.`);
+      console.log(`[⭐] [SET-BUMP-ROLE] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the set-bump-role command.`);
 
       await interaction.reply({
         content: `✅ Bump role set to <@&${role.id}>`,

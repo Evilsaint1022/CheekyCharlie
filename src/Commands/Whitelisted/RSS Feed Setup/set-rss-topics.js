@@ -28,6 +28,8 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
+        console.log(`[⭐] [SET-RSS-TOPICS] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the set-rss-topics command.`);
+
         const rssNewsChannelId = await db.settings.get(`${guildId}.rssNewsChannel`);
 
         if ( !rssNewsChannelId ) {

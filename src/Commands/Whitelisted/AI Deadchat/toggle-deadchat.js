@@ -27,7 +27,7 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-        console.log(`[⭐] [TOGGLE-DEADCHAT] [${new Date().toLocaleDateString()}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the toggle deadchat command.`);
+        console.log(`[⭐] [TOGGLE-DEADCHAT] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the toggle deadchat command.`);
         
         const currentState = await db.settings.get(`$${guildId}.deadchatState`);
 

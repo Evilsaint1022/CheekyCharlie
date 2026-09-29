@@ -42,6 +42,8 @@ module.exports = {
 
     await db.settings.set(guildKey, settings);
 
+    console.log(`[⭐] [TOGGLE-QOTD] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.tag} used the toggle-qotd command.`);
+
     return interaction.reply({
       content: settings.qotdState
         ? '✅ Question of the Day is now set to **true**.'

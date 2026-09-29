@@ -166,6 +166,8 @@ setInterval(() => {
 });
 
 // DayLight Savings Check -----------------------------------------------------------------------------------------------------
+
+if (process.env.DEV_MODE == "true") {
 let timeZone = "Pacific/Auckland";
 
 let isDaylightSaving =
@@ -185,6 +187,7 @@ console.log(`[${timezone}] DayLight Savings Time...`.bold.white);
 if (timezone = "NZST") {
 console.log(`[${timezone}] Normal NZ Time...`.bold.white);
 }}
+}
 
 // Interaction Command Handler --------------------------------------------------------------------------------------------------
 

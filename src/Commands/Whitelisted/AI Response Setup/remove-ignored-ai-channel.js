@@ -46,7 +46,7 @@ module.exports = {
         }
         
         await db.settings.set(`${guildId}.ignoredAIChannels`, ignoredChannels);
-        console.log(`[⭐] [REMOVE-IGNORE-AI-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${username} Removed channel / category <#${channel.id}> from the ignored AI channels list.`);
+        console.log(`[⭐] [REMOVE-IGNORE-AI-CHANNEL] [${new Date().toLocaleDateString('en-NZ')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${username} Removed channel / category <#${channel.id}> from the ignored AI channels list.`);
 
         return interaction.reply({
             content: `Channel / Category <#${channel.id}> has been removed from the ignored AI channels list.`,
