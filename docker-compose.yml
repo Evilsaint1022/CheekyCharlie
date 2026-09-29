@@ -4,6 +4,7 @@ services:
     container_name: cheekycharlie
     restart: unless-stopped
     environment:
+      TZ: Pacific/Auckland
       TOKEN: ${TOKEN}
       CLIENT_ID: ${CLIENT_ID}
       GUILD_ID: ${GUILD_ID}
