@@ -101,7 +101,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [BALANCE] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [BALANCE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} used the balance command. ` +
             `${targetUser.username}'s balance was checked.`

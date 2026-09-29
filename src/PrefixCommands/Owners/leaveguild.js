@@ -45,6 +45,8 @@ module.exports = {
     // Discord only allows 25 options per select menu
     const first25 = guilds.slice(0, 25);
 
+    console.log(`[👑] [LEAVE-GUILD] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} used the leaveguild command.`)
+
     // -----------------------------
     // EMBED
     // -----------------------------

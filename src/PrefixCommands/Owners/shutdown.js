@@ -31,6 +31,8 @@ module.exports = {
         return message.reply('🚫 You do not have permission to view the server list!');
         }
 
+        console.log(`[👑] [SHUTDOWN] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} used the shutdown command.`)
+
         try {
             await message.reply("Shutting down...");
             await shutdownBot(message.client, {

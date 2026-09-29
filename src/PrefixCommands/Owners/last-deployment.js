@@ -24,6 +24,8 @@ module.exports = {
 
         const ts = client.startupTime;
 
+        console.log(`[👑] [LAST-DEPLOYMENT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} used the lastdeployment command.`)
+
         return message.reply(
             `***🌿 \`Last Deployment\` 🌿***\n<t:${ts}:F> (<t:${ts}:R>)`
         );

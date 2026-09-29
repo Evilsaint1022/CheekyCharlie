@@ -26,6 +26,8 @@ module.exports = {
       guild => `〉***__${guild.name}__ — [\`${guild.id}\`]***`
     );
 
+    console.log(`[👑] [SERVERS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} used the servers command.`)
+
     const embed = new EmbedBuilder()
       .setColor(0x207e37)
       .setTitle(`***🌍 \`CheekyCharlie Servers\` [\`${guildList.length}\`]***`)

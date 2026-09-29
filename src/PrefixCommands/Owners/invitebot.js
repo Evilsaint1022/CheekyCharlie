@@ -3,6 +3,7 @@ const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
   name: 'invitebot',
+  aliases: ["botinvite"],
   description: 'Generate an invite link for the bot (Owner only)',
   async execute(message, args, client) {
 
@@ -29,6 +30,8 @@ module.exports = {
       PermissionsBitField.Flags.ManageMessages
     ]);
 
+    console.log(`[👑] [INVITE-BOT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} used the invitebot command.`)
+
     const invite = `https://discord.com/oauth2/authorize` +
       `?client_id=${client.user.id}` +
       `&scope=bot%20applications.commands` +
@@ -36,7 +39,7 @@ module.exports = {
 
     message.reply(
       `***🌿 \`CheekyCharlie Invite\` 🌿***\n` +
-      `- 🔗 [Invite Link:](${invite})`
+      `🔗 [\`Here is you're invite link:\`](${invite})`
     );
   }
 };
