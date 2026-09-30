@@ -119,6 +119,28 @@ module.exports = {
             );
         };
 
+        const generateDisabledButtons = () => {
+            return new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('shop_prev')
+                    .setLabel('Previous')
+                    .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true),
+
+                new ButtonBuilder()
+                    .setCustomId('shop_stop')
+                    .setLabel('Stop')
+                    .setStyle(ButtonStyle.Danger)
+                    .setDisabled(true),
+
+                new ButtonBuilder()
+                    .setCustomId('shop_next')
+                    .setLabel('Next')
+                    .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
+            );
+        };
+
         const shopMessage = await message.reply({
             embeds: [generateEmbed(currentPage)],
             components: [generateButtons()]
@@ -141,7 +163,7 @@ module.exports = {
 
             if (buttonInteraction.customId === 'shop_stop') {
                 collector.stop();
-                return buttonInteraction.update({ components: [] });
+                return buttonInteraction.update({ components: [generateDisabledButtons()] });
             }
 
             await buttonInteraction.update({
@@ -152,7 +174,7 @@ module.exports = {
 
         collector.on('end', async () => {
             try {
-                await shopMessage.edit({ components: [] });
+                await shopMessage.edit({ components: [generateDisabledButtons()] });
             } catch {}
         });
     }

@@ -25,7 +25,7 @@ module.exports = {
     const guildKey = `${message.guild.id}`;
 
     console.log(
-      `[🌿] [LEVEL ROLES] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [LEVELROLES] [${new Date().toLocaleDateString('en-GB')}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${message.guild.name} ${message.guild.id} ${message.author.tag} used levelroles command.`
     );
@@ -110,7 +110,7 @@ module.exports = {
 
     const collector = msg.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      time: 60000
+      time: 60_000
     });
 
     collector.on('collect', async (btn) => {
