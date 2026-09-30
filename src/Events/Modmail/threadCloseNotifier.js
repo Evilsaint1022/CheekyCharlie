@@ -13,11 +13,8 @@ module.exports = {
     // Only care if the thread just got locked
     if (!oldThread.locked && newThread.locked) {
 
-      // Testing Channel:
-      // const modMailChannelId = `1545706770649841695`;
-
       // Production Channel:
-      const modMailChannelId = `1502163708854665226`;
+      const modMailChannelId = db.settings.get(`modmailChannelId`);
 
       if (newThread.parentId !== modMailChannelId) return;
 
