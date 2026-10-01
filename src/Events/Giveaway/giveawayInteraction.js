@@ -60,7 +60,7 @@ module.exports = {
                 flags: 64
             });
 
-            console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} left giveaway ${originalGiveawayId}`);
+            console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} left giveaway ${originalGiveawayId}`);
             return;
         }
 
@@ -149,7 +149,7 @@ module.exports = {
                 flags: 64
             });
 
-            console.log(`[🎉] [GIVEAWAY REROLL ANYWAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Rerolled by ${user.username}`);
+            console.log(`[🎉] [GIVEAWAY REROLL ANYWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Rerolled by ${user.username}`);
             return;
         }
 
@@ -240,7 +240,7 @@ module.exports = {
                 content: `🔄 **Giveaway Rerolled!**\n🎉 New winner(s): ${winnerMentions} Won the **${giveawayData.prize} Giveaway**!! 🎉`
             });
 
-            console.log(`[🎉] [GIVEAWAY REROLL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Rerolled by ${user.username}`);
+            console.log(`[🎉] [GIVEAWAY REROLL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Rerolled by ${user.username}`);
 
             return interaction.deferUpdate();
         }
@@ -341,7 +341,7 @@ module.exports = {
 
             await interaction.deferUpdate();
 
-            console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} joined giveaway ${giveawayId}`);
+            console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${user.username} joined giveaway ${giveawayId}`);
 
         }
     }

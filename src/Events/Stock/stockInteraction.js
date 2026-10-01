@@ -225,7 +225,7 @@ module.exports = {
 
             await applyPressure(amount);
 
-            console.log(`[📈] [STOCK BUY] ${interaction.user.username} bought ${amount} FERNCOINS for ${cost.toLocaleString()} ${customname || fernsname} (wallet: ${walletDeduction}, bank: ${bankDeduction})`);
+            console.log(`[📈] [STOCK BUY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${interaction.user.username} bought ${amount} FERNCOINS for ${cost.toLocaleString()} ${customname || fernsname} (wallet: ${walletDeduction}, bank: ${bankDeduction})`);
 
             const sourceLine = bankDeduction > 0
                 ? `💰 \`${walletDeduction.toLocaleString()}\` from wallet  ·  🏦 \`${bankDeduction.toLocaleString()}\` from bank`
@@ -269,7 +269,7 @@ module.exports = {
 
         await applyPressure(-amount);
 
-        console.log(`[📈] [STOCK SELL] ${interaction.user.username} sold ${amount} FERNCOINS for ${earnings} ${customname || fernsname}`);
+        console.log(`[📈] [STOCK SELL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${interaction.user.username} sold ${amount} FERNCOINS for ${earnings} ${customname || fernsname}`);
 
         return interaction.update({
             components: [buildStatusContainer(

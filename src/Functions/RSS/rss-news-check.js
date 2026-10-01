@@ -35,7 +35,7 @@ async function runRSSNews(client) {
 
                 for ( const topic of rssTopics ) {
                     if ( !topic || !topic.url || !topic.name || typeof topic.url !== 'string' ) {
-                        console.error(`[🗞️] [RSS FEED] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Invalid topic or URL for server: ${serverName} (${serverId})`);
+                        console.error(`[🗞️] [RSS FEED] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Invalid topic or URL for server: ${serverName} (${serverId})`);
                         continue;
                     }
 
@@ -53,7 +53,7 @@ async function runRSSNews(client) {
 
                         await channel.send(`# **[${newItem.title}](${newItem.url})**`);
 
-                        console.log(`[🗞️] [RSS FEED] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${serverName} ${serverId} Sent RSS link to ${rssChannel} - ${newItem.url}`);
+                        console.log(`[🗞️] [RSS FEED] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${serverName} ${serverId} Sent RSS link to ${rssChannel} - ${newItem.url}`);
                     }
                 }
 

@@ -113,7 +113,7 @@ module.exports = {
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
 
-      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Scheduled for 2 hours in ${message.channel.name} ${message.channel.id}`);
+      console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Scheduled for 2 hours in ${message.channel.name} ${message.channel.id}`);
       await message.channel.send({ embeds: [bumped] });
 
       const now = Date.now();

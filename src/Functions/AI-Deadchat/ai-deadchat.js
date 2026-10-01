@@ -57,7 +57,7 @@ async function checkAIDeadchat(client) {
 
     if (isRunning) {
         const elapsed = runningSince ? Math.round((Date.now() - runningSince) / 1000) : '?';
-        console.log(`[💭] [AI Deadchat] is already Running... (stuck for ~${elapsed}s)`);
+        console.log(`[💭] [AI Deadchat] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] AI Deadchat is already Running... (stuck for ~${elapsed}s)`);
         return;
     }
 
@@ -153,7 +153,7 @@ async function checkAIDeadchat(client) {
                     allowedMentions: { roles: [role.id] }
                 });
 
-                console.log(`[💭] [AI DEADCHAT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${reply.trim()} `);
+                console.log(`[💭] [AI DEADCHAT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} - ${reply.trim()} `);
       
 
                 const timestamp = Date.now();

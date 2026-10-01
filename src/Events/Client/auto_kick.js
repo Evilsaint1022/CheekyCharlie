@@ -53,7 +53,7 @@ module.exports = {
 
         // ✅ Only logs if kick succeeded
         console.log(
-          `[❌] [AUTO KICK] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[❌] [AUTO KICK] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
           `${guildName} ${guildId} Kicked ${fetchedMember.user.tag} Didn't Verify Quick Enough!`
         );

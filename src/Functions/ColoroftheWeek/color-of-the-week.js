@@ -82,7 +82,7 @@ async function changeCotwColors(client) {
        // ✅ Correctly set the role color for discord.js v14
       await role.setColor( hexColor );
 
-      console.log(`[🟠] [COLOR OF THE WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] '${guild.name} ${guild.id}' Color of the Week Updated - ${role.name} to ${hexColor}`);
+      console.log(`[🟠] [COLOR OF THE WEEK] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] '${guild.name} ${guild.id}' Color of the Week Updated - ${role.name} to ${hexColor}`);
 
       // Save the colors and update lastChangeTime
       await db.coloroftheweek.set(guildKey, {
@@ -91,7 +91,7 @@ async function changeCotwColors(client) {
         lastChangeTime: now,
       });
     } catch (err) {
-      console.error(`[🔴] [COLOR OF THE WEEK] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] '${guild.name} ${guild.id}' Failed to change color:`, err.message);
+      console.error(`[🔴] [COLOR OF THE WEEK] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] '${guild.name} ${guild.id}' Failed to change color:`, err.message);
       return;
     }
   }
