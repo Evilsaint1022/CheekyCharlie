@@ -207,7 +207,7 @@ module.exports = {
         });
 
         console.log(
-            `[🌿] [BUY] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [BUY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
             `${guild.name} ${guild.id} ${user.username} used the buy command.`
         );

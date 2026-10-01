@@ -33,9 +33,9 @@ module.exports = {
     const { guild, author, channel } = message;
 
     console.log(
-      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} used the ai-search command.`
+      `${guild.name} ${guild.id} ${author.username} used the ai-search command to search "${query}".`
     );
 
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.ai_search_global`;

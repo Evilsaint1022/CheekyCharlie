@@ -30,10 +30,7 @@ module.exports = {
     const guildKey = `${guild.id}`;
     const userIdKey = user.id; // ✅ clean ID-only key
 
-    console.log(
-      `[🌿] [USE] [${new Date().toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
-      `${guild.name} ${guild.id} ${user.username} used the use command.`
-    );
+    console.log(`[🌿] [USE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guild.name} ${guild.id} ${user.username} used the use command.`);
 
     // -------------------------
     // LOAD INVENTORY + MIGRATE

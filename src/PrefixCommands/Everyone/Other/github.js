@@ -19,7 +19,7 @@ module.exports = {
 
     // Console Logs
     console.log(
-      `[🌿] [GITHUB] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [GITHUB] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
       `${guild.name} ${guild.id} ${author.username} used the github command.`
     );

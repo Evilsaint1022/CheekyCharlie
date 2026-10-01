@@ -130,7 +130,7 @@ module.exports = {
       const bank = await db.bank.get(`${robber.id}.bank`) || 0;
 
     console.log(
-      `[🌿] [HEIST] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [HEIST] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${message.guild.name} ${message.guild.id} ${robber.username} used the heist command to heist ${target.username} for ${stealAmount.toLocaleString()} ${customname || fernsname}.`
     );

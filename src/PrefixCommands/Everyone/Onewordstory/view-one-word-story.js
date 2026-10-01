@@ -12,7 +12,7 @@ module.exports = {
 
         console.log(
             `[🌿] [VIEW-ONE-WORD-STORY] ` +
-            `[${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
             `${message.author.username} used the view-one-word-story command.`
         );

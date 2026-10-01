@@ -36,7 +36,7 @@ module.exports = {
         const bottom = `🌿・Keep up the Good Work!`;
 
         console.log(
-            `[🌿] [LEVEL] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [LEVEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} used the level command to get ${targetUser.username}'s level.`
         );

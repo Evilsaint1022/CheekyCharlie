@@ -140,7 +140,7 @@ module.exports = {
 
         console.log(
             `[🌿] [JOB APPLY] ` +
-            `[${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", {
                 timeZone: "Pacific/Auckland"
             })}] ` +

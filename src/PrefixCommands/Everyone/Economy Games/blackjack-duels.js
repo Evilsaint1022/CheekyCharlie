@@ -79,7 +79,7 @@ module.exports = {
     if (opponentBalance < bet)
       return message.reply(`❌ ${opponent.username} doesn’t have enough balance.`);
 
-    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet} ${customname || fernsname}.`);
+    console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} challenged ${opponent.username} for ${bet} ${customname || fernsname}.`);
 
     const inviteRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('accept').setLabel('Accept').setStyle(ButtonStyle.Success),
@@ -98,14 +98,14 @@ module.exports = {
 
     inviteCollector.on('collect', async btn => {
       if (btn.customId === 'decline') {
-        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} declined the duel`);
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${opponent.username} declined the duel`);
         return btn.update({ content: '❌ Challenge declined.', components: [] });
       }
 
       await btn.update({ content: '✅ Challenge accepted! Starting blackjack...', components: [] });
       inviteCollector.stop();
 
-      console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Duel started between ${author.username} and ${opponent.username}`);
+      console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Duel started between ${author.username} and ${opponent.username}`);
 
       const drawCard = () => Math.floor(Math.random() * 10) + 1;
       const calcTotal = cards => cards.reduce((a, b) => a + b, 0);
@@ -162,7 +162,7 @@ module.exports = {
         const challengerTotal = calcTotal(challengerCards);
         const opponentTotal = calcTotal(opponentCards);
 
-        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${btn.user.username} -> ${btn.customId}`);
+        console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${btn.user.username} -> ${btn.customId}`);
 
         if (challengerTotal > 21 || opponentTotal > 21) {
           collector.stop();
@@ -179,7 +179,7 @@ module.exports = {
           await db.wallet.set(balanceKeyChallenger, challengerBalance);
           await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-          console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by bust`);
+          console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by bust`);
 
           return btn.update({
             embeds: [{
@@ -210,9 +210,9 @@ module.exports = {
             await db.wallet.set(balanceKeyChallenger, challengerBalance);
             await db.wallet.set(balanceKeyOpponent, opponentBalance);
 
-            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by total`);
+            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${winner.username} wins by total`);
           } else {
-            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id}  Duel ended in a tie`);
+            console.log(`[🌿] [BLACKJACK-DUELS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id}  Duel ended in a tie`);
           }
 
           return btn.update({

@@ -32,7 +32,7 @@ module.exports = {
 
       // Console Log
       console.log(
-        `[🌿] [INVITE] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[🌿] [INVITE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
         `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
         `${guild.name} ${guild.id} ${author.username} used the invite command.`
       );

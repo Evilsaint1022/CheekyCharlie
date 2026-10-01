@@ -39,7 +39,7 @@ module.exports = {
 
     // Console log
     console.log(
-      `[🌿] [AVATAR] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [AVATAR] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
       `${guildName} ${guildId} ${message.author.username} used the avatar command for ${user.username}'s avatar.`
     );

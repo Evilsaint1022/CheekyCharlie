@@ -25,7 +25,7 @@ module.exports = {
     const newKey = `${user.id}`;
 
     console.log(
-      `[🌿] [REFUND] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [REFUND] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
       `${guild.name} ${guild.id} ${user.username} used the refund command.`
     );

@@ -60,8 +60,9 @@ module.exports = {
 
         const confessionMessage = await ConfessionChannel.send({embeds: [confessionembed]});
 
+        // Console log for the command but does not contain the message contents.
         console.log(
-            `[🌿] [CONFESSIONS] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [CONFESSIONS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
             `${message.guild.name} ${message.guild.id} ${message.author.username} used the confession command.`
         );

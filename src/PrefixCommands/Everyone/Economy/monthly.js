@@ -124,7 +124,7 @@ module.exports = {
     await message.reply({ embeds: [embed] });
 
     console.log(
-      `[🌿] [MONTHLY] [${new Date().toLocaleDateString("en-GB")}] ` +
+      `[🌿] [MONTHLY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", {
         timeZone: "Pacific/Auckland",
       })}] ` +

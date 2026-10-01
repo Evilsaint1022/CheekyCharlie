@@ -118,7 +118,7 @@ module.exports = {
 
         // Console Log
         console.log(
-            `[🌿] [DAILY] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [DAILY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${username} used the daily command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}!`
         );

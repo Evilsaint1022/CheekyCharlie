@@ -42,7 +42,7 @@ module.exports = {
     await db.birthdays.set(`${guildKey}.${author}`, birthdayKey);
 
     console.log(
-      `[🌿] [BIRTHDAY-SET] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [BIRTHDAY-SET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${guildName} ${guildId} ${message.author.username} used the ?birthday-set command to set their birthday ${day}/${month}/${year}`
     );

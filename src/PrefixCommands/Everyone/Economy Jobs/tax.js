@@ -49,6 +49,8 @@ module.exports = {
       )
       .setFooter({ text: bottom })
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
+    
+      console.log(`[🌿] [TAX] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: "Pacific/Auckland"})}] ${message.guild.name} ${message.guild.id} ${message.author.username} used the tax command.`);
 
     return message.channel.send({ embeds: [embed] });
   }
