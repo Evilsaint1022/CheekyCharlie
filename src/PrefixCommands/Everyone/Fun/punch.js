@@ -80,7 +80,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[🥊] [PUNCH] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} punched ${targetName}`);
+        console.log(`[🥊] [PUNCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} punched ${targetName}`);
 
         const reply = await message.reply({ embeds: [embed], components: [row] });
 
@@ -133,7 +133,7 @@ module.exports = {
             senderPunches++;
             await db.fun_counters.set(`${sender.id}.punches`, senderPunches);
 
-            console.log(`[🥊] [PUNCH] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} punched ${senderName}`);
+            console.log(`[🥊] [PUNCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} punched ${senderName}`);
 
             const punchBackEmbed = new EmbedBuilder()
                 .setColor('Random')

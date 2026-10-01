@@ -218,7 +218,7 @@ module.exports = {
 
         console.log(
             `[🌿] [WORK] ` +
-            `[${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", {
                 timeZone: "Pacific/Auckland"
             })}] ` +

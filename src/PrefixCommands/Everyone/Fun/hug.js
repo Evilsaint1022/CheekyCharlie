@@ -80,7 +80,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[🫂] [HUG] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} hugged ${targetName}`);
+        console.log(`[🫂] [HUG] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} hugged ${targetName}`);
 
         const reply = await message.reply({ embeds: [embed], components: [row] });
 
@@ -133,7 +133,7 @@ module.exports = {
             senderHugs++;
             await db.fun_counters.set(`${sender.id}.hugs`, senderHugs);
 
-            console.log(`[🫂] [HUG] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} hugged ${senderName}`);
+            console.log(`[🫂] [HUG] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} hugged ${senderName}`);
 
             const hugBackEmbed = new EmbedBuilder()
                 .setColor('Random')

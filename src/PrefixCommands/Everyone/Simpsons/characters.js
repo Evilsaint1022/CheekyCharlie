@@ -53,7 +53,7 @@ module.exports = {
       const guildName = message.guild.name;
       const guildId = message.guild.id;
 
-      console.log(`[🌿] [CHARACTERS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the ?characters command.`);
+      console.log(`[🌿] [CHARACTERS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the ?characters command.`);
 
       const row = () =>
         new ActionRowBuilder().addComponents(

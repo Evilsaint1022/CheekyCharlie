@@ -48,7 +48,7 @@ module.exports = {
 
             // Console log (same format as slash command)
             console.log(
-                `[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString('en-GB')}] ` +
+                `[🌿] [UNLOCK-VC] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
                 `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
                 `${guildName} ${guildId} ${message.author.username} used the unlock-vc command.`
             );

@@ -144,7 +144,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [BEG] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [BEG] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${username} used the beg command and got ${reward.toLocaleString()} ${customname || fernsname}!`
         );

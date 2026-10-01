@@ -62,7 +62,7 @@ async function showPortfolio(message, args) {
     const customname = await db.settings.get(`${guildId}.currencyname`)
     const fernsname = await db.default.get("Default.name");
 
-    console.log(`[📈] [STOCKS PORTFOLIO] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed ${targetUser.username}'s portfolio`);
+    console.log(`[📈] [STOCKS PORTFOLIO] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed ${targetUser.username}'s portfolio`);
 
     const stockData = await db.stock.get('global');
     const currentPrice = stockData?.price ?? 3000;
@@ -145,7 +145,7 @@ async function showPortfolio(message, args) {
 // Leaderboard
 // ─────────────────────────────────────────────────────────
 async function showLeaderboard(message) {
-    console.log(`[📈] [STOCKS LEADERBOARD] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed the stocks leaderboard`);
+    console.log(`[📈] [STOCKS LEADERBOARD] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} — ${message.author.username} viewed the stocks leaderboard`);
 
     const guildId = message.guild.id
 

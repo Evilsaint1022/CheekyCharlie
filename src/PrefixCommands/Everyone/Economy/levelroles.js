@@ -25,7 +25,7 @@ module.exports = {
     const guildKey = `${message.guild.id}`;
 
     console.log(
-      `[🌿] [LEVELROLES] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [LEVELROLES] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${message.guild.name} ${message.guild.id} ${message.author.tag} used levelroles command.`
     );

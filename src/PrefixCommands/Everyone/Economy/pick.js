@@ -115,7 +115,7 @@ module.exports = {
             balance += coinsEarned;
 
             console.log(
-                `[🌿] [PICK] [${new Date().toLocaleDateString('en-GB')}] ` +
+                `[🌿] [PICK] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
                 `${guild.name} ${guild.id} ${user.username} picked ${coinsEarned.toLocaleString()} ${customname || fernsname}`
             );

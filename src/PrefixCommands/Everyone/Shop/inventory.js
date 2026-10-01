@@ -121,7 +121,7 @@ module.exports = {
     embed.setDescription(inventoryText);
 
     console.log(
-      `[🌿] [INVENTORY] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [INVENTORY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
       `${guild.name} ${guild.id} ${message.author.username} used the inventory command.`
     );

@@ -79,7 +79,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[🤣] [TICKLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} tickled ${targetName}`);
+        console.log(`[🤣] [TICKLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} tickled ${targetName}`);
 
         const reply = await message.reply({ embeds: [embed], components: [row] });
 

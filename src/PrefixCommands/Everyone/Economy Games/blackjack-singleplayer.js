@@ -103,7 +103,7 @@ module.exports = {
     }
 
     console.log(
-      `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${guild.name} ${guild.id} ${author.username} used the blackjack-singleplayer command placing a bet of ${bet.toLocaleString()} ${customname || fernsname}.`
     );
@@ -201,7 +201,7 @@ module.exports = {
       if (finalResult === 'win') {
         balance += bet;
         console.log(
-          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
           `${guild.name} ${guild.id} ${author.username} won the bet of ${bet.toLocaleString()} ${customname || fernsname}`
         );
@@ -210,7 +210,7 @@ module.exports = {
       if (finalResult === 'lose') {
         balance -= bet;
         console.log(
-          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
           `${guild.name} ${guild.id} ${author.username} lost the bet of ${bet.toLocaleString()} ${customname || fernsname}`
         );
@@ -218,7 +218,7 @@ module.exports = {
 
       if (finalResult === 'tie') {
         console.log(
-          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString('en-GB')}] ` +
+          `[🌿] [BLACKJACK-SINGLEPLAYER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
           `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
           `${guild.name} ${guild.id} ${author.username} tied and got the bet of ${bet.toLocaleString()} ${customname || fernsname} back!`
         );

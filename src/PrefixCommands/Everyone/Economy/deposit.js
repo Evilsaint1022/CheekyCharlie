@@ -156,7 +156,7 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} withdrew ${depositAmount.toLocaleString()} ${customname || fernsname}`);
+        console.log(`[🌿] [WITHDRAW] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} withdrew ${depositAmount.toLocaleString()} ${customname || fernsname}`);
         
         // Transaction Log -------------------------------------------
 
@@ -179,7 +179,7 @@ module.exports = {
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
                 `💰・**__Bank Withdraw:__**\n  *** - ${custom || ferns}\`${depositAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
-                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString("en-NZ", { timeZone: "Pacific/Auckland"})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
         .setColor(0x207e37)
@@ -223,7 +223,7 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        console.log(`[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount.toLocaleString()} ${customname || fernsname}`);
+        console.log(`[🌿] [DEPOSIT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} (${guild.id}) ${author.tag} deposited ${depositAmount.toLocaleString()} ${customname || fernsname}`);
         
        // Transaction Log -------------------------------------------
 
@@ -246,7 +246,7 @@ module.exports = {
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
                 `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns}\`${depositAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
-                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString("en-NZ", { timeZone: "Pacific/Auckland"})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
           .setColor(0x207e37)

@@ -93,7 +93,7 @@ module.exports = {
     await db.wallet.set(balanceKey, balance);
 
     console.log(
-      `[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] ` +
+      `[🌿] [SLOTS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
       `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
       `${guild.name} ${guild.id} ${author.username} bet ${bet.toLocaleString()} ${customname || fernsname}`
     );
@@ -157,12 +157,12 @@ module.exports = {
       resultText = `***🎉 You Won ${custom || ferns}\`${winnings.toLocaleString()}\` ${customname || fernsname}!***`;
       resultColor = 0x00FF00;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings.toLocaleString()} ${customname || fernsname}.`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} WON ${winnings.toLocaleString()} ${customname || fernsname}.`);
     } else {
       resultText = `***😢 You Lost your bet of ${custom || ferns}\`${bet.toLocaleString()}\` ${customname || fernsname}!***`;
       resultColor = 0xFF0000;
 
-      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet.toLocaleString()} ${customname || fernsname}.`);
+      console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet.toLocaleString()} ${customname || fernsname}.`);
     }
 
     // 🏁 Final result embed

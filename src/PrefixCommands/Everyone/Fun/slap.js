@@ -81,7 +81,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-        console.log(`[👋] [SLAP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} slapped ${targetName}`);
+        console.log(`[👋] [SLAP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${senderName} slapped ${targetName}`);
 
         const reply = await message.reply({ embeds: [embed], components: [row] });
 
@@ -134,7 +134,7 @@ module.exports = {
             senderSlaps++;
             await db.fun_counters.set(`${sender.id}.slaps`, senderSlaps);
 
-            console.log(`[👋] [SLAP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} slapped ${senderName}`);
+            console.log(`[👋] [SLAP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${targetName} slapped ${senderName}`);
 
             const slapBackEmbed = new EmbedBuilder()
                 .setColor('Random')

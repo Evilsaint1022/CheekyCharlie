@@ -163,7 +163,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [DEPOSIT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} deposited ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
@@ -189,7 +189,7 @@ module.exports = {
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
                 `💰・**__Bank Deposit:__**\n  *** + ${custom || ferns}\`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
-                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
             .setColor(0x207e37)
@@ -234,7 +234,7 @@ module.exports = {
         await message.reply({ embeds: [embed] });
 
         console.log(
-            `[🌿] [WITHDRAW] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[🌿] [WITHDRAW] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guild.name} ${guild.id} ${author.username} withdrew ${withdrawAmount.toLocaleString()} ${customname || fernsname}.`
         );
@@ -261,7 +261,7 @@ module.exports = {
                 `🌿・**__Username:__** \`${author.username}\`\n` +
                 `🌿・**__UserID:__** \`${author.id}\`\n\n` +
                 `💰・**__Bank Withdraw:__**\n  *** - ${custom || ferns}\`${withdrawAmount.toLocaleString()}\` ${customname || fernsname}***\n\n` +
-                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
+                `***__Transaction TimeStamp:__***\n***[\`${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n` +
                 `${bar}`
             )
             .setColor(0x207e37)
