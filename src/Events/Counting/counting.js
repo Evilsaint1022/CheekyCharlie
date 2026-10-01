@@ -103,7 +103,7 @@ module.exports = {
           await db.lives.set(`${guildKey}.lives`, countingLives);
         }
 
-        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Lives left: ${countingLives}.`)
+        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Lives left: ${countingLives}.`)
 
         await message.reply({
           content: `${WRONG_EMOJI} **${message.author.username}** counted twice in a row and lost a life! ${message.guild.name} has **${countingLives}** lives left.`,
@@ -112,7 +112,7 @@ module.exports = {
 
         // ✅ ONLY reset if lives are 0
         if (countingLives === 0) {
-          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${message.channel.name} ${message.channel.id}): Counting is restarting back at 1 again.`)
+          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${message.channel.name} ${message.channel.id}): Counting is restarting back at 1 again.`)
           await message.reply({ content: `**❌ Counting is Restarting back at 1 again.**` }).catch(() => null);
           await db.counting.set(guildKey, {
             current: 0,
@@ -136,7 +136,7 @@ module.exports = {
           await db.lives.set(`${guildKey}.lives`, countingLives);
         }
 
-        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Lives left: ${countingLives}.`)
+        console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): Send ${userNumber}, but ${countData.expected} was expected. Lives left: ${countingLives}.`)
 
         await message.reply({
           content: `${WRONG_EMOJI} **${message.author.username}** ruined the count at **${countData.current}**! ${message.guild.name} has **${countingLives}** lives left.`,
@@ -145,7 +145,7 @@ module.exports = {
 
         // ✅ ONLY reset if lives are 0
         if (countingLives === 0) {
-          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${message.channel.name} ${message.channel.id}): Counting is restarting back at 1 again.`)
+          console.log(`[❌] [COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${message.channel.name} ${message.channel.id}): Counting is restarting back at 1 again.`)
           await message.reply({ content: `**❌ Counting is Restarting back at 1 again.**` }).catch(() => null);
           await db.counting.set(guildKey, {
             current: 0,
@@ -191,7 +191,7 @@ module.exports = {
           record: newRecord
         });
 
-        console.log(`[✅] [COUNTING] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1} Lives: ${countingLives}.`)
+        console.log(`[✅] [COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} (${username}): From ${userNumber - 1} to ${userNumber}. Next Expected: ${userNumber + 1} Lives: ${countingLives}.`)
       }
 
     } finally {

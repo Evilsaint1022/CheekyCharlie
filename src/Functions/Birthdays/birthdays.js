@@ -82,7 +82,7 @@ module.exports = async (client) => {
         const age = todayYear - bday.year;
         const membername = member.user.username;
 
-        console.log(`[🎂] [Birthdays] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Sending birthday message for ${membername} in channel ${channel.name} ${channel.id}`);
+        console.log(`[🎂] [Birthdays] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Sending birthday message for ${membername} in channel ${channel.name} ${channel.id}`);
 
         await channel.send(
           `${role ? `\n\n<@&${role.id}>` : ''}\n🎉 **Happy Birthday ${member}!** 🎉

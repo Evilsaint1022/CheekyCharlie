@@ -30,7 +30,7 @@ module.exports = {
         if (reactionCount >= MAX_REACTIONS) return; // Stop if limit reached 
 
                 // React with the shrimp emoji 🦐
-                console.log(`[🦐] [SHRIMP] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Shrimp Reaction in ${message.channel.name} ${message.channel.id}`)
+                console.log(`[🦐] [SHRIMP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Shrimp Reaction in ${message.channel.name} ${message.channel.id}`)
                 await message.react('🦐');
                 reactionCount++;
 

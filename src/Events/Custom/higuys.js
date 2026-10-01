@@ -37,7 +37,7 @@ module.exports = {
         // Select a random link from the list
         const randomLink = links[Math.floor(Math.random() * links.length)];
   
-        console.log(`[👋] [HI GUYS] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Sent "Hi Guys" in ${message.channel.name} ${message.channel.id}`);
+        console.log(`[👋] [HI GUYS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${message.guild.id} - Sent "Hi Guys" in ${message.channel.name} ${message.channel.id}`);
 
         await message.channel.send(randomLink);
         

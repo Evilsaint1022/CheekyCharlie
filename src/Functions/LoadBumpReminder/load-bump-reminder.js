@@ -48,7 +48,7 @@ async function loadBumpReminder(client) {
 
                 await new Promise(resolve => setTimeout(resolve, 5000));
 
-                console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Sent in ${channel.name} ${channel.id}`);
+                console.log(`[⬆️] [BUMP REMINDER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - BumpReminder Has been Sent in ${channel.name} ${channel.id}`);
                 
                 const bumpreminder = new EmbedBuilder()
                     .setDescription(`## ***🌿 \`It's Time to Bump!\` 🌿***\n**_Its been 2 hours and its time to bump again!_**\n_You can bump by using the /bump command_\nㅤ\n**_Just a Friendly Reminder ${mention}_** ❤️`)

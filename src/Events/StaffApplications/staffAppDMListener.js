@@ -40,7 +40,7 @@ async execute(message, client) {
             )
         ] });
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${message.author.username} cancelled staff application`);
+        console.log(`[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} ${message.author.username} cancelled staff application`);
         return;
     }
 
@@ -119,7 +119,7 @@ async function handlePendingApplicationMessage(message, client, application, gui
 
         await message.react('✅');
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${message.author.username} sent message to staff thread`);
+        console.log(`[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} ${message.author.username} sent message to staff thread`);
 
     } catch (error) {
         console.error('Error forwarding user message to staff thread:', error);
@@ -197,7 +197,7 @@ async function finalizeApplication(message, client, application, guildName, guil
 
         await message.reply({ components: [completionEmbed], flags: [MessageFlags.IsComponentsV2] });
 
-        console.log(`[${new Date().toLocaleTimeString()}] ${guildName} ${guildId} ${message.author.username} completed staff application`);
+        console.log(`[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} ${message.author.username} completed staff application`);
 
     } catch (error) {
 

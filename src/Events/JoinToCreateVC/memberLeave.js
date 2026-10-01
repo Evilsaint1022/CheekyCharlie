@@ -58,7 +58,7 @@ async function handleChannelLeave(oldState, activeVCs, activeIdsKey) {
     const isLastMember = refreshed.members.size === 0;
 
     if (isLastMember) {
-        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} was the last member to leave, ${tempChannel.name} has been Deleted!`);
+        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} was the last member to leave, ${tempChannel.name} has been Deleted!`);
 
         // Disconnect bots (console-safe)
         for (const [_, member] of tempChannel.members) {
@@ -79,6 +79,6 @@ async function handleChannelLeave(oldState, activeVCs, activeIdsKey) {
         delete activeVCs[channelId];
         await db.vc.set(activeIdsKey, activeVCs);
     } else {
-        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} left ${tempChannel.name}`);
+        console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${oldState.member.user.username} left ${tempChannel.name}`);
     }
 }

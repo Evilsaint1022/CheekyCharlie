@@ -75,9 +75,9 @@ module.exports = {
                 const isFirstMember = newState.channel.members.size === 1;
 
                 if (isFirstMember) {
-                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name} and ${member.user.username}'s Voice has been Created!`);
+                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name} and ${member.user.username}'s Voice has been Created!`);
                 } else {
-                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name}`);
+                    console.log(`[🔊] [JOIN TO CREATE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - ${member.user.username} joined ${newState.channel.name}`);
                 }
             }
 

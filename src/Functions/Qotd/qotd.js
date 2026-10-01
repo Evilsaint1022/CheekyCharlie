@@ -6,9 +6,8 @@ const OpenAI = require("openai");
 
 // Run daily at 7AM Pacific/Auckland
 const CRON_SCHEDULE = "0 7 * * *";
-// const CRON_SCHEDULE = "* * * * *";
 
-const nzDate = new Date().toLocaleDateString('en-GB');
+const nzDate = new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'});
 const nzTimestamp = new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" });
 
 let isRunning = false;
@@ -101,7 +100,7 @@ async function sendQuestionOfTheDay(client) {
         question
       });
 
-      console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} Sent new question in ${channel.name} ${channel.id} - ${question}`);
+      console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} ${guild.id} Sent new question in ${channel.name} ${channel.id} - ${question}`);
     }
   } catch (err) {
     console.error("[❌] [QOTD] [Error]", err?.response?.data || err);

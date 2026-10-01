@@ -112,7 +112,7 @@ module.exports = {
 
         console.log(
             `[🗨️] [ONE-WORD-STORY] ` +
-            `[${new Date().toLocaleDateString('en-GB')}] ` +
+            `[${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
             `${guild.name} ${guild.id} ${message.author.username} added the word "${newWord}"`
         );

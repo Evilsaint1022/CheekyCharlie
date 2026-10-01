@@ -63,7 +63,7 @@ module.exports = {
                     reactionCount++;
 
                     console.log(
-                        `[${emoji}] [FRUIT & VEGGIES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} - Reacted with ${emoji} ${produce} in ${message.channel.name} ${message.channel.id}`
+                        `[${emoji}] [FRUIT & VEGGIES] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${message.guild.id} - Reacted with ${emoji} ${produce} in ${message.channel.name} ${message.channel.id}`
                     );
 
                 } catch (error) {

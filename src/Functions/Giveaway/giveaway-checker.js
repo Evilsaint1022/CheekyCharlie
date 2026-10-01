@@ -26,7 +26,7 @@ async function checkGiveaways(client) {
 
 async function endGiveaway(client, giveawayId, giveawayData) {
     try {
-        console.log(`[🎉] [GIVEAWAY] Ending giveaway ${giveawayId}`);
+        console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Ending giveaway ${giveawayId}`);
 
         const guild = client.guilds.cache.get(giveawayData.guildId);
         if (!guild) {
@@ -118,7 +118,7 @@ async function endGiveaway(client, giveawayId, giveawayData) {
         giveawayData.winnerIds = winners;
         await db.giveaways.set(giveawayId, giveawayData);
 
-        console.log(`[🎉] [GIVEAWAY] Successfully ended giveaway ${giveawayId} with ${participants.length} participants`);
+        console.log(`[🎉] [GIVEAWAY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] Successfully ended giveaway ${giveawayId} with ${participants.length} participants`);
     } catch (error) {
         console.error(`[🎉] [GIVEAWAY] Error ending giveaway ${giveawayId}:`, error);
     }
