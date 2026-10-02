@@ -227,7 +227,7 @@ module.exports = async function updateStarboard(reaction) {
     const customEmojis = [...content.matchAll(customEmojiPattern)];
     if (customEmojis.length && !content.replace(customEmojiPattern, '').trim()) {
       for (const [, animated, id] of customEmojis) {
-        addImage(`https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?size=256&quality=lossless`);
+       // addImage(`https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?size=256&quality=lossless`);
       }
     }
 
