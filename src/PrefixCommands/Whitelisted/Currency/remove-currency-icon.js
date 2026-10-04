@@ -14,6 +14,7 @@ module.exports = {
         }
 
         const guildId = message.guild.id;
+        const guildName = message.guild.name;
         const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = message.member.roles.cache.map(role => role.id);
@@ -36,6 +37,8 @@ module.exports = {
 
             // delete from database
             await db.settings.delete(`${guildId}.currencyicon`);
+
+            console.log(`[⭐] [REMOVE-CURRENCY-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-currency-icon command to remove ${existing}`);
 
             message.reply("✅ Currency icon has been removed.");
         } catch (err) {

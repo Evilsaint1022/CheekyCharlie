@@ -1,4 +1,4 @@
-const { PermissionFlagsBits } = require("discord.js");
+const { PermissionsBitField, PermissionFlagsBits } = require("discord.js");
 const db = require("../../../Handlers/database");
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
       }
       
       // console logs
-      console.log(`[💰] [SET-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-bankinterest-channel command to set ${channel.name} - ${channel.id}`);
+      console.log(`[⭐] [SET-BANKINTEREST-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-bankinterest-channel command to set ${channel.name} - ${channel.id}`);
 
       const key = `${guildId}`;
 

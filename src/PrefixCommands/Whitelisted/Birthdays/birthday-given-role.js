@@ -2,7 +2,7 @@ const db = require('../../../Handlers/database');
 
 module.exports = {
   name: 'birthdaygivenrole',
-  aliases: ['bdaygivenrole'],
+  aliases: ['bdaygrole'],
 
   async execute(message, args) {
 
@@ -37,6 +37,8 @@ module.exports = {
     settings.birthdaygivenrole = role.id;
 
     await db.birthdaysettings.set(`${guildId}`, settings);
+
+    console.log(`[⭐] [BIRTHDAY-GIVEN-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the birthday-channel command to set the birthday given role to ${role.name} ${role.id}`);
 
     message.reply(`🎉 Birthday given role set to **${role.name}**`);
   }

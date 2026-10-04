@@ -14,6 +14,7 @@ module.exports = {
         }
 
         const guildId = message.guild.id;
+        const guildName = message.guild.name;
         const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
 
         const memberRoles = message.member.roles.cache.map(role => role.id);
@@ -36,6 +37,8 @@ module.exports = {
 
             // save to database
             await db.settings.set(`${guildId}.currencyname`, currencyName);
+
+            console.log(`[⭐] [SET-CURRENCY-NAME] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-currency-name command to set the currency name to ${currencyName}`);
 
             message.reply(`✅ Currency name set to **${currencyName}**`);
         } catch (err) {

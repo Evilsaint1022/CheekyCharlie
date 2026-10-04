@@ -35,6 +35,8 @@ module.exports = {
             // save to database
             await db.settings.set(`${message.guild.id}.currencyicon`, emoji);
 
+            console.log(`[⭐] [SET-CURRENCY-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-currency-icon command to remove ${emoji}`);
+
             // confirmation
             message.reply(`✅ Currency icon set to ${emoji}`);
         } catch (err) {

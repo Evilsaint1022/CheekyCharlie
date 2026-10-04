@@ -8,6 +8,7 @@ module.exports = {
         if (!message.guild) return message.reply('This command cannot be used in DMs.');
 
         const guildId = message.guild.id;
+        const guildName = message.guild.name;
         const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
         const memberRoles = message.member.roles.cache.map(r => r.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(id => memberRoles.includes(id));
@@ -19,7 +20,7 @@ module.exports = {
 
             if (!channel) return message.reply('❌ Please provide a valid channel.');
 
-            console.log(`[📈] [SET-STOCK-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${guildId} ${message.author.username} set stock channel to #${channel.name}`);
+            console.log(`[⭐] [SET-STOCK-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} ${message.author.username} used the set-stock-channel command to set stock channel to ${channel.name}`);
 
             const existing = await db.settings.get(`${guildId}`) || {};
             existing.stockchannel = channel.id;

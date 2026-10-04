@@ -29,13 +29,6 @@ module.exports = {
             return message.reply("❌ You must be an administrator to use this command.");
         }
 
-        // Console log
-        console.log(
-            `[🌿] [STAFF TOGGLE] [${new Date().toLocaleDateString('en-GB')}] ` +
-            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${message.guild.name} ${message.guild.id} ${message.author.username} used the staff toggle command.`
-        );
-
         // Get current boolean (true/false)
         const current = await db.settings.get(`${guildId}.staffapplications`);
 
@@ -44,6 +37,13 @@ module.exports = {
 
         // Save new value ONLY in settings DB
         await db.settings.set(`${guildId}.staffapplications`, newValue);
+
+        // Console log
+        console.log(
+            `[⭐] [STAFF-TOGGLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+            `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+            `${guildName} ${guildId} ${message.author.username} used the staff-toggle command to toggle staff applications to ${newValue}`
+        );
 
         return message.reply(
             `📋 Staff Applications are now **${newValue ? "ENABLED" : "DISABLED"}** for this server.`

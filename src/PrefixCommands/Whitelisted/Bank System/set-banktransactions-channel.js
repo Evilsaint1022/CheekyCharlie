@@ -36,7 +36,7 @@ module.exports = {
       }
       
       // console logs
-      console.log(`[💰] [SET-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-banktransactions-channel command to set ${channel.name} - ${channel.id}`);
+      console.log(`[⭐] [SET-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-banktransactions-channel command to set ${channel.name} - ${channel.id}`);
 
       const key = `${guildId}`;
 

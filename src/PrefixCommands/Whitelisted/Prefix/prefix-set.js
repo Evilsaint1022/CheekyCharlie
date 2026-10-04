@@ -45,6 +45,8 @@ module.exports = {
       prefix: newPrefix
     });
 
+    console.log(`[⭐] [PREFIX-SET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the prefix-set command to set the prefix to ${newPrefix}`);
+
     message.reply(`✅ Prefix has been updated to: \`${newPrefix}\``);
   }
 };

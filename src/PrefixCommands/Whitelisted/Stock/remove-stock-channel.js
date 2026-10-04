@@ -8,6 +8,7 @@ module.exports = {
         if (!message.guild) return message.reply('This command cannot be used in DMs.');
 
         const guildId = message.guild.id;
+        const guildName = message.guild.name;
         const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
         const memberRoles = message.member.roles.cache.map(r => r.id);
         const hasPermission = WHITELISTED_ROLE_IDS.some(id => memberRoles.includes(id));
@@ -15,7 +16,7 @@ module.exports = {
         if (!hasPermission) return message.reply('You do not have the required whitelisted role to use this command.');
 
         try {
-            console.log(`[📈] [REMOVE-STOCK-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${message.guild.name} ${guildId} ${message.author.username} removed stock channel`);
+            console.log(`[⭐] [REMOVE-STOCK-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ${guildName} ${guildId} ${message.author.username} used the remove-stock-channel command to removed stock channel that was set`);
 
             const currentSettings = await db.settings.get(`${guildId}`) || {};
 

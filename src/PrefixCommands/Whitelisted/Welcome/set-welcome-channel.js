@@ -16,6 +16,7 @@ module.exports = {
     if (!message.guild) return;
 
     const guildId = message.guild.id;
+    const guildName = message.guild.name;
     const whitelistedRoleIds = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
     const memberRoleIds = message.member.roles.cache.map((role) => role.id);
     const hasWhitelistedRole = whitelistedRoleIds.some((roleId) => memberRoleIds.includes(roleId));
@@ -44,7 +45,7 @@ module.exports = {
     }
 
     // Console Logs
-    console.log(`[⭐] [SET-WELCOME-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${guildId} ${message.author.username} used the set-welcome-channel command to set ${channel.name} ${channel.id}`);
+    console.log(`[⭐] [SET-WELCOME-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-welcome-channel command to set ${channel.name} ${channel.id}`);
 
 
     // Save channel ID

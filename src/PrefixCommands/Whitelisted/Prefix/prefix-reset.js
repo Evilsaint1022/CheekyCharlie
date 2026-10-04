@@ -35,6 +35,8 @@ module.exports = {
     // Save updated settings
     await db.settings.set(guildId, existingSettings);
 
+    console.log(`[⭐] [PREFIX-RESET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the prefix-reset command to remove the prefix set.`);
+
     message.reply("✅ Prefix has been reset to the default.");
   }
 };

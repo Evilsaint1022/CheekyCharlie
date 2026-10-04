@@ -69,7 +69,7 @@ module.exports = {
             await message.reply(`✅ Emoji added! ${emoji} **:${emoji.name}:**`);
 
             console.log(
-                `[⭐] [STEAL] [${new Date().toLocaleDateString('en-NZ')}] ` +
+                `[⭐] [STEAL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
                 `${guildName} ${guildId} ${message.author.tag} used the steal command ` +
                 `to steal ${emojiName} ${emojiId}`
@@ -78,7 +78,7 @@ module.exports = {
         } catch (error) {
             
             console.log(
-                `[⭐] [STEAL] [${new Date().toLocaleDateString('en-NZ')}] ` +
+                `[⭐] [STEAL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
                 `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
                 `${guildName} ${guildId} Steal of Emoji failed. ${error.message}`
             );

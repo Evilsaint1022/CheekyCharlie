@@ -38,6 +38,8 @@ module.exports = {
 
     await db.birthdaysettings.set(`${guildId}`, settings);
 
+    console.log(`[⭐] [BIRTHDAY-PING-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the birthday-ping-role command to set the birthday ping role to ${role.name} ${role.id}`);
+
     message.reply(`🎉 Birthday ping role set to **${role.name}**`);
   }
 };

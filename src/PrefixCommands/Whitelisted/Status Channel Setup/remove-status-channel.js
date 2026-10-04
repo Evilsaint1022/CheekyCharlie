@@ -30,9 +30,9 @@ module.exports = {
       await db.settings.set(guildId, existingSettings);
 
       console.log(
-        `[📡] [REMOVE-STATUS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[⭐] [REMOVE-STATUS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
         `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
-        `${guildName} ${guildId} ${message.author.tag} removed the status channel.`
+        `${guildName} ${guildId} ${message.author.tag} used the remove-status-channel command to remove the status channel that was set`
       );
 
       await message.reply('✅ Status channel has been removed.');

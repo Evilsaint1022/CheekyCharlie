@@ -42,7 +42,7 @@ async execute(message, args) {
 
         // Logging the action
         console.log(
-            `[⭐] [MODMAIL] [${new Date().toLocaleDateString("en-NZ", {
+            `[👑] [MODMAIL] [${new Date().toLocaleDateString("en-NZ", {
                 timeZone: "Pacific/Auckland"
             })}] [${new Date().toLocaleTimeString("en-NZ", {
                 timeZone: "Pacific/Auckland"

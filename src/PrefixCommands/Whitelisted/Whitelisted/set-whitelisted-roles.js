@@ -33,9 +33,9 @@ module.exports = {
             db.whitelisted.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
         }
 
-        await message.reply(`The role <@&${role.id}> has been added to the whitelist.`);
+        await message.reply(`✅ The role <@&${role.id}> has been added to the whitelisted roles.`);
 
         // Console Logs
-        console.log(`[⭐] [SET-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-whitelisted-roles command. Added role <@&${role.id}> to the whitelist.`);
+        console.log(`[⭐] [SET-WHITELISTED-ROLES] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the set-whitelisted-roles command to add ${role.id} to the whitelisted roles list`);
     }
 };

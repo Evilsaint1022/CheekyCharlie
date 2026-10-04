@@ -11,6 +11,7 @@ module.exports = {
     if (!message.guild) return;
 
     const guildId = message.guild.id;
+    const guildName = message.guild.name;
 
     const whitelistedRoleIds =
       await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
@@ -40,7 +41,7 @@ module.exports = {
     }
 
     // Console Logs
-    console.log(`[⭐] [REMOVE-WELCOME-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.guild.name} ${guildId} ${message.author.username} used the remove-welcome-channel command to Remove ${currentChannel}`);
+    console.log(`[⭐] [REMOVE-WELCOME-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-welcome-channel command to remove ${currentChannel}`);
 
     // Remove the welcome channel
     await db.settings.delete(`${guildId}.welcomechannel`);

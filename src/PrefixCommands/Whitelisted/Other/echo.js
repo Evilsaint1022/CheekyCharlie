@@ -43,7 +43,7 @@ module.exports = {
 
         // Console Logs
         console.log(
-            `[⭐] [ECHO] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[⭐] [ECHO] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guildName} ${guildId} ${message.author.tag} used the echo command. ` +
             `Message: ${messageContent}`

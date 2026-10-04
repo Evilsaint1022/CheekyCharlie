@@ -38,6 +38,8 @@ module.exports = {
 
         await db.birthdaysettings.set(`${guildId}`, settings);
 
+        console.log(`[⭐] [BIRTHDAY-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the birthday-channel command to set the birthday channel to ${channel.name} ${channel.id}`);
+
         message.reply(`🎂 Birthday announcements channel set to ${channel}`);
       }
     };

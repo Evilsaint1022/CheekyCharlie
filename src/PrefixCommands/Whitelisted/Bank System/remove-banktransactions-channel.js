@@ -31,7 +31,7 @@ module.exports = {
       const userId = user.id;
       
       // console logs
-      console.log(`[💰] [REMOVE-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-banktransactions-channel command.`);
+      console.log(`[⭐] [REMOVE-BANKTRANSACTIONS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-banktransactions-channel command.`);
 
       const whitelistedRoles = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
       const member = guild.members.cache.get(userId);

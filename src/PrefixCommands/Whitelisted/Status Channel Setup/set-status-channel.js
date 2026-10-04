@@ -34,9 +34,9 @@ module.exports = {
       });
 
       console.log(
-        `[📡] [SET-STATUS-CHANNEL] [${new Date().toLocaleDateString('en-GB')}] ` +
+        `[⭐] [SET-STATUS-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
         `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
-        `${guildName} ${guildId} ${message.author.tag} set the status channel to ${channel.name} ${channel.id}.`
+        `${guildName} ${guildId} ${message.author.tag} used the set-status-channel command to set the status channel to ${channel.name} ${channel.id}`
       );
 
       await message.reply(`✅ Status channel has been set to <#${channel.id}>`);

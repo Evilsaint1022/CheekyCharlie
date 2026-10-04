@@ -45,7 +45,7 @@ module.exports = {
         await message.channel.send({ embeds: [stopEmbed] });
 
         console.log(
-            `[⭐] [STOP] [${new Date().toLocaleDateString('en-GB')}] ` +
+            `[⭐] [STOP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
             `${guildName} ${guildId} ${username} used the stop command.`
         );

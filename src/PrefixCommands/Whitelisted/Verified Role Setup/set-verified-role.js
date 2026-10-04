@@ -62,7 +62,7 @@ module.exports = {
 
     await db.settings.set(guildId, currentSettings);
 
-    console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.tag} Set the Verified Role to ${role.name}${roleToRemove ? ` and Unverified Role to ${roleToRemove.name}` : ''}`);
+    console.log(`[⭐] [SET-VERIFIED-ROLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.tag} used the set-verified-role to set the Verified Role to ${role.name}${roleToRemove ? ` and Unverified Role to ${roleToRemove.name}` : ''}`);
 
     return message.reply(`✅ Verified role has been set to **${role.name}**.${roleToRemove ? ` Members will also have **${roleToRemove.name}** removed after verification.` : ''}`);
   }

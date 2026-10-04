@@ -37,6 +37,8 @@ module.exports = {
     // Save new value
     await db.settings.set(`${message.guild.id}.ghostping`, newValue);
 
-    message.reply(`Ghostping detection is now set to: **${newValue}**`);
+    console.log(`[⭐] [GHOSTPING-TOGGLE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the ghostping-toggle command to change the ${current} to ${newValue}`);
+
+    message.reply(`✅ Ghostping detection is now set to: **${newValue}**`);
   }
 };

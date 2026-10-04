@@ -43,9 +43,9 @@ module.exports = {
         // Update the database with the new list of whitelisted roles
         db.whitelisted.set(`${guildId}.whitelistedRoles`, WHITELISTED_ROLE_IDS);
 
-        await message.reply(`The role <@&${role.id}> has been removed from the whitelist.`);
+        await message.reply(`✅ The role <@&${role.id}> has been removed from the whitelisted roles.`);
 
         // Console Logs
-        console.log(`[⭐] [REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString('en-GB')}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-whitelisted-roles command. Removed role <@&${role.id}> from the whitelist.`);
+        console.log(`[⭐] [REMOVE-WHITELISTED-ROLES] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${message.author.username} used the remove-whitelisted-roles command to remove ${role.id} from the whitelisted roles list.`);
     }
 };
