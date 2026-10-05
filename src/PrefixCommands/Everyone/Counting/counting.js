@@ -53,19 +53,19 @@ module.exports = {
 
             // Build embed
             const embed = new EmbedBuilder()
-                .setTitle(`***🌿 \`${guildName} Counting!\` 🌿***`)
+                .setTitle(`***🌿 \`${guildName}'s Counting!\` 🌿***`)
                 .setDescription(
                     `_This is the current counting info for ${guildName}._\n` +
                     `${middle}\n` +
                     `ㅤ⭐**__Highest Record__**\n` +
                     `ㅤ \`${countingData.record}\`\n` +
-                    `ㅤ🌿**__Next Number__ ㅤ🌿__Current Number__**\n` +
+                    `ㅤ🌿**__Current Number__ ㅤ🌿__Next Number__**\n` +
                     `ㅤ \`${countingData.current}\`     ㅤ ㅤ ㅤ ㅤㅤ\`${countingData.expected}\`\n` +
-                    `${middle}\n` +
-                    `***Remaining Lives:***\n\`${CountingLives}\`\n`
+                    `**__Counting Lives:__**\n\`${CountingLives}\`\n` +
+                    `${middle}\n`
                 )
                 .setThumbnail(message.guild.iconURL())
-                .setFooter({ text: `ㅤ 🌿 The Last Counter: ${lastUser} 🌿` })
+                .setFooter({ text: `ㅤ🌿 The Last Counter: ${lastUser} 🌿` })
                 .setColor(0x207e37);
 
             await message.reply({ embeds: [embed] });
