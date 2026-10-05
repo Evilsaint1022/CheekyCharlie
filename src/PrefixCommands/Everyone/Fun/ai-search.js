@@ -1,6 +1,6 @@
 // ai-search.js (PREFIX VERSION)
 require('dotenv').config({ quiet: true });
-const OpenAI = require('openai');
+const OpenAI = require("openai");
 const db = require('../../../Handlers/database');
 
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
@@ -14,16 +14,23 @@ module.exports = {
       return message.reply('This command cannot be used in DMs.');
     }
 
+  // -----------------------------------------------------
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     if (!OPENAI_API_KEY) {
       console.warn('🟥・The OPENAI_API_KEY is not set.')
       return;
     };
 
-        const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
-    });
-
+    const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
+    // -----------------------------------------------------
+    const OPENROUTER = process.env.OPENROUTER;
+      if (!OPENROUTER) {
+        console.warn('🟥・OPENROUTER Key is not set!')
+        return;
+      };
+    
+    const checker = new OpenAI({apiKey: OPENROUTER, baseURL: "https://openrouter.ai/api/v1" });
+    // -----------------------------------------------------
 
     const query = args.join(' ');
     if (!query) {
@@ -31,12 +38,6 @@ module.exports = {
     }
 
     const { guild, author, channel } = message;
-
-    console.log(
-      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
-      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} used the ai-search command to search "${query}".`
-    );
 
     const GLOBAL_COOLDOWN_KEY = `${guild.id}.ai_search_global`;
 
@@ -54,8 +55,44 @@ module.exports = {
     // Set cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
+    try {
+      const safetyCheck = await checker.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: 'Detect any NSFW content. Reply EXACTLY with: {"nsfw_content": true/false}. If you are unsure, reply with false.',
+          },
+          {
+            role: "user",
+            content: query,
+          }
+        ],
+        model: "openai/gpt-oss-safeguard-20b",
+     });
+
+      const safetyCheckResult = JSON.parse(safetyCheck.choices[0]?.message?.content || '{}');
+
+      if ( safetyCheckResult.nsfw_content ) {
+        await message.reply("⚠️ Sorry, I can't search for that type of content.")
+        return;
+      }
+    } catch (err) { 
+       if ( safetyCheckResult.nsfw_content ) {
+         await message.reply("⚠️ Sorry, I can't search for that type of content.")
+         return;
+       }
+     }
+
+    console.log(`[🛡️] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Passed The Saftey Checks`);
+
     // ⏳ Processing message
     const loadingMsg = await message.reply('🔍 Searching with AI, please wait...');
+
+    console.log(
+      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `${guild.name} ${guild.id} ${author.username} used the ai-search command to search "${query}".`
+    );
 
     try {
       const completion = await openai.chat.completions.create({
@@ -63,7 +100,7 @@ module.exports = {
         messages: [
           {
             role: 'system',
-            content: 'You are an AI assistant that searches and summarizes relevant results clearly.'
+            content: 'You are an AI assistant that searches and summarizes relevant results clearly wtih sweet short answers.'
           },
           { role: 'user', content: query }
         ],
@@ -86,6 +123,12 @@ module.exports = {
       for (let i = 1; i < chunks.length; i++) {
         await channel.send(chunks[i]);
       }
+
+      console.log(
+      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `${guild.name} ${guild.id} ${author.username} got the reply in ${channel.name} ${channel.id}`
+    );
 
     } catch (err) {
       console.error(err);
