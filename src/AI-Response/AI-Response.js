@@ -185,14 +185,29 @@ async function handleAIMessage(client, message) {
     });
 
     const reply = response.choices[0].message.content;
-    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) OPENROUTER Response: ${reply}`);
-    message.reply(reply);
 
-    memory.push({ role: 'assistant', content: reply });
+    let memoryreply = reply;
+
+    const escapedUsername = message.author.tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    if (memoryreply.includes(escapedUsername)) {
+        const encryptedUsername = encrypt(message.author.tag);
+
+        memoryreply = memoryreply.replaceAll(
+            escapedUsername,
+            encryptedUsername
+        );
+    }
+
+    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) OPENROUTER Response: ${reply}`);
+
+    message.reply(reply);
+    
+    memory.push({ role: 'assistant', content: memoryreply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
     console.log(`[📁] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Conversation has been successfully logged!`);
+    
   } catch (error) {
-    if (error.code === 50006) return;
     console.error('❌ Error talking to OPENROUTER:', error);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
   }
