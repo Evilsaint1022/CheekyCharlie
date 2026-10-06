@@ -52,6 +52,12 @@ module.exports = {
       );
     }
 
+    console.log(
+      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+      `${guild.name} ${guild.id} ${author.username} used the ai-search command to search "${query}".`
+    );
+
     // Set cooldown
     await db.cooldowns.set(GLOBAL_COOLDOWN_KEY, now);
 
@@ -74,10 +80,12 @@ module.exports = {
 
       if ( safetyCheckResult.nsfw_content ) {
         await message.reply("⚠️ Sorry, I can't search for that type of content.")
+        console.log(`[🛡️] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag}'s Query Has Failed The Saftey Check`);
         return;
       }
     } catch (err) { 
        if ( safetyCheckResult.nsfw_content ) {
+        console.log(`[🛡️] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag}'s Query Has Failed The Saftey Check`);
          await message.reply("⚠️ Sorry, I can't search for that type of content.")
          return;
        }
@@ -87,12 +95,6 @@ module.exports = {
 
     // ⏳ Processing message
     const loadingMsg = await message.reply('🔍 Searching with AI, please wait...');
-
-    console.log(
-      `[🌿] [AI-SEARCH] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
-      `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-      `${guild.name} ${guild.id} ${author.username} used the ai-search command to search "${query}".`
-    );
 
     try {
       const completion = await openai.chat.completions.create({

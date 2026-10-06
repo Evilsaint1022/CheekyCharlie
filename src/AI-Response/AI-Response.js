@@ -72,7 +72,7 @@ async function handleAIMessage(client, message) {
     const encryptedUsername = encrypt(message.author.tag);
     await message.channel.sendTyping();
 
-    console.log(`[🧠] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Message from ${message.author.tag} (Encrypted: ${encryptedUsername}): ${userContent}`);
+    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Sending message to Pollinations: ${userContent}`);
 
     try {
       const safetyCheck = await openai.chat.completions.create({
@@ -93,16 +93,18 @@ async function handleAIMessage(client, message) {
 
       if ( safetyCheckResult.nsfw_content ) {
         await message.reply("⚠️ Sorry, I can't generate that type of content.")
+        console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
         return;
       }
     } catch (err) { 
        if ( safetyCheckResult.nsfw_content ) {
+        console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
          await message.reply("⚠️ Sorry, I can't generate that type of content.")
          return;
        }
      }
 
-     console.log(`[🛡️] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Passed The Saftey Checks`);
+     console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Passed The Saftey Check`);
 
     const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
 
@@ -136,15 +138,13 @@ async function handleAIMessage(client, message) {
 
     await message.channel.send({ files: [attachment] });
 
-    console.log(`[🧠] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Pollination's Replied with a image in ${message.channel.name} ${message.channel.id}`);
+    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Pollination's Replied with a image in ${message.channel.name} ${message.channel.id}`);
 
     return;
 
   }
 
   const encryptedUsername = encrypt(message.author.tag);
-
-  console.log(`[🧠] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Message from ${message.author.tag} (Encrypted: ${encryptedUsername}): ${userContent}`);
 
   try {
     await message.channel.sendTyping();
@@ -173,7 +173,7 @@ async function handleAIMessage(client, message) {
 
     const systemPrompt = systemPrompt_raw.replaceAll("{USER_INFO}", userInfo).replaceAll("{NZ_DATE_TIME}", nzTime)
 
-    console.log(`[🧠] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Sending message to OPENROUTER...`);
+    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Sending message to OPENROUTER: ${userContent}`);
     const response = await openai.chat.completions.create({
 
       messages: [
@@ -185,12 +185,12 @@ async function handleAIMessage(client, message) {
     });
 
     const reply = response.choices[0].message.content;
-    console.log(`[🧠] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] OPENROUTER Reply: ${reply}`);
+    console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) OPENROUTER Response: ${reply}`);
     message.reply(reply);
 
     memory.push({ role: 'assistant', content: reply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
-    console.log(`[📁] [CheekyCharlie] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] Chat has been logged!`);
+    console.log(`[📁] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Conversation has been successfully logged!`);
   } catch (err) {
     console.error('❌ Error talking to OPENROUTER:', err);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
