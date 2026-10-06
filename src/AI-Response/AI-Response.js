@@ -96,7 +96,7 @@ async function handleAIMessage(client, message) {
         console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
         return;
       }
-    } catch (err) { 
+    } catch (error) { 
        if ( safetyCheckResult.nsfw_content ) {
         console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
          await message.reply("⚠️ Sorry, I can't generate that type of content.")
@@ -191,8 +191,9 @@ async function handleAIMessage(client, message) {
     memory.push({ role: 'assistant', content: reply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
     console.log(`[📁] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Conversation has been successfully logged!`);
-  } catch (err) {
-    console.error('❌ Error talking to OPENROUTER:', err);
+  } catch (error) {
+    if (error.code === 50006) return;
+    console.error('❌ Error talking to OPENROUTER:', error);
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
   }
 }
