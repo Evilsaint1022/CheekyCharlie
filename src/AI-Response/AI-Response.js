@@ -215,7 +215,7 @@ async function handleAIMessage(client, message) {
         ...memory,
         { role: 'system', content: systemPrompt },
       ],
-      model: "aion-labs/aion-3.5-miniq"
+      model: "aion-labs/aion-3.5-mini"
 
     });
 
