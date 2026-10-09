@@ -3,7 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const OpenAI = require("openai");
 const db = require('../Handlers/database');
-const { Client, Message, AttachmentBuilder } = require('discord.js');
+const { Client, Message, AttachmentBuilder, Collector } = require('discord.js');
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(process.env.ENCRYPT_KEY).digest();
 const IV = Buffer.alloc(16, 0);
@@ -59,6 +59,22 @@ async function handleAIMessage(client, message) {
   if (message.author.bot) return;
   if (!message.mentions.has(client.user)) return;
 
+  // ----------------------------------------------------------------
+  // Checks if User Has already used the ai-response.
+  const userId = message.author.id
+  const usedalreadycheck = await db.lastclaim.get(`${userId}.airesponse`)
+
+  if (usedalreadycheck === true) {
+    const reply = await message.reply(`Sorry but you are already waiting for a reply.`);
+
+    setTimeout(async () => {
+      if (reply.deletable) await reply.delete();
+      if (message.deletable) await message.delete();
+    }, 5000)
+    return;
+  };
+  // ----------------------------------------------------------------
+
   const ignoredChannels = await db.settings.get(`${message.guild.id}.ignoredAIChannels`) || [];
 
   if ( ignoredChannels.includes(message.channel.id) ) return;
@@ -70,7 +86,9 @@ async function handleAIMessage(client, message) {
 
   if (userContent.toLowerCase().startsWith("imagine") || userContent.toLowerCase().startsWith("create an image") || userContent.toLowerCase().startsWith("create a image") || userContent.toLowerCase().startsWith("generate a image") || userContent.toLowerCase().startsWith("generate an image")) {
     const encryptedUsername = encrypt(message.author.tag);
+
     await message.channel.sendTyping();
+     await db.lastclaim.set(`${userId}.airesponse`, true)
 
     console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Sending message to Pollinations: ${userContent}`);
 
@@ -136,6 +154,9 @@ async function handleAIMessage(client, message) {
     const imageBuffer = Buffer.from(base64Image, 'base64');
     const attachment = new AttachmentBuilder(imageBuffer, { name: 'image.png' });
 
+    // Sets the lastclaim to false so that the user can use the ai-response again.
+    await db.lastclaim.set(`${userId}.airesponse`, false)
+
     await message.channel.send({ files: [attachment] });
 
     console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Pollination's Replied with a image in ${message.channel.name} ${message.channel.id}`);
@@ -148,14 +169,14 @@ async function handleAIMessage(client, message) {
 
   try {
     await message.channel.sendTyping();
+    await db.lastclaim.set(`${userId}.airesponse`, true)
 
     let memory = [];
     const chatlog = await db.ai_history.get(encryptedUsername + ".history");
 
     if (chatlog && Array.isArray(chatlog)) {
       if (chatlog.length > 22) {
-        chatlog.shift();
-        chatlog.shift();
+          chatlog = chatlog.slice(-20);
       }
       memory = chatlog;
     }
@@ -187,19 +208,22 @@ async function handleAIMessage(client, message) {
     const reply = response.choices[0].message.content;
 
     let memoryreply = reply;
-
+    
     const escapedUsername = message.author.tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const usernameRegex = new RegExp(escapedUsername, 'gi');
 
-    if (memoryreply.includes(escapedUsername)) {
+    if (usernameRegex.test(memoryreply)) {
         const encryptedUsername = encrypt(message.author.tag);
 
-        memoryreply = memoryreply.replaceAll(
-            escapedUsername,
-            encryptedUsername
+        memoryreply = memoryreply.replace(
+            usernameRegex, encryptedUsername
         );
     }
 
     console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) OPENROUTER Response: ${reply}`);
+
+    // Sets the lastclaim to false so that the user can use the ai-response again.
+    await db.lastclaim.set(`${userId}.airesponse`, false)
 
     message.reply(reply);
     
@@ -209,6 +233,7 @@ async function handleAIMessage(client, message) {
     
   } catch (error) {
     console.error('❌ Error talking to OPENROUTER:', error);
+    db.lastclaim.set(`${userId}.airesponse`, false)
     message.reply('⚠️ Sorry, I had trouble thinking. Try again later.');
   }
 }
