@@ -75,7 +75,7 @@ async function sendQuestionOfTheDay(client) {
       const response = await withTimeout(
         openai.chat.completions.create({
           messages: [{ role: 'system', content: prompt }],
-          model: "anthropic/claude-sonnet-5",
+          model: "anthropic/claude-haiku-5.5",
           temperature: 1.5
         }),
         API_TIMEOUT_MS,

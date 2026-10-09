@@ -139,7 +139,7 @@ async function checkAIDeadchat(client) {
                         messages: [
                             { role: 'system', content: finalPrompt },
                         ],
-                        model: "anthropic/claude-sonnet-5",
+                        model: "anthropic/claude-haiku-5.5",
                         temperature: 1.5,
                     }),
                     API_TIMEOUT_MS,

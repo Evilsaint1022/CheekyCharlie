@@ -90,7 +90,7 @@ async function generateEventText(isPositive) {
     try {
         const response = await stonks.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
-            model: 'anthropic/claude-sonnet-5',
+            model: 'anthropic/claude-haiku-5.5',
             temperature: 1.1,
             max_tokens: 150
         });

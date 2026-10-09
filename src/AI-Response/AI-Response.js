@@ -92,37 +92,51 @@ async function handleAIMessage(client, message) {
 
     console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Sending message to Pollinations: ${userContent}`);
 
+    // NSFW check through the OpenRouter Decisions API (typed answer, no JSON parsing of chat output).
+    // `noul` is the probability (0-1) that the answer is "true".
     try {
-      const safetyCheck = await openai.chat.completions.create({
-        messages: [
-          {
-            role: "system",
-            content: 'Detect any NSFW content. Reply EXACTLY with: {"nsfw_content": true/false}. If you are unsure, reply with false.',
-          },
-          {
-            role: "user",
-            content: userContent,
+      const decisionResponse = await fetch("https://openrouter.ai/api/alpha/decisions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "inception/mercury-decide",
+          state: userContent,
+          questions: {
+            nsfw_content: {
+              type: "noul",
+              instructions: "Does this image-generation prompt request NSFW content (nudity, sexual content, explicit gore)? If you are unsure, answer false.",
+              criteria: {
+                true: "Requests nudity, sexual content, or explicit gore",
+                false: "Safe, or unclear"
+              }
+            }
           }
-        ],
-        model: "openai/gpt-oss-safeguard-20b",
-     });
+        })
+      });
 
-      const safetyCheckResult = JSON.parse(safetyCheck.choices[0]?.message?.content || '{}');
+      if (!decisionResponse.ok) throw new Error(`Decisions API returned HTTP ${decisionResponse.status}`);
 
-      if ( safetyCheckResult.nsfw_content ) {
+      const { answers } = await decisionResponse.json();
+      const nsfwProbability = answers.nsfw_content.noul;
+
+      if (nsfwProbability > 0.5) {
+        await db.lastclaim.set(`${userId}.airesponse`, false)
         await message.reply("⚠️ Sorry, I can't generate that type of content.")
-        console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
+        console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Safety Check (nsfw: ${nsfwProbability.toFixed(4)})`);
         return;
       }
-    } catch (error) { 
-       if ( safetyCheckResult.nsfw_content ) {
-        console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Failed The Saftey Check`);
-         await message.reply("⚠️ Sorry, I can't generate that type of content.")
-         return;
-       }
-     }
 
-     console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Passed The Saftey Check`);
+      console.log(`[🛡️] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Query Has Passed The Safety Check (nsfw: ${nsfwProbability.toFixed(4)})`);
+    } catch (error) {
+      // Fail closed: if the check can't run, don't generate the image.
+      console.error('❌ Error running the NSFW safety check:', error);
+      await db.lastclaim.set(`${userId}.airesponse`, false)
+      await message.reply("⚠️ Sorry, I couldn't verify that prompt right now. Try again later.")
+      return;
+    }
 
     const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
 
@@ -201,7 +215,7 @@ async function handleAIMessage(client, message) {
         ...memory,
         { role: 'system', content: systemPrompt },
       ],
-      model: "aion-labs/aion-3.0-mini"
+      model: "aion-labs/aion-3.5-miniq"
 
     });
 
