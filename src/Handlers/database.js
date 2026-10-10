@@ -10,6 +10,7 @@ const db = {
     commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
     bankInterest: new DotDB("./src/Utilities/Storage_Static/Bank-Interest/bank-interest.json"),
+    qotdpacks: new DotDB("./src/Utilities/Storage_Static/Qotd/qotdpacks.json"),
     // -----------------------------------------------------------------------------------------
     
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
@@ -46,7 +47,7 @@ const db = {
     giveaway_participants: new DotDB("./src/Utilities/Storage/Giveaways/participants.json"),
     giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json"),
     specials: new DotDB("./src/Utilities/Storage/Settings/Specials/Specials.json"),
-    qotd: new DotDB("./src/Utilities/Storage/Settings/Qotd/lastqotd.json"),
+    lastqotd: new DotDB("./src/Utilities/Storage/Settings/Qotd/lastqotd.json"),
     slapgifs: new DotDB("./src/Utilities/Storage/Fallback/slapgifs.json"),
     kissgifs: new DotDB("./src/Utilities/Storage/Fallback/kissgifs.json"),
     kickgifs: new DotDB("./src/Utilities/Storage/Fallback/kickgifs.json"),

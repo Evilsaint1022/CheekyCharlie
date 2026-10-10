@@ -4,6 +4,9 @@ const db = require("../../Handlers/database");
 const { Client } = require("discord.js");
 const OpenAI = require("openai");
 
+// Dev Tesing Timer:
+// const CRON_SCHEDULE = "*/1 * * * *"; // 1 minute timer
+
 // Run daily at 7AM Pacific/Auckland
 const CRON_SCHEDULE = "0 7 * * *";
 
@@ -45,6 +48,7 @@ function withTimeout(promise, ms, label) {
  * Sends the Question of the Day (QOTD) message.
  * @param {Client} client
  */
+
 async function sendQuestionOfTheDay(client) {
 
   if (isRunning) {
@@ -69,12 +73,39 @@ async function sendQuestionOfTheDay(client) {
 
       const now = Date.now();
 
-      const prompt = `You are a creative and it's time for the question of the day. Generate a simple question that will get members chatting. Reply ONLY with a question.`;
+      const qotdhistory = await db.lastqotd.get(`${guild.id}`) || {}; 
+      
+      // Keep the most recent 20 questions in the AI prompt.
+      if (qotdhistory.length > 22) {
+      const qotdhistory = qotdhistory.slice(-20);
+      }
+
+      const prompt = `
+      You are a creative assistant generating a Question of the Day
+      for a Discord server.
+
+      Generate ONE simple, interesting question that encourages
+      members to chat.
+
+      IMPORTANT RULES:
+      - Reply ONLY with a single question.
+      - Do not repeat any question from the previous questions list.
+      - Do not ask a question that is essentially the same as one
+        in the previous questions list.
+      - Choose a different topic or angle if a similar question exists.
+      - Keep the question suitable for a general Discord community.
+
+      Previous questions to avoid:
+      ${JSON.stringify(qotdhistory)}`;
+
       console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} Generating question of the day...`);
 
       const response = await withTimeout(
         openai.chat.completions.create({
-          messages: [{ role: 'system', content: prompt }],
+          
+          messages: [
+          { role: 'system', content: prompt }
+          ],
           model: "anthropic/claude-haiku-5.5",
           temperature: 1.5
         }),
@@ -92,13 +123,15 @@ async function sendQuestionOfTheDay(client) {
         allowedMentions: roleId ? { roles: [roleId] } : { parse: [] }
       });
 
-      const key = `${guild.id}.${nzDate} ${nzTimestamp}`;
+      const key = `${guild.id}.${now}`;
 
-      await db.qotd.set(key, {
-        messageId: sentMessage.id,
-        timestamp: now,
-        question
-      });
+      const currentqotd = await db.lastqotd.get(key) || {};
+
+      currentqotd.messageId = sentMessage.id,
+      currentqotd.timestamp = now,
+      currentqotd.question = question
+
+      await db.lastqotd.set(key, currentqotd);
 
       console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} ${guild.id} Sent new question in ${channel.name} ${channel.id} - ${question}`);
     }
