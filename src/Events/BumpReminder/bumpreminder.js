@@ -108,7 +108,7 @@ module.exports = {
       const bumpuser = message.interaction?.user?.id || message.mentions.users.first()?.id || message.author.id;
 
       const bumped = new EmbedBuilder()
-        .setDescription(`## ***🌿 \`Bump Reminder!\` 🌿***\n🎁 **_You have been gifted ${custom || ferns}\`${rewardAmount.toLocaleString()}\`_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
+        .setDescription(`## ***🌿 \`Bump Reminder!\` 🌿***\n🎁 **_You have been gifted ${custom || ferns}\`${rewardAmount.toLocaleString()}\` ${customname || fernsname}_**\nㅤ\n**_Thank you <@${bumpuser}> for Bumping ❤️_**`)
         .setFooter({ text: `ㅤBumper: #${currentbumpcount}` })
         .setColor(0x207e37)
         .setThumbnail(guild.iconURL())
