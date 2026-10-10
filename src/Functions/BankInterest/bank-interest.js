@@ -108,17 +108,17 @@ async function runDailyBankInterest(client) {
         }
 
         if (!channel) {
-            console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (no log channel configured).`);
+            console.log(`[💰] [Bank Interest] [${guild.name}] Applied interest to ${interestResults.length} user(s) (No Bank-Interest Channel Configured).`);
             continue;
         }
-        const nztimestamp = `\n ***__Bank-Interest TimeStamp:__***\n ***[\`${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n***╰────────────────────────────────╯***`
+        const nztimestamp = `\n***__Bank-Interest TimeStamp:__***\n***[\`${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})} - ${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}\`]***\n${splitter}`
         let embedsToSend = [];
-        let currentDescription = `_ㅤDaily Bank-Interest for ${guild.name}_\n${splitter}\n`;
+        let currentDescription = `**Daily Bank-Interest for ${guild.name}**\n${splitter}\n`;
 
         for (const { userId, username, amount, interest, newBalance } of interestResults) {
 
             const userBlock =
-                `***__${username}:__***\n_${custom || ferns}・\`${amount.toLocaleString()}\`${blank}+\`${interest.toLocaleString()}\`${blank}${custom || ferns}・\`${newBalance.toLocaleString()}\`_\n`;
+                `***__${username}:__***\n_${custom || ferns}\`${amount.toLocaleString()}\`${blank}**+\`${interest.toLocaleString()}\`**${blank}${custom || ferns}\`${newBalance.toLocaleString()}\`_\n`;
 
             // Bank Interest DB Save
             db.bankInterest.set(`${userId}.amount`, amount.toLocaleString())
@@ -135,7 +135,7 @@ async function runDailyBankInterest(client) {
                 currentDescription += userBlock;
             }
 
-            console.log(`[💰] [Bank Interest] ${username}: Old ${amount.toLocaleString()}, +${interest.toLocaleString()}, New ${newBalance.toLocaleString()}`);
+            console.log(`[💰] [Bank Interest] ${username} ${userId}: old:${amount.toLocaleString()}, interest:${interest.toLocaleString()}, new:${newBalance.toLocaleString()}`);
         }
 
         if (currentDescription) {
