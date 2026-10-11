@@ -135,7 +135,7 @@ async function runDailyBankInterest(client) {
                 currentDescription += userBlock;
             }
 
-            console.log(`[💰] [Bank Interest] ${username} ${userId}: old:${amount.toLocaleString()}, interest:${interest.toLocaleString()}, new:${newBalance.toLocaleString()}`);
+            console.log(`[💰] [Bank Interest] ${username} ${userId}: ${amount.toLocaleString()}, +${interest.toLocaleString()}, ${newBalance.toLocaleString()}`);
         }
 
         if (currentDescription) {
@@ -174,6 +174,7 @@ async function runDailyBankInterest(client) {
                     .setTitle(i === 0 ? `***╭───── 💰 \`Daily Bank Interest\` ─────╮***` : null)
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL())
+                    .setFooter({ text: `🌿 Bank of New Zealand` })
 
                 await message.edit({
                     embeds: [embed],
@@ -196,6 +197,7 @@ async function runDailyBankInterest(client) {
                     .setTitle(i === 0 ? `***╭───── 💰 \`Daily Bank Interest\` ─────╮***` : null)
                     .setDescription(embedsToSend[i])
                     .setThumbnail(guild.iconURL())
+                    .setFooter({ text: `🌿 Bank of New Zealand` })
 
                 let message = await channel.send({
                     embeds: [embed],
