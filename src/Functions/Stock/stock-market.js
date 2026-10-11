@@ -742,15 +742,14 @@ async function runStockTick(client) {
 module.exports = async (client) => {
     if (!client) {
         console.warn(
-            '[STOCK MARKET] Client not passed.'
+            '[📈] [STOCK MARKET] Client not passed.'
         );
 
         return;
     }
 
     cron.schedule(
-        CRON_SCHEDULE,
-        () => runStockTick(client),
+        CRON_SCHEDULE, () => runStockTick(client),
         {
             scheduled: true,
             timezone: 'Pacific/Auckland'
@@ -764,19 +763,6 @@ module.exports = async (client) => {
 
     if (client.isReady()) {
         console.log(`[📈] [STOCK MARKET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] Scheduler Started.`);
-
-        runStockTick(client);
-    } else {
-        client.once(
-            'ready',
-            () => {
-                console.log(
-                    `[📈] [STOCK MARKET] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", {timeZone: 'Pacific/Auckland'})}] Scheduler Started.`
-                );
-
-                runStockTick(client);
-            }
-        );
     }
 };
 
