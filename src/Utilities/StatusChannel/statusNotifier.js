@@ -255,12 +255,16 @@ async function sendStatusMessage(client, content, options = {}) {
       }
 
       if (await shouldSkipDuplicateStatusMessage(channelId, content)) {
+        if (process.env.DEV_MODE == "true") {
         statusLog(`${guildName} ${guildId} skipped duplicate status update to ${channelId}: ${content}`);
+        }
         continue;
       }
 
       await channel.send({ embeds: [embed] });
+      if (process.env.DEV_MODE == "true") {
       statusLog(`${guildName} ${guildId} sent status update to ${channelId}: ${content}`);
+      }
     } catch (error) {
       statusLog(`${guildName} ${guildId} failed to send status update to ${channelId}.`, error);
     }
@@ -285,7 +289,9 @@ async function sendEarlyStatusMessage(content, options = {}) {
   for (const { guildId, guildName, channelId } of configuredChannels) {
     try {
       if (await shouldSkipDuplicateStatusMessage(channelId, content)) {
+        if (process.env.DEV_MODE == "true") {
         statusLog(`${guildName} ${guildId} skipped duplicate early status update to ${channelId}: ${content}`);
+        }
         continue;
       }
 
@@ -293,7 +299,9 @@ async function sendEarlyStatusMessage(content, options = {}) {
         body: { embeds: [embed.toJSON()] }
       });
 
+      if (process.env.DEV_MODE == "true") {
       statusLog(`${guildName} ${guildId} sent early status update to ${channelId}: ${content}`);
+      }
     } catch (error) {
       statusLog(`${guildName} ${guildId} failed to send early status update to ${channelId}.`, error);
     }
