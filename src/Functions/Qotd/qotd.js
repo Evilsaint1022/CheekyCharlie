@@ -4,7 +4,7 @@ const db = require("../../Handlers/database");
 const { Client } = require("discord.js");
 
 // Dev Tesing Timer:
-//const CRON_SCHEDULE = "*/1 * * * *"; // 1 minute timer
+// const CRON_SCHEDULE = "*/1 * * * *"; // 1 minute timer
 
 // Run daily at 7AM Pacific/Auckland
 const CRON_SCHEDULE = "0 7 * * *";
@@ -48,7 +48,7 @@ async function sendQuestionOfTheDay(client) {
       const qotdpacks = await db.qotdpacks.get(`Starter_Pack`) || {};
       const qotdhistory = await db.lastqotd.get(`${guild.id}`) || {};
 
-      // Testing the qotdhistory output
+      // Testing the qotdpacks & qotdhistory outputs
       // console.log(qotdpacks);
       // console.log(qotdhistory);
 
@@ -58,12 +58,21 @@ async function sendQuestionOfTheDay(client) {
 
       const QOTDHistory = Object.values(
       qotdhistory.Default || qotdhistory
-      );
+      )
+      .filter(entry => entry && typeof entry.question === 'string')
+      .map(entry => entry.question);
+
+      // Testing the Object Outputs
+      // console.log(questions);
+      // console.log(QOTDHistory);
 
       // Remove questions that have already been asked
       const unusedQuestions = questions.filter(
           question => !QOTDHistory.includes(question)
       );
+
+      // Testing UnusedQuestions Output
+      // console.log(unusedQuestions.length)
 
       if (unusedQuestions.length === 0) {
           console.log(`[❓] [QOTD] [${nzDate}] [${nzTimestamp}] ${guild.name} ${guild.id} No unused questions remaining!`);
@@ -92,7 +101,6 @@ async function sendQuestionOfTheDay(client) {
       const currentqotd = await db.lastqotd.get(key) || {};
 
       currentqotd.question = question
-      currentqotd.timestamp = now,
 
       await db.lastqotd.set(key, currentqotd);
 
