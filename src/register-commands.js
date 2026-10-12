@@ -495,8 +495,8 @@ const commands = [
         description: 'Manage staff application questions with an interactive GUI.',
     },
     {
-        name: 'set-deadchat-channel',
-        description: 'Set the channel where deadchat messages will be sent',
+        name: 'setup-aideadchat',
+        description: 'Setup the AI-Deadchat feature',
         options: [
             {
                 name: 'channel',
@@ -504,35 +504,24 @@ const commands = [
                 type: 7,
                 required: true,
             },
-        ],
-    },
-    {
-        name: 'set-deadchat-duration',
-        description: 'Set the duration for Deadchat messages to be sent.',
-        options: [
-            {
-                name: 'duration',
-                description: 'The duration in seconds',
-                type: 4,
-                required: true,
-            },
-        ],
-    },
-    {
-        name: 'set-deadchat-role',
-        description: 'Set the role to to mention in deadchat messages.',
-        options: [
             {
                 name: 'role',
                 description: 'The role to mention.',
                 type: 8,
                 required: true,
             },
-        ],
+            {
+                name: 'duration',
+                description: 'The duration in seconds',
+                type: 4,
+                required: true,
+            },
+
+        ]
     },
     {
-        name: 'toggle-deadchat',
-        description: 'Toggle the AI Deadchat messages for the server.',
+        name: 'toggle-aideadchat',
+        description: 'Toggle the AI-Deadchat messages for the server.',
     },
     {
         name: 'set-confession-channel',
