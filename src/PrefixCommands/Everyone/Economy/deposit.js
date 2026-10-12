@@ -52,27 +52,7 @@ module.exports = {
         const customname = await db.settings.get(`${guild.id}.currencyname`)
         const fernsname = await db.default.get("Default.name");
 
-        const safeUsername = author.username.replace(/\./g, '_');
-
-        // Old key format
-        const oldKey = `${safeUsername}_${author.id}`;
         const newKey = `${author.id}`;
-
-        // -----------------------------------
-        // 🔍 DB MIGRATION — Move Old → New
-        // -----------------------------------
-        const oldWalletObj = await db.wallet.get(oldKey);
-        const oldBankObj = await db.bank.get(oldKey);
-
-        if (oldWalletObj !== undefined) {
-            await db.wallet.set(newKey, oldWalletObj);
-            await db.wallet.delete(oldKey);
-        }
-
-        if (oldBankObj !== undefined) {
-            await db.bank.set(newKey, oldBankObj);
-            await db.bank.delete(oldKey);
-        }
 
         // -----------------------------------
         // Always use ID-only key now
@@ -84,6 +64,10 @@ module.exports = {
         // !deposit 100
         // !deposit all
         let depositAmount;
+
+        if (!args[0]) {
+            return message.reply(`You need to enter a amount!`)
+        }
 
         const amount = args[0].toLowerCase();
 
