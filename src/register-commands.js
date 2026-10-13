@@ -525,7 +525,7 @@ const commands = [
     },
     {
         name: 'reset-aideadchat',
-        description: 'Resets the AI-Deadchat'
+        description: 'Resets the AI-Deadchat',
     },
     {
         name: 'set-confession-channel',
