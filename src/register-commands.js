@@ -496,7 +496,7 @@ const commands = [
     },
     {
         name: 'setup-aideadchat',
-        description: 'Setup the AI-Deadchat feature',
+        description: 'Setup the AI-Deadchat feature for the server.',
         options: [
             {
                 name: 'channel',
@@ -525,7 +525,7 @@ const commands = [
     },
     {
         name: 'reset-aideadchat',
-        description: 'Resets the AI-Deadchat',
+        description: 'Resets the AI-Deadchat for the server.',
     },
     {
         name: 'set-confession-channel',

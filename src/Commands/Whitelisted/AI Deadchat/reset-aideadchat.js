@@ -5,7 +5,7 @@ const db = require("../../../Handlers/database");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('reset-aideadchat')
-        .setDescription('Resets the AI-Deadchat'),
+        .setDescription('Resets the AI-Deadchat for the server.'),
 
     async execute(interaction) {
 
@@ -28,6 +28,15 @@ module.exports = {
         }
 
         const currentSettings = await db.settings.get(`${guildId}`) || {};
+
+        if (!currentSettings.deadchatDuration && !currentSettings.deadchatChannelId && !currentSettings.deadchatRoleId && !currentSettings.deadchatState ) {
+            interaction.reply({
+                content: `✅ There are no Settings Setup for AI-Deadchat\n-# Try using the /setup-aideadchat command.`,
+                flags: MessageFlags.Ephemeral,
+            })
+                return;
+        }
+
         if (currentSettings.deadchatDuration) {
             delete currentSettings.deadchatDuration
         }

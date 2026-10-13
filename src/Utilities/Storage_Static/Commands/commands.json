@@ -676,20 +676,16 @@
       ],
       "ai_deadchat_setup": [
         {
-          "command": "/set-deadchat-channel",
-          "description": "Sets the AI Deadchat channel to send messages in."
+          "command": "/reset-aideadchat",
+          "description": "Resets the AI-Deadchat for the server."
         },
         {
-          "command": "/set-deadchat-role",
-          "description": "Sets the role to mention in the messages."
-        },
-        {
-          "command": "/set-deadchat-duration",
-          "description": "Sets the time after the chat goes dead before a message is sent."
+          "command": "/setup-aideadchat",
+          "description": "Setup the AI-Deadchat feature for the server."
         },
         {
           "command": "/toggle-deadchat",
-          "description": "Toggles AI Deadchat on or off."
+          "description": "Toggle the AI-Deadchat messages for the server."
         }
       ],
       "confession_setup": [

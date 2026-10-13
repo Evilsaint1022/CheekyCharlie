@@ -5,7 +5,7 @@ const db = require('../../../Handlers/database');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('setup-aideadchat')
-        .setDescription('Setup the AI-Deadchat feature')
+        .setDescription('Setup the AI-Deadchat feature for the server.')
         .addChannelOption(option =>
                 option.setName('channel')
                 .setDescription('The channel to send deadchat messages')

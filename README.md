@@ -422,11 +422,10 @@ This is the message. Supports any Discord-native **markdown**.
 - `/set-staff-app-channel` - The channel where new applications will go.
 - `/remove-staff-app-channel` - Remove the channel. (Disables staff apps)
 
-**🌿・<ins>AI Deadchat Setup</ins>**
-- `/set-deadchat-channel` - Set the AI Deadchat channel to send messages in.
-- `/set-deadchat-role` - The role to mention in the messages.
-- `/set-deadchat-duration` - The time after the chat goes dead to the message being sent.
-- `/toggle-deadchat` - Toggle the AI deadchat on or off.
+**🌿・<ins>AI-Deadchat Setup</ins>**
+- `/reset-aideadchat` - Resets the AI-Deadchat for the server.
+- `/setup-aideadchat` - Setup AI-Deadchat's channel, role and duration.
+- `/toggle-deadchat` - Toggle the AI-Deadchat messages for the server.
 
 **🌿・<ins>Confession Setup</ins>**
 - `/set-confession-channel` - Set the confession channel where confessions will go.
