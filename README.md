@@ -48,7 +48,6 @@ These are the `API Keys` that we use in this project.
 🌿・Leaderboards  
 🌿・Level System  
 🌿・Level Roles  
-🌿・Roleplay  
 🌿・GhostPing  
 🌿・Confessions  
 🌿・AI Deadchat  
@@ -56,6 +55,7 @@ These are the `API Keys` that we use in this project.
 🌿・Bump-Reminder  
 🌿・Giveaway System  
 🌿・Custom Starboard  
+🌿・Simpsons-Roleplay  
 🌿・Color Of The Week  
 🌿・Custom AI Response  
 🌿・Staff Applications  
@@ -371,7 +371,7 @@ This is the message. Supports any Discord-native **markdown**.
 - `/set-nsfw-logs-channel` - sets a nsfw logs channel.
 - `/remove-nsfw-logs-channel` - removes the set nsfw logs channel.
 
-**🌿・<ins>AI Response Setup</ins>**
+**🌿・<ins>AI-Response Setup</ins>**
 - `/set-ignored-ai-channel` - Add a channel or category to the deactivated AI channels.
 - `/remove-ignored-ai-channel` - Remove a channel or category from the deactivated AI channels.
 
