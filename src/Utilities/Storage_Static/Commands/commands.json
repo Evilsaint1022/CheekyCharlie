@@ -684,7 +684,7 @@
           "description": "Setup the AI-Deadchat feature for the server."
         },
         {
-          "command": "/toggle-deadchat",
+          "command": "/toggle-aideadchat",
           "description": "Toggle the AI-Deadchat messages for the server."
         }
       ],
