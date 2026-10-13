@@ -27,7 +27,7 @@ module.exports = {
             return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
         }
 
-        const currentState = await db.settings.get(`$${guildId}.deadchatState`);
+        const currentState = await db.settings.get(`${guildId}.deadchatState`);
 
         console.log(`[⭐] [TOGGLE-AIDEADCHAT] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the toggle-aideadchat command.`);
 

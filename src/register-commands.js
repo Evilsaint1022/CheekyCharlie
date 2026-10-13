@@ -524,6 +524,10 @@ const commands = [
         description: 'Toggle the AI-Deadchat messages for the server.',
     },
     {
+        name: 'reset-aideadchat',
+        description: 'Resets the AI-Deadchat'
+    },
+    {
         name: 'set-confession-channel',
         description: 'Set the channel where confessions will be sent',
         options: [
