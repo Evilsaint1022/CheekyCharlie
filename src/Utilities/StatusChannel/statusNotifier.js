@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 const { REST, Routes, EmbedBuilder } = require('discord.js');
+const { keepOriginalColor } = require('../Themes/Halloween/halloween');
 const { owner, repo } = require('../../Functions/Github/github-state');
 
 const STATUS_EMBED_COLOR = 0x2b9348;
@@ -238,7 +239,7 @@ async function buildStatusEmbed(content, options = {}) {
     }
   }
 
-  return embed;
+  return keepOriginalColor(embed);
 }
 
 async function sendStatusMessage(client, content, options = {}) {

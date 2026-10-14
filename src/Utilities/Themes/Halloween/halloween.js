@@ -43,10 +43,19 @@ function swap(text) {
     });
 }
 
+// Embeds registered here (status messages, stock market) keep their original colour; only their 🌿 emojis are themed
+const KEEP_COLOR = new WeakSet();
+
+function keepOriginalColor(embed) {
+    if (embed && typeof embed === 'object') KEEP_COLOR.add(embed);
+    return embed;
+}
+
 function themeEmbed(embed) {
     if (!embed) return embed;
+    const keepColor = KEEP_COLOR.has(embed);
     const data = typeof embed.toJSON === 'function' ? embed.toJSON() : { ...embed };
-    data.color = COLOR;
+    if (!keepColor) data.color = COLOR;
     data.title = swap(data.title);
     data.description = swap(data.description);
     if (data.footer) data.footer = { ...data.footer, text: swap(data.footer.text) };
@@ -143,4 +152,4 @@ function install() {
 function themeInteraction() {}
 function themeMessage() {}
 
-module.exports = { install, isActive, getMode, setMode, isOctober, themeInteraction, themeMessage, themeOptions, MODES };
+module.exports = { install, isActive, getMode, setMode, isOctober, themeInteraction, themeMessage, themeOptions, keepOriginalColor, MODES };
