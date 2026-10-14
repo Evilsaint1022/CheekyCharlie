@@ -1,3 +1,4 @@
+const { keepOriginalColor } = require('../../Utilities/Themes/Halloween/halloween');
 const cron = require('node-cron');
 const {
     EmbedBuilder,
@@ -552,7 +553,7 @@ async function runStockTick(client) {
                 /*
                  * Main stock-market embed.
                  */
-                const embed =
+                const embed = keepOriginalColor(
                     new EmbedBuilder()
                         .setColor(embedColor)
                         .setDescription(
@@ -578,7 +579,8 @@ async function runStockTick(client) {
                         .setFooter({
                             text: `🌿 FernCoin Exchange`
                         })
-                        .setTimestamp();
+                        .setTimestamp()
+                        );
 
                 /*
                  * FernCoin itself is the traded asset.
@@ -626,7 +628,7 @@ async function runStockTick(client) {
                 let eventEmbed = null;
 
                 if (event) {
-                    eventEmbed =
+                    eventEmbed = keepOriginalColor(
                         new EmbedBuilder()
                             .setColor(eventColor)
                             .setTitle(
@@ -645,7 +647,8 @@ async function runStockTick(client) {
                             .setFooter({
                                 text: `🌿 FernCoin Exchange · Market Event`
                             })
-                            .setTimestamp();
+                            .setTimestamp()
+                            );
                 }
 
                 /*
