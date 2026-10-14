@@ -1,5 +1,5 @@
 const db = require('../../Handlers/database');
-const halloween = require('../../Utilities/Halloween/halloween');
+const halloween = require('../../Utilities/Themes/Halloween/halloween');
 
 module.exports = {
     name: "halloween",

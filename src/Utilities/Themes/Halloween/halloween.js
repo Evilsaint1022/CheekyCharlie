@@ -2,14 +2,12 @@
 // Halloween theme for every command response: embeds get spooky colours and their 🌿 become 🎃 in embeds, buttons and dropdowns (except currency). Modes: "auto" (Oct 1st - Oct 31st, NZ time), "on" (forced) and "off" (forced).
 // Command logic and formats are untouched, only colours / 🌿 emojis are changed.
 
-const db = require('../../Handlers/database');
+const db = require('../../../Handlers/database');
 
-const COLORS = [0xFF7518, 0x6A0DAD, 0x1B1B1B]; // pumpkin orange, witch purple, midnight black
+const COLOR = 0xFF7518; // pumpkin orange
 const PUMPKIN = '🎃';
 const FERN = '🌿';
 const MODES = ['auto', 'on', 'off'];
-
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 function isOctober() {
     const month = new Intl.DateTimeFormat('en-NZ', { timeZone: 'Pacific/Auckland', month: 'numeric' }).format(new Date());
@@ -48,7 +46,7 @@ function swap(text) {
 function themeEmbed(embed) {
     if (!embed) return embed;
     const data = typeof embed.toJSON === 'function' ? embed.toJSON() : { ...embed };
-    data.color = pick(COLORS.slice(0, 2));
+    data.color = COLOR;
     data.title = swap(data.title);
     data.description = swap(data.description);
     if (data.footer) data.footer = { ...data.footer, text: swap(data.footer.text) };
@@ -80,7 +78,7 @@ function themeComponent(component) {
         else if (['components', 'options', 'accessory'].includes(key)) themed[key] = themeComponent(value);
         else themed[key] = value;
     }
-    if (themed.type === 17 && themed.accent_color !== undefined) themed.accent_color = pick(COLORS.slice(0, 2)); // Container
+    if (themed.type === 17 && themed.accent_color !== undefined) themed.accent_color = COLOR; // Container
     return themed;
 }
 

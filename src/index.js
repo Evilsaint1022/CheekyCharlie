@@ -13,7 +13,7 @@ const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
-const halloween = require('./Utilities/Halloween/halloween');
+const halloween = require('./Utilities/Themes/Halloween/halloween');
 
 // Database -------------------------------------------------------------------------------------------------------------------------
 const db = require('../src/Handlers/database');
