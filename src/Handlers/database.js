@@ -65,7 +65,8 @@ const db = {
     lives: new DotDB("./src/Utilities/Storage/Settings/Lives/lives.json"),
     workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json"),
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
-    stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json")
+    stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json"),
+    halloween: new DotDB("./src/Utilities/Storage/Settings/Halloween/halloween.json")
 }
 
 module.exports = db;

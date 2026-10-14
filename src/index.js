@@ -13,6 +13,7 @@ const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
+const halloween = require('./Utilities/Halloween/halloween');
 
 // Database -------------------------------------------------------------------------------------------------------------------------
 const db = require('../src/Handlers/database');
@@ -197,6 +198,8 @@ client.on('interactionCreate', async interaction => {
     const command = client.commands.get(interaction.commandName);
     if (!command) return
 
+    halloween.themeInteraction(interaction); // 🎃 Halloween theme (auto Oct 1-31 / owner toggle)
+
     try {
         await command.execute(interaction);
     } catch (error) {
@@ -249,6 +252,8 @@ client.on("messageCreate", async (message) => {
     client.prefixCommands.find(cmd => cmd.aliases?.includes(commandName));
 
   if (!command) return;
+
+  halloween.themeMessage(message); // 🎃 Halloween theme (auto Oct 1-31 / owner toggle)
 
   try {
     await command.execute(message, args, client);
