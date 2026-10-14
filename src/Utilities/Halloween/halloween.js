@@ -91,6 +91,9 @@ function themeComponent(component) {
 
 function themeOptions(options) {
     if (!options || typeof options !== 'object' || Array.isArray(options)) return options;
+    // Only plain option objects can be themed (discord.js passes MessagePayload instances from message.reply into channel.send)
+    const proto = Object.getPrototypeOf(options);
+    if (proto !== Object.prototype && proto !== null) return options;
     // Components V2 messages can't contain embeds
     if (options.flags !== undefined && options.flags !== null && (Number(options.flags) & COMPONENTS_V2)) return options;
     const themed = { ...options };
