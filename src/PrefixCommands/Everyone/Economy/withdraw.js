@@ -47,7 +47,7 @@ module.exports = {
 
         const space = 'ㅤ';
 
-        const date = new Date().toLocaleDateString('en-GB', {
+        const date = new Date().toLocaleDateString('en-NZ', {
         day: '2-digit',
         month: '2-digit'
         });
