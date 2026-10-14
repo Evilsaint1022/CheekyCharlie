@@ -175,6 +175,7 @@ These are the current CheekyCharlie commands.
 🌿・[?invitebot](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/invitebot.js) - Gets the invite link for `cheekycharlie`.  
 🌿・[?leaveguild](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/leaveguild.js) - Removes `cheekycharlie` from a server.  
 🌿・[?last-deployment](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/last-deployment.js) - Views when `cheekycharlie` was last restarted.  
+🌿・[?halloween](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/src/PrefixCommands/Owners/halloween.js) - Toggles `cheekycharlie`'s Halloween theme. 
 </details>
 
 <details><summary> <ins><strong>Everyone Prefix Commands</strong></ins>  
