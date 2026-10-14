@@ -1,13 +1,12 @@
 // Halloween.js ---------------------------------------------------------------------------------------------------------------------
-// Halloween theme for every command response: embeds get spooky colours and their 🌿 become 🎃 (except currency). Modes: "auto" (Oct 1st - Oct 31st, NZ time), "on" (forced) and "off" (forced).
-// Command logic and formats are untouched, only embed colours / 🌿 emojis are changed.
+// Halloween theme for every command response: embeds get spooky colours and their 🌿 become 🎃 in embeds, buttons and dropdowns (except currency). Modes: "auto" (Oct 1st - Oct 31st, NZ time), "on" (forced) and "off" (forced).
+// Command logic and formats are untouched, only colours / 🌿 emojis are changed.
 
 const db = require('../../Handlers/database');
 
 const COLORS = [0xFF7518, 0x6A0DAD, 0x1B1B1B]; // pumpkin orange, witch purple, midnight black
 const PUMPKIN = '🎃';
-// 🌿 is swapped for 🎃 except when it's acting as currency (next to / right after a number, e.g. "🌿 1,000" or "50 🌿")
-const FERN = /(?<!\d[\s`*_~,.]*)🌿(?![\s`*_~]*[\d$])/gu;
+const FERN = '🌿';
 const COMPONENTS_V2 = 1 << 15;
 const MODES = ['auto', 'on', 'off'];
 
@@ -36,7 +35,18 @@ async function isActive() {
 
 // Theming helpers ------------------------------------------------------------------------------------------------------------------
 
-const swap = (text) => (typeof text === 'string' ? text.replace(FERN, PUMPKIN) : text);
+// 🌿 is swapped for 🎃 unless it's acting as currency: right before a number ("🌿 1,000", "🌿`50`") or right after one
+// and not attached to a styled word ("50 🌿", "5🌿" are kept, "1 🌿**__Item__**" is decoration and is swapped)
+function swap(text) {
+    if (typeof text !== 'string' || !text.includes(FERN)) return text;
+    return text.replace(/🌿/gu, (match, offset) => {
+        const before = text.slice(0, offset);
+        const after = text.slice(offset + match.length);
+        const beforeNumber = /^[\s`*_~]*[\d$]/u.test(after);
+        const afterNumber = /\d[\s`*_~,.]*$/u.test(before) && !/^[*_~`\p{L}]/u.test(after);
+        return beforeNumber || afterNumber ? match : PUMPKIN;
+    });
+}
 
 function themeEmbed(embed) {
     if (!embed) return embed;
@@ -52,12 +62,41 @@ function themeEmbed(embed) {
     return data;
 }
 
+function themeEmoji(emoji) {
+    if (typeof emoji === 'string') return emoji === FERN ? PUMPKIN : emoji;
+    if (emoji && emoji.name === FERN && !emoji.id) return { ...emoji, name: PUMPKIN };
+    return emoji;
+}
+
+// Themes buttons and select menus (labels, placeholders, option labels / descriptions / emojis)
+function themeComponent(component) {
+    const data = typeof component?.toJSON === 'function' ? component.toJSON() : component;
+    if (!data || typeof data !== 'object') return component;
+    if (Array.isArray(data.components)) return { ...data, components: data.components.map(themeComponent) };
+
+    const themed = { ...data };
+    if (themed.label) themed.label = swap(themed.label);
+    if (themed.placeholder) themed.placeholder = swap(themed.placeholder);
+    if (themed.emoji) themed.emoji = themeEmoji(themed.emoji);
+    if (Array.isArray(themed.options)) {
+        themed.options = themed.options.map(o => ({
+            ...o,
+            label: swap(o.label),
+            description: swap(o.description),
+            emoji: o.emoji ? themeEmoji(o.emoji) : o.emoji
+        }));
+    }
+    return themed;
+}
+
 function themeOptions(options) {
     if (!options || typeof options !== 'object' || Array.isArray(options)) return options;
     // Components V2 messages can't contain embeds
     if (options.flags !== undefined && options.flags !== null && (Number(options.flags) & COMPONENTS_V2)) return options;
-    if (!Array.isArray(options.embeds)) return options;
-    return { ...options, embeds: options.embeds.map(themeEmbed) };
+    const themed = { ...options };
+    if (Array.isArray(themed.embeds)) themed.embeds = themed.embeds.map(themeEmbed);
+    if (Array.isArray(themed.components)) themed.components = themed.components.map(themeComponent);
+    return themed;
 }
 
 // Wraps a method so its first argument is themed while Halloween mode is active
