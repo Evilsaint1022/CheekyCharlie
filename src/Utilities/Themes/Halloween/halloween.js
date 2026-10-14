@@ -1,5 +1,5 @@
 // Halloween.js ---------------------------------------------------------------------------------------------------------------------
-// Halloween theme for every command response: embeds get spooky colours and their 🌿 become 🎃 in embeds, buttons and dropdowns (except currency). Modes: "auto" (Oct 1st - Oct 31st, NZ time), "on" (forced) and "off" (forced).
+// Halloween theme for everything the bot sends (installed globally on discord.js): embeds get spooky colours and their 🌿 become 🎃 in embeds, buttons and dropdowns (except currency). Modes: "auto" (Oct 1st - Oct 31st, NZ time), "on" (forced) and "off" (forced).
 // Command logic and formats are untouched, only colours / 🌿 emojis are changed.
 
 const db = require('../../../Handlers/database');
@@ -95,11 +95,13 @@ function themeOptions(options) {
     return themed;
 }
 
+const PATCHED = Symbol('halloween');
+
 // Wraps a method so its first argument is themed while Halloween mode is active.
-// Messages returned from it get their own edit() / reply() wrapped so later edits stay themed.
 function wrap(target, method) {
     const original = target[method];
     if (typeof original !== 'function') return;
+    if (original[PATCHED]) return;
     target[method] = async function (options, ...rest) {
         let themed = options;
         try {
@@ -107,50 +109,38 @@ function wrap(target, method) {
         } catch (err) {
             console.error('[Halloween] Failed to theme response:', err);
         }
-        const result = await original.call(this, themed, ...rest);
-        themeSentMessage(result);
-        return result;
+        return original.call(this, themed, ...rest);
     };
+    target[method][PATCHED] = true;
 }
 
-const PATCHED = Symbol('halloween');
+// Patches discord.js itself so EVERYTHING the bot sends is themed: commands, buttons, automatic functions (bank interest, stock market,
+// bump reminders, giveaways, QOTD...), event listeners, DMs and edits of old messages. Call once at startup.
+let installed = false;
 
-function themeSentMessage(message) {
-    const msg = message?.resource?.message ?? message;
-    if (!msg || typeof msg.edit !== 'function' || msg[PATCHED]) return;
-    msg[PATCHED] = true;
-    wrap(msg, 'edit');
-    wrap(msg, 'reply');
-}
-
-function themeInteraction(interaction) {
-    ['reply', 'editReply', 'followUp', 'update'].forEach(method => wrap(interaction, method));
-    // Button / dropdown interactions edit the message they came from
-    if (interaction.message) themeSentMessage(interaction.message);
-}
-
-function themeMessage(message) {
-    wrap(message, 'reply');
-    const channel = message.channel;
-    if (channel && typeof channel.send === 'function') {
-        const send = channel.send.bind(channel);
-        const proxy = new Proxy(channel, {
-            get(t, prop) {
-                if (prop === 'send') {
-                    return async (options, ...rest) => {
-                        let themed = options;
-                        try { if (await isActive()) themed = themeOptions(options); } catch { /* ignore */ }
-                        const result = await send(themed, ...rest);
-                        themeSentMessage(result);
-                        return result;
-                    };
-                }
-                const value = Reflect.get(t, prop, t);
-                return typeof value === 'function' ? value.bind(t) : value;
+function install() {
+    if (installed) return;
+    installed = true;
+    const discord = require('discord.js');
+    const targets = {
+        send: new Set(), edit: new Set(), reply: new Set(), editReply: new Set(), followUp: new Set(), update: new Set()
+    };
+    for (const value of Object.values(discord)) {
+        if (typeof value !== 'function' || !value.prototype) continue;
+        for (const method of Object.keys(targets)) {
+            if (Object.prototype.hasOwnProperty.call(value.prototype, method) && typeof value.prototype[method] === 'function') {
+                targets[method].add(value.prototype);
             }
-        });
-        Object.defineProperty(message, 'channel', { value: proxy, configurable: true });
+        }
+    }
+    // Webhooks send/edit through their own classes; keep them out of the interaction wrappers to avoid double theming
+    for (const [method, prototypes] of Object.entries(targets)) {
+        for (const proto of prototypes) wrap(proto, method);
     }
 }
 
-module.exports = { isActive, getMode, setMode, isOctober, themeInteraction, themeMessage, themeOptions, MODES };
+// Kept for backwards compatibility, everything is handled globally by install()
+function themeInteraction() {}
+function themeMessage() {}
+
+module.exports = { install, isActive, getMode, setMode, isOctober, themeInteraction, themeMessage, themeOptions, MODES };
