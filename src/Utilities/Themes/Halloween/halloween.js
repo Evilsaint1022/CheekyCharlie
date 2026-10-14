@@ -43,19 +43,22 @@ function swap(text) {
     });
 }
 
-// Embeds registered here (status messages, stock market) keep their original colour; only their 🌿 emojis are themed
-const KEEP_COLOR = new WeakSet();
+// Embeds marked here (status messages, stock market) keep their original colour; only their 🌿 emojis are themed.
+// The marker is a symbol stored on the embed data: it survives toJSON() / spreads / EmbedBuilder.from() / theming twice,
+// and JSON.stringify drops it so it's never sent to Discord.
+const KEEP_COLOR = Symbol('halloweenKeepColor');
 
 function keepOriginalColor(embed) {
-    if (embed && typeof embed === 'object') KEEP_COLOR.add(embed);
+    if (!embed || typeof embed !== 'object') return embed;
+    const target = embed.data && typeof embed.toJSON === 'function' ? embed.data : embed;
+    target[KEEP_COLOR] = true;
     return embed;
 }
 
 function themeEmbed(embed) {
     if (!embed) return embed;
-    const keepColor = KEEP_COLOR.has(embed);
     const data = typeof embed.toJSON === 'function' ? embed.toJSON() : { ...embed };
-    if (!keepColor) data.color = COLOR;
+    if (!data[KEEP_COLOR]) data.color = COLOR;
     data.title = swap(data.title);
     data.description = swap(data.description);
     if (data.footer) data.footer = { ...data.footer, text: swap(data.footer.text) };
