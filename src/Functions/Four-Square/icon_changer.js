@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const db = require("../../Handlers/database");
 
 // -----------------------------------------------------------------------------------------------------
-// Testing Section:
+// Testing Code Section:
 // const GuildId = "1502175645801906216";
 // const CronTime = "*/1 * * * *"; // Every minute
 // -----------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ async function Icon_Changer(client) {
     if (halloween) try {
         await guild.setIcon(HalloweenIcon);
         await db.settings.set(`${GuildId}.HalloweenUpdated`, true);
-        await db.settings.set(`${GuildId}.DefaultIconUpdated`, false)
+        await db.settings.delete(`${GuildId}.DefaultIconUpdated`, false)
         console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated icon to the Halloween Themed Icon.`);
         return;
      } catch (error) {
@@ -87,7 +87,7 @@ async function Icon_Changer(client) {
     // Else the Default Icon Gets Set.
     if (!events && DefaultIconUpdated == false ) {
         await guild.setIcon(DefaultIcon);
-        await db.settings.set(`${GuildId}.HalloweenUpdated`, false);
+        await db.settings.delete(`${GuildId}.HalloweenUpdated`, false);
         await db.settings.set(`${GuildId}.DefaultIconUpdated`, true);
         console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated icon to the Default Icon.`);
         return;
