@@ -9,7 +9,6 @@ const db = {
     default: new DotDB("./src/Utilities/Storage_Static/Settings/Default/default.json"),
     commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
-    bankInterest: new DotDB("./src/Utilities/Storage_Static/Bank-Interest/bank-interest.json"),
     qotdpacks: new DotDB("./src/Utilities/Storage_Static/Qotd/qotdpacks.json"),
     // -----------------------------------------------------------------------------------------
     
@@ -66,6 +65,7 @@ const db = {
     workers: new DotDB("./src/Utilities/Storage/Economy/Jobs/workers.json"),
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
     stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json"),
+    bankInterest: new DotDB("./src/Utilities/Storage/Bank-Interest/bankinterest.json"),
     halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json")
 }
 
