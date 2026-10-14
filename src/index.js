@@ -14,6 +14,7 @@ const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
 const halloween = require('./Utilities/Themes/Halloween/halloween');
+halloween.install(); // 🎃 Themes everything the bot sends (auto Oct 1-31 / owner toggle)
 
 // Database -------------------------------------------------------------------------------------------------------------------------
 const db = require('../src/Handlers/database');
@@ -192,10 +193,6 @@ console.log(`[${timezone}] Normal NZ Time...`.bold.white);
 
 // Interaction Command Handler --------------------------------------------------------------------------------------------------
 
-// Button / dropdown / modal interactions keep the Halloween theme when they edit a message (must be registered before collectors)
-client.on('interactionCreate', interaction => {
-    if (!interaction.isCommand()) halloween.themeInteraction(interaction);
-});
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
@@ -203,7 +200,6 @@ client.on('interactionCreate', async interaction => {
     const command = client.commands.get(interaction.commandName);
     if (!command) return
 
-    halloween.themeInteraction(interaction); // 🎃 Halloween theme (auto Oct 1-31 / owner toggle)
 
     try {
         await command.execute(interaction);
@@ -258,7 +254,6 @@ client.on("messageCreate", async (message) => {
 
   if (!command) return;
 
-  halloween.themeMessage(message); // 🎃 Halloween theme (auto Oct 1-31 / owner toggle)
 
   try {
     await command.execute(message, args, client);
