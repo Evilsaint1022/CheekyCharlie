@@ -192,6 +192,11 @@ console.log(`[${timezone}] Normal NZ Time...`.bold.white);
 
 // Interaction Command Handler --------------------------------------------------------------------------------------------------
 
+// Button / dropdown / modal interactions keep the Halloween theme when they edit a message (must be registered before collectors)
+client.on('interactionCreate', interaction => {
+    if (!interaction.isCommand()) halloween.themeInteraction(interaction);
+});
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
