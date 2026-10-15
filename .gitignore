@@ -54,6 +54,7 @@
 /src/Utilities/Storage/Economy/Jobs/workers.json
 /src/Utilities/Storage/Economy/Tax/tax.json
 /src/Utilities/Storage/Economy/Stock/stock.json
+/src/Utilities/Storage/Bank-Interest/bankinterest.json
+/src/Utilities/Storage/Settings/Themes/Halloween/halloween.json
 CLAUDE.md
 AGENTS.md
-/src/Utilities/Storage/Settings/Themes/Halloween/halloween.json

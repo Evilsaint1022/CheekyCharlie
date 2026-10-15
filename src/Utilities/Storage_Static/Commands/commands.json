@@ -20,6 +20,10 @@
       {
         "command": "?last-deployment",
         "description": "Views when cheekycharlie was last restarted."
+      },
+      {
+        "command": "?halloween",
+        "description": "Toggles cheekycharlie's Halloween theme."
       }
     ],
     "everyone": {
