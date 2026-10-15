@@ -20,9 +20,11 @@ const DefaultBotIcon = path.join(__dirname, `../../Utilities/CheekyCharlie/Icons
 const HalloweenBotIcon = path.join (__dirname, `../../Utilities/CheekyCharlie/Icons/cheekycharlie_halloween.png`)
 // -----------------------------------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------------------------------
 // CheekyCharlie Banner Fetch
 const DefaultBotBanner = path.join(__dirname, `../../Utilities/CheekyCharlie/Banners/defaultbanner.png`)
 const HalloweenBotBanner = path.join(__dirname, `../../Utilities/CheekyCharlie/Banners/halloweenbanner.png`)
+// -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
 // Support Server Icons Fetch
