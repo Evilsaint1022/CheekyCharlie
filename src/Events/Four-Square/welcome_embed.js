@@ -6,13 +6,17 @@ module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
 
-    // Test Channels & Roles:
+    // -------------------------------------------------------------
+    // Dev Test Channels & Roles:
     // const welcomechannel = '1508362167215194152';
     // const welcomersrole = '1504744371709284423';
+    // -------------------------------------------------------------
 
+    // -------------------------------------------------------------
     // Production Channels & Roles:
     const welcomechannel = '1500763511448539307';
     const welcomersrole = '1501470170026086480';
+    // -------------------------------------------------------------
 
     // Ignore bots ( Sometimes commented out for testing. )
     if (member.user.bot) return;
@@ -31,7 +35,7 @@ module.exports = {
     // Load welcome banner from storage
     const bannerPath = path.join(
       __dirname,
-      '../../Utilities/Cheekycharlie/fsbanner.png'
+      '../../Utilities/Banners/fsbanner.png'
     );
 
     const banner = new AttachmentBuilder(bannerPath, {
@@ -42,7 +46,7 @@ module.exports = {
     const welcomeEmbed = new EmbedBuilder()
       .setTitle(`**Welcome ${member.user.tag} to Four-Square**`)
       .setDescription(
-        `**Check Out**\n` +
+        `### **__Check Out:__**\n` +
         `**🌿・<#1500763626422796288>**\n` +
         `**🌿・<#1500763684375629894>**\n` +
         `**🌿・<id:customize>**\n\n` +

@@ -7,11 +7,16 @@ module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
 
-    // Test Channel:
+    // -------------------------------------------------------------
+    // Dev Testing Section:
     // const channelId = '1508362167215194152';
+    // -------------------------------------------------------------
 
-    // Production Channel ID where the welcome message will be sent
+    // -------------------------------------------------------------
+    // Production Channel ID for the support server.
     const channelId = '1500763626422796288';
+    // -------------------------------------------------------------
+
     const channel = member.guild.channels.cache.get(channelId);
 
     // Makes sure it only sends for the Four-Square Server.
@@ -37,7 +42,7 @@ module.exports = {
 
     try {
       // Load the welcome template and member avatar
-      const templatePath = path.join(__dirname, '../../Utilities/Cheekycharlie/welcome_banner.png');
+      const templatePath = path.join(__dirname, '../../Utilities/Banners/welcome_banner.png');
       const template = await loadImage(templatePath);
       const avatar = await loadImage(member.user.displayAvatarURL({ format: 'png' }));
 
@@ -69,13 +74,13 @@ module.exports = {
       
       // Send the customized welcome message with the image attachment
       await channel.send({
-        content: `**🌿Kia ora <@${member.id}>, Welcome to the New Zealand family!**\n` +
-                 `*Welcome to the Four-Square Server.*\n` +
+        content: `**🌿 Kia ora <@${member.id}>, Welcome to the New Zealand family! 🌿**\n` +
+                 `*Welcome to the Four-Square Discord Server.*\n` +
                  `# **__Getting started__**\n` +
                  `**• Verify in <#1500763684375629894>**\n` +
                  `**• Get some roles in ⁠<id:customize>**\n` +
                  `**• Chat with us in ⁠<#1500763511448539307>**\n\n` +
-                 `**🌿Member #${membercount}**`,
+                 `**🌿・__Member: #${membercount}__**`,
         files: [attachment],
       });
     } catch (error) {
