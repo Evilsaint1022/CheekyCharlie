@@ -11,13 +11,24 @@ const db = require("../../Handlers/database");
 // -----------------------------------------------------------------------------------------------------
 // Production Code:
 const GuildId = "1495254374971084961";
-const CronTime = "0 5 * * *"; // Runs at 5am everyday to check
+const CronTime = "0 * * * *"; // Runs every hour to check if its active or not.
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
-// Icons Fetch
+// CheekyCharlie Icons Fetch
+const DefaultBotIcon = path.join(__dirname, `../../Utilities/CheekyCharlie/Icons/cheekycharlie.png`)
+const HalloweenBotIcon = path.join (__dirname, `../../Utilities/CheekyCharlie/Icons/cheekycharlie_halloween.png`)
+// -----------------------------------------------------------------------------------------------------
+
+// CheekyCharlie Banner Fetch
+const DefaultBotBanner = path.join(__dirname, `../../Utilities/CheekyCharlie/Banners/defaultbanner.png`)
+const HalloweenBotBanner = path.join(__dirname, `../../Utilities/CheekyCharlie/Banners/halloweenbanner.png`)
+
+// -----------------------------------------------------------------------------------------------------
+// Support Server Icons Fetch
 const DefaultIcon = path.join(__dirname, `../../Utilities/Four-Square/Icons/foursquare_icon.png`)
 const HalloweenIcon = path.join(__dirname,'../../Utilities/Four-Square/Icons/foursquare_halloween_icon.png');
+// -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
 // Fetching existing Settings
@@ -26,7 +37,7 @@ let DefaultIconUpdated = settings.DefaultIconUpdated || false;
 let HalloweenUpdated = settings.HalloweenUpdated || false;
 // -----------------------------------------------------------------------------------------------------
 
-async function Icon_Changer(client) {
+async function Theme_Changer(client) {
 
     const date = new Date().toLocaleDateString('en-NZ', {
         month: '2-digit',
@@ -36,7 +47,7 @@ async function Icon_Changer(client) {
     try {
         guild = await client.guilds.fetch(GuildId);
     if (!guild) {
-        console.log('[❌] [SERVER-ICON] Guild not found.');
+        console.log('[❌] [THEME-CHANGER] Guild not found.');
         return;
     };
     } catch (error) {
@@ -56,20 +67,22 @@ async function Icon_Changer(client) {
     // -----------------------------------------------------------------------------------------------------
     // Checks if halloween has already Run.
     if (halloween && HalloweenUpdated == true) {
-        // console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
+        // console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
         return;
     }
 
     // If its October and has not already run...
     if (halloween) try {
         await guild.setIcon(HalloweenIcon);
+        await client.user.setAvatar(HalloweenBotIcon);
+        await client.user.setBanner(HalloweenBotBanner);
         await db.settings.set(`${GuildId}.HalloweenUpdated`, true);
         await db.settings.delete(`${GuildId}.DefaultIconUpdated`, false)
-        console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated icon to the Halloween Themed Icon.`);
+        console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated to the Halloween Themed.`);
         return;
      } catch (error) {
         console.error(
-            '[❌] [SERVER-ICON] Failed to update:',
+            '[❌] [THEME-CHANGER] Failed to update:',
             error
         );
     }
@@ -80,27 +93,29 @@ async function Icon_Changer(client) {
     // -----------------------------------------------------------------------------------------------------
     // Checks if DefaulIcon has already Ran.
     if (!events && DefaultIconUpdated == true) {
-    //console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
+    //console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
     return;
     }
 
     // Else the Default Icon Gets Set.
     if (!events && DefaultIconUpdated == false ) {
         await guild.setIcon(DefaultIcon);
+        await client.user.setAvatar(DefaultBotIcon);
+        await client.user.setBanner(DefaultBotBanner);
         await db.settings.delete(`${GuildId}.HalloweenUpdated`, false);
         await db.settings.set(`${GuildId}.DefaultIconUpdated`, true);
-        console.log(`[✅] [SERVER-ICON] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated icon to the Default Icon.`);
+        console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated to the Default Theme.`);
         return;
     }
     };
     // -----------------------------------------------------------------------------------------------------
     // Cron Timer & Exporting the Function.
     module.exports = {
-        name: 'Icon_Changer',
+        name: 'Theme_Changer',
         execute(client) {
             cron.schedule(
                 CronTime,
-                () => Icon_Changer(client),
+                () => Theme_Changer(client),
                 {
                     timezone: 'Pacific/Auckland'
                 }
@@ -110,4 +125,4 @@ async function Icon_Changer(client) {
     // -----------------------------------------------------------------------------------------------------
 
     // Function Exporting.
-    module.exports = Icon_Changer;
+    module.exports = Theme_Changer;
