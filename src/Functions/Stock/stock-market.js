@@ -20,7 +20,7 @@ const emojis = require('../../Utilities/Stocks/stocks_ui');
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 // Production settings:
-const CRON_SCHEDULE = '*/10 * * * *'; // Every 10 minutes
+const CRON_SCHEDULE = '*/15 * * * *'; // Every 15 minutes
 const EVENT_CHANCE = 0.02;
 const HISTORY_MAX = 50;
 const STARTING_PRICE = 3000;
