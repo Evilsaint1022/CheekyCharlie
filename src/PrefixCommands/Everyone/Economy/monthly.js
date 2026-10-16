@@ -22,7 +22,7 @@ function formatAmount(amount) {
 }
 
 const monthlyCooldown = 30 * 24 * 60 * 60 * 1000; // 30 days
-const rewardAmount = 3000;
+const BaseRewardAmount = 5000;
 
 module.exports = {
   name: "monthly",
@@ -37,7 +37,7 @@ module.exports = {
       });
     }
 
-    const { author, guild } = message;
+    const { author, guild, member } = message;
 
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -46,38 +46,15 @@ module.exports = {
     const fernsname = await db.default.get("Default.name");
 
     const username = author.username;
-    const newKey = `${author.id}`;
+    const userId = author.id;
     const space = "ㅤ";
 
     const top = `**🌿 \`${username}'s Monthly!\` 🌿**`;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
     const bar = `**─────────────────────────────────**`;
-    const bottom = `🌿・Come back next month!`;
+    const bottom = `🌿・Come back next month for more!`;
 
-    // ------------------------------------------------------
-    // 1️⃣ MIGRATION — username-based → ID-only keys
-    // ------------------------------------------------------
-    const safeUsername = author.username.replace(/\./g, "_");
-    const oldKey = `${safeUsername}_${author.id}`;
-
-    const oldWalletObj = await db.wallet.get(oldKey);
-    const oldBankObj = await db.bank.get(oldKey);
-    const oldLastClaimObj = await db.lastclaim.get(oldKey);
-
-    if (oldWalletObj !== undefined) {
-      await db.wallet.set(newKey, oldWalletObj);
-      await db.wallet.delete(oldKey);
-    }
-
-    if (oldBankObj !== undefined) {
-      await db.bank.set(newKey, oldBankObj);
-      await db.bank.delete(oldKey);
-    }
-
-    if (oldLastClaimObj !== undefined) {
-      await db.lastclaim.set(newKey, oldLastClaimObj);
-      await db.lastclaim.delete(oldKey);
-    }
+    const newKey = `${userId}`;
     // ------------------------------------------------------
 
     const lastClaim = (await db.lastclaim.get(`${newKey}.monthly`)) || 0;
@@ -95,6 +72,14 @@ module.exports = {
         `Please wait **${days}d ${hours}h ${minutes}m** before claiming again.`
       );
     }
+
+    const guildSettings = await db.settings.get(`${guild.id}`) || {};
+    const boosterRoleId = guildSettings.boostersRoleId;
+
+    let rewardAmount = BaseRewardAmount
+      if (boosterRoleId && member.roles.cache.has(boosterRoleId)) {
+        rewardAmount *= 2;
+      }
 
     // Balances
     let bank = (await db.bank.get(`${newKey}.bank`)) || 0;
@@ -126,12 +111,10 @@ module.exports = {
 
     await message.reply({ embeds: [embed] });
 
-    console.log(
-      `[🌿] [MONTHLY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
-      `[${new Date().toLocaleTimeString("en-NZ", {
-        timeZone: "Pacific/Auckland",
-      })}] ` +
-      `${guild.name} ${guild.id} ${username} claimed ${rewardAmount.toLocaleString()} ${customname || fernsname}.`
-    );
+      console.log(
+          `[🌿] [MONTHLY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
+          `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
+          `${guild.name} ${guild.id} ${username} used the monthly command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}!`
+      );
   }
 };

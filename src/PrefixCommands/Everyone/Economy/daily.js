@@ -22,7 +22,7 @@ function formatAmount(amount) {
 }
 
 const dailyCooldown = 24 * 60 * 60 * 1000; // 24 hours
-const baseRewardAmount = 500; // Base daily reward
+const BaseRewardAmount = 1500; // Base daily reward
 
 module.exports = {
     name: "daily",
@@ -54,33 +54,9 @@ module.exports = {
         const top = `**🌿 \`${username} Daily!\` 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
-        const bottom = `🌿・Come Back Tomorrow for More!`;
+        const bottom = `🌿・Come back tomorrow for more!`;
 
-        // ------------------------------------------------------
-        // 1️⃣ MIGRATION — move username-based keys → ID-only keys
-        // ------------------------------------------------------
-        const safeUsername = username.replace(/\./g, '_');
-        const oldKey = `${safeUsername}_${userId}`;
         const newKey = `${userId}`;
-
-        const oldWalletObj = await db.wallet.get(oldKey);
-        const oldBankObj = await db.bank.get(oldKey);
-        const oldLastClaimObj = await db.lastclaim.get(oldKey);
-
-        if (oldWalletObj !== undefined) {
-            await db.wallet.set(newKey, oldWalletObj);
-            await db.wallet.delete(oldKey);
-        }
-
-        if (oldBankObj !== undefined) {
-            await db.bank.set(newKey, oldBankObj);
-            await db.bank.delete(oldKey);
-        }
-
-        if (oldLastClaimObj !== undefined) {
-            await db.lastclaim.set(newKey, oldLastClaimObj);
-            await db.lastclaim.delete(oldKey);
-        }
         // ------------------------------------------------------
 
         const lastClaim = await db.lastclaim.get(`${newKey}.daily`) || 0;
@@ -103,7 +79,7 @@ module.exports = {
         const guildSettings = await db.settings.get(`${guild.id}`) || {};
         const boosterRoleId = guildSettings.boostersRoleId;
 
-        let rewardAmount = baseRewardAmount;
+        let rewardAmount = BaseRewardAmount;
         if (boosterRoleId && member.roles.cache.has(boosterRoleId)) {
             rewardAmount *= 2;
         }

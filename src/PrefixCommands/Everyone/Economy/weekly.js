@@ -21,7 +21,7 @@ function formatAmount(amount) {
 }
 
 const weeklyCooldown = 7 * 24 * 60 * 60 * 1000; // 7 days
-const baseRewardAmount = 1500; // Weekly reward
+const BaseRewardAmount = 3000; // Weekly reward
 
 module.exports = {
     name: "weekly",
@@ -51,33 +51,9 @@ module.exports = {
         const top = `**🌿 \`${username}'s Weekly!\` 🌿**`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
-        const bottom = `🌿・Come Back Next Week for More!`;
+        const bottom = `🌿・Come back next week for more!`;
 
-        // ------------------------------------------------------
-        // 1️⃣ MIGRATION — move username-based keys → ID-only keys
-        // ------------------------------------------------------
-        const safeUsername = username.replace(/\./g, '_');
-        const oldKey = `${safeUsername}_${userId}`;
         const newKey = `${userId}`;
-
-        const oldWalletObj = await db.wallet.get(oldKey);
-        const oldBankObj = await db.bank.get(oldKey);
-        const oldLastClaimObj = await db.lastclaim.get(oldKey);
-
-        if (oldWalletObj !== undefined) {
-            await db.wallet.set(newKey, oldWalletObj);
-            await db.wallet.delete(oldKey);
-        }
-
-        if (oldBankObj !== undefined) {
-            await db.bank.set(newKey, oldBankObj);
-            await db.bank.delete(oldKey);
-        }
-
-        if (oldLastClaimObj !== undefined) {
-            await db.lastclaim.set(newKey, oldLastClaimObj);
-            await db.lastclaim.delete(oldKey);
-        }
         // ------------------------------------------------------
 
         const lastClaim = await db.lastclaim.get(`${newKey}.weekly`) || 0;
@@ -104,7 +80,7 @@ module.exports = {
         const guildSettings = await db.settings.get(`${guild.id}`) || {};
         const boosterRoleId = guildSettings.boostersRoleId;
 
-        let rewardAmount = baseRewardAmount;
+        let rewardAmount = BaseRewardAmount;
         if (boosterRoleId && member.roles.cache.has(boosterRoleId)) {
             rewardAmount *= 2;
         }
@@ -143,7 +119,7 @@ module.exports = {
         console.log(
             `[🌿] [WEEKLY] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
             `[${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ` +
-            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}.`
+            `${guild.name} ${guild.id} ${username} used the weekly command and got ${rewardAmount.toLocaleString()} ${customname || fernsname}!`
         );
     }
 };
