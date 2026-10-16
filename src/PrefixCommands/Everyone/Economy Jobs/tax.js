@@ -1,6 +1,25 @@
 const { EmbedBuilder } = require("discord.js");
 const db = require("../../../Handlers/database");
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (Math.floor(amount / 100_000_000) / 10)
+      .toString().replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (Math.floor(amount / 100_000) / 10)
+      .toString().replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (Math.floor(amount / 100) / 10)
+      .toString().replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 module.exports = {
   name: "tax",
   aliases: [],
@@ -37,6 +56,8 @@ module.exports = {
 
     const overdue = !lastPaid || now - lastPaid > week;
 
+    const formattedtax = formatAmount(currentTax);
+
     const embed = new EmbedBuilder()
       .setColor(overdue ? 0xff4d4d : 0x207e37)
       .setTitle(`***🧾 \`${message.author.tag} Tax's\`***`)
@@ -44,7 +65,7 @@ module.exports = {
         `_You are viewing your tax information._\n` +
         `${middle}\n` +
         `ㅤ **💰__Current Tax__   ⏰__Last Payment__**\n` +
-        `ㅤ ***${custom || ferns}・\`${currentTax.toLocaleString()}\`***     ${lastPaidText}\n` +
+        `ㅤ ***${custom || ferns}・\`${formattedtax}\`***     ${lastPaidText}\n` +
         `${middle}\n`
       )
       .setFooter({ text: bottom })

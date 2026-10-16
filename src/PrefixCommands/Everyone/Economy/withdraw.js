@@ -4,15 +4,18 @@ const db = require("../../../Handlers/database");
 
 function formatAmount(amount) {
   if (amount >= 1_000_000_000) {
-    return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+    return (Math.floor(amount / 100_000_000) / 10)
+      .toString().replace(/\.0$/, '') + 'b';
   }
 
   if (amount >= 1_000_000) {
-    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+    return (Math.floor(amount / 100_000) / 10)
+      .toString().replace(/\.0$/, '') + 'm';
   }
 
   if (amount >= 1_000) {
-    return (amount / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+    return (Math.floor(amount / 100) / 10)
+      .toString().replace(/\.0$/, '') + 'k';
   }
 
   return amount.toString();

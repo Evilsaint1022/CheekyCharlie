@@ -6,6 +6,25 @@ function escapeUsername(username) {
   return username.replace(/\./g, '_');
 }
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (Math.floor(amount / 100_000_000) / 10)
+      .toString().replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (Math.floor(amount / 100_000) / 10)
+      .toString().replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (Math.floor(amount / 100) / 10)
+      .toString().replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 function parseAmount(input) {
 
   if (!input) return NaN;
@@ -105,13 +124,16 @@ module.exports = {
       await db.tax.set(`${sender.id}.tax`, newTax);
       await db.tax.set(`${sender.id}.lastpayed`, Date.now());
 
+      const formattedpay = formatAmount(payAmount);
+      const formattedtax = formatAmount(newTax)
+
       const taxembed = new EmbedBuilder()
         .setTitle(`***🧾 \`Tax Payment Successful\`***`)
         .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid Amount:__  __Remaining Tax:__**\n` +
-          `ㅤ ***ㅤ${custom || ferns}・\`${payAmount.toLocaleString()}\`      ${custom || ferns}・\`${newTax.toLocaleString()}\`***\n` +
+          `ㅤ 💰 **__Paid Amount:__  ⏰ __Remaining Tax:__**\n` +
+          `ㅤ ***ㅤ${custom || ferns}・\`${formattedpay}\`      ${custom || ferns}・\`${formattedtax}\`***\n` +
           `${middle}\n`
         )
         .setFooter({ text: `ㅤ 🌿 Inland Revenue Department 🌿` })
@@ -179,13 +201,15 @@ module.exports = {
         );
       }
 
+      const formattedamount = formatAmount(amount)
+
       const paymentembed = new EmbedBuilder()
         .setTitle(`***🌿 \`Payment Successful!\` 🌿***`)
         .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
           `ㅤ 💰 **__Paid:__     💰 __Receiver:__**\n` +
-          `ㅤ ***${custom || ferns}・\`${amount.toLocaleString()}\`      \`${user.username}\`***\n` +
+          `ㅤ ***${custom || ferns}・\`${formattedamount}\`      \`${user.username}\`***\n` +
           `${middle}\n`
         )
         .setFooter({ text: `ㅤ 🌿 ${sender.username} ${sender.id} 🌿` })

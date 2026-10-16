@@ -1,6 +1,25 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../../Handlers/database');
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (Math.floor(amount / 100_000_000) / 10)
+      .toString().replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (Math.floor(amount / 100_000) / 10)
+      .toString().replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (Math.floor(amount / 100) / 10)
+      .toString().replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 const COOLDOWN_TIME = 60 * 1000; // 1 minute
 
 // simple async sleep helper
@@ -165,6 +184,8 @@ module.exports = {
       console.log(`[🌿] [SLOTS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${author.username} LOST ${bet.toLocaleString()} ${customname || fernsname}.`);
     }
 
+    const formattedbalance = formatAmount(balance);
+
     // 🏁 Final result embed
     const resultEmbed = new EmbedBuilder()
       .setTitle('***🎰 \`Slots Result\`***')
@@ -173,7 +194,7 @@ module.exports = {
       .setDescription(resultText)
       .addFields(
         { name: 'Final Slot Results', value: final.join(' | ') },
-        { name: '💰 __New Balance__', value: `***${custom || ferns}・\`${balance.toLocaleString()}\`***` }
+        { name: '💰 __New Balance__', value: `***${custom || ferns}・\`${formattedbalance}\`***` }
       );
 
     await slotMessage.edit({ embeds: [resultEmbed] });

@@ -3,6 +3,25 @@ const { EmbedBuilder } = require('discord.js');
 const { dropPartyEvent } = require('../../../Events/Client/drop_party');
 const db = require('../../../Handlers/database');
 
+function formatAmount(amount) {
+  if (amount >= 1_000_000_000) {
+    return (Math.floor(amount / 100_000_000) / 10)
+      .toString().replace(/\.0$/, '') + 'b';
+  }
+
+  if (amount >= 1_000_000) {
+    return (Math.floor(amount / 100_000) / 10)
+      .toString().replace(/\.0$/, '') + 'm';
+  }
+
+  if (amount >= 1_000) {
+    return (Math.floor(amount / 100) / 10)
+      .toString().replace(/\.0$/, '') + 'k';
+  }
+
+  return amount.toString();
+}
+
 const pickedUsers = new Set();
 
 const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
