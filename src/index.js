@@ -5,7 +5,6 @@
 // ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 //
 // ------------------------------------------------- @Index.js ----------------------------------------------------------------------
-
 require('dotenv').config({ quiet: true });
 const { loadEvents } = require('../src/Handlers/eventHandler');
 const { registerCommands } = require('./register-commands');
@@ -13,8 +12,12 @@ const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
+// ----------------------------------------------------------------------------------------------------------------------------------
+
+// Themes -------------------------------------------------------------------------------------------------------------------------
 const halloween = require('./Utilities/Themes/Halloween/halloween');
 halloween.install(); // 🎃 Themes everything the bot sends (auto Oct 1-31 / owner toggle)
+// ----------------------------------------------------------------------------------------------------------------------------------
 
 // Database -------------------------------------------------------------------------------------------------------------------------
 const db = require('../src/Handlers/database');
@@ -155,7 +158,7 @@ const activeStatuses = [
     ...(normal ? normalstatus : [])
 ];
 
-// Set Activity
+// Set Activity ----------------------------------------------------------------------------------------------------------------
 setInterval(() => {
     if (activeStatuses.length === 0) return; // Prevent crash if no statuses are enabled
     const activity = activeStatuses[Math.floor(Math.random() * activeStatuses.length)];
@@ -167,33 +170,7 @@ setInterval(() => {
     console.log(`🌿・Successfully Finished Startup!`.bold.white);
 });
 
-// DayLight Savings Check -----------------------------------------------------------------------------------------------------
-
-if (process.env.DEV_MODE == "true") {
-let timeZone = "Pacific/Auckland";
-
-let isDaylightSaving =
-    new Intl.DateTimeFormat("en-NZ", {
-        timeZone,
-        timeZoneName: "longOffset"
-    })
-    .formatToParts(new Date())
-    .find(part => part.type === "timeZoneName")
-    ?.value === "GMT+13";
-
-let timezone = isDaylightSaving ? "NZDT" : "NZST";
-
-if (timezone = "NZDT") {
-console.log(`[${timezone}] DayLight Savings Time...`.bold.white);
-} else {
-if (timezone = "NZST") {
-console.log(`[${timezone}] Normal NZ Time...`.bold.white);
-}}
-}
-
 // Interaction Command Handler --------------------------------------------------------------------------------------------------
-
-
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
