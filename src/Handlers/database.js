@@ -10,6 +10,7 @@ const db = {
     commands: new DotDB("./src/Utilities/Storage_Static/Commands/commands.json"),
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
     qotdpacks: new DotDB("./src/Utilities/Storage_Static/Qotd/qotdpacks.json"),
+    status: new DotDB("./src/Utilities/Storage_Static/Status/status.json"),
     // -----------------------------------------------------------------------------------------
     
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),

@@ -69,7 +69,7 @@ Green = `<:Green:1505107801050189895>`;
 // Ready Event ---------------------------------------------------------------------------------------------------------------------
 client.once("clientReady", async () => {
 
-    console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.white);
+    console.log(`🌿・${client.user.tag} Is Starting Up!`.bold.yellow);
 
     await sendStatusMessage(client, `${Green} ***CheekyCharlie is Online.***`, {
       includeCommitFooter: true
@@ -86,76 +86,26 @@ client.once("clientReady", async () => {
     await PrefixCommands(client);
     await registerAIHandler(client);
 
-    // Status Toggles
-    const normal = true;
+// CheekyCharlie Status ------------------------------------------------------------------------
+const date = new Date().toLocaleDateString('en-NZ', {
+    month: '2-digit',
+});
 
-    // Status Groups
-    const normalstatus = [
-    "Shopping at the Four-Square",
-    "Made in New Zealand",
-    "Stocking the Shelves",
-    "Packing up the Boxes",
-    "Stocking the Fridges",
-    "Helping a Customer",
-    "Greeting Customers at the Door",
-    "Working the Night Shift",
-    "On the Checkout",
-    "Scanning Some Groceries",
-    "Restocking the Aisles",
-    "Checking the Stock",
-    "Taking a Lunch Break",
-    "Having a Quick Cuppa",
-    "Keeping the Shelves Full",
-    "Making the Store Cheeky",
-    "Serving Up Some Cheeky Vibes",
-    "Bringing the Good Vibes",
-    "Here to Brighten Your Day!",
-    "Your Friendly Neighbourhood Bot",
-    "Spreading Smiles & Good Vibes",
-    "CheekyCharlie at Your Service!",
-    "Bringing the Fun to Your Server",
-    "Making Your Server a Little Cheekier",
-    "Here to Make You Smile",
-    "Your Daily Dose of Cheekiness",
-    "Keeping Things Cheeky",
-    "Just Being a Little Cheeky",
-    "Powered by Kiwi Ingenuity",
-    "100% Kiwi Made",
-    "Freshly Made in Aotearoa",
-    "Straight From the Four-Square",
-    "Keeping It Kiwi",
-    "Living the Kiwi Life",
-    "Having a Cheeky Moment",
-    "Probably Causing Trouble",
-    "Definitely Up to Something",
-    "Doing Bot Things",
-    "Pretending to Work",
-    "Working Hard or Hardly Working",
-    "Checking My Notifications",
-    "Waiting for Someone to Say Hi",
-    "Keeping an Eye on Things",
-    "Watching the Server",
-    "Patrolling the Aisles",
-    "Avoiding the Checkout Queue",
-    "Looking for the Good Snacks",
-    "Buying the Last Packet of Shapes",
-    "Having a Cheeky Snack",
-    "Where's the L&P?",
-    "Someone Say Fish & Chips?",
-    "Putting the Kettle On",
-    "Sweet As, Bro!",
-    "Yeah, Nah, I'm Working",
-    "Chur, I'm On It!",
-    "No Worries, I'm Here",
-    "Keeping the Server Fresh",
-    "Fresh Outta the Four-Square",
-    "Serving Fresh Bot Vibes",
-    "The Cheekiest Bot in Aotearoa"
-];
+// Status Fetch
+const normalstatus = db.status.get("NormalStatus") || [];
+const halloweenstatus = db.status.get("HalloweenStatus") || [];
+
+// Default Status
+let status = normalstatus;
+
+// Halloween Status
+if (date == "10") {
+  status = halloweenstatus;
+}
 
 // Combine all enabled statuses
 const activeStatuses = [
-    ...(normal ? normalstatus : [])
+    ...status
 ];
 
 // Set Activity ----------------------------------------------------------------------------------------------------------------
@@ -166,8 +116,8 @@ setInterval(() => {
 }, 5000);
 
     // CheekyCharlie is Online!
-    console.log(`🌿・${client.user.tag} Is Online!`.bold.white);
-    console.log(`🌿・Successfully Finished Startup!`.bold.white);
+    console.log(`🌿・Successfully Finished Startup!`.bold.green);
+    console.log(`🌿・${client.user.tag} Is Online!`.bold.green);
 });
 
 // Interaction Command Handler --------------------------------------------------------------------------------------------------
