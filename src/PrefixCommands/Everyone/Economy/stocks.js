@@ -139,7 +139,7 @@ async function showPortfolio(message, args) {
         )
         .setFooter({ text: `🌿 FernCoin Exchange · ?stocks leaderboard for Rankings 🌿` })
 
-    return message.reply({ embeds: [keepOriginalColor(embed)] });
+    return message.reply({ embeds: [embed] });
 }
 
 // ─────────────────────────────────────────────────────────
@@ -230,7 +230,7 @@ async function showLeaderboard(message) {
     );
 
     const msg = await message.reply({
-        embeds: [keepOriginalColor(generateEmbed(currentPage))],
+        embeds: [generateEmbed(currentPage)],
         components: [buildRow()]
     });
 
@@ -249,7 +249,7 @@ async function showLeaderboard(message) {
             collector.stop();
             return btn.update({ components: [] });
         }
-        await btn.update({ embeds: [keepOriginalColor(generateEmbed(currentPage))], components: [buildRow()] });
+        await btn.update({ embeds: [generateEmbed(currentPage)], components: [buildRow()] });
     });
 
     collector.on('end', () => { if (msg.editable) msg.edit({ components: [] }); });
