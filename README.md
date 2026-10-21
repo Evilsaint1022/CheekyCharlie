@@ -44,23 +44,23 @@ These are the `API Keys` that we use in this project.
 🌿・Verification System   
 🌿・Giveaway System  
 🌿・Economy System  
-🌿・Welcome Banner
+🌿・Welcome Banner   
 🌿・Economy Games  
 🌿・Economy Jobs  
 🌿・Level System  
 🌿・Leaderboards  
-🌿・GhostPing  
-🌿・AI Deadchat  
-🌿・RSS Feed News  
-🌿・Bump Reminder  
-🌿・Custom Starboard  
-🌿・Color Of The Week  
-🌿・Simpsons Roleplay  
-🌿・Staff Applications  
-🌿・Question Of The Day 
+🌿・GhostPing   
+🌿・AI Deadchat   
+🌿・RSS Feed News   
+🌿・Bump Reminder   
+🌿・Custom Starboard   
+🌿・Color Of The Week   
+🌿・Simpsons Roleplay   
+🌿・Staff Applications   
+🌿・Question Of The Day   
 🌿・Anonymous Confessions   
-🌿・Temporary Voice Channels  
-🌿・AI NSFW Content Filtering  
+🌿・Temporary Voice Channels   
+🌿・AI NSFW Content Filtering   
 
 <h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
   
