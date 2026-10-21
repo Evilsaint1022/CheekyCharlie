@@ -41,26 +41,24 @@ These are the `API Keys` that we use in this project.
 
 <h2> 🌿 <ins>Features</ins> 🌿 </h2>
 
-🌿・Full Economy System  
-🌿・Welcome Banner  
+🌿・Verification System   
+🌿・Giveaway System  
+🌿・Economy System  
+🌿・Welcome Banner
 🌿・Economy Games  
 🌿・Economy Jobs  
-🌿・Leaderboards  
 🌿・Level System  
-🌿・Level Roles  
+🌿・Leaderboards  
 🌿・GhostPing  
-🌿・Confessions  
 🌿・AI Deadchat  
 🌿・RSS Feed News  
-🌿・Bump-Reminder  
-🌿・Giveaway System  
+🌿・Bump Reminder  
 🌿・Custom Starboard  
-🌿・Simpsons-Roleplay  
 🌿・Color Of The Week  
-🌿・Custom AI Response  
+🌿・Simpsons Roleplay  
 🌿・Staff Applications  
-🌿・Question Of The Day  
-🌿・Button Verification  
+🌿・Question Of The Day 
+🌿・Anonymous Confessions   
 🌿・Temporary Voice Channels  
 🌿・AI NSFW Content Filtering  
 
@@ -153,7 +151,7 @@ These are CheekyCharlie's automatic reactions.
   
 ‎ 
   
-- `Welcome`: :heart:
+- `Welcome`: ❤️
   
 </details>
 
