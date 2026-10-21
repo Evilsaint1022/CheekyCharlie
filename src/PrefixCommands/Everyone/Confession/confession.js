@@ -1,4 +1,14 @@
-// confession.js
+// Anonymous confession.js
+
+// ----------------------------
+// RULES FOR THIS CONFESSION COMMAND!
+// - No Message Logs
+// - No Console Logs
+
+// If another Bot logs the message removal then there is nothing we can do about it,
+// but in saying that there will be no logs for this command via cheekycharlie.
+// ----------------------------
+
 const {
     EmbedBuilder,
     ContainerBuilder,
@@ -59,13 +69,6 @@ module.exports = {
             
 
         const confessionMessage = await ConfessionChannel.send({embeds: [confessionembed]});
-
-        // Console log for the command but does not contain the message contents.
-        console.log(
-            `[🌿] [CONFESSIONS] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] ` +
-            `[${new Date().toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland' })}] ` +
-            `${message.guild.name} ${message.guild.id} ${message.author.username} used the confession command.`
-        );
 
         return channel.send(
             '✅ **Confession message successfully sent! Check it out:** ' + confessionMessage.url
