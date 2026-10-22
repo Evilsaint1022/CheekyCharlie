@@ -452,6 +452,7 @@ This is the message. Supports any Discord-native **markdown**.
 <h2>🌿 <ins>Installation & Setup</ins> 🌿</h2>
   
 We have made a couple of scripts so that its easier to host cheekycharlie.   
+(Make sure you have [nodejs](https://nodejs.org/en/download/current) Installed)   
 
 <h3><ins>Windows Setup:</ins></h3>
 
