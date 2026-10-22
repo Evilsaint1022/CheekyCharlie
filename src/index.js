@@ -14,6 +14,20 @@ const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
 // ----------------------------------------------------------------------------------------------------------------------------------
 
+// Load Console Colors --------------------------------------------------------------------------------------------------------------
+const colors = require('colors'); // For console colors
+// loads colors globally for console use.
+// ----------------------------------------------------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------------------------------------------
+// TOKEN HERE!
+const TOKEN = process.env.TOKEN;
+if (!TOKEN) {
+  console.log(`YOU NEED TO SET YOUR DISCORD TOKEN!`.bold.red);
+  return;
+}
+// ----------------------------------------------------------------------------------------------------------------------------------
+
 // Themes -------------------------------------------------------------------------------------------------------------------------
 const halloween = require('./Utilities/Themes/Halloween/halloween');
 halloween.install(); // 🎃 Themes everything the bot sends (auto Oct 1-31 / owner toggle)
@@ -28,11 +42,6 @@ const showGuilds = require('./ShowGuilds/showguilds');
 
 const { Client, Collection, Partials, GatewayIntentBits, ActivityType, } = require('discord.js');
 const { user, Message, GuildMember, ThreadMember, Channel, Reaction, User, GuildScheduledEvent, SoundboardSound } = Partials;
-
-// Load Console Colors --------------------------------------------------------------------------------------------------------------
-
-const colors = require('colors'); // For console colors
-// loads colors globally for console use.
 
 // ----------------------------------------------------------------------------------------------------------------------------------
 const client = new Client({

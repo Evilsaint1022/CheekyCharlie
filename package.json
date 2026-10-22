@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "description": "A Modular Disord Bot",
   "scripts": {
+    "ls": "sh start.sh",
+    "ws": "node start.bat",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
