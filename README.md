@@ -449,10 +449,18 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
+<h2>🌿 <ins>Installation & Setup</ins> 🌿</h2>
   
-**We have made a couple of scripts so that its easier to host cheekycharlie.**   
-**Make sure you got your discord TOKEN set in a `.env` file!**
+We have made a couple of scripts so that its easier to host cheekycharlie.   
 
-Windows -> `npm run ws` - Runs the Windows script in `package.json`.   
-Linux -> `npm run ls` - Runs the Linux script in `package.json`.   
+<h3><ins>Windows Setup:</ins></h3>
+
+This will Run the Windows npm script in `package.json`.   
+
+〉Command: `npm run ws`
+
+<h3><ins>Linux Setup:</ins></h3>   
+
+This will Run the Linux npm script in `package.json`.   
+
+〉Command: `npm run ls`
