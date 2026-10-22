@@ -448,3 +448,11 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
+
+<h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
+  
+**We have made a couple of scripts so that its easier to host cheekycharlie.**   
+**Make sure you got your discord TOKEN set in a `.env` file!**
+
+Windows -> `npm run ws` - Runs the Windows script in `package.json`.   
+Linux -> `npm run ls` - Runs the Linux script in `package.json`.   
