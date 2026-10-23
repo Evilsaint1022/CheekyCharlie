@@ -456,7 +456,7 @@ We have made a couple of scripts so that its easier to host cheekycharlie.
 
 <h3> 🌿 <ins>Verify Dependencies</ins> 🌿 </h3>
 
-To verify that you have successfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) by running the following command.
+Verify that you have successfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) by running the following command.
 
 ```
 node --version
