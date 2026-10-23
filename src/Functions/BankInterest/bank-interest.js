@@ -85,7 +85,11 @@ async function runDailyBankInterest(client) {
         interestResults.push({ userId, username, amount, interest, newBalance });
     }
 
+    // Checks if there are no entries.
     if (interestResults.length === 0) return;
+
+    // Sort from largest original balance to smallest
+    interestResults.sort((a, b) => b.amount - a.amount);
 
     // Per-guild: send to channel if configured, otherwise just log
     for (const guild of client.guilds.cache.values()) {
