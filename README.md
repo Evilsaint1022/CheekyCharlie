@@ -62,18 +62,6 @@ These are the `API Keys` that we use in this project.
 🌿・Temporary Voice Channels   
 🌿・AI NSFW Content Filtering   
 
-<h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
-  
-_**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
-
-**Type `/set-whitelisted-roles` to set the whitelisted role.**  
-_Setting the whitelisted role gives that role access to the whitelisted commands._
-
-- `/help` - Help command that displays commands.
-- `/ping` - Check CheekyCharlie's latency.
-
-**That’s it — you’re ready to use CheekyCharlie!**
-
 <h2> 🌿 <ins>Reactions Documentation</ins> 🌿 </h2>
 
 CheekyCharlie's Automatic Emoji Reactions.
@@ -448,6 +436,18 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
+
+<h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
+  
+_**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
+
+**Type `/set-whitelisted-roles` to set the whitelisted role.**  
+_Setting the whitelisted role gives that role access to the whitelisted commands._
+
+- `/help` - Help command that displays commands.
+- `/ping` - Check CheekyCharlie's latency.
+
+**That’s it — you’re ready to use CheekyCharlie!**
 
 <h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
   
