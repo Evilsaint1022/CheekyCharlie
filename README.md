@@ -449,19 +449,31 @@ This is the message. Supports any Discord-native **markdown**.
 
 </details>
 
-<h2>🌿 <ins>Installation & Setup</ins> 🌿</h2>
+<h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
   
 We have made a couple of scripts so that its easier to host cheekycharlie.   
-(Make sure you have [nodejs](https://nodejs.org/en/download/current) Installed)   
+( Make sure you have [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) Installed )   
 
-<h3><ins>Windows Setup:</ins></h3>
+<h3> 🌿 <ins>Verify Dependencies:</ins> 🌿 </h3>
 
-This will Run the Windows npm script in `package.json`.   
+To verify that you have succesfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) run the following command.
 
-〉Command: `npm run ws`
+```
+node --version
+npm --version
+git --version
+```
 
-<h3><ins>Linux Setup:</ins></h3>   
+<h3> 🌿 <ins>Windows Setup:</ins> 🌿 </h3>
 
-This will Run the Linux npm script in `package.json`.   
+This will Run the Windows npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
 
-〉Command: `npm run ls`
+〉Command: `npm run win`   
+〉Description: _Runs the [start.bat](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.bat) File._   
+
+<h3> 🌿 <ins>Linux Setup:</ins> 🌿 </h3>   
+
+This will Run the Linux npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
+
+〉Command: `npm run unix`   
+〉Description: _Runs the [start.sh](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.sh) File._   
