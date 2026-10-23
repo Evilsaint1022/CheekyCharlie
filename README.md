@@ -26,18 +26,9 @@ https://github.com/NZ-Linix/dotdatabase
 
 🔗・[Support Server Invite Link](https://discord.com/invite/3gtJ33cZDH)
 
-<h2> 🌿 <ins>API Keys</ins> 🌿 </h2>
+<h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
 
-These are the `API Keys` that we use in this project.
-
-⭐・[OPENAI](https://openai.com/api/)  
-⭐・[GROQ](https://groq.com/)  
-⭐・[TENOR](https://tenor.com/gifapi)  
-⭐・[CAT API](https://thecatapi.com/)  
-⭐・[DOG API](https://thedogapi.com/)  
-⭐・[OPENROUTER](https://openrouter.ai/)  
-⭐・[SIMPSONS API](https://thesimpsonsapi.com/)  
-⭐・[IMAGE GENERATION](https://enter.pollinations.ai/sign-in)  
+To see how to get started and / or run the bot yourself, please see our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wiki).
 
 <h2> 🌿 <ins>Features</ins> 🌿 </h2>
 
@@ -436,45 +427,3 @@ This is the message. Supports any Discord-native **markdown**.
 - `/toggle-qotd` - toggles question of the day on or off.
 
 </details>
-
-<h2> 🌿 <ins>Getting Started</ins> 🌿 </h2>
-  
-_**CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to see them._  
-
-**Type `/set-whitelisted-roles` to set the whitelisted role.**  
-_Setting the whitelisted role gives that role access to the whitelisted commands._
-
-- `/help` - Help command that displays commands.
-- `/ping` - Check CheekyCharlie's latency.
-
-**That’s it — you’re ready to use CheekyCharlie!**
-
-<h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
-  
-We have made a couple of scripts so that its easier to host cheekycharlie.   
-(Make sure you have [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) Installed)
-
-<h3> 🌿 <ins>Verify Dependencies</ins> 🌿 </h3>
-
-Verify that you have successfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) by running the following command.
-
-```
-node --version
-npm --version
-git --version
-```
-If you get a command not found error message that means its not installed correctly.
-
-<h3> 🌿 <ins>Windows Setup</ins> 🌿 </h3>
-
-This will Run the Windows npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
-
-- Command: _`npm run win`_   
-- Description: _Runs the [start.bat](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.bat) File._   
-
-<h3> 🌿 <ins>Linux Setup</ins> 🌿 </h3>   
-
-This will Run the Linux npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
-
-- Command: _`npm run unix`_   
-- Description: _Runs the [start.sh](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.sh) File._
