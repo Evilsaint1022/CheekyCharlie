@@ -76,7 +76,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 
 <h2> 🌿 <ins>Reactions Documentation</ins> 🌿 </h2>
 
-These are CheekyCharlie's automatic reactions.
+CheekyCharlie's Automatic Emoji Reactions.
 
 <details><summary> <ins><strong>Animals</strong></ins>  
   </summary>
@@ -157,7 +157,7 @@ These are CheekyCharlie's automatic reactions.
 
 <h2> 🌿 <ins>Commands Documentation</ins> 🌿 </h2>
 
-These are the current CheekyCharlie commands.
+CheekyCharlie Application & Prefix Commands.
 
 <details><summary> <ins><strong>Owner Prefix Commands</strong></ins>  
   
@@ -452,28 +452,29 @@ This is the message. Supports any Discord-native **markdown**.
 <h2> 🌿 <ins>Installation & Setup</ins> 🌿 </h2>
   
 We have made a couple of scripts so that its easier to host cheekycharlie.   
-( Make sure you have [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) Installed )   
+(Make sure you have [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) Installed)
 
-<h3> 🌿 <ins>Verify Dependencies:</ins> 🌿 </h3>
+<h3> 🌿 <ins>Verify Dependencies</ins> 🌿 </h3>
 
-To verify that you have succesfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) run the following command.
+To verify that you have successfully installed [nodejs](https://nodejs.org/en/download/current) & [Git](https://git-scm.com/) by running the following command.
 
 ```
 node --version
 npm --version
 git --version
 ```
+If you get a command not found error message that means its not installed correctly.
 
-<h3> 🌿 <ins>Windows Setup:</ins> 🌿 </h3>
+<h3> 🌿 <ins>Windows Setup</ins> 🌿 </h3>
 
 This will Run the Windows npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
 
-〉Command: `npm run win`   
-〉Description: _Runs the [start.bat](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.bat) File._   
+- Command: _`npm run win`_   
+- Description: _Runs the [start.bat](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.bat) File._   
 
-<h3> 🌿 <ins>Linux Setup:</ins> 🌿 </h3>   
+<h3> 🌿 <ins>Linux Setup</ins> 🌿 </h3>   
 
 This will Run the Linux npm script in [`package.json`](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/package.json).   
 
-〉Command: `npm run unix`   
-〉Description: _Runs the [start.sh](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.sh) File._   
+- Command: _`npm run unix`_   
+- Description: _Runs the [start.sh](https://github.com/Evilsaint1022/CheekyCharlie/blob/main/start.sh) File._
