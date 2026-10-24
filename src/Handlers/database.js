@@ -66,7 +66,9 @@ const db = {
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
     stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json"),
     bankInterest: new DotDB("./src/Utilities/Storage/Bank-Interest/bankinterest.json"),
-    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json")
+    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json"),
+    youtube: new DotDB("./src/Utilities/Storage/Settings/Youtube/youtube.json"),
+    youtubesent: new DotDB("./src/Utilities/Storage/Settings/Youtube/youtube-sent.json")
 }
 
 module.exports = db;
