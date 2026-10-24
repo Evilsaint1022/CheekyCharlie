@@ -47,7 +47,7 @@ module.exports = async function updateStarboard(reaction) {
 
   const guildKey = `${guildId}`; // Guild key for storage
 
-  const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
+  const middle = `· · - ┈┈━━━ ˚ . 🌿 . ˚ ━━━┈┈ - · ·`;
 
   try {
 
@@ -130,11 +130,11 @@ module.exports = async function updateStarboard(reaction) {
       ? `${username} [🤖]`
       : username;
 
-    let messageContent = message.content || `ㅤ***[\`No Message Content\`]***`;
+    let messageContent = message.content || `[\`No Message Content\`]`;
 
     if (message.stickers.size > 0 && !message.content) {
 
-      messageContent = `ㅤ***[\`Message contains stickers\`]***`;
+      messageContent = `[\`Message contains stickers\`]`;
 
     }
 
@@ -150,29 +150,12 @@ module.exports = async function updateStarboard(reaction) {
 
     const embed = new EmbedBuilder()
       .setColor(STARBOARD_COLOR)
-      .setTitle(`***${starboardEmoji} ${currentCount} ${currentCount === 1 ? 'STARBOARD REACTION' : 'STARBOARD REACTIONS'} ${starboardEmoji}***`)
+      .setTitle(`***${starboardEmoji} ${guild.name}'s Starboard ${starboardEmoji}***`)
       .setURL(message.url)
       .setThumbnail(guildIcon)
-      .setDescription(`${middle}\nㅤ\n` + formatMessageContent(messageContent) + `\nㅤ\n${middle}`)
-      .addFields(
-        {
-          name: '**__Author__**',
-          value: `<@${userId}>`,
-          inline: true
-        },
-        {
-          name: '**__Channel__**',
-          value: `<#${message.channel.id}>`,
-          inline: true
-        },
-        {
-          name: '**__Original Message__**',
-          value: `[Jump to message](${message.url})`,
-          inline: true
-        }
-      )
+      .setDescription(`${middle}\n〉**__Author:__** <@${userId}>\n〉**__Channel:__** <#${message.channel.id}>\n〉**__Reactions:__** \`${currentCount}\`\n\n**__Original Message__**\n**[Jump to message](${message.url})**\n${middle}\nㅤ\n` + formatMessageContent(messageContent) + `\nㅤ\n${middle}`)
       .setFooter({
-        text: `${authorName} • Starboard Submission`,
+        text: `${starboardEmoji} STARBOARD • ${authorName}`,
         ...(authorAvatar ? { iconURL: authorAvatar } : {})
       });
 
@@ -263,7 +246,6 @@ module.exports = async function updateStarboard(reaction) {
         length += link.length + 1;
       }
       if (lines.length < mediaLinks.length) lines.push('More media available via **Jump to message**.');
-      embed.addFields({ name: '📎 Media & attachments', value: lines.join('\n'), inline: false });
     }
 
     const embeds = [embed];
