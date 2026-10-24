@@ -188,10 +188,11 @@ async function handleAIMessage(client, message) {
     let memory = [];
     let chatlog = await db.ai_history.get(encryptedUsername + ".history");
 
+    if (chatlog && Array.isArray(chatlog)) {
+
     // Keep only messages sent by the user
     chatlog = chatlog.filter(message => message.role === "user");
 
-    if (chatlog && Array.isArray(chatlog)) {
       if (chatlog.length > 22) {
           chatlog = chatlog.slice(-20);
       }
