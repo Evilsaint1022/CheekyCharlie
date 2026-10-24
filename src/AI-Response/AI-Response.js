@@ -186,7 +186,10 @@ async function handleAIMessage(client, message) {
     await db.lastclaim.set(`${userId}.airesponse`, true)
 
     let memory = [];
-    const chatlog = await db.ai_history.get(encryptedUsername + ".history");
+    let chatlog = await db.ai_history.get(encryptedUsername + ".history");
+
+    // Keep only messages sent by the user
+    chatlog = chatlog.filter(message => message.role === "user");
 
     if (chatlog && Array.isArray(chatlog)) {
       if (chatlog.length > 22) {
@@ -194,6 +197,9 @@ async function handleAIMessage(client, message) {
       }
       memory = chatlog;
     }
+
+    // Testing The Chatlog Output
+    // console.log(chatlog);
 
     memory.push({ role: 'user', content: userContent });
 
