@@ -191,8 +191,8 @@ async function handleAIMessage(client, message) {
     if (chatlog && Array.isArray(chatlog)) {
 
 
-      if (chatlog.length > 22) {
-          chatlog = chatlog.slice(20);
+      if (chatlog.length > 20) {
+          chatlog = chatlog.slice(-20);
           db.ai_history.set(encryptedUsername + ".history", chatlog);
       }
 
