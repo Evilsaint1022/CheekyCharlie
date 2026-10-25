@@ -4,7 +4,7 @@ const db = require('../../../Handlers/database');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway-setup')
-        .setDescription('Configure giveaway participation whitelist and blacklist settings')
+        .setDescription('Configure giveaway whitelist, blacklist and winner role settings')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('whitelist')
@@ -57,6 +57,21 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand
+                .setName('set-given-role')
+                .setDescription('Set a role that is given to giveaway winners')
+                .addRoleOption(option =>
+                    option.setName('role')
+                        .setDescription('The role to give to giveaway winners')
+                        .setRequired(true)
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove-given-role')
+                .setDescription('Stop giving a role to giveaway winners')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
                 .setName('view')
                 .setDescription('View current giveaway settings')
         ),
@@ -87,7 +102,8 @@ module.exports = {
             whitelistEnabled: false,
             blacklistEnabled: false,
             whitelistedRoles: [],
-            blacklistedRoles: []
+            blacklistedRoles: [],
+            givenRole: null
         };
 
         switch (subcommand) {
@@ -199,6 +215,54 @@ module.exports = {
                 console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Role ${removeBlacklistRole.name} removed from blacklist by ${interaction.user.username}`);
                 break;
 
+            case 'set-given-role':
+
+                const givenRole = interaction.options.getRole('role');
+
+                // The bot can't give @everyone, integration/bot roles, or roles above its own highest role
+                if (givenRole.id === guildId || givenRole.managed || !givenRole.editable) {
+                    return interaction.reply({ 
+                        content: `❌ I can't give ${givenRole} to members. Make sure it isn't @everyone or a bot/integration role, that I have the **Manage Roles** permission, and that my highest role is above it.`, 
+                        flags: 64 
+                    });
+                }
+
+                if (settings.givenRole === givenRole.id) {
+                    return interaction.reply({ 
+                        content: `❌ ${givenRole} is already the giveaway given role!`, 
+                        flags: 64 
+                    });
+                }
+
+                settings.givenRole = givenRole.id;
+                await db.giveaway_settings.set(settingsKey, settings);
+                await interaction.reply({ 
+                    content: `✅ ${givenRole} will now be given to giveaway winners and automatically removed after 1 month.`, 
+                    flags: 64 
+                });
+
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Given role set to ${givenRole.name} by ${interaction.user.username}`);
+                break;
+
+            case 'remove-given-role':
+
+                if (!settings.givenRole) {
+                    return interaction.reply({ 
+                        content: '❌ There is no giveaway given role set!', 
+                        flags: 64 
+                    });
+                }
+
+                settings.givenRole = null;
+                await db.giveaway_settings.set(settingsKey, settings);
+                await interaction.reply({ 
+                    content: '✅ Giveaway winners will no longer be given a role.', 
+                    flags: 64 
+                });
+
+                console.log(`[🎉] [GIVEAWAY SETUP] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} - Given role removed by ${interaction.user.username}`);
+                break;
+
             case 'view':
 
                 const whitelistRoleNames = settings.whitelistedRoles.length > 0
@@ -213,7 +277,8 @@ module.exports = {
                         `**Whitelist:** ${settings.whitelistEnabled ? '✅ Enabled' : '❌ Disabled'}\n` +
                         `**Whitelisted Roles:** ${whitelistRoleNames}\n\n` +
                         `**Blacklist:** ${settings.blacklistEnabled ? '✅ Enabled' : '❌ Disabled'}\n` +
-                        `**Blacklisted Roles:** ${blacklistRoleNames}`,
+                        `**Blacklisted Roles:** ${blacklistRoleNames}\n\n` +
+                        `**Winner Given Role:** ${settings.givenRole ? `<@&${settings.givenRole}> (removed after 1 month)` : 'None'}`,
                     flags: 64
                 });
                 break;

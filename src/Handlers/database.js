@@ -46,6 +46,7 @@ const db = {
     giveaways: new DotDB("./src/Utilities/Storage/Giveaways/giveaways.json"),
     giveaway_participants: new DotDB("./src/Utilities/Storage/Giveaways/participants.json"),
     giveaway_settings: new DotDB("./src/Utilities/Storage/Giveaways/settings.json"),
+    giveaway_given_roles: new DotDB("./src/Utilities/Storage/Giveaways/givenroles.json"),
     lastqotd: new DotDB("./src/Utilities/Storage/Settings/Qotd/lastqotd.json"),
     slapgifs: new DotDB("./src/Utilities/Storage/Fallback/slapgifs.json"),
     kissgifs: new DotDB("./src/Utilities/Storage/Fallback/kissgifs.json"),

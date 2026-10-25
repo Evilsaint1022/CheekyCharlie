@@ -569,7 +569,7 @@ const commands = [
     },
     {
         name: 'giveaway-setup',
-        description: 'Configure giveaway participation whitelist and blacklist settings',
+        description: 'Configure giveaway whitelist, blacklist and winner role settings',
         options: [
             {
                 name: 'whitelist',
@@ -632,6 +632,24 @@ const commands = [
                         required: true,
                     },
                 ],
+            },
+            {
+                name: 'set-given-role',
+                description: 'Set a role that is given to giveaway winners',
+                type: 1,
+                options: [
+                    {
+                        name: 'role',
+                        description: 'The role to give to giveaway winners',
+                        type: 8,
+                        required: true,
+                    },
+                ],
+            },
+            {
+                name: 'remove-given-role',
+                description: 'Stop giving a role to giveaway winners',
+                type: 1,
             },
             {
                 name: 'view',

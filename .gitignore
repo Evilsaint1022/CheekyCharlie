@@ -56,6 +56,9 @@
 /src/Utilities/Storage/Bank-Interest/bankinterest.json
 /src/Utilities/Storage/Settings/Themes/Halloween/halloween.json
 /src/Utilities/Storage/Settings/Halloween/halloween.json
+/src/Utilities/Storage/Settings/Youtube/youtube.json
+/src/Utilities/Storage/Settings/Youtube/youtube-sent.json
+/src/Utilities/Storage/Giveaways/givenroles.json
 
 CLAUDE.md
 AGENTS.md

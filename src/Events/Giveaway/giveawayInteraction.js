@@ -1,5 +1,6 @@
 const { Events, EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../../Handlers/database');
+const { giveWinnerRole } = require('../../Functions/Giveaway/giveaway-checker');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -119,6 +120,8 @@ module.exports = {
             originalGiveawayData.winnerIds = winners;
             await db.giveaways.set(originalGiveawayId, originalGiveawayData);
 
+            giveWinnerRole(guild, winners); // Not awaited so the button interaction is answered in time
+
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
             const topRowFromat    = "***─────────── 🎉 \`GIVEAWAY\` 🎉 ──────────***"
@@ -220,6 +223,8 @@ module.exports = {
             
             giveawayData.winnerIds = [...oldWinners, ...winners];
             await db.giveaways.set(giveawayId, giveawayData);
+
+            giveWinnerRole(guild, winners); // Not awaited so the button interaction is answered in time
 
             const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
 
