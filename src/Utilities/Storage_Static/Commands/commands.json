@@ -732,6 +732,14 @@
           "description": "Removes a role from the giveaway participation blacklist."
         },
         {
+          "command": "/giveaway-setup set-given-role",
+          "description": "The role to give to giveaway winners"
+        },
+        {
+          "command": "/giveaway-setup remove-given-role",
+          "description": "Stop giving a role to giveaway winners"
+        },
+        {
           "command": "/giveaway-setup view",
           "description": "Views the current giveaway settings."
         }

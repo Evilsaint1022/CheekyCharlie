@@ -62,38 +62,38 @@ CheekyCharlie's Automatic Emoji Reactions.
   
 ‎ 
   
-- `cat`: 🐱
-- `dog`: 🐶
-- `mouse`: 🐭
-- `hamster`: 🐹
-- `rabbit`: 🐰
-- `fox`: 🦊
-- `bear`: 🐻
-- `panda`: 🐼
-- `koala`: 🐨
-- `tiger`: 🐯
-- `lion`: 🦁
-- `cow`: 🐮
-- `pig`: 🐷
-- `frog`: 🐸
-- `monkey`: 🐵
-- `chicken`: 🐔
-- `penguin`: 🐧
-- `bird`: 🐦
-- `wolf`: 🐺
-- `horse`: 🐴
-- `unicorn`: 🦄
-- `elephant`: 🐘
-- `snake`: 🐍
-- `turtle`: 🐢
-- `fish`: 🐟
-- `dolphin`: 🐬
-- `whale`: 🐳
-- `shark`: 🦈
-- `octopus`: 🐙
-- `crab`: 🦀
-- `shrimp`: 🦐
-- `spider`: 🕷️
+🌿・`cat`: 🐱   
+🌿・`dog`: 🐶   
+🌿・`mouse`: 🐭   
+🌿・`hamster`: 🐹   
+🌿・`rabbit`: 🐰   
+🌿・`fox`: 🦊   
+🌿・`bear`: 🐻   
+🌿・`panda`: 🐼   
+🌿・`koala`: 🐨   
+🌿・`tiger`: 🐯   
+🌿・`lion`: 🦁   
+🌿・`cow`: 🐮   
+🌿・`pig`: 🐷   
+🌿・`frog`: 🐸   
+🌿・`monkey`: 🐵   
+🌿・`chicken`: 🐔   
+🌿・`penguin`: 🐧   
+🌿・`bird`: 🐦   
+🌿・`wolf`: 🐺   
+🌿・`horse`: 🐴   
+🌿・`unicorn`: 🦄   
+🌿・`elephant`: 🐘   
+🌿・`snake`: 🐍   
+🌿・`turtle`: 🐢   
+🌿・`fish`: 🐟   
+🌿・`dolphin`: 🐬   
+🌿・`whale`: 🐳   
+🌿・`shark`: 🦈   
+🌿・`octopus`: 🐙   
+🌿・`crab`: 🦀   
+🌿・`shrimp`: 🦐   
+🌿・`spider`: 🕷️   
 
 </details>
 
@@ -102,26 +102,26 @@ CheekyCharlie's Automatic Emoji Reactions.
   
 ‎ 
   
-- `apple`: 🍎
-- `banana`: 🍌
-- `orange`: 🍊
-- `grape`: 🍇
-- `strawberry`: 🍓
-- `watermelon`: 🍉
-- `pineapple`: 🍍
-- `peach`: 🍑
-- `lemon`: 🍋
-- `avocado`: 🥑
-- `tomato`: 🍅
-- `carrot`: 🥕
-- `corn`: 🌽
-- `potato`: 🥔
-- `broccoli`: 🥦
-- `lettuce`: 🥬
-- `cucumber`: 🥒
-- `onion`: 🧅
-- `garlic`: 🧄
-- `pepper`: 🫑
+🌿・`apple`: 🍎   
+🌿・`banana`: 🍌   
+🌿・`orange`: 🍊   
+🌿・`grape`: 🍇   
+🌿・`strawberry`: 🍓   
+🌿・`watermelon`: 🍉   
+🌿・`pineapple`: 🍍   
+🌿・`peach`: 🍑   
+🌿・`lemon`: 🍋   
+🌿・`avocado`: 🥑   
+🌿・`tomato`: 🍅   
+🌿・`carrot`: 🥕   
+🌿・`corn`: 🌽   
+🌿・`potato`: 🥔   
+🌿・`broccoli`: 🥦   
+🌿・`lettuce`: 🥬    
+🌿・`cucumber`: 🥒   
+🌿・`onion`: 🧅   
+🌿・`garlic`: 🧄   
+🌿・`pepper`: 🫑   
 
  </details>
 
@@ -130,7 +130,7 @@ CheekyCharlie's Automatic Emoji Reactions.
   
 ‎ 
   
-- `Welcome`: ❤️
+🌿・`Welcome`: ❤️   
   
 </details>
 
@@ -417,6 +417,8 @@ This is the message. Supports any Discord-native **markdown**.
 - `/giveaway-setup blacklist` - Toggle blacklist mode (blacklisted roles cannot join).
 - `/giveaway-setup blacklist-add-role` - Add a role to the giveaway participation blacklist.
 - `/giveaway-setup blacklist-remove-role` - Remove a role from the giveaway participation blacklist.
+- `/giveaway-setup set-given-role` - Set a role that is given to giveaway winners and automatically removed after 1 month.
+- `/giveaway-setup remove-given-role` - Stop giving a role to giveaway winners.
 - `/giveaway-setup view` - View current giveaway settings.
 
 **🌿・<ins>Question-of-the-day Setup</ins>**
