@@ -41,6 +41,7 @@
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
+    "sharp": "^0.35.5",
     "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
