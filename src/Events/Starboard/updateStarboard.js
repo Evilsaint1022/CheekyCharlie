@@ -216,10 +216,90 @@ module.exports = async function updateStarboard(reaction) {
 
     const spoilers = content.match(/\|\|[\s\S]*?\|\|/g) || [];
     const visibleContent = content.replace(/\|\|[\s\S]*?\|\|/g, '');
+
     for (const match of visibleContent.matchAll(/https?:\/\/[^\s<>]+/g)) {
       const url = match[0].replace(/[.,!?;:)\]]+$/, '');
-      if (isImageUrl(url)) addImage(url);
-    }
+
+      if (isImageUrl(url)) {
+        addImage(url);
+        continue;
+      }
+
+
+    
+    // Extract the actual GIF image URL from Tenor or Klipy pages.
+    try {
+      const parsedUrl = new URL(url);
+      const hostname = parsedUrl.hostname.toLowerCase();
+
+      const isTenor =
+        hostname === 'tenor.com' ||
+        hostname.endsWith('.tenor.com');
+
+      const isKlipy =
+        hostname === 'klipy.com' ||
+        hostname.endsWith('.klipy.com') ||
+        hostname === 'klip.y' ||
+        hostname.endsWith('.klip.y');
+
+      if (isTenor || isKlipy) {
+        const response = await fetch(url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0'
+          },
+          signal: AbortSignal.timeout(8000)
+        });
+
+        if (!response.ok) {
+          addLink('GIF', url);
+          continue;
+        }
+
+        const html = await response.text();
+        const metaTags = html.match(/<meta\b[^>]*>/gi) || [];
+
+        let imageUrl = null;
+
+        for (const tag of metaTags) {
+          const property =
+            tag.match(/\b(?:property|name)\s*=\s*["']([^"']+)["']/i)?.[1]
+              ?.toLowerCase();
+
+          if (
+            property !== 'og:image' &&
+            property !== 'og:image:url' &&
+            property !== 'twitter:image'
+          ) {
+            continue;
+          }
+
+          imageUrl = tag.match(
+            /\bcontent\s*=\s*["']([^"']+)["']/i
+          )?.[1];
+
+          if (imageUrl) break;
+        }
+
+        if (imageUrl) {
+          imageUrl = imageUrl
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"');
+
+          const directUrl = new URL(imageUrl, url);
+
+          if (directUrl.protocol === 'https:') {
+            addImage(directUrl.href);
+          } else {
+            addLink('GIF', url);
+          }
+        } else {
+          addLink('GIF', url);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to extract GIF image:', error);
+      addLink('GIF', url);
+    }}
 
     for (const source of message.embeds) {
       if (source.url && spoilers.some(spoiler => spoiler.includes(source.url))) continue;
@@ -240,20 +320,23 @@ module.exports = async function updateStarboard(reaction) {
     if (mediaLinks.length) {
       const lines = [];
       let length = 0;
+
       for (const link of mediaLinks) {
         if (length + link.length + 1 > FIELD_VALUE_LIMIT - 60) continue;
+
         lines.push(link);
         length += link.length + 1;
       }
-      if (lines.length < mediaLinks.length) lines.push('More media available via **Jump to message**.');
+
+      if (lines.length < mediaLinks.length) {
+        lines.push('More media available via **Jump to message**.');
+      }
     }
 
     const embeds = [embed];
+
     if (images.length) {
       embed.setImage(images[0]);
-      for (const url of images.slice(1)) {
-        embeds.push(new EmbedBuilder().setColor(STARBOARD_COLOR).setImage(url));
-      }
     }
 
     // -------------------------------------------------------------
