@@ -80,7 +80,7 @@ module.exports = {
                  `**• Verify in <#1500763684375629894>**\n` +
                  `**• Get some roles in ⁠<id:customize>**\n` +
                  `**• Chat with us in ⁠<#1500763511448539307>**\n\n` +
-                 `**🌿・__Member: #${membercount}__**`,
+                 `**🌿・Member: #${membercount}**`,
         files: [attachment],
       });
     } catch (error) {
