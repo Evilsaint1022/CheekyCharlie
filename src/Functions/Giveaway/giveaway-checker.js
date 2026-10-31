@@ -1,9 +1,15 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../../Handlers/database");
 
+// Testing ------------------------------------------------------------------------------
+// const GIVEN_ROLE_DURATION = 1 * 60 * 1000; // Giveaway given role is removed after 1 minute (testing)
+// ------------------------------------------------------------------------------
+
+// Production ------------------------------------------------------------------------------
 const CHECK_INTERVAL = 5000;
 const GIVEN_ROLE_CHECK_INTERVAL = 10 * 60 * 1000; // Check for expired giveaway given roles every 10 minutes
 const GIVEN_ROLE_DURATION = 30 * 24 * 60 * 60 * 1000; // Giveaway given role is removed after 1 month (30 days)
+// ------------------------------------------------------------------------------
 
 async function checkGiveaways(client) {
 
@@ -78,20 +84,21 @@ async function endGiveaway(client, giveawayId, giveawayData) {
 
         }
 
-        const topRowFromat    = "***──────── 🎉 \`GIVEAWAY RESULTS\` 🎉 ───────***"
+        const topRowFromat    = `***🎉 \`${guild.name} Giveaway Results\` 🎉***`
         const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
-        const bottomRowFormat = "***───────────────────────────────────────***"
+        const bottomRowFormat = "***───────────────────────────────***"
 
         const space = 'ㅤ'
 
-        const prize = `ㅤㅤㅤ**・Prize: \`${giveawayData.prize}\`**`
-        const ended = `ㅤㅤㅤㅤ**・Ended: <t:${Math.floor(giveawayData.endTime / 1000)}:F>**`
-        const winner = `ㅤㅤㅤㅤ**・Winner(s): ${winnerMentions}**`
+        const prize = `ㅤㅤㅤ**🌿・Prize: \`${giveawayData.prize}\`**`
+        const ended = `ㅤㅤㅤㅤ**🌿・Ended: <t:${Math.floor(giveawayData.endTime / 1000)}:F>**`
+        const winner = `ㅤㅤㅤㅤ**🌿・Winner(s): ${winnerMentions}**`
 
         const endedEmbed = new EmbedBuilder()
             .setTitle(`${topRowFromat}`)
-            .setDescription(`\n${space}\n${middle}\n${prize}\n${ended}\n${winner}\n${middle}\n${space}\n${bottomRowFormat}`)
-            .setColor('#FFFFFF')
+            .setDescription(`${bottomRowFormat}\n${space}\n${prize}\n${ended}\n${winner}\n${space}\n${bottomRowFormat}`)
+            .setThumbnail(guild.iconURL())
+            .setColor(0xff0000)
 
         const originalEmbed = message.embeds[0];
 
