@@ -187,6 +187,13 @@ module.exports = {
             });
         }
 
+        if (amount > 5000) {
+            return interaction.update({
+                components: [buildStatusContainer(`❌ You cant buy more than 5000 FernCoins`)],
+                flags: MessageFlags.IsComponentsV2
+            });
+        }
+
         const { price, userId } = session;
         const { applyPressure } = require('../../Functions/Stock/stock-market');
 
@@ -212,6 +219,13 @@ module.exports = {
             if (bankDeduction > 0) await db.bank.set(`${userId}.bank`, currentBank - bankDeduction);
 
             const currentHoldings = await db.stock.get(`${userId}.holdings`) || 0;
+            if (currentHoldings == 5000) {
+            return interaction.update({
+                components: [buildStatusContainer(`❌ You already have ${currentHoldings} FernCoins`)],
+                flags: MessageFlags.IsComponentsV2
+            });
+        }
+
             await db.stock.set(`${userId}.holdings`, currentHoldings + amount);
 
             const prevSpent = await db.stock.get(`${userId}.totalSpent`) || 0;
