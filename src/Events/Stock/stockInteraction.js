@@ -219,9 +219,16 @@ module.exports = {
             if (bankDeduction > 0) await db.bank.set(`${userId}.bank`, currentBank - bankDeduction);
 
             const currentHoldings = await db.stock.get(`${userId}.holdings`) || 0;
+            const canbuyamount = 5000 - currentHoldings;
             if (currentHoldings == 5000) {
             return interaction.update({
-                components: [buildStatusContainer(`❌ You already have ${currentHoldings} FernCoins`)],
+                components: [buildStatusContainer(`❌ You already have ${currentHoldings.toLocaleString()} FernCoins!`)],
+                flags: MessageFlags.IsComponentsV2
+            });
+            }
+            if (currentHoldings > canbuyamount) {
+            return interaction.update({
+                components: [buildStatusContainer(`❌ You can only buy ${canbuyamount.toLocaleString()} FernCoins!`)],
                 flags: MessageFlags.IsComponentsV2
             });
         }
