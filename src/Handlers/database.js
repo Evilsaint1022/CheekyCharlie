@@ -2,7 +2,7 @@ const DotDB = require("dotdatabase").default;
 
 const db = {
 
-    // Owners ID's DataBase -------------------------------------------------------------------------
+    // Owners ID's DataBase --------------------------------------------------------------------
     owners: new DotDB("./src/Utilities/Storage_Static/Settings/Owners/owners.json"),
 
     // Static DataBase -------------------------------------------------------------------------
@@ -13,6 +13,13 @@ const db = {
     status: new DotDB("./src/Utilities/Storage_Static/Status/status.json"),
     // -----------------------------------------------------------------------------------------
     
+
+    // Dev Testing Databases -----------------------------------------------------------------------
+    youtube: new DotDB("./src/Utilities/Dev/Youtube/youtube.json"),
+    youtubesent: new DotDB("./src/Utilities/Dev/Youtube/youtube-sent.json"),
+    // -----------------------------------------------------------------------------------------
+
+    // Normal Databases ------------------------------------------------------------------------
     vc: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vc.json"),
     vcmembers: new DotDB("./src/Utilities/Storage/Settings/VoiceChannels/vcmembers.json"),
     whitelisted: new DotDB("./src/Utilities/Storage/Settings/Whitelisted/whitelisted.json"),
@@ -67,9 +74,7 @@ const db = {
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
     stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json"),
     bankInterest: new DotDB("./src/Utilities/Storage/Bank-Interest/bankinterest.json"),
-    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json"),
-    youtube: new DotDB("./src/Utilities/Storage/Settings/Youtube/youtube.json"),
-    youtubesent: new DotDB("./src/Utilities/Storage/Settings/Youtube/youtube-sent.json")
+    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json")
 }
 
 module.exports = db;
