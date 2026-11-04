@@ -12,6 +12,7 @@ const { loadFunctions }  = require('./Handlers/functionHandler');
 const registerAIHandler = require('./Handlers/AI-Handler');
 const commandHandler = require('../src/Handlers/commandHandler');
 const PrefixCommands = require('../src/Handlers/prefixcommandsHandler');
+const { StartYouTubeFeed } = require('../src/Handlers/youtubeFeedHandler');
 // ----------------------------------------------------------------------------------------------------------------------------------
 
 // Load Console Colors --------------------------------------------------------------------------------------------------------------
@@ -94,6 +95,7 @@ client.once("clientReady", async () => {
     await commandHandler(client);
     await PrefixCommands(client);
     await registerAIHandler(client);
+    await StartYouTubeFeed(client);
 
 // CheekyCharlie Status ------------------------------------------------------------------------
 const date = new Date().toLocaleDateString('en-NZ', {
