@@ -85,14 +85,14 @@ async function endGiveaway(client, giveawayId, giveawayData) {
         }
 
         const topRowFromat    = `***🎉 \`${guild.name} Giveaway Results\` 🎉***`
-        const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+        const middle =              `· · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
         const bottomRowFormat = "***───────────────────────────────***"
 
         const space = 'ㅤ'
 
-        const prize = `ㅤㅤㅤ**🌿・Prize: \`${giveawayData.prize}\`**`
-        const ended = `ㅤㅤㅤㅤ**🌿・Ended: <t:${Math.floor(giveawayData.endTime / 1000)}:F>**`
-        const winner = `ㅤㅤㅤㅤ**🌿・Winner(s): ${winnerMentions}**`
+        const prize =  `**🌿・Prize: \`${giveawayData.prize}\`**`
+        const ended =  `**🌿・Ended: <t:${Math.floor(giveawayData.endTime / 1000)}:F>**`
+        const winner = `**🌿・Winner(s): ${winnerMentions}**`
 
         const endedEmbed = new EmbedBuilder()
             .setTitle(`${topRowFromat}`)

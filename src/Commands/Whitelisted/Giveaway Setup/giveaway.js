@@ -52,15 +52,15 @@ module.exports = {
         const endTime = Date.now() + (duration * 60 * 1000);
         const endTimestamp = Math.floor(endTime / 1000);
 
-        const topRowFromat    = `***🎉 \`${guildName} Giveaway\` 🎉***`
-        const middle =              `ㅤㅤ · · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
+        const title    = `***🎉 \`${guildName} Giveaway\` 🎉***`
+        const middle =              `· · - ┈┈━━━━ ˚ . 🌿 . ˚ ━━━━┈┈ - · ·`
         const bottomRowFormat = "***──────────────────────────────***"
 
         const space = 'ㅤ'
 
         const giveawayEmbed = new EmbedBuilder()
-            .setTitle(`${topRowFromat}`)
-            .setDescription(`${bottomRowFormat}\n${space}\nㅤㅤ**🌿・Prize: \`${prize}\`**\nㅤㅤ**🌿・Ends: <t:${endTimestamp}:R>** (<t:${endTimestamp}:F>)\nㅤㅤ**🌿・Winners: ${winners}**\n${space}\n${bottomRowFormat}`)
+            .setTitle(`${title}`)
+            .setDescription(`${bottomRowFormat}\n${space}\n**🌿・Prize: \`${prize}\`**\n**🌿・Ends: <t:${endTimestamp}:R>** (<t:${endTimestamp}:F>)\n**🌿・Winners: ${winners}**\n${space}\n${bottomRowFormat}`)
             .setThumbnail(interaction.guild.iconURL())
             .setColor(0x207e37)
 
