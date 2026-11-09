@@ -158,8 +158,8 @@ module.exports = {
         .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid Amount:__ㅤ ⏰ __Remaining Tax:__**\n` +
-          `ㅤ ***ㅤ ${custom || ferns}・\`${formattedpay}\`${spacing}${custom || ferns}・\`${formattedtax}\`***\n` +
+          `ㅤ💰 **__Paid Amount:__ㅤ ⏰ __Remaining Tax:__**\n` +
+          `ㅤ***${custom || ferns}・\`${formattedpay}\`${spacing}${custom || ferns}・\`${formattedtax}\`***\n` +
           `${middle}\n`
         )
         .setFooter({ text: `ㅤ 🌿 Inland Revenue Department 🌿` })

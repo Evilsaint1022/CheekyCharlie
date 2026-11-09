@@ -130,14 +130,37 @@ module.exports = {
         const formattedBalance = formatAmount(walletBalance); 
         const formattedBank = formatAmount(bankBalance);
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedBalance.length === 6) {
+            spacing = "  "
+        } else if (formattedBalance.length === 5) {
+            spacing = "   "
+        } else if (formattedBalance.length === 4) {
+            spacing = "   "
+        } else if (formattedBalance.length === 3) {
+           spacing = "   " 
+        } else if (formattedBalance.length === 2) {
+            spacing = "    "
+        } else if (formattedBalance.length === 1) {
+            spacing = "     "
+        } else if (formattedBalance.length === 0) {
+            spacing = "      "
+        };
+        // --------------------------------------------------------
+
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setDescription(
                 `### ***🌿 \`${author.username}'s Deposit!\` 🌿***\n` +
                 `_Successfully deposited **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
+                `ㅤ **💰__Wallet__**    **🏦__Bank__**\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`${spacing}${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })
@@ -201,14 +224,37 @@ module.exports = {
         const formattedBalance = formatAmount(walletBalance); 
         const formattedBank = formatAmount(bankBalance);
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedBalance.length === 6) {
+            spacing = "  "
+        } else if (formattedBalance.length === 5) {
+            spacing = "   "
+        } else if (formattedBalance.length === 4) {
+            spacing = "   "
+        } else if (formattedBalance.length === 3) {
+           spacing = "   " 
+        } else if (formattedBalance.length === 2) {
+            spacing = "    "
+        } else if (formattedBalance.length === 1) {
+            spacing = "     "
+        } else if (formattedBalance.length === 0) {
+            spacing = "      "
+        };
+        // --------------------------------------------------------
+
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
             .setDescription(
                 `### ***🌿 \`${author.username}'s Withdrawal!\` 🌿***\n` +
                 `_Successfully withdrew **${custom || ferns}${withdrawAmount.toLocaleString()} ${customname || fernsname}**_\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
+                `ㅤ **💰__Wallet__**    **🏦__Bank__**\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`${spacing}${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

@@ -36,6 +36,9 @@ module.exports = {
     const custom = await db.settings.get(`${guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    // For Testing Use Only
+    // const ferns = `🌿`
+
     const customname = await db.settings.get(`${guild.id}.currencyname`)
     const fernsname = await db.default.get("Default.name");
 
@@ -44,7 +47,7 @@ module.exports = {
 
     // format last paid
     let lastPaidText = "🌿 Never Paid Tax 🌿";
-    let bottom = `ㅤ 🌿 Inland Revenue Department 🌿`;
+    let bottom = `🌿 Inland Revenue Department 🌿`;
 
     if (lastPaid) {
       const date = new Date(lastPaid);
@@ -58,14 +61,37 @@ module.exports = {
 
     const formattedtax = formatAmount(currentTax);
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedtax.length === 6) {
+            spacing = "   "
+        } else if (formattedtax.length === 5) {
+            spacing = "    "
+        } else if (formattedtax.length === 4) {
+            spacing = "    "
+        } else if (formattedtax.length === 3) {
+           spacing = "    " 
+        } else if (formattedtax.length === 2) {
+            spacing = "     "
+        } else if (formattedtax.length === 1) {
+            spacing = "      "
+        } else if (formattedtax.length === 0) {
+            spacing = "       "
+        };
+        // --------------------------------------------------------
+
     const embed = new EmbedBuilder()
       .setColor(overdue ? 0xff4d4d : 0x207e37)
       .setTitle(`***🧾 \`${message.author.tag} Tax's\`***`)
       .setDescription(
         `_You are viewing your tax information._\n` +
         `${middle}\n` +
-        `ㅤ **💰__Current Tax__   ⏰__Last Payment__**\n` +
-        `ㅤ ***${custom || ferns}・\`${formattedtax}\`***     ${lastPaidText}\n` +
+        `ㅤ**💰__Current Tax__  ⏰__Last Payment__**\n` +
+        `ㅤ***${custom || ferns}・\`${formattedtax}\`***${spacing}${lastPaidText}\n` +
         `${middle}\n`
       )
       .setFooter({ text: bottom })

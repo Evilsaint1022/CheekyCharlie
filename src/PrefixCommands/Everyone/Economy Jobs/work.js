@@ -199,20 +199,41 @@ module.exports = {
         const formattedBalance = formatAmount(balance); 
         const formattedBank = formatAmount(bank);
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedBalance.length === 6) {
+            spacing = "  "
+        } else if (formattedBalance.length === 5) {
+            spacing = "   "
+        } else if (formattedBalance.length === 4) {
+            spacing = "   "
+        } else if (formattedBalance.length === 3) {
+           spacing = "   " 
+        } else if (formattedBalance.length === 2) {
+            spacing = "    "
+        } else if (formattedBalance.length === 1) {
+            spacing = "     "
+        } else if (formattedBalance.length === 0) {
+            spacing = "      "
+        };
+        // --------------------------------------------------------
+
         // Embed
         const embed = new EmbedBuilder()
             .setTitle(`***🌿 \`${username} Worked!\` 🌿***`)
             .setDescription(
                 `${selectedJob.emoji} _${phrase}_ **${currency}${reward.toLocaleString()}**\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__**     ㅤ**🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
+                `ㅤ **💰__Wallet__**    **🏦__Bank__**\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`${spacing}${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}\n\n`
             )
             .setColor(0x207e37)
-            .setFooter({
-                text: ` 🌿 Current Job: ${selectedJob.name}`
-            })
+            .setFooter({ text: `🌿 Current Job: ${selectedJob.name}`})
             .setThumbnail(message.author.displayAvatarURL({ dynamic: true }));
 
         await message.reply({
