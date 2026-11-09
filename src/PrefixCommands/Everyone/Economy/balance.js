@@ -40,6 +40,9 @@ module.exports = {
         const custom = await db.settings.get(`${guild.id}.currencyicon`)
         const ferns = await db.default.get("Default.ferns");
 
+        // For Testing Use Only
+        // const ferns = `🌿`
+
         const customname = await db.settings.get(`${guild.id}.currencyname`)
         const fernsname = await db.default.get("Default.name");
 
@@ -52,11 +55,9 @@ module.exports = {
             (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null) ||
             author;
 
-        const space = 'ㅤ';
-
         const top = `***🌿 \`${targetUser.username}'s Balance\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-        const bottom = `ㅤ ㅤ🌿 Thanks For Using Bank-NZ 🌿`;
+        const bottom = `ㅤ 🌿 Thanks For Using Bank-NZ 🌿`;
 
         // ------------------------------------------------------
         // 1️⃣ MIGRATION — move username-based keys → ID-only keys
@@ -87,6 +88,29 @@ module.exports = {
         const formattedBalance = formatAmount(balance); 
         const formattedBank = formatAmount(bank);
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedBalance.length === 6) {
+            spacing = "  "
+        } else if (formattedBalance.length === 5) {
+            spacing = "   "
+        } else if (formattedBalance.length === 4) {
+            spacing = "   "
+        } else if (formattedBalance.length === 3) {
+           spacing = "   " 
+        } else if (formattedBalance.length === 2) {
+            spacing = "    "
+        } else if (formattedBalance.length === 1) {
+            spacing = "     "
+        } else if (formattedBalance.length === 0) {
+            spacing = "      "
+        };
+        // --------------------------------------------------------
+
         // Embed
         const embed = new EmbedBuilder()
             .setColor(0x207e37)
@@ -94,8 +118,8 @@ module.exports = {
             .setDescription(
                 `_You are viewing ${targetUser.username}'s balance._\n` +
                 `${middle}\n` +
-                `ㅤ **💰__Wallet__     ㅤ🏦__Bank__**\n` +
-                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`    ${custom || ferns}・\`${formattedBank}\`***\n` +
+                `ㅤ **💰__Wallet__    🏦__Bank__**\n` +
+                `ㅤ ***${custom || ferns}・\`${formattedBalance}\`${spacing}${custom || ferns}・\`${formattedBank}\`***\n` +
                 `${middle}`
             )
             .setFooter({ text: bottom })

@@ -70,6 +70,9 @@ module.exports = {
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
 
+    // For Testing Use Only
+    // const ferns = `🌿`
+
     const customname = await db.settings.get(`${message.guild.id}.currencyname`)
     const fernsname = await db.default.get("Default.name");
 
@@ -127,13 +130,36 @@ module.exports = {
       const formattedpay = formatAmount(payAmount);
       const formattedtax = formatAmount(newTax)
 
+        // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedpay.length === 6) {
+            spacing = "    "
+        } else if (formattedpay.length === 5) {
+            spacing = "     "
+        } else if (formattedpay.length === 4) {
+            spacing = "     "
+        } else if (formattedpay.length === 3) {
+           spacing = "     " 
+        } else if (formattedpay.length === 2) {
+            spacing = "      "
+        } else if (formattedpay.length === 1) {
+            spacing = "       "
+        } else if (formattedpay.length === 0) {
+            spacing = "        "
+        };
+        // --------------------------------------------------------
+
       const taxembed = new EmbedBuilder()
         .setTitle(`***🧾 \`Tax Payment Successful\`***`)
         .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid Amount:__  ⏰ __Remaining Tax:__**\n` +
-          `ㅤ ***ㅤ${custom || ferns}・\`${formattedpay}\`      ${custom || ferns}・\`${formattedtax}\`***\n` +
+          `ㅤ 💰 **__Paid Amount:__ㅤ ⏰ __Remaining Tax:__**\n` +
+          `ㅤ ***ㅤ ${custom || ferns}・\`${formattedpay}\`${spacing}${custom || ferns}・\`${formattedtax}\`***\n` +
           `${middle}\n`
         )
         .setFooter({ text: `ㅤ 🌿 Inland Revenue Department 🌿` })
@@ -203,16 +229,39 @@ module.exports = {
 
       const formattedamount = formatAmount(amount)
 
+              // Spacing Formatting for the embed message! -------------
+        let spacing = ``;
+
+        // Debug Console Log
+        // console.log(formattedBalance.length);
+
+        if (formattedamount.length === 6) {
+            spacing = "  "
+        } else if (formattedamount.length === 5) {
+            spacing = "   "
+        } else if (formattedamount.length === 4) {
+            spacing = "   "
+        } else if (formattedamount.length === 3) {
+           spacing = "   " 
+        } else if (formattedamount.length === 2) {
+            spacing = "    "
+        } else if (formattedamount.length === 1) {
+            spacing = "     "
+        } else if (formattedamount.length === 0) {
+            spacing = "      "
+        };
+        // --------------------------------------------------------
+
       const paymentembed = new EmbedBuilder()
         .setTitle(`***🌿 \`Payment Successful!\` 🌿***`)
         .setColor(0x207e37)
         .setDescription(
           `${middle}\n` +
-          `ㅤ 💰 **__Paid:__     💰 __Receiver:__**\n` +
-          `ㅤ ***${custom || ferns}・\`${formattedamount}\`      \`${user.username}\`***\n` +
+          `ㅤ 💰 **__Paid:__    💰 __Receiver:__**\n` +
+          `ㅤ ***${custom || ferns}・\`${formattedamount}\`${spacing}\`${user.username}\`***\n` +
           `${middle}\n`
         )
-        .setFooter({ text: `ㅤ 🌿 ${sender.username} ${sender.id} 🌿` })
+        .setFooter({ text: ` 🌿 ${sender.username} -> ${sender.id} 🌿` })
         .setThumbnail(sender.displayAvatarURL({ dynamic: true }))
 
       // ------------------------------------------------------

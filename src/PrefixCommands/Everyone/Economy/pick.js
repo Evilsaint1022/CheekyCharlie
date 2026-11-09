@@ -49,6 +49,9 @@ module.exports = {
             const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
             const ferns = await db.default.get("Default.ferns");
 
+            // For Testing Use Only
+            // const ferns = `🌿`
+
             const customname = await db.settings.get(`${message.guild.id}.currencyname`)
             const fernsname = await db.default.get("Default.name");
 
@@ -150,7 +153,8 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`***🌿 \`Successfully Picked!\` 🌿***`)
-                        .setDescription(`***Picked: ${custom || ferns}\`${coinsEarned.toLocaleString()}\` ${customname || fernsname}***`)
+                        .setDescription(`〉***You Have Successfully Picked:***\n    ***${custom || ferns}\`${coinsEarned.toLocaleString()}\` ${customname || fernsname}***`)
+                        .setThumbnail(user.displayAvatarURL({ dynamic: true }))
                         .setColor(0x207e37)
                 ]
             });
