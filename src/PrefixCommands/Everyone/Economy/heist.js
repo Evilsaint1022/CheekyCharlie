@@ -151,13 +151,13 @@ module.exports = {
         if (formattedBalance.length === 6) {
             spacing = "  "
         } else if (formattedBalance.length === 5) {
-            spacing = "   "
+            spacing = "  "
         } else if (formattedBalance.length === 4) {
-            spacing = "   "
+            spacing = "    "
         } else if (formattedBalance.length === 3) {
-           spacing = "   " 
+            spacing = "    " 
         } else if (formattedBalance.length === 2) {
-            spacing = "    "
+            spacing = "     "
         } else if (formattedBalance.length === 1) {
             spacing = "     "
         } else if (formattedBalance.length === 0) {
