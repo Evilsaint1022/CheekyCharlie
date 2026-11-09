@@ -145,7 +145,7 @@ module.exports = {
         if (formattedBalance.length === 6) {
             spacing = "  "
         } else if (formattedBalance.length === 5) {
-            spacing = "  "
+            spacing = "   "
         } else if (formattedBalance.length === 4) {
             spacing = "    "
         } else if (formattedBalance.length === 3) {

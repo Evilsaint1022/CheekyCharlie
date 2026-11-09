@@ -38,10 +38,10 @@ module.exports = {
         const { guild, author } = message;
 
         const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
-        const ferns = await db.default.get("Default.ferns");
+        let ferns = await db.default.get("Default.ferns");
 
         // For Testing Use Only
-        // const ferns = `🌿`
+        // ferns = `🌿`
 
         const customname = await db.settings.get(`${message.guild.id}.currencyname`)
         const fernsname = await db.default.get("Default.name");
@@ -142,7 +142,7 @@ module.exports = {
         if (formattedBalance.length === 6) {
             spacing = "  "
         } else if (formattedBalance.length === 5) {
-            spacing = "  "
+            spacing = "   "
         } else if (formattedBalance.length === 4) {
             spacing = "    "
         } else if (formattedBalance.length === 3) {
@@ -236,7 +236,7 @@ module.exports = {
         if (formattedBalance.length === 6) {
             spacing = "  "
         } else if (formattedBalance.length === 5) {
-            spacing = "  "
+            spacing = "   "
         } else if (formattedBalance.length === 4) {
             spacing = "    "
         } else if (formattedBalance.length === 3) {
