@@ -92,7 +92,7 @@ module.exports = {
         let spacing = ``;
 
         // Debug Console Log
-        console.log(formattedBalance.length);
+        // console.log(formattedBalance.length);
 
         if (formattedBalance.length === 6) {
             spacing = "  "
