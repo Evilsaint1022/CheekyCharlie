@@ -86,10 +86,10 @@ module.exports = {
         const username = author.username;
 
         const custom = await db.settings.get(`${guild.id}.currencyicon`)
-        // const ferns = await db.default.get("Default.ferns");
+        const ferns = await db.default.get("Default.ferns");
 
         // For Testing Use Only
-        const ferns = `🌿`
+        // const ferns = `🌿`
 
         const customname = await db.settings.get(`${guild.id}.currencyname`)
         const fernsname = await db.default.get("Default.name");
