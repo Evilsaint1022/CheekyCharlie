@@ -86,10 +86,10 @@ module.exports = {
         const username = author.username;
 
         const custom = await db.settings.get(`${guild.id}.currencyicon`)
-        const ferns = await db.default.get("Default.ferns");
+        // const ferns = await db.default.get("Default.ferns");
 
         // For Testing Use Only
-        // const ferns = `🌿`
+        const ferns = `🌿`
 
         const customname = await db.settings.get(`${guild.id}.currencyname`)
         const fernsname = await db.default.get("Default.name");
@@ -98,7 +98,7 @@ module.exports = {
         const top = `***🌿 \`${username} Begs!\` 🌿***`;
         const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
         const bar = `**─────────────────────────────────**`;
-        const bottom = `ㅤ 🌿 Come Back for More Soon! 🌿`;
+        const bottom = `🌿 Come Back for More Soon! 🌿`;
 
         // Cooldown check
         const lastBeg = await db.lastclaim.get(`${userId}.beg`) || 0;
@@ -140,19 +140,19 @@ module.exports = {
         // console.log(formattedBalance.length);
 
         if (formattedBalance.length === 6) {
-            spacing = "  "
+            spacing = "   "
         } else if (formattedBalance.length === 5) {
-            spacing = "   "
-        } else if (formattedBalance.length === 4) {
-            spacing = "   "
-        } else if (formattedBalance.length === 3) {
-           spacing = "   " 
-        } else if (formattedBalance.length === 2) {
             spacing = "    "
-        } else if (formattedBalance.length === 1) {
+        } else if (formattedBalance.length === 4) {
+            spacing = "    "
+        } else if (formattedBalance.length === 3) {
+           spacing = "    " 
+        } else if (formattedBalance.length === 2) {
             spacing = "     "
-        } else if (formattedBalance.length === 0) {
+        } else if (formattedBalance.length === 1) {
             spacing = "      "
+        } else if (formattedBalance.length === 0) {
+            spacing = "       "
         };
         // --------------------------------------------------------
 
