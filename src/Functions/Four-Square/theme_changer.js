@@ -1,18 +1,18 @@
 const path = require('path');
 const cron = require('node-cron');
-const db = require("../../Handlers/database");
-const { RateLimitError } = require('openai/error.js');
 
+const db = require("../../Handlers/database");
 // -----------------------------------------------------------------------------------------------------
 // Testing Code Section:
 // const GuildId = "1502175645801906216";
-// const CronTime = "*/1 * * * *"; // Every minute
+// const CronTime = "* * * * *"; // Every 1 minute
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
 // Production Code:
 const GuildId = "1495254374971084961";
 const CronTime = "0 5 * * *"; // Runs everyday at 5am to check if its active or not.
+let scheduledTask = null;
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
@@ -46,11 +46,7 @@ db.settings.set(`${GuildId}`, settings);
 let DefaultIconUpdated = settings.DefaultIconUpdated || false;
 let HalloweenUpdated = settings.HalloweenUpdated || false;
 
-if (RateLimitError?.status) {
-    console.log(`You are reaching the Rate Limit!`.bold.red);
-    return;
-}
-// -----------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 
 async function Theme_Changer(client) {
 
@@ -96,10 +92,11 @@ async function Theme_Changer(client) {
         console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated to the Halloween Themed.`);
         return;
      } catch (error) {
-        console.error(
-            '[❌] [THEME-CHANGER] Failed to update:',
-            error
-        );
+        if (error.code == 50035) { 
+        console.log(`[THEME-CHANGER] HALLOWEEN - You are being Rate Limited!`.bold.red) 
+        return;
+        }
+        console.error('[❌] [THEME-CHANGER] Failed to update:', error );
     }
     // -----------------------------------------------------------------------------------------------------
     //
@@ -113,7 +110,7 @@ async function Theme_Changer(client) {
     }
 
     // Else the Default Icon Gets Set.
-    if (!events && DefaultIconUpdated == false ) {
+    if (!events && DefaultIconUpdated == false ) try {
         await guild.setIcon(DefaultIcon);
         await client.user.setAvatar(DefaultBotIcon);
         await client.user.setBanner(DefaultBotBanner);
@@ -121,23 +118,27 @@ async function Theme_Changer(client) {
         await db.settings.set(`${GuildId}.DefaultIconUpdated`, true);
         console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Updated to the Default Theme.`);
         return;
-    }
-    };
-    // -----------------------------------------------------------------------------------------------------
-    // Cron Timer & Exporting the Function.
-    module.exports = {
-        name: 'Theme_Changer',
-        execute(client) {
-            cron.schedule(
-                CronTime,
-                () => Theme_Changer(client),
-                {
-                    timezone: 'Pacific/Auckland'
-                }
-            );
+     } catch (error) {
+        if (error.code == 50035) { 
+        console.log(`[THEME-CHANGER] DEFAULT - You are being Rate Limited!`.bold.red) 
+        return;
         }
-    };
+        console.error('[❌] [THEME-CHANGER] Failed to update:', error );
+    }
+};
+    // -----------------------------------------------------------------------------------------------------
+
+    // Cron Timer & Exporting the Function.
+    async function StartThemeChanger(client) {
+        scheduledTask = cron.schedule(CronTime, async () => {
+            Theme_Changer(client);
+        }, {
+            scheduled: true,
+            timezone: 'Pacific/Auckland'
+        });
+    }    
     // -----------------------------------------------------------------------------------------------------
 
     // Function Exporting.
     module.exports = Theme_Changer;
+    module.exports = StartThemeChanger
