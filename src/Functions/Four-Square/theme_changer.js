@@ -1,6 +1,7 @@
 const path = require('path');
 const cron = require('node-cron');
 const db = require("../../Handlers/database");
+const { RateLimitError } = require('openai/error.js');
 
 // -----------------------------------------------------------------------------------------------------
 // Testing Code Section:
@@ -35,8 +36,20 @@ const HalloweenIcon = path.join(__dirname,'../../Utilities/Four-Square/Icons/fou
 // -----------------------------------------------------------------------------------------------------
 // Fetching existing Settings
 const settings = db.settings.get(`${GuildId}`) || {};
+
+// Initialise DefaultIconUpdated if it doesn't exist
+settings.DefaultIconUpdated ??= false;
+
+// Save settings
+db.settings.set(`${GuildId}`, settings);
+
 let DefaultIconUpdated = settings.DefaultIconUpdated || false;
 let HalloweenUpdated = settings.HalloweenUpdated || false;
+
+if (RateLimitError?.status) {
+    console.log(`You are reaching the Rate Limit!`.bold.red);
+    return;
+}
 // -----------------------------------------------------------------------------------------------------
 
 async function Theme_Changer(client) {
@@ -69,7 +82,7 @@ async function Theme_Changer(client) {
     // -----------------------------------------------------------------------------------------------------
     // Checks if halloween has already Run.
     if (halloween && HalloweenUpdated == true) {
-        // console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
+        console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
         return;
     }
 
@@ -95,7 +108,7 @@ async function Theme_Changer(client) {
     // -----------------------------------------------------------------------------------------------------
     // Checks if DefaulIcon has already Ran.
     if (!events && DefaultIconUpdated == true) {
-    //console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
+    console.log(`[✅] [THEME-CHANGER] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} Has already Ran and changes have already been made.`)
     return;
     }
 
