@@ -33,6 +33,7 @@
 /src/Utilities/Storage/AI-Deadchat/ai-deadchat.json
 /src/Utilities/Storage/Giveaways/giveaways.json
 /src/Utilities/Storage/Giveaways/participants.json
+/src/Utilities/Storage/Giveaways/givenroles.json
 /src/Utilities/Storage/Giveaways/settings.json
 /src/Utilities/Storage/Settings/Qotd/lastqotd.json
 /src/Utilities/Storage/Fallback/slapgifs.json
@@ -56,9 +57,5 @@
 /src/Utilities/Storage/Bank-Interest/bankinterest.json
 /src/Utilities/Storage/Settings/Themes/Halloween/halloween.json
 /src/Utilities/Storage/Settings/Halloween/halloween.json
-/src/Utilities/Storage/Settings/Youtube/youtube.json
-/src/Utilities/Storage/Settings/Youtube/youtube-sent.json
-/src/Utilities/Storage/Giveaways/givenroles.json
-
 CLAUDE.md
 AGENTS.md
