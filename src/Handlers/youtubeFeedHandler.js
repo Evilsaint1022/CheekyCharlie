@@ -159,7 +159,7 @@ async function CheckYouTubeFeeds(client) {
                         !DiscordChannel.isTextBased() ||
                         typeof DiscordChannel.send !== 'function'
                     ) {
-                        console.log(`[🔴] [YOUTUBE-FEED] Invalid Discord channel: ${discordChannelId}`);
+                        // console.log(`[🔴] [YOUTUBE-FEED] Invalid Discord channel: ${discordChannelId}`);
                         continue;
                     }
 
@@ -192,21 +192,23 @@ async function CheckYouTubeFeeds(client) {
                         return new Date(b.published || 0) - new Date(a.published || 0);
                     });
 
-                    // Identify videos to send.
-                    let VideosToSend;
+                    // Only consider the 5 latest videos overall.
+                    const LatestVideos = SortedVideos.slice(0, INITIAL_VIDEO_LIMIT);
 
-                    // Only retrieve videos that haven't already been sent.
-                    VideosToSend = SortedVideos.filter(
+                    // Identify which of the latest 5 haven't already been sent.
+                    let VideosToSend = LatestVideos.filter(
                         Video => !SentVideos.includes(Video.link)
                     );
 
-                    // Only send the 5 latest videos.
-                    VideosToSend = VideosToSend.slice(0, INITIAL_VIDEO_LIMIT);
-
-                    // console.log(`[🔴] [YOUTUBE-FEED] Found ${VideosToSend.length} new videos for ${youtubeChannelId}.`);
+                    // Return if all latest 5 videos have already been sent.
+                    if (VideosToSend.length === 0) {
+                        continue;
+                    }
 
                     // Send oldest videos first.
                     VideosToSend.reverse();
+
+                    // console.log(`[🔴] [YOUTUBE-FEED] Found ${VideosToSend.length} new videos for ${youtubeChannelId}.`);
 
                     // Send videos to Discord.
                     for (const Video of VideosToSend) {
