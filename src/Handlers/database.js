@@ -11,12 +11,12 @@ const db = {
     joblist: new DotDB("./src/Utilities/Storage_Static/JobList/joblist.json"),
     qotdpacks: new DotDB("./src/Utilities/Storage_Static/Qotd/qotdpacks.json"),
     status: new DotDB("./src/Utilities/Storage_Static/Status/status.json"),
+    youtube: new DotDB("./src/Utilities/Storage_Static/Youtube/youtube.json"),
     // -----------------------------------------------------------------------------------------
     
 
     // Dev Testing Databases -----------------------------------------------------------------------
-    youtube: new DotDB("./src/Utilities/Dev/Youtube/youtube.json"),
-    youtubesent: new DotDB("./src/Utilities/Dev/Youtube/youtube-sent.json"),
+    // No Databases being tested at the moment...
     // -----------------------------------------------------------------------------------------
 
     // Normal Databases ------------------------------------------------------------------------
@@ -74,7 +74,9 @@ const db = {
     tax: new DotDB("./src/Utilities/Storage/Economy/Tax/tax.json"),
     stock: new DotDB("./src/Utilities/Storage/Economy/Stock/stock.json"),
     bankInterest: new DotDB("./src/Utilities/Storage/Bank-Interest/bankinterest.json"),
-    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json")
+    halloween: new DotDB("./src/Utilities/Storage/Settings/Themes/Halloween/halloween.json"),
+    youtubesent: new DotDB("./src/Utilities/Storage/Settings/Youtube/youtube-sent.json"),
+
 }
 
 module.exports = db;
