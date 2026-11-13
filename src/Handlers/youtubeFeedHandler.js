@@ -237,7 +237,7 @@ async function CheckYouTubeFeeds(client) {
 
                 } catch (Error) {
 
-                    console.error(`[🔴] [YOUTUBE-FEED] Error checking channel for guild ${GuildId}:`, Error);
+                    // console.error(`[🔴] [YOUTUBE-FEED] Error checking channel for guild ${GuildId}:`, Error);
                 }
             }
         }
