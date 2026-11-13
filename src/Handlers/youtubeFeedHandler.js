@@ -1,13 +1,16 @@
 const db = require('./database');
 
 // -----------------------------------------------------------------------------------------------------
-// Production Configuration
-const CHECK_INTERVAL = 30 * 60 * 1000; // Check every 30 minutes.
-const INITIAL_VIDEO_LIMIT = 5;
-
 // Dev Testing Configuration
 // const CHECK_INTERVAL = 1 * 60 * 1000; // Check every 1 minutes.
 // const INITIAL_VIDEO_LIMIT = 5;
+// -----------------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------------------
+// Production Configuration
+const CHECK_INTERVAL = 30 * 60 * 1000; // Check every 30 minutes.
+const INITIAL_VIDEO_LIMIT = 5;
+// -----------------------------------------------------------------------------------------------------
 
 // Cache resolved YouTube handles.
 const YouTubeChannelCache = new Map();
