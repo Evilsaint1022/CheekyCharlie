@@ -1,14 +1,15 @@
-const db = require('./database');
+const cron = require(`node-cron`);
+const db = require('../../Handlers/database');
 
 // -----------------------------------------------------------------------------------------------------
 // Dev Testing Configuration
-// const CHECK_INTERVAL = 1 * 60 * 1000; // Check every 1 minutes.
+// const CHECK_INTERVAL = "*/1 * * * *"; // 1 minute timer
 // const INITIAL_VIDEO_LIMIT = 5;
 // -----------------------------------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------------------------------
 // Production Configuration
-const CHECK_INTERVAL = 30 * 60 * 1000; // Check every 30 minutes.
+const CHECK_INTERVAL = "*/10 * * * *"; // 10 minute timer
 const INITIAL_VIDEO_LIMIT = 5;
 // -----------------------------------------------------------------------------------------------------
 
@@ -66,7 +67,7 @@ async function ResolveYouTubeChannel(YouTubeHandle) {
     // Cache resolved Channel ID.
     YouTubeChannelCache.set(YouTubeHandle, ChannelId);
 
-    // console.log(`[YOUTUBE-FEED] Resolved ${Handle} -> ${ChannelId}`);
+    // console.log(`[🔴] [YOUTUBE-FEED] Resolved ${Handle} -> ${ChannelId}`);
 
     return ChannelId;
 }
@@ -98,9 +99,9 @@ async function FetchYouTubeVideos(YouTubeHandle) {
     const XML = await Response.text();
 
     // Dev Testing ----------------------------------------------------------------------
-    // console.log('[YOUTUBE-FEED] RSS response received.');
-    // console.log('[YOUTUBE-FEED] RSS contains entries:', XML.includes('<entry>'));
-    // console.log('[YOUTUBE-FEED] RSS response length:', XML.length);
+    // console.log('[🔴] [YOUTUBE-FEED] RSS response received.');
+    // console.log('[🔴] [YOUTUBE-FEED] RSS contains entries:', XML.includes('<entry>'));
+    // console.log('[🔴] [YOUTUBE-FEED] RSS response length:', XML.length);
     // -----------------------------------------------------------------------------------
 
     const Videos = [];
@@ -181,9 +182,9 @@ async function CheckYouTubeFeeds(client) {
                     let SentVideos = await db.youtubesent.get(DatabaseKey);
 
                     // Dev Testing Section ----------------------------------------------
-                    // console.log('[YOUTUBE-FEED] Database key:', DatabaseKey);
-                    // console.log('[YOUTUBE-FEED] Existing history:', SentVideos);
-                    // console.log('[YOUTUBE-FEED] History type:', typeof SentVideos);
+                    // console.log('[🔴] [YOUTUBE-FEED] Database key:', DatabaseKey);
+                    // console.log('[🔴] [YOUTUBE-FEED] Existing history:', SentVideos);
+                    // console.log('[🔴] [YOUTUBE-FEED] History type:', typeof SentVideos);
                     // -------------------------------------------------------------------
 
                     if (!Array.isArray(SentVideos)) {
@@ -211,7 +212,7 @@ async function CheckYouTubeFeeds(client) {
                     // Send oldest videos first.
                     VideosToSend.reverse();
 
-                    // console.log(`[🔴] [YOUTUBE-FEED] Found ${VideosToSend.length} new videos for ${youtubeChannelId}.`);
+                    console.log(`[🔴] [YOUTUBE-FEED] Found ${VideosToSend.length} new videos for ${youtubeChannelId}.`);
 
                     // Send videos to Discord.
                     for (const Video of VideosToSend) {
@@ -227,11 +228,11 @@ async function CheckYouTubeFeeds(client) {
 
                             await db.youtubesent.set(DatabaseKey, SentVideos);
 
-                            // console.log(`[🔴] [YOUTUBE-FEED] Sent video: ${Video.link}`);
+                            console.log(`[🔴] [YOUTUBE-FEED] Sent video: ${Video.link}`);
 
                         } catch (Error) {
 
-                            console.error(`[🔴] [YOUTUBE-FEED] Failed to send video: ${Video.link}`, Error);
+                            console.error(`[🔴] [YOUTUBE-FEED] Failed to send video: ${Video.link}`, Error.message);
 
                             // Don't mark an unsuccessful send as sent.
                             break;
@@ -240,14 +241,14 @@ async function CheckYouTubeFeeds(client) {
 
                 } catch (Error) {
 
-                    // console.error(`[🔴] [YOUTUBE-FEED] Error checking channel for guild ${GuildId}:`, Error);
+                    // console.error(`[🔴] [YOUTUBE-FEED] Error checking channel for guild ${GuildId}:`, Error.message);
                 }
             }
         }
 
     } catch (Error) {
 
-        console.error('[🔴] [YOUTUBE-FEED] Database error:', Error);
+        console.error('[🔴] [YOUTUBE-FEED] Database error:', Error.message);
     }
 
     // console.log('[🔴] [YOUTUBE-FEED] Feed check completed.');
@@ -263,7 +264,7 @@ async function StartYouTubeFeed(client) {
 
     if (FeedInterval) return;
 
-    const RunCheck = async () => {
+    const RunCheck = async (client) => {
 
         if (IsChecking) return;
 
@@ -276,22 +277,21 @@ async function StartYouTubeFeed(client) {
         }
     };
 
-    // Check immediately when started.
-    await RunCheck();
-
     // Continue checking every 5 minutes.
-    FeedInterval = setInterval(RunCheck, CHECK_INTERVAL);
+    FeedInterval = cron.schedule(CHECK_INTERVAL, () => {
+    RunCheck(client)
+    });
 
     // console.log('[🔴] [YOUTUBE-FEED] Automatic checker started.');
 }
 
 // -----------------------------------------------------------------------------------------------------
 
-module.exports = {
+module.exports =
     StartYouTubeFeed,
     CheckYouTubeFeeds,
     ResolveYouTubeChannel,
     FetchYouTubeVideos
-};
+;
 
 // -----------------------------------------------------------------------------------------------------
