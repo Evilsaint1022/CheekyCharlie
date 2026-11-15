@@ -13,8 +13,15 @@ const CHECK_INTERVAL = "*/10 * * * *"; // 10 minute timer
 const INITIAL_VIDEO_LIMIT = 5;
 // -----------------------------------------------------------------------------------------------------
 
+// Only log a feed error after this many failed checks in a row.
+// YouTube's RSS endpoint randomly returns 404/500 for valid channels, so single failures are ignored.
+const FAILURE_LOG_THRESHOLD = 6; // 6 checks x 10 minutes = 1 hour
+
 // Cache resolved YouTube handles.
 const YouTubeChannelCache = new Map();
+
+// Consecutive failures per feed.
+const FeedFailures = new Map();
 
 // -----------------------------------------------------------------------------------------------------
 // Resolve YouTube Handle into Channel ID
@@ -34,6 +41,31 @@ async function ResolveYouTubeChannel(YouTubeHandle) {
     const Handle = YouTubeHandle.startsWith('@')
         ? YouTubeHandle
         : `@${YouTubeHandle}`;
+
+    let ChannelId;
+
+    try {
+        ChannelId = await ScrapeYouTubeChannelId(Handle);
+    } catch (ScrapeError) {
+
+        // No API key configured, keep the scrape error.
+        if (!process.env.YOUTUBE_API_KEY) throw ScrapeError;
+
+        ChannelId = await ResolveYouTubeChannelAPI(Handle);
+    }
+
+    // Cache resolved Channel ID.
+    YouTubeChannelCache.set(YouTubeHandle, ChannelId);
+
+    // console.log(`[🔴] [YOUTUBE-FEED] Resolved ${Handle} -> ${ChannelId}`);
+
+    return ChannelId;
+}
+
+// -----------------------------------------------------------------------------------------------------
+// Scrape Channel ID from the YouTube channel page
+
+async function ScrapeYouTubeChannelId(Handle) {
 
     const ChannelURL = `https://www.youtube.com/${Handle}`;
 
@@ -64,21 +96,109 @@ async function ResolveYouTubeChannel(YouTubeHandle) {
         throw new Error(`Could not find Channel ID for ${Handle}`);
     }
 
-    // Cache resolved Channel ID.
-    YouTubeChannelCache.set(YouTubeHandle, ChannelId);
+    return ChannelId;
+}
 
-    // console.log(`[🔴] [YOUTUBE-FEED] Resolved ${Handle} -> ${ChannelId}`);
+// -----------------------------------------------------------------------------------------------------
+// Resolve Channel ID with the YouTube Data API
+
+async function ResolveYouTubeChannelAPI(Handle) {
+
+    const Params = new URLSearchParams({
+        part: 'id',
+        forHandle: Handle,
+        key: process.env.YOUTUBE_API_KEY
+    });
+
+    const Response = await fetch(`https://www.googleapis.com/youtube/v3/channels?${Params}`, {
+        signal: AbortSignal.timeout(15000)
+    });
+
+    if (!Response.ok) {
+        throw new Error(`YouTube API could not resolve ${Handle}: HTTP ${Response.status}`);
+    }
+
+    const Data = await Response.json();
+    const ChannelId = Data.items?.[0]?.id;
+
+    if (!ChannelId) {
+        throw new Error(`YouTube API found no channel for ${Handle}`);
+    }
 
     return ChannelId;
 }
 
 // -----------------------------------------------------------------------------------------------------
-// Fetch YouTube RSS Feed
+// Fetch Videos (RSS first, YouTube Data API as fallback)
 
 async function FetchYouTubeVideos(YouTubeHandle) {
 
     // Resolve handle into Channel ID.
     const ChannelId = await ResolveYouTubeChannel(YouTubeHandle);
+
+    try {
+        return await FetchYouTubeRSS(YouTubeHandle, ChannelId);
+    } catch (RSSError) {
+
+        // No API key configured, keep the RSS error.
+        if (!process.env.YOUTUBE_API_KEY) throw RSSError;
+
+        try {
+            return await FetchYouTubeAPI(ChannelId);
+        } catch (APIError) {
+            throw new Error(`${RSSError.message} | API fallback failed: ${APIError.message}`);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------------------------------
+// Fetch YouTube Data API (uploads playlist)
+
+async function FetchYouTubeAPI(ChannelId) {
+
+    // Every channel's uploads playlist is its Channel ID with "UC" replaced by "UU".
+    const PlaylistId = `UU${ChannelId.slice(2)}`;
+
+    const Params = new URLSearchParams({
+        part: 'snippet,contentDetails',
+        playlistId: PlaylistId,
+        maxResults: '15',
+        key: process.env.YOUTUBE_API_KEY
+    });
+
+    const Response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?${Params}`, {
+        signal: AbortSignal.timeout(15000)
+    });
+
+    if (!Response.ok) {
+        const Body = await Response.json().catch(() => null);
+        throw new Error(`YouTube API returned HTTP ${Response.status}${Body?.error?.message ? ` (${Body.error.message})` : ''}`);
+    }
+
+    const Data = await Response.json();
+    const Videos = [];
+
+    for (const Item of Data.items || []) {
+
+        const VideoId = Item.contentDetails?.videoId || Item.snippet?.resourceId?.videoId;
+
+        if (!VideoId) continue;
+
+        Videos.push({
+            videoId: VideoId,
+            title: Item.snippet?.title || 'New YouTube Video',
+            link: `https://www.youtube.com/watch?v=${VideoId}`,
+            published: Item.contentDetails?.videoPublishedAt || Item.snippet?.publishedAt || null
+        });
+    }
+
+    return Videos;
+}
+
+// -----------------------------------------------------------------------------------------------------
+// Fetch YouTube RSS Feed
+
+async function FetchYouTubeRSS(YouTubeHandle, ChannelId) {
 
     const FeedURL = `https://www.youtube.com/feeds/videos.xml?channel_id=${ChannelId}`;
 
@@ -145,6 +265,8 @@ async function CheckYouTubeFeeds(client) {
 
             for (const Feed of YouTubeChannels) {
 
+                const FailureKey = `${GuildId}.${Feed.youtubeChannelId}.${Feed.discordChannelId}`;
+
                 try {
 
                     const {
@@ -169,6 +291,13 @@ async function CheckYouTubeFeeds(client) {
 
                     // Retrieve YouTube videos.
                     const Videos = await FetchYouTubeVideos(youtubeChannelId);
+
+                    // Feed recovered after being reported as failing.
+                    if ((FeedFailures.get(FailureKey) || 0) >= FAILURE_LOG_THRESHOLD) {
+                        console.log(`[🔴] [YOUTUBE-FEED] Feed for ${youtubeChannelId} in guild ${GuildId} is working again.`);
+                    }
+
+                    FeedFailures.delete(FailureKey);
 
                     // console log for testing.
                     // console.log(`[🔴] [YOUTUBE-FEED] Retrieved ${Videos.length} videos for ${youtubeChannelId}.`);
@@ -241,7 +370,14 @@ async function CheckYouTubeFeeds(client) {
 
                 } catch (Error) {
 
-                    // console.error(`[🔴] [YOUTUBE-FEED] Error checking channel for guild ${GuildId}:`, Error.message);
+                    const Failures = (FeedFailures.get(FailureKey) || 0) + 1;
+
+                    FeedFailures.set(FailureKey, Failures);
+
+                    // Log once when the threshold is reached, not on every failed check.
+                    if (Failures === FAILURE_LOG_THRESHOLD) {
+                        console.error(`[🔴] [YOUTUBE-FEED] Feed for ${Feed.youtubeChannelId} in guild ${GuildId} failed ${Failures} checks in a row:`, Error.message);
+                    }
                 }
             }
         }
