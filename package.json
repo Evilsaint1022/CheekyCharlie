@@ -37,7 +37,7 @@
     "node": "^26.13.1",
     "node-cron": "^4.6.0",
     "node-fetch": "^2.7.0",
-    "openai": "^7.55.0",
+    "openai": "^7.57.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
@@ -45,7 +45,7 @@
     "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "nodemon": "^3.1.14"
   },
   "overrides": {
