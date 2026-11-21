@@ -23,7 +23,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.15.0",
     "@discordjs/rest": "^2.6.3",
-    "@napi-rs/canvas": "^1.1.1",
+    "@napi-rs/canvas": "^1.2.0",
     "axios": "^1.21.1",
     "cheerio": "^1.2.0",
     "child_process": "^1.0.2",
@@ -37,7 +37,7 @@
     "node": "^26.13.1",
     "node-cron": "^4.6.0",
     "node-fetch": "^2.7.0",
-    "openai": "^7.57.0",
+    "openai": "^7.62.0",
     "path": "^0.12.7",
     "register-commands": "^1.0.0",
     "rss-parser": "^3.13.0",
