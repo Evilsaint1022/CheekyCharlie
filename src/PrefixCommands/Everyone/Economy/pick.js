@@ -153,8 +153,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`***🌿 \`Successfully Picked!\` 🌿***`)
-                        .setDescription(`〉***You Have Successfully Picked:***\n    ***${custom || ferns}\`${coinsEarned.toLocaleString()}\` ${customname || fernsname}***`)
-                        .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+                        .setDescription(`〉***You Have Picked: ${custom || ferns}\`${coinsEarned.toLocaleString()}\` ${customname || fernsname}***`)
                         .setColor(0x207e37)
                 ]
             });
