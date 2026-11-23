@@ -695,7 +695,7 @@ const commands = [
         description: 'Enable or disable the Question of the Day feature.',
     },
     {
-        name: 'set-ban-channel',
+        name: 'setup-banned',
         description: 'Set the channel where ^banned messages are counted',
         options: [
             {
@@ -707,7 +707,7 @@ const commands = [
         ],
     },
     {
-        name: 'remove-ban-channel',
+        name: 'reset-banned',
         description: 'Remove the configured ^banned channel'
     }
 ];

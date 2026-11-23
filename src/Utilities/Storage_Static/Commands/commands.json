@@ -648,11 +648,11 @@
       ],
       "banned_channel_setup": [
         {
-          "command": "/set-ban-channel",
+          "command": "/setup-banned",
           "description": "Sets the banned channel."
         },
         {
-          "command": "/remove-ban-channel",
+          "command": "/reset-banned",
           "description": "Removes the banned channel."
         }
       ],
