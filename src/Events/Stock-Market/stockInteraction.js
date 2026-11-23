@@ -195,7 +195,7 @@ module.exports = {
         }
 
         const { price, userId } = session;
-        const { applyPressure } = require('../../Functions/Stock/stock-market');
+        const { applyPressure } = require('../../Functions/Stock-Market/stock-market');
 
         if (session.action === 'buy') {
             const cost = Math.round(amount * price);
