@@ -42,6 +42,7 @@ module.exports = {
       const key = `${guildId}`;
 
       const existing = await db.bump.get(key) || {};
+      
       existing.roleId = role.id;
 
       await db.bump.set(key, existing);

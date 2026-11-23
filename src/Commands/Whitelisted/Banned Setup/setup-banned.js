@@ -40,24 +40,20 @@ module.exports = {
       // Fetch current settings
       const currentSettings = await db.settings.get(guildKey) || {};
 
-      // Merge new ban_channel into settings
-      const updatedSettings = {
-        ...currentSettings,
-        ban_channel: channel.id
-      };
+      currentSettings.ban_channel = channel.id
 
       // Save updated settings
-      await db.settings.set(guildKey, updatedSettings);
-      console.log(`[⭐] [SET-BAN-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} set the ban channel to ${channel}`);
+      db.settings.set(guildKey, currentSettings);
+      console.log(`[⭐] [SETUP-BANNED-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guild.name} ${guild.id} ${interaction.user.username} set the banned channel to ${channel}`);
 
       await interaction.reply({
-        content: `✅ Ban channel successfully set to ${channel}`,
+        content: `✅ Banned channel successfully set to ${channel}`,
         flags: 64
       });
     } catch (error) {
-      console.error('[SetBanChannel] Error:', error);
+      console.error('[SetBannedChannel] Error:', error);
       await interaction.reply({
-        content: `❌ There was an error setting the ban channel.`,
+        content: `❌ There was an error setting the banned channel.`,
         flags: 64
       });
     }

@@ -35,7 +35,7 @@ module.exports = {
 
       if (!currentSettings || !currentSettings.ban_channel) {
         return await interaction.reply({
-          content: `⚠️ No ban channel is currently set.`,
+          content: `⚠️ No banned channel is currently set.`,
           flags: 64
         });
       }
@@ -45,16 +45,16 @@ module.exports = {
 
       // Save updated settings
       await db.settings.set(guildKey, currentSettings);
-      console.log(`[⭐] [REMOVE-BAN-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${username} removed ${currentSettings.ban_channel} from the ban channel.`);
+      console.log(`[⭐] [RESET-BANNED-CHANNEL] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${username} reset the banned configuration.`);
 
       await interaction.reply({
-        content: `✅ Ban channel has been removed.`,
+        content: `✅ Banned channel has been removed.`,
         flags: 64
       });
     } catch (error) {
-      console.error('[RemoveBanChannel] Error:', error);
+      console.error('[RemoveBannedChannel] Error:', error);
       await interaction.reply({
-        content: `❌ There was an error removing the ban channel.`,
+        content: `❌ There was an error removing the banned channel.`,
         flags: 64
       });
     }

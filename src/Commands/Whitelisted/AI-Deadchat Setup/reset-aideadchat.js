@@ -51,7 +51,8 @@ module.exports = {
             delete currentSettings.deadchatState
         };
 
-        const settings = await db.settings.set(`${guildId}`, currentSettings);
+        // Saved the Results back into Settings Database
+        db.settings.set(`${guildId}`, currentSettings);
 
        await interaction.reply({
                 content: '✅ You have Succesfully Reset the AI-Deadchat\n-# If you want to feature again use the /setup-aideadchat command',
