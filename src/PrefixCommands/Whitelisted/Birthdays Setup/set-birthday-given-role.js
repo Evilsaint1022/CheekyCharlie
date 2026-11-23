@@ -1,7 +1,7 @@
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  name: 'birthdaygivenrole',
+  name: 'set-birthday-given-role',
   aliases: ['bdaygrole'],
 
   async execute(message, args) {

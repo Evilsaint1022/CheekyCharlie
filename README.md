@@ -265,9 +265,9 @@ CheekyCharlie Application & Prefix Commands.
 - `?send-verification-button <mode> <button-label>` - Sends a verification button in the current channel. A verified role must be set first. If no label is provided, it uses `Verify ->`. `<mode>` can either be `math` (random generated math equation: n + n + n + n) or `puzzle` (random generated captcha-like image)
 
 **🌿・<ins>Birthdays Setup</ins>**
-- `?birthdaychannel` - Sets a birthday channel for the birthday messages.
-- `?birthdaypingrole` - Sets a role to be pinged for the birthday messages.
-- `?birthdaygivenrole` - Sets a role that will be given to the birthday user.
+- `?set-birthday-channel` - Sets a birthday channel for the birthday messages.
+- `?set-birthday-ping-role` - Sets a role to be pinged for the birthday messages.
+- `?set-birthday-given-role` - Sets a role that will be given to the birthday user.
 
 **🌿・<ins>Currency Setup</ins>**
 - `?set-currency-icon` - Sets a custom currency icon for the economy system.

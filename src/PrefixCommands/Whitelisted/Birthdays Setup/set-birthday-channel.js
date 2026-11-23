@@ -1,7 +1,7 @@
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  name: 'birthdaychannel',
+  name: 'set-birthday-channel',
   aliases: ['bdaychannel'],
 
   async execute(message, args) {

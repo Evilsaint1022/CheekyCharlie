@@ -339,15 +339,15 @@
       ],
       "birthdays_setup": [
         {
-          "command": "?birthdaychannel",
+          "command": "?set-birthday-channel",
           "description": "Sets a birthday channel for the birthday messages."
         },
         {
-          "command": "?birthdaypingrole",
+          "command": "?set-birthday-ping-role",
           "description": "Sets a role to be pinged for the birthday messages."
         },
         {
-          "command": "?birthdaygivenrole",
+          "command": "?set-birthday-given-role",
           "description": "Sets a role that will be given to the birthday user."
         }
       ],

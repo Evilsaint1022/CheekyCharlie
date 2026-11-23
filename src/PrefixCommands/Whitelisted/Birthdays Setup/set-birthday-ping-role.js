@@ -1,7 +1,7 @@
 const db = require('../../../Handlers/database');
 
 module.exports = {
-  name: 'birthdaypingrole',
+  name: 'set-birthday-ping-role',
   aliases: ['bdaypingrole'],
 
   async execute(message, args) {
