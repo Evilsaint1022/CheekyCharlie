@@ -369,8 +369,8 @@ const commands = [
         description: 'Toggle the levels feature on or off for this server.',
     },
     {
-        name: 'set-counting-channel',
-        description: 'Set the channel where the counting game will happen.',
+        name: `setup-counting`,
+        description: `Setup the counting configuration.`,
         options: [
             {
                 name: 'channel',
@@ -378,16 +378,6 @@ const commands = [
                 type: 7,
                 required: true,
             },
-        ]
-    },
-    {
-        name: 'remove-counting-channel',
-        description: 'Remove the counting channel.',
-    },
-    {
-        name: 'set-counting-emojis',
-        description: 'Set the custom counting emojis.',
-        options: [
             {
                 name: 'correct_emoji',
                 description: 'Emoji to show when the number is correct',
@@ -403,8 +393,8 @@ const commands = [
         ]
     },
     {
-        name: 'remove-counting-emojis',
-        description: 'Reset the custom emojis for counting feedback.',
+        name: `reset-counting`,
+        description: `Resets the counting configuration.`
     },
     {
         name: 'set-color-of-the-week',

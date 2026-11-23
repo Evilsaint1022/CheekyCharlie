@@ -468,20 +468,12 @@
       ],
       "counting_setup": [
         {
-          "command": "/set-counting-channel",
-          "description": "Sets the counting entertainment channel."
+          "command": "/setup-counting",
+          "description": "Setup the counting configuration"
         },
         {
-          "command": "/set-counting-emojis",
-          "description": "Sets custom emojis for reactions."
-        },
-        {
-          "command": "/remove-counting-channel",
-          "description": "Removes the set counting channel."
-        },
-        {
-          "command": "/remove-counting-emojis",
-          "description": "Removes custom emoji reactions for counting."
+          "command": "/reset-counting",
+          "description": "Resets the counting configuration."
         }
       ],
       "rss_feed_setup": [

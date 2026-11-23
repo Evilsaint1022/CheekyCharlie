@@ -1,0 +1,52 @@
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, ChannelType } = require('discord.js');
+const db = require('../../../Handlers/database');
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName('reset-counting')
+    .setDescription('Setup the counting configuration.'),
+
+
+  async execute(interaction) {
+
+    if (interaction.channel.isDMBased()) {
+      return interaction.reply({
+        content: "❌ This command cannot be used in DMs.",
+        flags: 64 // ephemeral
+      });
+    }
+
+    const guildId = interaction.guild.id;
+    const guildName = interaction.guild.name;
+    const guildKey = `${guildId}`;
+    const WHITELISTED_ROLE_IDS = await db.whitelisted.get(`${guildId}.whitelistedRoles`) || [];
+
+    const memberRoles = interaction.member.roles.cache.map(role => role.id);
+    const hasPermission = WHITELISTED_ROLE_IDS.some(roleId => memberRoles.includes(roleId));
+
+    if (!hasPermission) {
+        return interaction.reply({ content: 'You do not have the required whitelisted role to use this command.', flags: MessageFlags.Ephemeral });
+    }
+
+    // Database Fetch
+    const Existing = db.countingemojis.get(guildKey) || {};
+    const currentSettings = db.settings.get(guildKey) || {};
+
+    // Channel Delete
+    delete currentSettings.counting_channel
+
+    // Emojis Delete
+    delete Existing.correctEmoji
+    delete Existing.wrongEmoji
+
+    // Database Setting
+    db.countingemojis.set(guildKey, currentSettings);
+    db.settings.set(guildKey, Existing);
+
+    // console log
+     console.log(`[⭐] [RESET-COUNTING] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${guildName} ${guildId} ${interaction.user.username} used the reset-counting command.`);
+
+    return interaction.reply({content: `You have successfully reset the counting configuration.`,
+        flags: MessageFlags.Ephemeral
+    })
+}}

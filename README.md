@@ -324,10 +324,8 @@ This is the message. Supports any Discord-native **markdown**.
 - `/remove-whitelisted-roles` - Removes a whitelisted Role.
 
 **🌿・<ins>Counting Setup</ins>**
-- `/set-counting-channel` - Sets the counting entertainment channel.
-- `/set-counting-emojis` - Sets custom emojis for reactions.
-- `/remove-counting-channel` - Removes the set counting channel.
-- `/remove-counting-emojis` - Removes custom emoji reactions for counting.
+- `/setup-counting` - Setup the counting configuration.
+- `/reset-counting` - Resets the counting configuration.
 
 **🌿・<ins>RSS Feed Setup</ins>**
 - `/set-rss-channel` - Lets you set a channel where new RSS feed news will be send.
