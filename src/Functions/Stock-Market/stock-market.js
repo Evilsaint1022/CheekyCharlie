@@ -26,6 +26,8 @@ const HISTORY_MAX = 50;
 const STARTING_PRICE = 3000;
 const PRICE_TARGET = 3000; // mean-reversion anchor — gravity pulls toward this
 
+const splitter = `***─────────────────────────────────***`;
+
 let pendingPressureMemory = 0;
 
   // We no Longer use Groq
@@ -558,26 +560,24 @@ async function runStockTick(client) {
                         .setColor(embedColor)
                         .setDescription(
                             `## ***${emojis.ferncoin} \`FernCoin Stock-Market\`***\n` +
-                            `### ${trendEmoji} ` +
+                            `${splitter}\n` +
+                            `${trendEmoji} ` +
                             `**${currencyIcon} ` +
                             `${Math.round(price).toLocaleString()} ` +
                             `${currencyName}**\n` +
                             `${changeSign} ` +
                             `\`${Math.abs(change).toFixed(2)}\` | ` +
                             `\`${Math.abs(changePct).toFixed(2)}%\` ` +
-                            `${pctSign}`
+                            `${pctSign}\n` +
+                            `📊 Trend\n${trendBar}\n` +
+                            `${splitter}`
                         )
                         .setThumbnail(`https://cdn.discordapp.com/emojis/${emojiId}.png`)
-                        .addFields({
-                            name: '📊 Trend',
-                            value: trendBar,
-                            inline: true
-                        })
                         .setImage(
                             'attachment://ferncoin-chart.png'
                         )
                         .setFooter({
-                            text: `🌿 FernCoin Exchange`
+                            text: `🌿 FernCoin Crypto Exchange 🌿`
                         })
                         .setTimestamp()
                         );
