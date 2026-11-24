@@ -26,6 +26,13 @@ module.exports = {
 
   async execute(message, args) {
 
+    if (message.channel.isDMBased()) {
+      return message.reply({
+        content: "This command cannot be used in DMs.",
+        flags: 64
+      });
+    }
+
     const robber = message.author;
     const target = message.mentions.users.first() || (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
 
