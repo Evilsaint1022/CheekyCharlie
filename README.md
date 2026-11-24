@@ -31,7 +31,7 @@ https://github.com/NZ-Linix/dotdatabase
 
 To see how to get started and / or run the bot yourself, please see our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wiki).
 
-<h2> 🌿 <ins>Features</ins> 🌿 </h2>
+<img src="src/Utilities/Github/Banners/features_banner.png" width="300" height="300">
 
 🌿・Verification System   
 🌿・Giveaway System  
