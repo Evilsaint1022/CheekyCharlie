@@ -27,11 +27,9 @@ module.exports = {
   async execute(message, args) {
 
     const robber = message.author;
-    const target =
-      message.mentions.users.first() ||
-      (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
+    const target = message.mentions.users.first() || (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
 
-    if (!target) return message.reply('You must mention someone to heist!');
+    if (!args[0] || !target) return message.reply('You must mention someone using \`@username\` or \`userid\` to heist!');
 
     if (target.bot) return message.reply('You cannot heist a bot!');
 
@@ -60,9 +58,9 @@ module.exports = {
     }
 
     // Command Cooldown check
-    const commandcooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const commandcooldown = 4 * 60 * 60 * 1000; // 4 hours
     const now = Date.now();
-    const lastUsed = await db.cooldowns.get(`${robber.id}.lastheist`);
+    const lastUsed = await db.cooldowns.get(`${robber.id}.lastheist`) || 0;
 
     if (now - lastUsed < commandcooldown) {
       const timeLeft = commandcooldown - (now - lastUsed);
@@ -77,8 +75,8 @@ module.exports = {
     }
 
     // Target Cooldown check
-    const UserCooldown = 24 * 60 * 60 * 1000; // 24 hours
-    const lastheist = await db.stolen.get(`${target.id}.timestamp`);
+    const UserCooldown = 12 * 60 * 60 * 1000; // 12 hours
+    const lastheist = await db.stolen.get(`${target.id}.timestamp`) || 0;
 
     if (now - lastheist < UserCooldown) {
       const timeLeft = UserCooldown - (now - lastheist);
@@ -94,7 +92,7 @@ module.exports = {
 
     const top = `**🌿 \`Heist Successful\` 🌿**`;
     const middle = `· · - ┈┈━━━━━━ ˚ . 🌿 . ˚ ━━━━━━┈┈ - · ·`;
-    const bottom = `🌿・The Banks are Not Safe!`;
+    const bottom = `🌿 The Banks are Not Safe! 🌿`;
 
     const custom = await db.settings.get(`${message.guild.id}.currencyicon`)
     const ferns = await db.default.get("Default.ferns");
@@ -113,8 +111,14 @@ module.exports = {
       return message.reply(`${target.username} has no money in their bank to steal!`);
     }
 
-    const randomAmount = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-    const stealAmount = Math.min(randomAmount, targetBank);
+    // Generate a random percentage between 5% and 25%.
+    const randomPercentage = Math.random() * (0.25 - 0.05) + 0.05;
+
+    // Calculate the random amount based on their balance.
+    const randomAmount = Math.floor(targetBank * randomPercentage);
+
+    // Never steal more than the target has, with a minimum of 1.
+    const stealAmount = Math.min(Math.max(1, randomAmount), targetBank);
 
     // Update cooldowns
     await db.stolen.set(`${target.id}.timestamp`, now);
