@@ -1,6 +1,7 @@
 <img src="src/Utilities/Github/Banners/cheekycharlie.png" width="600" height="600">
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
+![Version](https://img.shields.io/badge/%20Version-%201.0.0-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?logo=raspberrypi&logoColor=white)
