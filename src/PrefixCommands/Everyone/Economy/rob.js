@@ -27,9 +27,11 @@ module.exports = {
   async execute(message, args) {
 
     const robber = message.author;
-    const target =
-            message.mentions.users.first() ||
-            (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
+    const target = message.mentions.users.first() || (args[0] ? await message.client.users.fetch(args[0]).catch(() => null) : null);
+
+    if (!args[0] || !target) {
+      return message.reply(`You must use \`@username\` or \`userid\``)
+    };
 
     // Target Passive Mode Check
     let targetPassive = await db.passive.get(target.id);
@@ -48,7 +50,7 @@ module.exports = {
     // Command Cooldown check
     const commandcooldown = 24 * 60 * 60 * 1000; // 24 hours
     const now = Date.now();
-    const lastUsed = await db.cooldowns.get(`${robber.id}.lastrob`);
+    const lastUsed = await db.cooldowns.get(`${robber.id}.lastrob`) || 0;
 
     if (now - lastUsed < commandcooldown) {
       const timeLeft = commandcooldown - (now - lastUsed);
@@ -64,7 +66,7 @@ module.exports = {
 
     // User Cooldown check
     const UserCooldown = 24 * 60 * 60 * 1000; // 24 hours
-    const lastrob = await db.stolen.get(`${target.id}.timestamp`);
+    const lastrob = await db.stolen.get(`${target.id}.timestamp`) || 0;
 
     if (now - lastrob < UserCooldown) {
       const timeLeft = UserCooldown - (now - lastrob);
@@ -163,7 +165,7 @@ module.exports = {
       .setColor(0x207e37)
       .setTitle(top)
       .setDescription(
-        `_You Robbed_ **${target.username}** for ${custom || fernsname}**\`${stealAmount.toLocaleString()}\`** ${customname || fernsname}!_\n` +
+        `_You Robbed **${target.username}** for ${custom || fernsname}**\`${stealAmount.toLocaleString()}\`** ${customname || fernsname}!_\n` +
         `${middle}\n` +
         `ㅤ **💰__Wallet__**    **🏦__Bank__**\n` +
         `ㅤ ***${custom || ferns}・\`${formattedBalance}\`${spacing}${custom || ferns}・\`${formattedBank}\`***\n` +
