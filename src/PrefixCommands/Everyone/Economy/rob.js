@@ -48,7 +48,7 @@ module.exports = {
     }
 
     // Command Cooldown check
-    const commandcooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const commandcooldown = 4 * 60 * 60 * 1000; // 4 hours
     const now = Date.now();
     const lastUsed = await db.cooldowns.get(`${robber.id}.lastrob`) || 0;
 
@@ -65,7 +65,7 @@ module.exports = {
     }
 
     // User Cooldown check
-    const UserCooldown = 24 * 60 * 60 * 1000; // 24 hours
+    const UserCooldown = 12 * 60 * 60 * 1000; // 12 hours
     const lastrob = await db.stolen.get(`${target.id}.timestamp`) || 0;
 
     if (now - lastrob < UserCooldown) {
@@ -106,11 +106,17 @@ module.exports = {
     const targetBalance = targetData.balance ?? 0;
 
     if (targetBalance <= 0) {
-      return message.reply(`${target.username} has no money to steal!`);
+      return message.reply(`${target.username} has no ${customname || ferns} to steal!`);
     }
 
-    const randomAmount = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-    const stealAmount = Math.min(randomAmount, targetBalance); // don't steal more than they have
+    // Generate a random percentage between 5% and 25%.
+    const randomPercentage = Math.random() * (0.25 - 0.05) + 0.05;
+
+    // Calculate the random amount based on their balance.
+    const randomAmount = Math.floor(targetBalance * randomPercentage);
+
+    // Never steal more than the target has, with a minimum of 1.
+    const stealAmount = Math.min(Math.max(1, randomAmount), targetBalance);
 
     // Update cooldown
     await db.stolen.set(`${target.id}.timestamp`, now);
