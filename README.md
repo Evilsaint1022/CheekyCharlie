@@ -19,14 +19,14 @@ https://github.com/NZ-Linix/dotdatabase
 〉**Currently Running on a Rasberry Pi**  
 〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-<img src="src/Utilities/Github/Banners/support_banner.png" width="600" height="600">
+<img src="src/Utilities/Github/Banners/support_banner.png" width="300" height="300">
 
 **If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:**  
 `@evilsaint1022` & `@nz_linix`  
 
 <img src="src/Utilities/Github/icons/discord.png" align="center" width="30" height="30">・[Support Server Invite Link](https://discord.com/invite/3gtJ33cZDH)
 
-<img src="src/Utilities/Github/Banners/started_banner.png" width="600" height="600">
+<img src="src/Utilities/Github/Banners/started_banner.png" width="300" height="300">
 
 To see how to get started and / or run the bot yourself, please see our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wiki).
 
