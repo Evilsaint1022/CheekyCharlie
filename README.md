@@ -1,4 +1,4 @@
-<h1> 🌿 <ins>The CheekyCharlie Discord Bot</ins> 🌿 </h1>
+<img src="src/Utilities/Github/Banners/cheekycharlie.png" width="600" height="600">
 
 ![Status](https://img.shields.io/badge/%20Status-%20Active-44cc11)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-44cc11)](https://github.com/)
