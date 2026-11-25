@@ -15,6 +15,58 @@ function encrypt(text) {
   return encrypted;
 }
 
+const IMAGE_API_URL = 'https://gen.pollinations.ai/v1/images/generations';
+
+/**
+ * Generates an image through the Pollinations API and returns it as a Buffer.
+ * Throws a descriptive error on any non-OK response or unexpected payload,
+ * so callers can release the user's lock and tell them what happened.
+ *
+ * @param {string} prompt
+ * @param {string} apiKey
+ * @returns {Promise<Buffer>}
+ */
+async function generateImage(prompt, apiKey) {
+  const response = await fetch(IMAGE_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + apiKey
+    },
+    body: JSON.stringify({
+      prompt,
+      model: 'klein',
+      n: 1,
+      size: '1024x1024',
+      quality: 'medium',
+      response_format: 'b64_json'
+    }),
+    signal: AbortSignal.timeout(120000)
+  });
+
+  const raw = await response.text();
+  let data;
+  try { data = JSON.parse(raw); } catch { data = null; }
+
+  if (!response.ok) {
+    const detail = data?.error?.message || data?.error || raw.slice(0, 200);
+    throw new Error(`Image API returned HTTP ${response.status}: ${detail}`);
+  }
+
+  const item = data?.data?.[0];
+
+  if (item?.b64_json) return Buffer.from(item.b64_json, 'base64');
+
+  // Fall back to a hosted URL if the API ignored response_format.
+  if (item?.url) {
+    const imageResponse = await fetch(item.url, { signal: AbortSignal.timeout(60000) });
+    if (!imageResponse.ok) throw new Error(`Image download returned HTTP ${imageResponse.status}`);
+    return Buffer.from(await imageResponse.arrayBuffer());
+  }
+
+  throw new Error(`Image API returned no image data: ${raw.slice(0, 200)}`);
+}
+
 /**
  * 
  * @param {Client} client 
@@ -142,31 +194,22 @@ async function handleAIMessage(client, message) {
 
     if (!IMAGE_API_KEY) {
       console.warn('🟥・The IMAGE_API_KEY Token is not set.')
+      await db.lastclaim.set(`${userId}.airesponse`, false)
+      await message.reply("⚠️ Image generation isn't set up right now.")
       return;
     };
 
-    const IMAGE_API_RESULT = await fetch('https://gen.pollinations.ai/v1/images/generations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + IMAGE_API_KEY
-      },
-      body: JSON.stringify({
-        prompt: userContent,
-        model: 'klein',
-        n: 1,
-        size: '1024x1024',
-        quality: 'medium',
-        response_format: 'b64_json'
-      })
-    })
+    let attachment;
 
-    const IMAGE_DATA = await IMAGE_API_RESULT.json();
-    
-    const base64Image = IMAGE_DATA.data[0].b64_json;
-    
-    const imageBuffer = Buffer.from(base64Image, 'base64');
-    const attachment = new AttachmentBuilder(imageBuffer, { name: 'image.png' });
+    try {
+      const imageBuffer = await generateImage(userContent, IMAGE_API_KEY);
+      attachment = new AttachmentBuilder(imageBuffer, { name: 'image.png' });
+    } catch (error) {
+      console.error('❌ Error generating the image:', error);
+      await db.lastclaim.set(`${userId}.airesponse`, false)
+      await message.reply("⚠️ Sorry, I couldn't generate that image right now. Try again later.")
+      return;
+    }
 
     // Sets the lastclaim to false so that the user can use the ai-response again.
     await db.lastclaim.set(`${userId}.airesponse`, false)
@@ -259,4 +302,4 @@ async function handleAIMessage(client, message) {
   }
 }
 
-module.exports = { handleAIMessage };
+module.exports = { handleAIMessage, generateImage };
