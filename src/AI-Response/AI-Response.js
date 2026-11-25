@@ -102,7 +102,7 @@ async function handleAIMessage(client, message) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "inception/mercury-decide",
+          model: "perplexity/pplx-decider-flash-v1.3:free",
           state: userContent,
           questions: {
             nsfw_content: {
