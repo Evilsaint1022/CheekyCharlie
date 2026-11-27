@@ -67,7 +67,7 @@ __Please check out our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wik
 
 **and much much more...**
 
-<h2><ins>Automatic Reactions</ins></h2>
+<img src="src/Utilities/Github/Banners/automaticreactions_banner.png" width="350" height="350">
 
 CheekyCharlie's Automatic Emoji Reactions.
 
@@ -148,7 +148,7 @@ CheekyCharlie's Automatic Emoji Reactions.
   
 </details>
 
-<h2><ins>Application & Prefix Commands</ins></h2>
+<img src="src/Utilities/Github/Banners/application&prefix_banner.png" width="350" height="350">
 
 CheekyCharlie Application & Prefix Commands.
 
