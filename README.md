@@ -20,14 +20,14 @@ https://github.com/NZ-Linix/dotdatabase
 〉**Currently Running on a Rasberry Pi**  
 〉**Created by Evilsaint1022 (Owner, Developer) & NZ-Linix (Owner, Developer)**  
 
-<img src="src/Utilities/Github/Banners/support_banner.png" width="350" height="350">
+<ins> <h2> 🌿 Support Server 🌿 </ins> </h2>
 
 __If you need help with the bot or the code or want to report a bug, feel free to DM us on Discord:__  
 `@evilsaint1022` & `@nz_linix`  
 
-<img src="src/Utilities/Github/icons/discord.png" align="center" width="30" height="30">・[Support Server Invite Link](https://discord.com/invite/3gtJ33cZDH)
+<img src="src/Utilities/Github/icons/discord.png" align="center" width="25" height="35">・[Support Server Invite Link](https://discord.com/invite/3gtJ33cZDH)
 
-<img src="src/Utilities/Github/Banners/started_banner.png" width="350" height="350">
+<ins> <h2>🌿 Getting Started 🌿</ins> </h2>
 
 **CheekyCharlie** uses `Application` & `Prefix` commands, so type `/help` in chat to check them out.  
 
@@ -42,7 +42,7 @@ _Setting the whitelisted role gives that role access to the whitelisted commands
 __If you want to learn how to host the bot yourself?__   
 __Please check out our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wiki).__
 
-<img src="src/Utilities/Github/Banners/features_banner.png" width="350" height="350">
+<ins> <h2> 🌿 Features 🌿 </ins> </h2>
 
 - Verification System  
 - Full Economy System  
@@ -67,7 +67,7 @@ __Please check out our [Wiki](https://github.com/Evilsaint1022/CheekyCharlie/wik
 
 **and much much more...**
 
-<img src="src/Utilities/Github/Banners/automaticreactions_banner.png" width="350" height="350">
+<ins> <h2> 🌿 Automatic Reactions 🌿 </ins> </h2>
 
 CheekyCharlie's Automatic Emoji Reactions.
 
@@ -148,7 +148,7 @@ CheekyCharlie's Automatic Emoji Reactions.
   
 </details>
 
-<img src="src/Utilities/Github/Banners/application&prefix_banner.png" width="350" height="350">
+<ins> <h2> 🌿 Application & Prefix Commands 🌿 </ins> </h2>
 
 CheekyCharlie Application & Prefix Commands.
 
