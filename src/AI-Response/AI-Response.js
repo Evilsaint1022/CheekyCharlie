@@ -106,6 +106,7 @@ async function handleAIMessage(client, message) {
     user => user.id !== message.client.user.id
   );
 
+  // 🐦 The IF Statement Nest 🐦 ------------------------------------
   if (message.content.includes(`pick`)) return;
   if (message.channel.id == settings.ban_channel) return;
   if (message.channel.id == settings.story_channel) return;
@@ -221,13 +222,16 @@ async function handleAIMessage(client, message) {
 
     // Sets the lastclaim to false so that the user can use the ai-response again.
     await db.lastclaim.set(`${userId}.airesponse`, false)
-
-    await message.channel.send({ files: [attachment] });
+    
+    try {
+    await message.reply({ files: [attachment] });
+    } catch(error) {
+      await message.channel.send({ files: [attachment] });
+    };
 
     console.log(`[🧠] [CHEEKYCHARLIE] [${new Date().toLocaleDateString("en-NZ", {timeZone: 'Pacific/Auckland'})}] [${new Date().toLocaleTimeString("en-NZ", { timeZone: "Pacific/Auckland" })}] ${message.author.tag} (Encrypted: ${encryptedUsername}) Pollination's Replied with a image in ${message.channel.name} ${message.channel.id}`);
 
     return;
-
   }
 
   const encryptedUsername = encrypt(message.author.tag);
@@ -297,7 +301,11 @@ async function handleAIMessage(client, message) {
     // Sets the lastclaim to false so that the user can use the ai-response again.
     await db.lastclaim.set(`${userId}.airesponse`, false)
 
-    message.reply(reply);
+    try {
+    await message.reply(reply);
+    } catch(error) {
+      await message.channel.send(reply);
+    };
     
     memory.push({ role: 'assistant', content: memoryreply });
     await db.ai_history.set(encryptedUsername + ".history", memory);
