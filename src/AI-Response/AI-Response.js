@@ -76,6 +76,9 @@ async function generateImage(prompt, apiKey) {
 
 async function handleAIMessage(client, message) {
 
+  // Channel Settings
+  const settings = db.settings.get(message.guild.id) || {};
+
   // We no Longer use Groq
   // const GROQ_API_KEY = API_KEY;
   const OPENROUTER = process.env.OPENROUTER;
@@ -103,6 +106,11 @@ async function handleAIMessage(client, message) {
     user => user.id !== message.client.user.id
   );
 
+  if (message.content.includes(`pick`)) return;
+  if (message.channel.id == settings.ban_channel) return;
+  if (message.channel.id == settings.story_channel) return;
+  if (message.channel.id == settings.counting_channel) return;
+
   if (everyonePing) return;
   if (herePing) return;
   if (roleMentions.size > 0) return;
@@ -114,7 +122,7 @@ async function handleAIMessage(client, message) {
   // ----------------------------------------------------------------
   // Checks if User Has already used the ai-response.
   const userId = message.author.id
-  const usedalreadycheck = await db.lastclaim.get(`${userId}.airesponse`)
+  const usedalreadycheck = await db.lastclaim.get(`${userId}.airesponse`);
 
   if (usedalreadycheck === true) {
     const reply = await message.reply(`Sorry but you are already waiting for a reply.`);
